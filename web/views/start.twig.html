@@ -1,0 +1,23 @@
+{% extends 'base.twig.html' %}
+
+{% block title %}Coastkeeper Volunteer - Patrol a Section{% endblock %}
+
+{% block header %}{{ section.name }} Patrol{% endblock %}
+
+{% block content %}
+{% if errors is defined %}
+<div class="errors">
+	{% for error in errors %}
+		{{ error }}<br>
+	{% endfor %}
+</div>
+{% endif %}
+<form id="start-time-form" action="{{ path('patrol_section_start', {id : section.id }) }}" method="POST" data-ajax="false">
+	<div class="container">
+		<label for="start-time" class="ui-hidden-accessible">Start Time:</label>
+		<input type="time" name="start-time" id="start-time" class="time-input" value="" step="1">
+		<a data-role="button" class="fill-time-btn">Now</a>
+	</div>
+	<input type="submit" id="start-time-submit" value="Continue">
+</form>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% block field_errors %}
+{% spaceless %}
+    <span class="help-inline">
+        {% if errors|length > 0 %}
+            {% for error in errors %}
+            {{ error.messageTemplate|trans(error.messageParameters, "validators") }}<br/>
+            {% endfor %}
+        {% endif %}
+    </span>
+{% endspaceless %}
+{% endblock %}
+
+{% block form_errors %}
+{{ block("field_errors") }}
+{% endblock %}
+
+{% block field_row %}
+<div class="control-group{% if errors|length > 0 %} error{% endif %}">
+    {{ form_label(form, label) }}
+    {% set class = "" %}
+    {% if errors|length > 0 %}
+        {% set class = "error" %}
+    {% endif %}
+    {{ form_widget(form, { "attr": { "class": class } }) }}
+    {{ form_errors(form) }}
+</div>
+{% endblock %}

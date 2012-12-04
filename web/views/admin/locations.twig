@@ -1,0 +1,24 @@
+{% extends "admin/base.twig" %}
+
+{% block title %}Location Administration{% endblock %}
+
+{% block content %}
+<div class="span12">
+	<table class="table">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Location Name</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for location in locations %}
+			<tr>
+				<td>{{ location.id }}</td>
+				<td>{{ location.name }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+{% endblock %}

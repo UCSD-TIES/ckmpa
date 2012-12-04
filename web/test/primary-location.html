@@ -1,0 +1,47 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+    <meta charset="utf-8">
+    <title>Primary Location Selection</title> 
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
+    <link rel="stylesheet" href="styles.css">
+    <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+    <script src="main.js"></script>
+</head> 
+
+<body> 
+    <div data-role="page">
+        <div data-role="header" data-theme="b">
+            <header>
+                <h1>
+                    Primary Location
+                </h1>
+            </header>
+        </div>
+        <div data-role="content" data-theme="c">
+            <form action="/uploader.php" method="post" name="primary-location-form" id="primary-location-form"> 
+                <label 
+                    for="primary-location"
+                    class="ui-hidden-accessible">
+                    Primary Location:
+                </label>
+                <select name="primary-location" id="primary-lcoation">
+                    <option value="" selected>Choose a location</option>
+                    <option value="slj">South La Jolla</option>
+                    <option value="mat">Matlahuayl</option>
+                </select>
+                <input type="submit" value="Continue" class="submit">
+             </form>
+        </div>
+        <div data-role="footer" data-theme="b">    
+            <footer>
+                <p>
+                    &copy; 2013 SDCoastkeeper
+                </p>
+            </footer>
+        </div>
+    </div>
+</body>
+</html>

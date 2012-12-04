@@ -1,0 +1,57 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+    <meta charset="utf-8">
+    <title>End Time page</title> 
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
+    <link rel="stylesheet" href="styles.css">
+    <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+    <script src="main.js"></script>   
+</head> 
+
+<body> 
+    <div data-role="page">
+        <div data-role="header" data-theme="b">
+            <header>
+                <h1>
+                    End Time
+                </h1>
+            </header>
+        </div>
+        <div data-role="content" class="time-entry">
+            <form action="/upload.php" name="end-time-form" id="end-time-form" method="post">
+                <div class="container">
+                    <input type="time" name="end-time" id="end-time" value="" class="time-input" />
+                    <a data-role="button" data-inline="true" class="fill-time-btn">Now</a>
+                </div>
+
+                <a href="primary-location.html" 
+                   data-role="button" 
+                   data-inline="true"
+                   class="end-loop-btn">
+                   Finished
+                </a>
+                <input type="submit" value="Continue" data-inline="true" class="submit">
+            </form>
+            <!-- <form action="/upload.php" name="end-time-form" id="end-time-form" method="post">
+                <div>
+                    <input type="time" name="end-time" id="end-time" value="" class="time-box" />
+                    <a class="fill-time-btn" data-role="button" data-inline="true">Now</a>
+                </div>
+                <label for="comment">Comments:</label>
+                <textarea name="comment"></textarea>
+                <input type="submit" value="Continue" data-inline="true">
+            </form> -->
+        </div>
+        <div data-role="footer" data-theme="b">    
+            <footer>
+                <p>
+                    &copy; 2013 SDCoastkeeper
+                </p>
+            </footer>
+        </div>
+    </div>
+</body>
+</html>
