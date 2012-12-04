@@ -3,7 +3,16 @@
 namespace Coastkeeper;
 
 use \Model;
+/*
 
+	CoastkeeperSection
+
+	Available Fields:
+	id
+	coastkeeper_location_id
+	name
+
+ */
 class Section extends Model{
 	
 	/*

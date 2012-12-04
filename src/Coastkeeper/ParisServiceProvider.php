@@ -35,18 +35,31 @@ class ParisServiceProvider implements ServiceProviderInterface{
 	}
 }
 
+/*
+	These are the methods used to interface with 
+	the Paris/Idiorm ORM system.
+ */
 class ParisWrapper
 {
+	/*
+		Return a query object of the given model.
+	 */
 	public function getModel($modelName)
 	{
 		return \Model::factory($modelName);
 	}
 
+	/*
+		Return the last executed query.
+	 */
 	public function getLastQuery()
 	{
 		return \ORM::get_last_query();
 	}
 
+	/*
+		Return the query log.
+	 */
 	public function getQueryLog()
 	{
 		return \ORM::get_query_log();
