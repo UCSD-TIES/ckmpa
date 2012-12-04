@@ -391,7 +391,7 @@ $app->match('/patrol/section/finish', function(Request $request) use ($app){
 	$section_patrol_id = $app['session']->get('section_patrol');
 	$section_patrol = $app['paris']->getModel('Coastkeeper\PatrolEntry')->find_one($section_patrol_id);
 
-	if(!$section_patrol || $section_patrol_id)
+	if(!$section_patrol || !$section_patrol_id)
 	{
 		/* redirect to section selection */
 		return $app->redirect($app['url_generator']->generate('patrol_section_select'));
