@@ -1,5 +1,5 @@
 {
-    "hash": "74f64d986ea57a705a0e7e2ce7a27757",
+    "hash": "5a21bb5da2091098e9653265967339b1",
     "packages": [
         {
             "name": "j4mie/idiorm",
@@ -117,6 +117,41 @@
                 "Active Record",
                 "model",
                 "paris"
+            ]
+        },
+        {
+            "name": "phpexcel/phpexcel",
+            "version": "v1.7.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ddeboer/phpexcel",
+                "reference": "v1.7.6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/ddeboer/phpexcel/zipball/v1.7.6",
+                "reference": "v1.7.6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">5.2.0"
+            },
+            "time": "2012-05-07 12:05:46",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-0": {
+                    "PHPExcel": "Classes"
+                }
+            },
+            "license": [
+                "GNU"
+            ],
+            "description": "PHPExcel - OpenXML - Create Excel2007 documents in PHP - Spreadsheet engine",
+            "homepage": "http://phpexcel.codeplex.com",
+            "keywords": [
+                "excel",
+                "xls"
             ]
         },
         {

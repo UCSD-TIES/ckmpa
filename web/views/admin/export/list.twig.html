@@ -1,0 +1,16 @@
+{% extends 'admin/base.twig.html' %}
+
+{% block title %}Export Location to Excel{% endblock %}
+
+{% block content %}
+<div class="span12">
+	<h1>Select a Location to export.</h1>
+	{% if locations %}
+	<table class="table">
+		{% for location in locations %}
+		<tr><td><a href="{{ path('admin_export_data', {id:location.id}) }}"><i class="icon-download"></i> {{ location.name }}</a></td></tr>
+		{% endfor %}
+	</table>
+	{% endif %}
+</div>
+{% endblock %}

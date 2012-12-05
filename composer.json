@@ -17,7 +17,8 @@
         "symfony/validator": "2.1.*",
         "symfony/twig-bridge": "2.1.*",
         "twig/twig": ">=1.2.0,<2.0-dev",
-	    "j4mie/paris": "dev-master"	
+	    "j4mie/paris": "dev-master",
+        "phpexcel/phpexcel": "1.7.6"
     },
     "autoload": {
     	"psr-0" : {
