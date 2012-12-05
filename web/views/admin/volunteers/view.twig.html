@@ -1,0 +1,38 @@
+{% extends 'admin/base.twig.html' %}
+
+{% block title %}Volunteer Administration{% endblock %}
+
+{% block content %}
+<div class="span12">
+{% if volunteer is defined %}
+	<h2>{{ volunteer.last_name }}, {{ volunteer.first_name }}{% if volunteer.is_admin %} <small>Administrator</small>{% endif %}</h2>
+	<p>
+		Login Name: {{ volunteer.username }}
+	</p>
+	<p>
+		<a class="btn btn-small" href="{{ path('admin_volunteer_edit', {id:volunteer.id}) }}"><i class="icon-pencil"></i> Edit</a>
+		<a class="btn btn-small btn-danger" href="{{ path('admin_volunteer_delete', {id:volunteer.id}) }}"><i class="icon-white icon-trash"></i> Delete</a>
+	</p>
+	{% if volunteer.patrols.count %}
+	<table class="table table-bordered">
+		<thead><tr><th>Patrols</th></tr></thead>
+		<tbody>
+			{% for patrol in volunteer.patrols.find_many %}
+			<tr><td>
+				Patrol on {{ patrol.date }}
+				{% if not patrol.finished %}
+				<small class="uncompleted">(uncompleted)</small>
+				{% endif %}
+			</td></tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{% endif %}
+
+{% else %}
+
+	Volunteer not found.
+
+{% endif %}
+</div>
+{% endblock %}

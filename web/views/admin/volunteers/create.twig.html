@@ -1,0 +1,64 @@
+{% extends 'admin/base.twig.html' %}
+
+{% block title %}Create Volunteer{% endblock %}
+
+{% block content %}
+<div class="span12">
+	<h1>Create New Volunteer</h1>
+	<form class="form-horizontal" action="{{ path('admin_volunteer_create') }}" method="POST">
+		<div class="control-group{% if errors.first_name is defined %} error{% endif %}">
+			<label class="control-label" for="first_name">First Name</label>
+			<div class="controls">
+				<input type="text" id="first_name" name="first_name" value="{{ app.request.get('first_name') }}">
+				{% if errors.first_name is defined %}
+				<span class="help-inline">{{ errors.first_name }}</span>
+				{% endif %}
+			</div>
+		</div>
+		<div class="control-group{% if errors.last_name is defined %} error{% endif %}">
+			<label class="control-label" for="last_name">Last Name</label>
+			<div class="controls">
+				<input type="text" id="last_name" name="last_name" value="{{ app.request.get('last_name') }}">
+				{% if errors.last_name is defined %}
+				<span class="help-inline">{{ errors.last_name }}</span>
+				{% endif %}
+			</div>
+		</div>
+		<div class="control-group{% if errors.username is defined %} error{% endif %}">
+			<label class="control-label" for="username">Login Name</label>
+			<div class="controls">
+				<input type="text" id="username" name="username" value="{{ app.request.get('username') }}">
+				{% if errors.username is defined %}
+				<span class="help-inline">{{ errors.username }}</span>
+				{% endif %}
+			</div>
+		</div>
+		<div class="control-group">
+			<div class="controls">
+				<label class="checkbox" for="is_admin">
+					<input type="checkbox" id="is_admin" name="is_admin" value="1"> Is Administrator
+				</label>
+			</div>
+		</div>
+		<div class="control-group{% if errors.new_password is defined %} error{% endif %}">
+			<label class="control-label" for="new_password">New Password:</label>
+			<div class="controls">
+				<input type="password" id="new_password" name="new_password">
+				{% if errors.new_password is defined %}
+				<span class="help-inline">{{ errors.new_password }}</span>
+				{% endif %}
+			</div>
+		</div>
+		<div class="control-group{% if errors.new_password is defined %} error{% endif %}">
+			<label class="control-label" for="new_password_b">Renter New Password:</label>
+			<div class="controls">
+				<input type="password" id="new_password_b" name="new_password_b">
+			</div>
+		</div>
+		<div class="form-actions">
+			<button type="submit" class="btn btn-primary">Save Changes</button>
+			<a class="btn" href="{{ path('admin_volunteers') }}">Cancel</a>
+		</div>
+	</form>
+</div>
+{% endblock %}

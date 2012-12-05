@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Volunteer Administration Login</title>
+		<base href="http://{{ app.request.host }}/">
+		<link href="web/css/bootstrap.min.css" rel="stylesheet" media="screen">
+		<link href="web/css/admin.css" rel="stylesheet" media="screen">
+	</head>
+	<body class="form-signin-body">
+		<div class="container">
+			<form action="{{ path('admin_login') }}" method="POST" class="form-signin">
+				<h2 class="form-signin-heading">Please Sign In</h2>
+				{% if errors is defined %}
+				<div class="errors">
+					{% for error in errors %}
+						{{ error }}<br>
+					{% endfor %}
+				</div>
+				{% endif %}
+				<input name="username" type="text" class="input-block-level" placeholder="Username">
+				<input name="password" type="password" class="input-block-level" placeholder="Password">
+				<button class="btn btn-large btn-primary" type="submit">Sign In</button>
+			</form>
+		</div>
+	</body>
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script src="web/js/bootstrap.js"></script>
+</html>

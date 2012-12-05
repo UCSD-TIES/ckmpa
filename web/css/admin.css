@@ -1,0 +1,26 @@
+body { margin-top: 60px; }
+
+body.form-signin-body
+{
+	background-color: whiteSmoke;
+}
+
+.form-signin
+{
+	max-width: 300px;
+	padding: 20px 30px 30px;
+	margin: 0 auto;
+	border: 1px solid #e5e5e5;
+	background-color: #ffffff;
+	border-radius: 5px;
+}
+
+small.uncompleted
+{
+	color: red;	
+}
+
+.is_admin
+{
+	font-weight: bold;
+}

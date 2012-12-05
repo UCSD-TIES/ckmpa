@@ -1,0 +1,44 @@
+{% extends 'admin/base.twig.html' %}
+
+{% block title %}Volunteers{% endblock %}
+
+{% block content %}
+<div class="span12">
+	<h1>Volunteers</h1>
+	<a class="btn btn-primary" href="{{ path('admin_volunteer_create') }}">Create new Volunteer</a>
+	<br><br>
+	{% if volunteers|length %}
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Controls</th>
+			</tr>
+		</thead>
+		<tfoot>
+			<tr>
+				<td colspan="2"><span class="is_admin">Administrators</span> are in bold.</td>
+			</tr>
+		</tfoot>
+		<tbody>
+		{% for volunteer in volunteers %}
+			<tr>
+				<td>
+					<a {% if volunteer.is_admin %}class="is_admin" {% endif %}href="{{ path('admin_volunteer_view', {id:volunteer.id}) }}">
+						{{ volunteer.last_name }}, {{ volunteer.first_name }}
+					</a>
+				</td>
+				<td>
+					<a class="btn btn-small" href="{{ path('admin_volunteer_view', {id:volunteer.id}) }}"><i class="icon-eye-open"></i> View</a>
+					<a class="btn btn-small" href="{{ path('admin_volunteer_edit', {id:volunteer.id}) }}"><i class="icon-pencil"></i> Edit</a>
+					<a class="btn btn-small btn-danger" href="{{ path('admin_volunteer_delete', {id:volunteer.id}) }}"><i class="icon-white icon-trash"></i> Delete</a>
+				</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+	{% else %}
+	There are no volunteers available. <a href="{{ path('admin_volunteer_create') }}">Create a new one?</a>
+	{% endif %}
+</div>
+{% endblock %}

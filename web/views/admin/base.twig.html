@@ -2,12 +2,10 @@
 <html>
 	<head>
 		{% block head %}
-		<title>{% block title %}MPA Volunteer Administration{% endblock %}</title>
+		<title>{% block title %}Volunteer Administration{% endblock %}</title>
 		<base href="http://{{ app.request.host }}/">
-		<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
-		<style>
-			body{ margin-top: 60px;}
-		</style>
+		<link href="web/css/bootstrap.min.css" rel="stylesheet" media="screen">
+		<link href="web/css/admin.css" rel="stylesheet" media="screen">
 		{% endblock %}
 	</head>
 	<body>
@@ -22,10 +20,8 @@
 					<a class="brand" href="/admin">Volunteer Track</a>
 					<div class="nav-collapse collapse">
 						<ul class="nav">
-							<li><a href="#">Volunteers</a></li>
-							<li><a href="#">Locations</a></li>
-							<li><a href="#">Datasheets</a></li>
-							<li><a href="#">Patrols</a></li>
+							<li><a href="{{ path('admin_volunteers') }}">Volunteers</a></li>
+							<li><a href="{{ path('admin_logout') }}">Logout</a></li>
 						</ul>
 					</div>
 				</div>
@@ -36,7 +32,7 @@
 		</div>
 		{% block scripts %}
 		<script src="http://code.jquery.com/jquery-latest.js"></script>
-		<script src="js/bootstrap.js"></script>
+		<script src="web/js/bootstrap.js"></script>
 		{% endblock %}
 	</body>
 </html>

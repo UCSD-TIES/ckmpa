@@ -21,13 +21,13 @@ $app['debug'] = true;
 
 /*
 
-	This will make all routes check to make sure the user
-	is logged in, otherwise it will redirect the user
-	to the login page.
+	This function is used to check to make sure the user
+	is logged in and should be
+	->before($before)
+	on all routes that require the user to be logged in.
 
  */
-$app['controllers']->before(function() use ($app){
-
+$login_check = function() use ($app){
 
 	/* Check the user's session to see if they are logged in */
 	$user = $app['session']->get('user');
@@ -37,11 +37,12 @@ $app['controllers']->before(function() use ($app){
 	{
 		/* prevent infinite loop */
 		if($app['request']->get('_route') != 'login'){
-			//return $app->redirect('/');
+			return $app->redirect('/');
 		}
+
 	}
 
-});
+};
 
 /*
 
@@ -120,7 +121,7 @@ $app->match('/', function(Request $request) use ($app){
 /*
 	User Logout.
 */
-$app->match('/logout', function() use ($app){
+$app->match('/logout/', function() use ($app){
 
 	/* user is logging out so invalidate current session */
 	$app['session']->invalidate();
@@ -132,7 +133,7 @@ $app->match('/logout', function() use ($app){
 /*
 	patrol_location_select
 */
-$app->match('/patrol/location', function(Request $request) use ($app){
+$app->match('/patrol/location/', function(Request $request) use ($app){
 
 	/* Error array for error display */
 	$errors = array();
@@ -198,12 +199,12 @@ $app->match('/patrol/location', function(Request $request) use ($app){
 		'errors' => $errors
 	));
 
-})->bind('patrol_location_select');
+})->before($login_check)->bind('patrol_location_select');
 
 /*
 	patrol_section_select
 */
-$app->get('/patrol/section', function() use ($app){
+$app->get('/patrol/section/', function() use ($app){
 
 	/* errors */
 	$errors = array();	
@@ -228,9 +229,9 @@ $app->get('/patrol/section', function() use ($app){
 		'errors' => $errors
 	));
 
-})->bind('patrol_section_select');
+})->before($login_check)->bind('patrol_section_select');
 
-$app->match('/patrol/section/{id}', function(Request $request, $id) use ($app){
+$app->match('/patrol/section/{id}/', function(Request $request, $id) use ($app){
 
 	/* Error stack */
 	$errors = array();
@@ -317,9 +318,9 @@ $app->match('/patrol/section/{id}', function(Request $request, $id) use ($app){
 		"errors" => $errors
 	));
 
-})->assert('id','\d+')->bind('patrol_section_start');
+})->assert('id','\d+')->before($login_check)->bind('patrol_section_start');
 
-$app->match('/patrol/datasheet', function(Request $request) use ($app){
+$app->match('/patrol/datasheet/', function(Request $request) use ($app){
 
 	/* Check to make sure there is a current patrol going on, otherwise redirect. */
 	$section_patrol_id = $app['session']->get('section_patrol');
@@ -380,9 +381,9 @@ $app->match('/patrol/datasheet', function(Request $request) use ($app){
 		'datasheet' => $datasheet,
 	));
 
-})->bind('patrol_datasheet');
+})->before($login_check)->bind('patrol_datasheet');
 
-$app->match('/patrol/section/finish', function(Request $request) use ($app){
+$app->match('/patrol/section/finish/', function(Request $request) use ($app){
 
 	/* Errors */
 	$errors = array();
@@ -435,10 +436,10 @@ $app->match('/patrol/section/finish', function(Request $request) use ($app){
 		"errors" => $errors
 	));
 
-})->bind('patrol_section_finish');
+})->before($login_check)->bind('patrol_section_finish');
 
 
-$app->get('/patrol/finish', function () use ($app){
+$app->get('/patrol/finish/', function () use ($app){
 
 	/* Find the current patrol. */
 	$patrol_id = $app['session']->get('patrol');
@@ -464,7 +465,14 @@ $app->get('/patrol/finish', function () use ($app){
 	/* return to location select */
 	return $app->redirect($app['url_generator']->generate('patrol_location_select'));
 
-})->bind('patrol_finish'); 
+})->before($login_check)->bind('patrol_finish');
+
+/*
+	Mount the Admin URLs
+ */
+$app->mount('/admin/', include __DIR__ . '/routes/admin/admin.php');
+$app->mount('/admin/volunteers/', include __DIR__ . '/routes/admin/volunteers.php');
+
 /*
 	Run the application
 */
