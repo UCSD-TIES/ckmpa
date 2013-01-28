@@ -2,7 +2,7 @@
     Options -MultiViews	
 
     RewriteEngine On
-    RewriteBase /coastkeeper
+    RewriteBase /
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ web/index.php [L]
 </IfModule>
