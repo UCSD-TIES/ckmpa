@@ -66,6 +66,7 @@ $routes->match('/create/', function(Request $request) use ($app){
 		{
 			$location = $app['paris']->getModel('Coastkeeper\Location')->create();
 			$location->name = $location_name;
+                        $location->coastkeeper_datasheet_id = 1;
 
 			$location->save();
 
