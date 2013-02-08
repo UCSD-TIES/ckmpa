@@ -11,8 +11,8 @@
         <label for="location_name" class="control-label">Name</label>
         <div class="controls">
           <input type="text" name="location_name" id="location_name" value="{{ app.request.get( 'location_name' ) }}" >
-          {% if errors.first_name is defined %}
-          <span class="help-inline">{{ errors.first_name }}</span>
+          {% if errors.location_name is defined %}
+          <span class="help-inline">{{ errors.location_name }}</span>
           {% endif %}
         </div>
       </div>
