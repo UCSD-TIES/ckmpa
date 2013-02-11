@@ -9,10 +9,10 @@
     <table class="table table-hover">
             {% for location in locations %}
             <tr>
-              <td><a href="{{ path('admin_locations_create', {id:location.id}) }}"> {{ location.name }}</a></td>
+              <td><a href=""> {{ location.name }}</a></td>
               <td>
-                <a href="{{ path('admin_locations_create') }}"><i class="icon-edit"></i></a> 
-                <a href="{{ path('admin_locations_create') }}"><i class="icon-trash"></i></a>
+                <a href="{{ path('admin_locations_edit', {id:location.id}) }}"><i class="icon-edit"></i></a> 
+                <a href="{{ path('admin_locations_delete', {id:location.id}) }}"><i class="icon-trash"></i></a>
               </td>
             </tr>
             {% endfor %}
