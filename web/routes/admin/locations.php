@@ -41,25 +41,23 @@ $routes->match('/create/', function(Request $request) use ($app){
 
 		/* Validity Checks. */
 
-                /* Location name cannot be blank */
+        /* Location name cannot be blank */
 		if( empty($location_name) )
 		{
 			$errors['location_name'] = "Please enter an name for the new location";
 		}
 
-                /* Name must consist of letters and numbers */
-                /*if( !ctype_alnum($location_name) ) {
-                  $errors['location_name'] = "Please use only letters and/or numbers for the location's name";
-                }*/
+        /* Name must consist of letters and numbers */
+        if( !ctype_alnum($location_name) ) {
+          $errors['location_name'] = "Please use only letters and/or numbers for the location's name";
+        }
 
-                /* Name must be unique */
-                if( $app['paris']->getModel('Coastkeeper\Location')
-                                              ->where_equal('name', $location_name)
-                                              ->find_one()) {
-                  $errors['location_name'] = "There is already a location with that name";
-                }
-
-
+        /* Name must be unique */
+        if( $app['paris']->getModel('Coastkeeper\Location')
+                                      ->where_equal('name', $location_name)
+                                      ->find_one()) {
+          $errors['location_name'] = "There is already a location with that name";
+        }
 
 		/* If everything is ok, create the new location */
 		if(count($errors) <= 0)
@@ -70,7 +68,7 @@ $routes->match('/create/', function(Request $request) use ($app){
 
 			$location->save();
 
-                        $locations = $app['paris']->getModel('Coastkeeper\Location')->find_many();
+            $locations = $app['paris']->getModel('Coastkeeper\Location')->find_many();
 
 			return $app->redirect($app['url_generator']->generate('admin_locations'));
 		}
@@ -111,6 +109,66 @@ $routes->match( '/{id}/delete/', function( REQUEST $request, $id ) use ( $app ) 
 })->assert('id','\d+')
     ->before( $admin_login_check )
     ->bind('admin_locations_delete');
+
+$routes->match( '/{id}/edit/', function( REQUEST $request, $id ) use ( $app ) {
+
+    /* Array for errors */
+    $errors = array();
+
+    /* get the location */
+    $location = $app['paris']->getModel('Coastkeeper\Location')->find_one($id);
+
+    if( 'POST' == $request->getMethod() && $location ) {
+
+        /* Get the user input */
+        $location_name = $request->get('location_name');
+
+        /*
+         * Validity checks
+         */
+
+        /* Location name cannot be blank */
+        if( empty($location_name) )
+        {
+            $errors['location_name'] = "Please enter an name for the location";
+        }
+
+        /* Name must consist of letters and numbers */
+        if( !ctype_alnum($location_name) ) {
+          $errors['location_name'] = "Please use only letters and/or numbers for the location's name";
+        }
+
+        /* Name must be unique */
+        if( $app['paris']->getModel('Coastkeeper\Location')
+                                      ->where_equal('name', $location_name)
+                                      ->find_one()) {
+            $errors['location_name'] = "There is already a location with that name";
+        }
+
+        /* If everything is ok, update the location */
+        if(count($errors) <= 0)
+        {
+            $location->name = $location_name;
+
+            /* Update the location */
+            $location->save();
+
+
+            $locations = $app['paris']->getModel('Coastkeeper\Location')->find_many();
+
+            return $app->redirect($app['url_generator']->generate('admin_locations'));
+        }
+    }
+
+    /* Render the edit locations form */
+    return $app['twig']->render('admin/locations/edit.twig.html', array(
+        "errors"   => $errors,
+        "location" => $location
+    ));
+
+})->assert('id', '\d+')
+ ->before($admin_login_check)
+ ->bind('admin_locations_edit');
 
 
 return $routes;
