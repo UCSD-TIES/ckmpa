@@ -1,0 +1,26 @@
+{% extends 'admin/base.twig.html' %}
+
+{% block title %} Delete MPA {% endblock %}
+
+{% block content %}
+<div span="12">
+{% if location %}
+    <h1>Delete location named {{ location.name }}?</h1>
+    <div class="alert">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Warning!</strong> This action cannot be undone!
+    </div>
+    <form action="{{ path('admin_locations_delete', {id:location.id}) }}" method="POST">
+        <input type="hidden" name="approve_delete" value="1">
+        <button type="submit" class="btn btn-danger">Yes, delete {{location.name}}</button>
+        <a href="{{ path('admin_locations') }}" class="btn">Cancel</a>
+    </form>
+{% else %}
+    <h1>This location doesn't exist</h1>
+    <a href="{{ path('admin_locations') }}" class="btn btn-primary">
+        Return to locations
+    </a>
+{% endif %}
+</div>
+{% endblock %}
+
