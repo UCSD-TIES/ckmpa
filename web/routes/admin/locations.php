@@ -84,5 +84,33 @@ $routes->match('/create/', function(Request $request) use ($app){
 
 })->before($admin_login_check)->bind('admin_locations_create');
 
+$routes->match( '/{id}/delete/', function( REQUEST $request, $id ) use ( $app ) {
+
+    /* get the location */
+    $location = $app['paris']->getModel('Coastkeeper\Location')->find_one($id);
+
+    if( 'POST' == $request->getMethod() && $location ) {
+
+        // check for delete approval
+        if( $request->get('approve_delete')) {
+
+            /* Delete the location */
+            $location->delete();
+
+            /* Return to the locations list */
+            return $app->redirect( $app['url_generator']->generate('admin_locations'));
+        }
+
+    }
+
+    /* display delete confirmation form */
+    return $app['twig']->render('admin/locations/delete.twig.html', array(
+        "location" => $location
+    ));
+
+})->assert('id','\d+')
+    ->before( $admin_login_check )
+    ->bind('admin_locations_delete');
+
 
 return $routes;
