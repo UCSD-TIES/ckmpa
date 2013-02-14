@@ -41,14 +41,14 @@ $routes->match('/create/', function(Request $request) use ($app){
 
 		/* Validity Checks. */
 
-        /* Location name cannot be blank */
-		if( empty($location_name) )
-		{
-			$errors['location_name'] = "Please enter an name for the new location";
-		}
+            /* Location name cannot be blank */
+            if( empty($location_name) )
+            {
+                    $errors['location_name'] = "Please enter an name for the new location";
+            }
 
         /* Name must consist of letters and numbers */
-        if( !ctype_alnum($location_name) ) {
+        if( !empty($location_name) && !ctype_alnum($location_name) ) {
           $errors['location_name'] = "Please use only letters and/or numbers for the location's name";
         }
 
@@ -134,7 +134,7 @@ $routes->match( '/{id}/edit/', function( REQUEST $request, $id ) use ( $app ) {
         }
 
         /* Name must consist of letters and numbers */
-        if( !ctype_alnum($location_name) ) {
+        if( !empty($location_name) && !ctype_alnum($location_name) ) {
           $errors['location_name'] = "Please use only letters and/or numbers for the location's name";
         }
 
