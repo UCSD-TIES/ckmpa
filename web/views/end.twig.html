@@ -12,7 +12,7 @@
 		{% endfor %}
 	</div>
 {% endif %}
-<form action="{{ path('patrol_section_finish') }}" method="POST" data-ajax="false">
+<form class="time-entry" action="{{ path('patrol_section_finish') }}" method="POST" data-ajax="false">
 	<div class="container">
 		<label for="end-time" class="ui-hidden-accessible">End Time:</label>
 		<input type="time" name="end-time" id="end-time" class="time-input" value="" step="1">
