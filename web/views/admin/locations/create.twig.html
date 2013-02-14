@@ -1,0 +1,32 @@
+{% extends 'admin/base.twig.html' %}
+
+{% block title %} Create new MPA {% endblock %}
+
+{% block content %} 
+  <div span="12">
+    <h1>Create a new location</h1>
+
+    <form class="form-horizontal" action="{{ path('admin_locations_create') }}" method="POST">
+      <div class="control-group {% if errors.location_name is defined %} error {% endif %}">
+        <label for="location_name" class="control-label">Name</label>
+        <div class="controls">
+          <input type="text" name="location_name" id="location_name" value="{{ app.request.get( 'location_name' ) }}" >
+          {% if errors.location_name is defined %}
+          <span class="help-inline">{{ errors.location_name }}</span>
+          {% endif %}
+        </div>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Create location</button>
+        <a href="{{ path('admin_locations') }}" class="btn">Cancel</a>
+      </div>
+
+
+
+    </form>
+
+
+
+  </div>
+{% endblock %}
+
