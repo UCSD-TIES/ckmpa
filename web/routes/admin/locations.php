@@ -171,4 +171,118 @@ $routes->match( '/{id}/edit/', function( REQUEST $request, $id ) use ( $app ) {
  ->bind('admin_locations_edit');
 
 
+///////// VIEW A LOCATION'S Sections //////////////////
+
+$routes->get('/{id}/', function($id) use ($app){
+
+    /* Find the sections with the same coastkeeper_location_id and send it to the template. */
+    $location = $app['paris']->getModel('Coastkeeper\Location')->find_one($id);
+
+    $section = $app['paris']->getModel('Coastkeeper\Section')
+        ->where_equal('coastkeeper_location_id', $id)
+        ->find_many();
+
+    /* Get information on a certain location */
+    return $app['twig']->render('admin/locations/view.twig.html', array(
+        "section" => $section,
+        "location" => $location
+    )); 
+
+})->assert('id','\d+')
+  ->before($admin_login_check)
+  ->bind('admin_locations_view');
+
+/////////////// CREATE Section ROUTE ///////////////
+
+$routes->match('{id}/section_create/', function(Request $request, $id) use ($app){
+
+    /* Errors */
+    $errors = array();
+
+    $section = $app['paris']->getModel('Coastkeeper\Section')->find_many();
+
+    $location = $app['paris']->getModel('Coastkeeper\Location')->find_one($id);
+
+    if('POST' == $request->getMethod())
+    {
+
+        $section_name = $request->get('section_name');
+
+        /* Validity Checks. */
+
+            /* Section name cannot be blank */
+            if( empty($section_name) )
+            {
+                    $errors['section_name'] = "Please enter an name for the new section";
+            }
+
+        /* Name must consist of letters and numbers */
+        if( !empty($section_name) && !ctype_alnum($section_name) ) {
+          $errors['section_name'] = "Please use only letters and/or numbers for the section's name";
+        }
+
+        /* Name must be unique */
+        if( $app['paris']->getModel('Coastkeeper\Section')
+                        ->where_equal('name', $section_name)
+                        ->find_one()) {
+          $errors['section_name'] = "There is already a section with that name";
+        }
+
+        /* If everything is ok, create the new section */
+        if(count($errors) <= 0)
+        {
+            $section = $app['paris']->getModel('Coastkeeper\Section')->create();
+            $section->name = $section_name;
+            $section->coastkeeper_location_id = $id;
+
+            $section->save();
+
+            $section = $app['paris']->getModel('Coastkeeper\Section')->find_many();
+
+            return $app->redirect($app['url_generator']->generate('admin_locations_view', array("id" => $id)));
+        }
+
+    }
+
+    /* Render the create form. */
+    return $app['twig']->render('admin/locations/sections/section_create.twig.html', array(
+        "errors" => $errors,
+        "section" => $section,
+        "location" => $location
+    ));
+
+})->assert('id', '\d+')
+  ->before($admin_login_check)
+  ->bind('admin_sections_create');
+
+
+/////////////// DELETE section ROUTE /////////////
+$routes->match( '/{id}/section_delete/', function( REQUEST $request, $id ) use ( $app ) {
+
+    /* get the section */
+    $section = $app['paris']->getModel('Coastkeeper\Section')->find_one($id);
+
+    if( 'POST' == $request->getMethod() && $section ) {
+
+        // check for delete approval
+        if( $request->get('approve_delete')) {
+
+            /* Delete the location */
+            $section->delete();
+
+            /* Return to the locations list */
+            return $app->redirect( $app['url_generator']->generate('admin_locations_view'));
+        }
+
+    }
+
+    /* display delete confirmation form */
+    return $app['twig']->render('admin/locations/sections/section_delete.twig.html', array(
+        "section" => $section
+    ));
+
+})->assert('id','\d+')
+    ->before( $admin_login_check )
+    ->bind('admin_sections_delete');
+
 return $routes;
