@@ -47,11 +47,6 @@ $routes->match('/create/', function(Request $request) use ($app){
                     $errors['location_name'] = "Please enter an name for the new location";
             }
 
-        /* Name must consist of letters and numbers */
-        if( !empty($location_name) && !ctype_alnum($location_name) ) {
-          $errors['location_name'] = "Please use only letters and/or numbers for the location's name";
-        }
-
         /* Name must be unique */
         if( $app['paris']->getModel('Coastkeeper\Location')
                                       ->where_equal('name', $location_name)
