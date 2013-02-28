@@ -252,10 +252,10 @@ $routes->match('{id}/section_create/', function(Request $request, $id) use ($app
 
 
 /////////////// DELETE section ROUTE /////////////
-$routes->match( '/{id}/section_delete/', function( REQUEST $request, $id ) use ( $app ) {
+$routes->match( '/{id}/{section_id}/section_delete/', function( REQUEST $request, $id, $section_id ) use ( $app ) {
 
     /* get the section */
-    $section = $app['paris']->getModel('Coastkeeper\Section')->find_one($id);
+    $section = $app['paris']->getModel('Coastkeeper\Section')->find_one($section_id);
 
     if( 'POST' == $request->getMethod() && $section ) {
 
@@ -266,7 +266,7 @@ $routes->match( '/{id}/section_delete/', function( REQUEST $request, $id ) use (
             $section->delete();
 
             /* Return to the locations list */
-            return $app->redirect( $app['url_generator']->generate('admin_locations_view'));
+            return $app->redirect( $app['url_generator']->generate('admin_locations_view', array("id" => $id),  array("section_id" => $section_id)));
         }
 
     }
