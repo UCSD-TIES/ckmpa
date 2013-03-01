@@ -11,7 +11,8 @@
             <tr>
               <td><a href=""> {{ section.name }}</a></td>
               <td>
-                <a href="{{ path('admin_sections_delete', {id:section.id}) }}"><i class="icon-trash"></i></a>
+                <a href="{{ path('admin_sections_edit', {id:location.id, section_id:section.id}) }}"><i class="icon-edit"></i></a> 
+                <a href="{{ path('admin_sections_delete', {id:location.id, section_id:section.id}) }}"><i class="icon-trash"></i></a>
               </td>
             </tr>
             {% endfor %}
