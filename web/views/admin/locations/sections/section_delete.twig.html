@@ -10,10 +10,10 @@
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         <strong>Warning!</strong> This action cannot be undone!
     </div>
-    <form action="{{ path('admin_sections_delete', {location_id:section.coastkeeper_location_id}, {id:section.id}) }}" method="POST">
+    <form action="{{ path('admin_sections_delete', {id:section.coastkeeper_location_id, section_id:section.id}) }}" method="POST">
         <input type="hidden" name="approve_delete" value="1">
         <button type="submit" class="btn btn-danger">Yes, delete {{section.name}}</button>
-        <a href="{{ path('admin_locations_view', {id:section.id}) }}" class="btn">Cancel</a>
+        <a href="{{ path('admin_locations_view', {id:section.coastkeeper_location_id}) }}" class="btn">Cancel</a>
     </form>
 {% else %}
     <h1>This section doesn't exist</h1>
