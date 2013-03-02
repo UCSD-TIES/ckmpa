@@ -346,5 +346,37 @@ $routes->match( '/{id}/{section_id}/section_delete/', function( REQUEST $request
  ->before($admin_login_check)
  ->bind('admin_sections_edit');
 
+//////////// VIEW a SECTION's Patrols  //////////////////
+
+$routes->match( '/{id}/section_view/', function( REQUEST $request, $id ) use ( $app ) {
+//$routes->get('/{id}/{section_id}/section_view/', function($id, $section_id) use ($app){
+
+    $volunteer = $app['paris']->getModel('Coastkeeper\Volunteer')->find_many();
+
+    $patrol = $app['paris']->getModel('Coastkeeper\Patrol')
+                                        ->where_equal('coastkeeper_location_id', $id)
+                                        ->find_many();
+
+    $location = $app['paris']->getModel('Coastkeeper\Location')->find_one($id);
+
+    
+
+       
+    /*$section = $app['paris']->getModel('Coastkeeper\Section')
+        ->where_equal('coastkeeper_location_id', $id)
+        ->find_many();
+*/
+
+    /* Get information on a certain section */
+    return $app['twig']->render('admin/locations/sections/section_view.twig.html', array(
+        "patrol" => $patrol,
+        "location" => $location,
+        "volunteer" => $volunteer
+    )); 
+
+})->assert('id','\d+')
+  ->before($admin_login_check)
+  ->bind('admin_sections_view');
+
 
 return $routes;
