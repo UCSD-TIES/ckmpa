@@ -5,7 +5,12 @@
 {% block content %}
 <div span="12">
 {% if section %}
-    <h1>Delete section named {{ section.name }}?</h1>
+    <h1>Delete</h1>
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        Deleting section <b>{{section.name}}</b> of location <b>{{ location.name }}</b>
+    </div>
+
     <div class="alert">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         <strong>Warning!</strong> This action cannot be undone!

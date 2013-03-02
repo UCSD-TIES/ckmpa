@@ -7,7 +7,7 @@
     <h1>Edit</h1>
     <div class="alert alert-info">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
-        Editing section  {{section.name}}
+        Editing section <b>{{section.name}}</b> of location <b>{{ location.name }}</b>
     </div>
     <form class="form-horizontal" action="{{ path('admin_sections_edit', {id:section.coastkeeper_location_id, section_id:section.id}) }}" method="POST">
       <div class="control-group {% if errors.section_name is defined %} error {% endif %}">

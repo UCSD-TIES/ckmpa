@@ -19,7 +19,16 @@
             {% endfor %}
     </table>
     {% endif %}
-    <a href="{{ path('admin_locations_create') }}" class="btn"><i class="icon-plus"></i> Create new location</a>
+
+    <table>
+      <tr>
+        <td>
+            <a href="{{ path('admin_locations_create') }}" class="btn"><i class="icon-plus"></i> Create new location</a>
+            <a href="{{ path('admin_sections_list') }}" class="btn"><i class="icon-eye-open"></i> View all sections</a>
+        </td>
+      </tr>
+    </table> 
+    
           
 </div>
 {% endblock %}
