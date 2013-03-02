@@ -1,0 +1,40 @@
+{% extends 'admin/base.twig.html' %}
+
+{% block title %}Section's Patrols{% endblock %}
+
+{% block content %}
+<div class="span12">
+    <h1>Patrols for {{ location.name }}</h1>
+
+    {% if patrol %}    
+    <table class="table table-hover">
+        <tr>
+          <th>Patrol Date</th>
+          <th>Made By</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+        </tr>
+          {% for patrol in patrol %}
+            {% for volunteer in volunteer %}
+              {% set foo = patrol.coastkeeper_volunteer_id %}
+              {% if volunteer.id == foo %}
+        <tr>
+          <td><a href=""> {{ patrol.date }}
+            {% if not patrol.finished %}
+            <small class="uncompleted">(uncompleted)</small>
+            {% endif %}</a>
+          </td>
+          <td>{{ volunteer.username }}</td>
+          <td>{{ volunteer.first_name }}</td>
+          <td>{{ volunteer.last_name }}</td>
+              {% endif %}
+            {% endfor %}
+        </tr>
+          {% endfor %}
+    </table>
+    {% endif %}
+
+    <a href="{{ path('admin_locations_view', {id:location.id}) }}" class="btn"><i class="icon-chevron-left"></i>  Back</a>
+    
+</div>
+{% endblock %}
