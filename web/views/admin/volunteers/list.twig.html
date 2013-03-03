@@ -7,6 +7,12 @@
 	<h1>Volunteers</h1>
 	<a class="btn btn-primary" href="{{ path('admin_volunteer_create') }}">Create new Volunteer</a>
 	<br><br>
+	{# if I want 2 POSTs on the same page, make an input type = "hidden" #}
+	<form name="search" action="{{ path('admin_volunteers') }}" method="POST">
+		<input type="text" name="search_string">
+		<button class = "btn btn-success" type="submit"><i class="icon-search icon-white"></i></button>
+	</form>
+	<br><br>
 	{% if volunteers|length %}
 	<table class="table table-bordered">
 		<thead>
@@ -27,6 +33,8 @@
 					<a {% if volunteer.is_admin %}class="is_admin" {% endif %}href="{{ path('admin_volunteer_view', {id:volunteer.id}) }}">
 						{{ volunteer.last_name }}, {{ volunteer.first_name }}
 					</a>
+
+
 				</td>
 				<td>
 					<a class="btn btn-small" href="{{ path('admin_volunteer_view', {id:volunteer.id}) }}"><i class="icon-eye-open"></i> View</a>
