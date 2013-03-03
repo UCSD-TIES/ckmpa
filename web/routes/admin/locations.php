@@ -255,6 +255,9 @@ $routes->match('{id}/section_create/', function(Request $request, $id) use ($app
 /////////////// DELETE section ROUTE /////////////
 $routes->match( '/{id}/{section_id}/section_delete/', function( REQUEST $request, $id, $section_id ) use ( $app ) {
 
+     /* get the location */
+    $location = $app['paris']->getModel('Coastkeeper\Location')->find_one($id);
+
     /* get the section */
     $section = $app['paris']->getModel('Coastkeeper\Section')->find_one($section_id);
 
@@ -274,7 +277,8 @@ $routes->match( '/{id}/{section_id}/section_delete/', function( REQUEST $request
 
     /* display delete confirmation form */
     return $app['twig']->render('admin/locations/sections/section_delete.twig.html', array(
-        "section" => $section
+        "section" => $section,
+        "location" => $location
     ));
 
 })->assert('id','\d+')
@@ -339,7 +343,8 @@ $routes->match( '/{id}/{section_id}/section_delete/', function( REQUEST $request
     /* Render the edit locations form */
     return $app['twig']->render('admin/locations/sections/section_edit.twig.html', array(
         "errors"   => $errors,
-        "section" => $section
+        "section" => $section,
+        "location" => $location
     ));
 
 })->assert('id', '\d+')
@@ -378,5 +383,23 @@ $routes->match( '/{id}/section_view/', function( REQUEST $request, $id ) use ( $
   ->before($admin_login_check)
   ->bind('admin_sections_view');
 
+///////// VIEW all SECTIONS //////////////////
+
+$routes->match('/location/section_list', function(Request $request) use ($app){
+
+    $location = $app['paris']->getModel('Coastkeeper\Location')->find_many();
+
+    /* Find all sections and send it to the template. */
+    $section = $app['paris']->getModel('Coastkeeper\Section')->find_many();
+
+    /* Get information on a certain location */
+    return $app['twig']->render('admin/locations/sections/section_list.twig.html', array(
+        "section" => $section,
+        "location" => $location
+    )); 
+
+})->assert('id','\d+')
+  ->before($admin_login_check)
+  ->bind('admin_sections_list');
 
 return $routes;
