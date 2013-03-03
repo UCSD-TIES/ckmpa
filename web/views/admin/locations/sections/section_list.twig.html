@@ -13,12 +13,12 @@
                 <th></th>
             </tr>
             {% for section in section %}
-            {% for location in location %}
             <tr>
-              {% if section.coastkeeper_location_id == location.id %}
+              {% set loc = location[section.coastkeeper_location_id - 1] %}
+              {% if section.coastkeeper_location_id == loc.id %}
               <td><a href=""> {{ section.name }}</a></td>
               
-              <td><a href="{{ path('admin_locations_view', {id:location.id}) }}">{{ location.name }}</a></td>
+              <td><a href="{{ path('admin_locations_view', {id:loc.id}) }}">{{ loc.name }}</a></td>
               
               <td>
                 <a href="{{ path('admin_sections_edit', {id:section.coastkeeper_location_id, section_id:section.id}) }}"><i class="icon-edit"></i></a> 
@@ -26,7 +26,6 @@
               </td>
                 {% endif %}
             </tr>
-            {% endfor %}
             {% endfor %}
     </table>
     

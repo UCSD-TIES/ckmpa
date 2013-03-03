@@ -390,7 +390,7 @@ $routes->match('/location/section_list', function(Request $request) use ($app){
     $location = $app['paris']->getModel('Coastkeeper\Location')->find_many();
 
     /* Find all sections and send it to the template. */
-    $section = $app['paris']->getModel('Coastkeeper\Section')->find_many();
+    $section = $app['paris']->getModel('Coastkeeper\Section')->order_by_asc('coastkeeper_location_id')->order_by_asc('name')->find_many();
 
     /* Get information on a certain location */
     return $app['twig']->render('admin/locations/sections/section_list.twig.html', array(
@@ -400,6 +400,8 @@ $routes->match('/location/section_list', function(Request $request) use ($app){
 
 })->assert('id','\d+')
   ->before($admin_login_check)
-  ->bind('admin_sections_list');
+  ->bind('admin_sections_list'); 
+
+
 
 return $routes;
