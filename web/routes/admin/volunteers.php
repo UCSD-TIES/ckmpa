@@ -16,7 +16,45 @@ $routes = $app['controllers_factory'];
 /*
 	Volunteer Management
  */
-$routes->get('/', function() use ($app){
+$routes->match('/', function(Request $request) use ($app){
+
+	/* Errors */
+	$errors = array();
+	
+	/*
+		VOLUNTEER SEARCH
+	*/
+	if ('POST' == $request->getMethod())
+	{
+		
+		//GET THE USER INPUT SEARCH STRING
+		$search_string = $request->get('search_string');
+
+		if(empty($search_string) || ctype_space($search_string)){
+			$errors['search_string'] = "Search must be only one word.";
+		}
+
+		//PUT SEARCH CODE HERE
+		$firsts = $app['paris']->getModel('Coastkeeper\Volunteer')
+						->where('first_name', $search_string)
+						//->where_like('(`first_name` = ? OR `last_name` = ?)', array($search_string,$search_string))
+						->find_many();
+		$lasts = $app['paris']->getModel('Coastkeeper\Volunteer')
+						->where('last_name', $search_string)
+						->find_many();
+		$volunteers = $firsts + $lasts;
+		if(count($errors) <= 0)
+		{
+			return $app['twig']->render('admin/volunteers/list.twig.html', array(
+				'volunteers' => $volunteers
+			));
+		}
+
+		return $app['twig']->render('admin/volunteers/create.twig.html', array(
+		"errors" => $errors,
+	));
+	}
+
 
 	/* Get a list of volunteers. */
 	$volunteers = $app['paris']->getModel('Coastkeeper\Volunteer')->find_many();
