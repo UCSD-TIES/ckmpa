@@ -473,6 +473,7 @@ $app->get('/patrol/finish/', function () use ($app){
 $app->mount('/admin/', include __DIR__ . '/routes/admin/admin.php');
 $app->mount('/admin/volunteers/', include __DIR__ . '/routes/admin/volunteers.php');
 $app->mount('/admin/locations/', include __DIR__ . '/routes/admin/locations.php');
+$app->mount('/admin/volunteers/', include __DIR__ . '/routes/admin/patrol.php');
 //$app->mount('/admin/locations/sections', include __DIR__ . '/routes/admin/sections.php');
 
 /*

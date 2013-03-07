@@ -1,0 +1,40 @@
+{% extends 'admin/base.twig.html' %}
+
+{% block title %}Patrol{%endblock%}
+
+{%block content %}
+<h1>
+	Volunteer Data
+</h1>
+<h4>
+{% if volunteer is defined %}
+Volunteer: {{volunteer.first_name}} {{volunteer.last_name}}
+{%endif%}
+{% if patrol is defined %}
+<ul class="unstyled">
+	<li>
+	Date:    {{patrol.date}}
+	<li>
+	Finished: 
+{%if patrol.finished %}
+Yes
+{%else%}
+No
+{%endif%}
+<li>
+Start time: {{patrolEntry.start_time}}
+<li>
+End time: {{patrolEntry.end_time}}
+<li>
+Location: (location.name)
+<li>
+Section: (section.name)
+<li>
+
+</ul>
+{%else%}
+No Patrol Found.
+{%endif%}
+</h4>
+
+{%endblock%}

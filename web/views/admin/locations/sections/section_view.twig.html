@@ -19,7 +19,7 @@
               {% set foo = patrol.coastkeeper_volunteer_id %}
               {% if volunteer.id == foo %}
         <tr>
-          <td><a href=""> {{ patrol.date }}
+		<td><a href="{{path('admin_patrol_view', {id:volunteer.id, patrolEntryID:patrol.id, patrol:patrol.id })}}"> {{ patrol.date }}
             {% if not patrol.finished %}
             <small class="uncompleted">(uncompleted)</small>
             {% endif %}</a>

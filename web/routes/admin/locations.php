@@ -364,6 +364,8 @@ $routes->match( '/{id}/section_view/', function( REQUEST $request, $id ) use ( $
 
     $location = $app['paris']->getModel('Coastkeeper\Location')->find_one($id);
 
+    $patrolEntry = $app['paris']->getModel('Coastkeeper\Location')->find_many();
+
     
 
        
@@ -376,7 +378,8 @@ $routes->match( '/{id}/section_view/', function( REQUEST $request, $id ) use ( $
     return $app['twig']->render('admin/locations/sections/section_view.twig.html', array(
         "patrol" => $patrol,
         "location" => $location,
-        "volunteer" => $volunteer
+        "volunteer" => $volunteer,
+	"patrolEntry" => $patrolEntry
     )); 
 
 })->assert('id','\d+')
