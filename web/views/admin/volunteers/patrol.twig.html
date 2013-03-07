@@ -4,7 +4,7 @@
 
 {%block content %}
 <h1>
-	Volunteer Data
+	Patrol Data
 </h1>
 <h4>
 {% if volunteer is defined %}
@@ -26,11 +26,24 @@ Start time: {{patrolEntry.start_time}}
 <li>
 End time: {{patrolEntry.end_time}}
 <li>
-Location: (location.name)
+Location: {{location.name}}
 <li>
-Section: (section.name)
+Section: {{section.name}}
+<p>  </p>
 <li>
-
+{%for patrolTally in patrolTallies %}
+  {% if patrolTally.coastkeeper_patrol_entry_id == patrolEntryID %}
+     {% set tallyNum = patrolTally.tally %}
+     {% set deid = patrolTally.coastkeeper_datasheet_entry_id %}
+     {% for dataEntry in dataEntries %}
+       {% if deid == dataEntry.id %}
+          {{dataEntry.name}}: {{tallyNum}} <br>
+       {% endif %}
+       {% endfor %}
+  {% endif %}
+{% endfor %}
+<li>
+Categories
 </ul>
 {%else%}
 No Patrol Found.
