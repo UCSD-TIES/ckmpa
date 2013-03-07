@@ -28,6 +28,10 @@ $routes->match('/{id}/{patrolEntryID}/{patrol}/{lid}/', function($id, $patrolEnt
 	}
 
 
+	/* Pass the categories in */
+	$categories = $app['paris']->getModel('Coastkeeper\DatasheetCategory')->find_many();
+
+
 	/* Get information on a certain patrol */
 	/* Pass all the variables to the template */
 	return $app['twig']->render('admin/volunteers/patrol.twig.html', array(
@@ -38,7 +42,8 @@ $routes->match('/{id}/{patrolEntryID}/{patrol}/{lid}/', function($id, $patrolEnt
 		"section" => $section,
 		"patrolTallies" => $patrolTallies,
 		"dataEntries" => $dataEntries,
-		"patrolEntryID" => $patrolEntryID
+		"patrolEntryID" => $patrolEntryID,
+		"categories" => $categories
 	));
 
 })->assert('id','\d+')

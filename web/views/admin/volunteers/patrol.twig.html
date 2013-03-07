@@ -31,19 +31,26 @@ Location: {{location.name}}
 Section: {{section.name}}
 <p>  </p>
 <li>
-{%for patrolTally in patrolTallies %}
-  {% if patrolTally.coastkeeper_patrol_entry_id == patrolEntryID %}
-     {% set tallyNum = patrolTally.tally %}
-     {% set deid = patrolTally.coastkeeper_datasheet_entry_id %}
-     {% for dataEntry in dataEntries %}
-       {% if deid == dataEntry.id %}
-          {{dataEntry.name}}: {{tallyNum}} <br>
+
+
+
+  {% for category in categories %}
+  <h1>{{category.name }}</h1>
+    {%for patrolTally in patrolTallies %}
+      {% if patrolTally.coastkeeper_patrol_entry_id == patrolEntryID %}
+        {% set tallyNum = patrolTally.tally %}
+        {% set deid = patrolTally.coastkeeper_datasheet_entry_id %}
+        {% for dataEntry in dataEntries %}
+	{% if deid == dataEntry.id %}	   
+	{% if dataEntry.coastkeeper_datasheet_category_id == category.id %}
+            {{dataEntry.name}}: {{tallyNum}} <br>
+	    {% endif %}
+	    {% endif %}
+        {% endfor %}
+
        {% endif %}
-       {% endfor %}
-  {% endif %}
-{% endfor %}
-<li>
-Categories
+     {% endfor %}
+   {% endfor %}
 </ul>
 {%else%}
 No Patrol Found.
