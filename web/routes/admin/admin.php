@@ -119,6 +119,7 @@ $admin->match('/login/', function(Request $request) use ($app){
 $admin->get('/logout/', function() use ($app){
 
 	/* Kill the session and rerout to login */
+        $app['session']->set('admin_user', null);
 	$app['session']->invalidate();
 
 	return $app->redirect($app['url_generator']->generate('admin_login'));

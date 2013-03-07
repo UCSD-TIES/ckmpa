@@ -124,6 +124,8 @@ $app->match('/', function(Request $request) use ($app){
 $app->match('/logout/', function() use ($app){
 
 	/* user is logging out so invalidate current session */
+
+        $app['session']->set('user', null);
 	$app['session']->invalidate();
 
 	/* Redirect to login page. */
