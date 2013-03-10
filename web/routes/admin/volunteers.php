@@ -156,10 +156,13 @@ $routes->get('/{id}/', function($id) use ($app){
 
 	/* Find the volunteer and send it to the template. */
 	$volunteer = $app['paris']->getModel('Coastkeeper\Volunteer')->find_one($id);
+	/* Find all the locations */
+	$locations = $app['paris']->getModel('Coastkeeper\Location')->find_many();
 
 	/* Get information on a certain volunteer */
 	return $app['twig']->render('admin/volunteers/view.twig.html', array(
-		"volunteer" => $volunteer
+		"volunteer" => $volunteer,
+		"locations" => $locations
 	));
 
 })->assert('id','\d+')

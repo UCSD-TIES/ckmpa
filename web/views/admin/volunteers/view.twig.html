@@ -15,7 +15,8 @@
 	</p>
 	{% if volunteer.patrols.count %}
 	<table class="table table-bordered">
-		<thead><tr><th>Patrols</th></tr></thead>
+		<thead><tr><th>Patrols</th>
+				<th>Location</th></tr></thead>
 		<tbody>
 			{% for patrol in volunteer.patrols.find_many %}
 			<tr><td>
@@ -24,7 +25,15 @@
 				{% if not patrol.finished %}
 				<small class="uncompleted">(uncompleted)</small>
 				{% endif %}</a>
-			</td></tr>
+		</td>
+		<td>
+			{% for location in locations%}
+			{%if patrol.coastkeeper_location_id == location.id%}
+			   {{location.name}}
+			   {%endif%}
+			   {%endfor%}
+		</td>		
+</tr>
 			{% endfor %}
 		</tbody>
 	</table>
