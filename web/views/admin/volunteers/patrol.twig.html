@@ -8,22 +8,26 @@
 </h1>
 
 {% if volunteer is defined %}
-Entered by <strong>{{volunteer.first_name}} {{volunteer.last_name}} </strong>
+	Entered by <strong>{{volunteer.first_name}} {{volunteer.last_name}} </strong>
 on
 {%endif%}
+
 {% if patrol is defined %}
-<strong> {{patrol.date}} </strong> 
-from <strong>{{patrolEntry.start_time}} </strong> to <strong>{{patrolEntry.end_time}}</strong><br>
+	Patrol on <strong> {{patrol.date}} </strong><br>
 
-{%if patrol.finished %}
-This patrol was finished. <br>
-{%else%}
-This patrol is <small class="uncompleted">incomplete</small><br>
-{%endif%}
-
-<h2>
-	Data for the {{section.name}} section of {{location.name}}
-</h2>
+	{%if patrol.finished %}
+		This patrol was finished. <br>
+	{%else%}
+		This patrol is <small class="uncompleted">incomplete</small><br>	{%endif%}
+{% for patrolEntry in patrolEntries %}
+{% for section in sections %}
+	{% if section.id == patrolEntry.coastkeeper_section_id %}
+		<h2>
+			Data for the {{section.name}} section of {{location.name}}
+		</h2>
+	{% endif %}
+{%endfor %}
+Time of patrol: <strong>{{patrolEntry.start_time}} </strong> to <strong>{{patrolEntry.end_time}}</strong>
 
   {% for category in categories %}
   <h3>{{category.name }}</h3>
@@ -36,7 +40,7 @@ This patrol is <small class="uncompleted">incomplete</small><br>
 	  </thead>
 	  <tbody>
 		  {%for patrolTally in patrolTallies %}
-     				 {% if patrolTally.coastkeeper_patrol_entry_id == patrolEntryID %}
+     				 {% if patrolTally.coastkeeper_patrol_entry_id == patrolEntry.id %}
      				   {% set tallyNum = patrolTally.tally %}
      				   {% set deid = patrolTally.coastkeeper_datasheet_entry_id %}
      				   {% for dataEntry in dataEntries %}
@@ -60,6 +64,7 @@ This patrol is <small class="uncompleted">incomplete</small><br>
  </table>
    {% endfor %}
 </ul>
+{% endfor %}
 {%else%}
 No Patrol Found.
 {%endif%}
