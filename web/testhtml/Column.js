@@ -2,16 +2,16 @@ Ext.require('Ext.chart.*');
 Ext.require(['Ext.Window', 'Ext.layout.container.Fit', 'Ext.fx.target.Sprite']);
 
 Ext.onReady(function () {
-Ext.define('User', {
+Ext.define('Tally', {
     extend: 'Ext.data.Model',
     fields: ['id', 'datasheetentry', 'totalTally']
 });
 
 var storeTemp = Ext.create('Ext.data.Store', {
-    model: 'User',
+    model: 'Tally',
     proxy: {
         type: 'ajax',
-        url : 'users.json',
+        url : 'tally.json',
         reader: {
             type: 'json'
         }
