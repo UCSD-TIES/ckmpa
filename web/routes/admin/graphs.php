@@ -19,10 +19,10 @@ $routes->get('/', function() use ($app){
 	$patrolentryid = $request->get('coastkeeper_patrol_entry_id');
 	$datasheetentryid = $request->get('coastkeeper_datasheet_entry_id');
 	
-	if ($tallyTotal[$patrolentryid] == null){
-		$tallyTotal[$patrolentryid] = $tally;
+	if ($tallyTotal[$datasheetentryid] == null){
+		$tallyTotal[$datasheetentryid] = $tally;
 	} else {
-		$tallyTotal[$patrolentryid] = $tallyTotal[$patrolentryid] + $tally;
+		$tallyTotal[$datasheetentryid] = $tallyTotal[$datasheetentryid] + $tally;
 	}
 	
 	return $app['twig']->render('admin/volunteers/list.twig.html', array(
