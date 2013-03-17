@@ -8,6 +8,7 @@
 	<a class="btn btn-primary" href="{{ path('admin_volunteer_create') }}">Create new Volunteer</a>
 	<br><br>
 	{# if I want 2 POSTs on the same page, make an input type = "hidden" #}
+	Search for First or Last name only
 	<form name="search" action="{{ path('admin_volunteers') }}" method="POST">
 		<input type="text" name="search_string">
 		<button class = "btn btn-success" type="submit"><i class="icon-search icon-white"></i></button>
