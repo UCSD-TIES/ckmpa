@@ -4,14 +4,8 @@
 
 {% block content %}
 <div class="span12">
-    <h1>View All Sections</h1> 
-  
+    <h1>Locations</h1> 
     <table class="table table-hover">
-            <tr>
-                <th>Click to go to Section View (yet to be implemented)</th>
-                <th>Click to go to Location View</th>
-                <th></th>
-            </tr>
             {% for section in section %}
             {% for location in location %}
             <tr>
@@ -30,7 +24,5 @@
             {% endfor %}
     </table>
     
-    <a href="{{ path('admin_locations') }}" class="btn"><i class="icon-chevron-left"></i>  Back</a>
-
 </div>
 {% endblock %}
