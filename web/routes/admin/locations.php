@@ -16,37 +16,40 @@ $routes = $app['controllers_factory'];
 /*
 	MPA (Locations) Management
  */
-// $routes->get('/', function() use ($app){
-
-//         /* Get a list of mpas */
-//         $locations = $app['paris']->getModel('Coastkeeper\Location')->find_many();
-
-//         /* Display the list of locations */
-//         return $app['twig']->render('admin/locations/list.twig.html', array(
-//             'locations' => $locations
-//         ));
-        
-
-// })->before($admin_login_check)->bind('admin_locations');
-
-/*
- * View all the sections in every location
- */
 $routes->get('/', function() use ($app){
 
-    $location = $app['paris']->getModel('Coastkeeper\Location')->find_many();
+        /* Get a list of mpas */
+        $locations = $app['paris']->getModel('Coastkeeper\Location')->find_many();
 
-    /* Find all sections and send it to the template. */
-    $section = $app['paris']->getModel('Coastkeeper\Section')->find_many();
+        /* Display the list of locations */
+        return $app['twig']->render('admin/locations/list.twig.html', array(
+            'locations' => $locations
+        ));
+        
+
+})->before($admin_login_check)->bind('admin_locations');
+
+/*
+ * Display a specific location's sections
+ */
+$routes->get('/{id}/', function($id) use ($app){
+
+    /* Find the sections with the same coastkeeper_location_id and send it to the template. */
+    $location = $app['paris']->getModel('Coastkeeper\Location')->find_one($id);
+
+    $section = $app['paris']->getModel('Coastkeeper\Section')
+        ->where_equal('coastkeeper_location_id', $id)
+        ->find_many();
 
     /* Get information on a certain location */
-    return $app['twig']->render('admin/locations/sections/section_list.twig.html', array(
+    return $app['twig']->render('admin/locations/view.twig.html', array(
         "section" => $section,
         "location" => $location
     )); 
 
-})->before($admin_login_check)
-  ->bind('admin_locations');
+})->assert('id','\d+')
+  ->before($admin_login_check)
+  ->bind('admin_locations_view');
 
 $routes->match('/create/', function(Request $request) use ($app){
 
@@ -185,26 +188,7 @@ $routes->match( '/{id}/edit/', function( REQUEST $request, $id ) use ( $app ) {
  ->bind('admin_locations_edit');
 
 
-///////// VIEW A LOCATION'S Sections //////////////////
 
-$routes->get('/{id}/', function($id) use ($app){
-
-    /* Find the sections with the same coastkeeper_location_id and send it to the template. */
-    $location = $app['paris']->getModel('Coastkeeper\Location')->find_one($id);
-
-    $section = $app['paris']->getModel('Coastkeeper\Section')
-        ->where_equal('coastkeeper_location_id', $id)
-        ->find_many();
-
-    /* Get information on a certain location */
-    return $app['twig']->render('admin/locations/view.twig.html', array(
-        "section" => $section,
-        "location" => $location
-    )); 
-
-})->assert('id','\d+')
-  ->before($admin_login_check)
-  ->bind('admin_locations_view');
 
 /////////////// CREATE Section ROUTE ///////////////
 
