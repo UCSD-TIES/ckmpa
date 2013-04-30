@@ -40,11 +40,23 @@ $routes->get('/{location_id}/{section_id}', function($location_id, $section_id) 
 		if(!isset($section->id)) { $app->abort(404, "Section with that id does not exist"); }
 	}
 
-	/* Check whether the location/section combo is valid */
-	if((!$location_id && !$section_id ) 
-		&& !is_array($location) && !is_array($section)
+	/* Check whether the location/section combo is valid if both are specified */
+	if((!$location_id && !$section_id ) 						
+		&& !is_array($location) && !is_array($section)			
 		&& $location->id != $section->coastkeeper_location_id) {
 		$app->abort(404, "Section doesn't exist at this MPA");
+	}
+
+
+	if($location_id) {
+		$patrols = $app['paris']->getModel('Coastkeeper\Patrol')
+					->where_equal('coastkeeper_location_id', $location_id)
+					->join('coastkeeper_patrol_entry', "coastkeeper_patrol.id = coastkeeper_patrol_id")
+					->find_many();
+	} else {
+		$patrols = $app['paris']->getModel('Coastkeeper\Patrol')
+					->join('coastkeeper_patrol_entry', "coastkeeper_patrol.id = coastkeeper_patrol_id")
+					->find_many();
 	}
 
 	/* Render the html file, passing in the values */
