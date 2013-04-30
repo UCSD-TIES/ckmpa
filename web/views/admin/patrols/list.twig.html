@@ -6,16 +6,27 @@
 <div class="span12">
     <h1>Patrols {% if location is defined and location[0] is not defined %} for {{location.name}} {% endif %} </h1>
     <h2>{% if section is defined and section[0] is not defined %}{{section.name}} {% endif %}</h2>
-    {% if patrol is defined %}
+    {% if patrols is defined %}
     <table class="table table-hover">
+        <tr>
+            <th>Date</th>
+            <th>Location</th>
+            <th>Section</th>
+            <th>Volunteer</th>
+            <th>Completed</th>
+        </tr>   
             {% for patrol in patrols %}
+            {% set patrol_location = location[patrol.coastkeeper_location_id - 1] %}
+            {% set patrol_section  = section[patrol.coastkeeper_section_id - 1] %}
             <tr>
-              <td><a href="{{ path('admin_locations_view', {id:location.id}) }}"> {{ location.name }}</a></td>
+                <td>{{ patrol.date }}</td>
+                <td><a href="{{ path('admin_locations_view', {id:patrol_location.id}) }}"> {{ patrol_location.name }}</a></td>
+                <td>{{ patrol_section.name }}</td>
               <td>
-                <a href="{{ path('admin_locations_view', {id:location.id}) }}"><i class="icon-eye-open"></i></a> 
-                <a href="{{ path('admin_export_data', {id:location.id}) }}"<i class="icon-download"></i></a>
-                <a href="{{ path('admin_locations_edit', {id:location.id}) }}"><i class="icon-edit"></i></a> 
-                <a href="{{ path('admin_locations_delete', {id:location.id}) }}"><i class="icon-trash"></i></a>
+                <!-- <a href="{{ path('admin_locations_view', {id:patrol_location.id}) }}"><i class="icon-eye-open"></i></a>  -->
+                <!-- <a href="{{ path('admin_export_data', {id:patrol_location.id}) }}"<i class="icon-download"></i></a> -->
+                <!-- <a href="{{ path('admin_locations_edit', {id:patrol_location.id}) }}"><i class="icon-edit"></i></a>  -->
+                <!-- <a href="{{ path('admin_locations_delete', {id:patrol_location.id}) }}"><i class="icon-trash"></i></a> -->
               </td>
             </tr>
             {% endfor %}
