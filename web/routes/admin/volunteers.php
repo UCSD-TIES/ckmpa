@@ -115,6 +115,10 @@ $routes->match('/create/', function(Request $request) use ($app){
 		{
 			$is_admin = 0;
 		}
+		else
+		{
+			$is_admin = 1;
+		}
 
 		/* Username must be unique */
 		if($app['paris']->getModel('Coastkeeper\Volunteer')
@@ -238,6 +242,10 @@ $routes->match('/{id}/edit/', function(Request $request, $id) use ($app){
 		if(empty($is_admin) || !is_numeric($is_admin) || ($is_admin > 1))
 		{
 			$is_admin = 0;
+		}
+		else
+		{
+			$is_admin = 1;
 		}
 
 		/*
