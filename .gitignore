@@ -1,2 +1,6 @@
 vendor/*
 composer.lock
+*.sublime-project
+*.sublime-workspace
+sftp-config.json
+.DS_Store
