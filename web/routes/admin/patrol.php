@@ -29,6 +29,7 @@ $routes->match('/{id}/{patrolEntryID}/{patrol}/{lid}/', function($id, $patrolEnt
 	}
 
 	/* Find all the patrol tallies and their dataEntries */
+	$dataEntries = array();
 	$patrolTallies = $app['paris']->getModel('Coastkeeper\PatrolTally')->find_many();
 	for( $i = 0; $i < count($patrolTallies); ++$i) {
 		if ( $patrolTallies[$i]->coastkeeper_patrol_entry_id == $patrolEntryID){
