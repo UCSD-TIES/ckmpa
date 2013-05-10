@@ -111,9 +111,13 @@ $routes->match('/create/', function(Request $request) use ($app){
 		}
 
 		/* check and fill "is_admin" */
-		if(empty($is_admin) || !is_numeric($admin) || ($admin > 1))
+		if(empty($is_admin) || !is_numeric($is_admin) || ($is_admin > 1))
 		{
 			$is_admin = 0;
+		}
+		else
+		{
+			$is_admin = 1;
 		}
 
 		/* Username must be unique */
@@ -134,6 +138,7 @@ $routes->match('/create/', function(Request $request) use ($app){
 			$volunteer->last_name = $last_name;
 			$volunteer->username = $username;
 			$volunteer->password = md5($password);
+			
 			$volunteer->is_admin = $is_admin;
 
 			$volunteer->save();
@@ -238,6 +243,10 @@ $routes->match('/{id}/edit/', function(Request $request, $id) use ($app){
 		if(empty($is_admin) || !is_numeric($is_admin) || ($is_admin > 1))
 		{
 			$is_admin = 0;
+		}
+		else
+		{
+			$is_admin = 1;
 		}
 
 		/*
