@@ -27,8 +27,11 @@ on
 		</h2>
 	{% endif %}
 {%endfor %}
+{%if patrol.finished %}
 Time of patrol: <strong>{{patrolEntry.start_time}} </strong> to <strong>{{patrolEntry.end_time}}</strong>
-
+{%else%}
+Start of patrol: <strong>{{patrolEntry.start_time}}
+{% endif %}
   {% for category in categories %}
   <h3>{{category.name }}</h3>
   <table class="table table-bordered">

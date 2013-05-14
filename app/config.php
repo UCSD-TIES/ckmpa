@@ -16,4 +16,4 @@ define('APP_PATH', __DIR__ . '/../web');
 define('DBHOST', 'localhost');
 define('DBNAME', 'coastkeeper');
 define('DBUSER', 'root');
-define('DBPASS', '');
+define('DBPASS', 'ck');
