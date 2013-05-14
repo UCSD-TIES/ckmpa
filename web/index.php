@@ -476,8 +476,13 @@ $app->mount('/admin/', include __DIR__ . '/routes/admin/admin.php');
 $app->mount('/admin/volunteers/', include __DIR__ . '/routes/admin/volunteers.php');
 $app->mount('/admin/locations/', include __DIR__ . '/routes/admin/locations.php');
 $app->mount('/admin/volunteers/', include __DIR__ . '/routes/admin/patrol.php');
+<<<<<<< HEAD
 //$app->mount('/admin/locations/sections', include __DIR__ . '/routes/admin/sections.php');
 $app->mount('/admin/graphs/', include __DIR__ . '/routes/admin/graphs.php');
+=======
+$app->mount('/admin/sections/', include __DIR__ . '/routes/admin/sections.php');
+$app->mount('/admin/patrols/', include __DIR__ . '/routes/admin/patrols.php');
+>>>>>>> b4be48fd01e46ea9be7391c38ed6a9551dff20a9
 
 /*
 	Run the application
