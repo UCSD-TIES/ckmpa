@@ -192,7 +192,7 @@ $routes->match( '/{id}/edit/', function( REQUEST $request, $id ) use ( $app ) {
 
 /////////////// CREATE Section ROUTE ///////////////
 
-$routes->match('{id}/section_create/', function(Request $request, $id) use ($app){
+$routes->match('{id}/create/', function(Request $request, $id) use ($app){
 
     /* Errors */
     $errors = array();
@@ -252,7 +252,7 @@ $routes->match('{id}/section_create/', function(Request $request, $id) use ($app
 
 })->assert('id', '\d+')
   ->before($admin_login_check)
-  ->bind('admin_sections_create');
+  ->bind('admin_section_create');
 
 
 /////////////// DELETE section ROUTE /////////////

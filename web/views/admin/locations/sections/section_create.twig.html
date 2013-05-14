@@ -6,7 +6,7 @@
   <div span="12">
     <h1>Add a new section</h1>
 
-    <form class="form-horizontal" action="{{ path('admin_sections_create', {id:location.id}) }}" method="POST">
+    <form class="form-horizontal" action="{{ path('admin_section_create', {id:location.id}) }}" method="POST">
       <div class="control-group {% if errors.section_name is defined %} error {% endif %}">
         <label for="sections_name" class="control-label">Name</label>
         <div class="controls">
