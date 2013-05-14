@@ -98,6 +98,7 @@ $routes->get('/{location_id}/', function($location_id) use ($app) {
 	/* Render the html file, passing in the values */
 	return $app['twig']->render('admin/patrols/list.twig.html', array(
 		'patrols' => $patrols,
+                'location' => $location
 	));
 })->assert('location_id', '\d+')
   ->before($admin_login_check)
@@ -144,6 +145,8 @@ $routes->match('/{location_id}/{section_id}/', function($location_id, $section_i
 	/* Render the html file, passing in the values */
 	return $app['twig']->render('admin/patrols/list.twig.html', array(
 		'patrols' => $patrols,
+                'location' => $location,
+                'section' => $section
 	));
 
 })->value('location_id', 0)

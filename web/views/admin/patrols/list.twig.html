@@ -3,9 +3,8 @@
 {% block title %}Patrols{% endblock %}
 
 {% block content %}
-<div class="span12">
-    
-    <h2>{% if section is defined and section[0] is not defined %}{{section.name}} {% endif %}</h2>
+<div class="span12"> 
+    <h2>{% if location is defined %}{{location.name}}{% if section is defined %} - {{section.name}}{% endif %}{% else %}Patrols{% endif %}</h2>
     {% if patrols is defined %}
     <table class="table table-hover">
         <tr>
@@ -15,7 +14,6 @@
             <th>Volunteer</th>
             <th>Completed</th>
         </tr>   
-            <!-- <pre>{{ dump(patrols) }}</pre> -->
 
             {% for patrol in patrols %}
             <tr>
