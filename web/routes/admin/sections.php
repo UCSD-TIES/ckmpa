@@ -22,12 +22,35 @@ $routes->get('/', function() use ($app){
         $sections = $app['paris']->getModel('Coastkeeper\Section')->find_many();
 
         /* Display the list of locations */
-        return $app['twig']->render('admin/locations/sections/list.twig.html', array(
-            'sections' => $sections
+        return $app['twig']->render('admin/sections/list.twig.html', array(
+            'section' => $sections,
         ));
         
 })->before($admin_login_check)->bind('admin_sections');
 
+/* 
+ * Author: David Drabik - djdrabik@gmail.com
+ * Description: Route that gets the patrols from a specific section 
+ *              and calls the twig file to display it to the user
+ */
+// $routes->get('/{section_id}/', function($section_id) use ($app){
+
+//         /* Get the location */
+
+//         /* Find a section with the passed id */
+//         $section = $app['paris']->getModel('Coastkeeper\Section')->find_one($section_id);
+
+//         $section_patrols = $app['paris']->getModel('Coastkeeper\Patrol Entry')->
+
+//         /* Display the list of patrols */
+//         return $app['twig']->render('admin/locations/sections/section_view.twig.html', array(
+//             'sections' => $section_patrols
+//             'location' => $location
+//         ));
+        
+// })->assert('section_id','\d+')
+//   ->before($admin_login_check)
+//   ->bind('admin_section_view');
 
 
 
