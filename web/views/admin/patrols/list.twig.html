@@ -20,8 +20,8 @@
             {% for patrol in patrols %}
             <tr>
                 <td>{{patrol.date}}</td>
-                <td><a href="{{ path('admin_locations_view', {id:patrol.location.id}) }}"> {{ patrol.location.name }}</a></td>
-                <td>{{ patrol.section.name }}</td>
+                <td><a href="{{ path('admin_patrols_one', {location_id:patrol.location.id}) }}"> {{ patrol.location.name }}</a></td>
+                <td><a href="{{ path('admin_patrols', {location_id:patrol.location.id, section_id:patrol.section.id}) }}">{{ patrol.section.name }}</td>
                 <td>{% if patrol.volunteer is defined %}{{ patrol.volunteer }}{% endif %}</td>
                 <td>{% if patrol.finished %}<i class="icon-ok"></i>{% endif %}</td>
               <td>
