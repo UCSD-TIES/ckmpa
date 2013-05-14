@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="span12">
-    <h1>Patrols {% if location is defined and location[0] is not defined %} for {{location.name}} {% endif %} </h1>
+    
     <h2>{% if section is defined and section[0] is not defined %}{{section.name}} {% endif %}</h2>
     {% if patrols is defined %}
     <table class="table table-hover">
@@ -15,18 +15,17 @@
             <th>Volunteer</th>
             <th>Completed</th>
         </tr>   
+            <!-- <pre>{{ dump(patrols) }}</pre> -->
+
             {% for patrol in patrols %}
-            {% set patrol_location = location[patrol.coastkeeper_location_id - 1] %}
-            {% set patrol_section  = section[patrol.coastkeeper_section_id - 1] %}
             <tr>
-                <td>{{ patrol.date }}</td>
-                <td><a href="{{ path('admin_locations_view', {id:patrol_location.id}) }}"> {{ patrol_location.name }}</a></td>
-                <td>{{ patrol_section.name }}</td>
+                <td>{{patrol.date}}</td>
+                <td><a href="{{ path('admin_locations_view', {id:patrol.location.id}) }}"> {{ patrol.location.name }}</a></td>
+                <td>{{ patrol.section.name }}</td>
+                <td>{% if patrol.volunteer is defined %}{{ patrol.volunteer }}{% endif %}</td>
+                <td>{% if patrol.finished %}<i class="icon-ok"></i>{% endif %}</td>
               <td>
-                <!-- <a href="{{ path('admin_locations_view', {id:patrol_location.id}) }}"><i class="icon-eye-open"></i></a>  -->
-                <!-- <a href="{{ path('admin_export_data', {id:patrol_location.id}) }}"<i class="icon-download"></i></a> -->
-                <!-- <a href="{{ path('admin_locations_edit', {id:patrol_location.id}) }}"><i class="icon-edit"></i></a>  -->
-                <!-- <a href="{{ path('admin_locations_delete', {id:patrol_location.id}) }}"><i class="icon-trash"></i></a> -->
+                
               </td>
             </tr>
             {% endfor %}
