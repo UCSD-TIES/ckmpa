@@ -1,0 +1,34 @@
+{% extends 'admin/base.twig.html' %}
+
+{% block title %}Patrols{% endblock %}
+
+{% block content %}
+<div class="span12"> 
+    <h2>{% if location is defined %}{{location.name}}{% if section is defined %} - {{section.name}}{% endif %}{% else %}Patrols{% endif %}</h2>
+    {% if patrols is defined %}
+    <table class="table table-hover">
+        <tr>
+            <th>Date</th>
+            <th>Location</th>
+            <th>Section</th>
+            <th>Volunteer</th>
+            <th>Completed</th>
+        </tr>   
+
+            {% for patrol in patrols %}
+            <tr>
+                <td>{{patrol.date}}</td>
+                <td><a href="{{ path('admin_patrols_one', {location_id:patrol.location.id}) }}"> {{ patrol.location.name }}</a></td>
+                <td><a href="{{ path('admin_patrols', {location_id:patrol.location.id, section_id:patrol.section.id}) }}">{{ patrol.section.name }}</td>
+                <td>{% if patrol.volunteer is defined %}{{ patrol.volunteer }}{% endif %}</td>
+                <td>{% if patrol.finished %}<i class="icon-ok"></i>{% endif %}</td>
+              <td>
+                
+              </td>
+            </tr>
+            {% endfor %}
+    </table>    
+    {% endif %}
+          
+</div>
+{% endblock %}

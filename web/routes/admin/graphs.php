@@ -27,29 +27,7 @@ $routes->get('/', function() use ($app){
         ));
         
 
-})->before($admin_login_check)->bind('admin_locations');
-
-/*
- * Display a specific location's sections
- */
-$routes->get('/{id}/', function($id) use ($app){
-
-    /* Find the sections with the same coastkeeper_location_id and send it to the template. */
-    $location = $app['paris']->getModel('Coastkeeper\Location')->find_one($id);
-
-    $section = $app['paris']->getModel('Coastkeeper\Section')
-        ->where_equal('coastkeeper_location_id', $id)
-        ->find_many();
-
-    /* Get information on a certain location */
-    return $app['twig']->render('admin/locations/view.twig.html', array(
-        "section" => $section,
-        "location" => $location
-    )); 
-
-})->assert('id','\d+')
-  ->before($admin_login_check)
-  ->bind('admin_locations_view');
+})->before($admin_login_check)->bind('admin_graphs');
 
 $routes->match('/create/', function(Request $request) use ($app){
 
@@ -97,7 +75,7 @@ $routes->match('/create/', function(Request $request) use ($app){
 		"errors" => $errors,
 	));
 
-})->before($admin_login_check)->bind('admin_locations_create');
+})->before($admin_login_check)->bind('admin_graphs_create');
 
 $routes->match( '/{id}/delete/', function( REQUEST $request, $id ) use ( $app ) {
 
@@ -125,7 +103,7 @@ $routes->match( '/{id}/delete/', function( REQUEST $request, $id ) use ( $app ) 
 
 })->assert('id','\d+')
     ->before( $admin_login_check )
-    ->bind('admin_locations_delete');
+    ->bind('admin_graphs_delete');
 
 $routes->match( '/{id}/edit/', function( REQUEST $request, $id ) use ( $app ) {
 
@@ -185,14 +163,33 @@ $routes->match( '/{id}/edit/', function( REQUEST $request, $id ) use ( $app ) {
 
 })->assert('id', '\d+')
  ->before($admin_login_check)
- ->bind('admin_locations_edit');
+ ->bind('admin_graphs_edit');
 
 
+///////// VIEW A LOCATION'S Sections //////////////////
 
+$routes->get('/{id}/', function($id) use ($app){
+
+    /* Find the sections with the same coastkeeper_location_id and send it to the template. */
+    $location = $app['paris']->getModel('Coastkeeper\Location')->find_one($id);
+
+    $section = $app['paris']->getModel('Coastkeeper\Section')
+        ->where_equal('coastkeeper_location_id', $id)
+        ->find_many();
+
+    /* Get information on a certain location */
+    return $app['twig']->render('admin/locations/view.twig.html', array(
+        "section" => $section,
+        "location" => $location
+    )); 
+
+})->assert('id','\d+')
+  ->before($admin_login_check)
+  ->bind('admin_graphs_view');
 
 /////////////// CREATE Section ROUTE ///////////////
 
-$routes->match('{id}/create/', function(Request $request, $id) use ($app){
+$routes->match('{id}/section_create/', function(Request $request, $id) use ($app){
 
     /* Errors */
     $errors = array();
@@ -201,7 +198,7 @@ $routes->match('{id}/create/', function(Request $request, $id) use ($app){
 
     $location = $app['paris']->getModel('Coastkeeper\Location')->find_one($id);
 
-   if('POST' == $request->getMethod())
+    if('POST' == $request->getMethod())
     {
 
         $section_name = $request->get('section_name');
@@ -215,8 +212,7 @@ $routes->match('{id}/create/', function(Request $request, $id) use ($app){
             }
 
         /* Name must consist of letters and numbers */
-
-        if( !empty($section_name) && !ctype_alnum(str_replace(' ', '', $section_name) )) {
+        if( !empty($section_name) && !ctype_alnum($section_name) ) {
           $errors['section_name'] = "Please use only letters and/or numbers for the section's name";
         }
 
@@ -253,7 +249,7 @@ $routes->match('{id}/create/', function(Request $request, $id) use ($app){
 
 })->assert('id', '\d+')
   ->before($admin_login_check)
-  ->bind('admin_section_create');
+  ->bind('admin_sections_create');
 
 
 /////////////// DELETE section ROUTE /////////////
@@ -287,7 +283,7 @@ $routes->match( '/{id}/{section_id}/section_delete/', function( REQUEST $request
 
 })->assert('id','\d+')
     ->before( $admin_login_check )
-    ->bind('admin_sections_delete');
+    ->bind('admin_graphs_delete');
 
 
 //////////////// EDIT section ROUTE ////////////////////////
@@ -317,7 +313,7 @@ $routes->match( '/{id}/{section_id}/section_delete/', function( REQUEST $request
         }
 
         /* Name must consist of letters and numbers */
-        if( !empty($section_name) && !ctype_alnum(str_replace(' ', '', $section_name) )){
+        if( !empty($section_name) && !ctype_alnum($section_name) ) {
           $errors['section_name'] = "Please use only letters and/or numbers for the section's name";
         }
 
@@ -353,7 +349,7 @@ $routes->match( '/{id}/{section_id}/section_delete/', function( REQUEST $request
 
 })->assert('id', '\d+')
  ->before($admin_login_check)
- ->bind('admin_sections_edit');
+ ->bind('admin_graphs_edit');
 
 //////////// VIEW a SECTION's Patrols  //////////////////
 
@@ -388,6 +384,25 @@ $routes->match( '/{id}/section_view/', function( REQUEST $request, $id ) use ( $
 
 })->assert('id','\d+')
   ->before($admin_login_check)
-  ->bind('admin_sections_view');
+  ->bind('admin_graphs_view');
+
+///////// VIEW all SECTIONS //////////////////
+
+$routes->match('/location/section_list', function(Request $request) use ($app){
+
+    $location = $app['paris']->getModel('Coastkeeper\Location')->find_many();
+
+    /* Find all sections and send it to the template. */
+    $section = $app['paris']->getModel('Coastkeeper\Section')->find_many();
+
+    /* Get information on a certain location */
+    return $app['twig']->render('admin/locations/sections/section_list.twig.html', array(
+        "section" => $section,
+        "location" => $location
+    )); 
+
+})->assert('id','\d+')
+  ->before($admin_login_check)
+  ->bind('admin_graphs_list');
 
 return $routes;

@@ -22,18 +22,15 @@ $routes->get('/', function() use ($app){
         $sections = $app['paris']->getModel('Coastkeeper\Section')->find_many();
 
         /* Display the list of locations */
-        return $app['twig']->render('admin/locations/sections/list.twig.html', array(
-            'sections' => $sections
+        return $app['twig']->render('admin/sections/list.twig.html', array(
+            'section' => $sections,
         ));
         
 })->before($admin_login_check)->bind('admin_sections');
 
-
-
-
 /////////////// CREATE ROUTE ///////////////
 
-$routes->match('sections/create/', function(Request $request) use ($app){
+$routes->match('/create/', function(Request $request) use ($app){
 
 	/* Errors */
 	$errors = array();
@@ -41,47 +38,47 @@ $routes->match('sections/create/', function(Request $request) use ($app){
 	if('POST' == $request->getMethod())
 	{
 
-		$section_name = $request->get('section_name');
+          $section_name = $request->get('section_name');
 
-		/* Validity Checks. */
+          /* Validity Checks. */
 
-            /* Section name cannot be blank */
-            if( empty($section_name) )
-            {
-                    $errors['section_name'] = "Please enter an name for the new section";
-            }
+          /* Section name cannot be blank */
+          if( empty($section_name) )
+          {
+            $errors['section_name'] = "Please enter an name for the new section";
+          }
 
         /* Name must consist of letters and numbers */
         if( !empty($section_name) && !ctype_alnum(str_replace(' ', '', $section_name) )) {
           $errors['section_name'] = "Please use only letters and/or numbers for the section's name";
         }
 
-        /* Name must be unique */
-        if( $app['paris']->getModel('Coastkeeper\Section')
-                                      ->where_equal('name', $section_name)
-                                      ->find_one()) {
-          $errors['section_name'] = "There is already a section with that name";
-        }
+          /* Name must be unique */
+          if( $app['paris']->getModel('Coastkeeper\Section')
+                                        ->where_equal('name', $section_name)
+                                        ->find_one()) {
+            $errors['section_name'] = "There is already a section with that name";
+          }
 
-		/* If everything is ok, create the new section */
-		if(count($errors) <= 0)
-		{
-			$section = $app['paris']->getModel('Coastkeeper\Section')->create();
-			$section->name = $section_name;
-                        $section->coastkeeper_datasheet_id = 1;
+          /* If everything is ok, create the new section */
+          if(count($errors) <= 0)
+          {
+            $section = $app['paris']->getModel('Coastkeeper\Section')->create();
+            $section->name = $section_name;
+            $section->coastkeeper_datasheet_id = 1;
 
-			$section->save();
+            $section->save();
 
             $section = $app['paris']->getModel('Coastkeeper\Location\Section')->find_many();
 
-			return $app->redirect($app['url_generator']->generate('admin_sections'));
-		}
+            return $app->redirect($app['url_generator']->generate('admin_sections'));
+          }
 
 	}
 
 	/* Render the create form. */
-	return $app['twig']->render('admin/locations/sections/create.twig.html', array(
-		"errors" => $errors,
+	return $app['twig']->render('admin/sections/create.twig.html', array(
+		"errors" => $errors
 	));
 
 })->before($admin_login_check)->bind('admin_sections_create');
