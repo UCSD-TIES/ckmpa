@@ -52,7 +52,7 @@ $routes->match('sections/create/', function(Request $request) use ($app){
             }
 
         /* Name must consist of letters and numbers */
-        if( !empty($section_name) && !ctype_alnum($section_name) ) {
+        if( !empty($section_name) && !ctype_alnum(str_replace(' ', '', $section_name) )) {
           $errors['section_name'] = "Please use only letters and/or numbers for the section's name";
         }
 
@@ -143,7 +143,7 @@ $routes->match( '/{id}/edit/', function( REQUEST $request, $id ) use ( $app ) {
         }
 
         /* Name must consist of letters and numbers */
-        if( !empty($section_name) && !ctype_alnum($section_name) ) {
+        if( !empty($section_name) && !ctype_alnum(str_replace(' ', '', $section_name) )){
           $errors['section_name'] = "Please use only letters and/or numbers for the section's name";
         }
 
