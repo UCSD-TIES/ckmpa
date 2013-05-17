@@ -22,7 +22,7 @@ $routes->get('/', function() use ($app){
         $sections = $app['paris']->getModel('Coastkeeper\Section')->find_many();
 
         /* Display the list of locations */
-        return $app['twig']->render('admin/sections/list.twig.html', array(
+        return $app['twig']->render('admin/locations/sections/list.twig.html', array(
             'section' => $sections,
         ));
         
@@ -77,7 +77,7 @@ $routes->match('/create/', function(Request $request) use ($app){
 	}
 
 	/* Render the create form. */
-	return $app['twig']->render('admin/sections/create.twig.html', array(
+	return $app['twig']->render('admin/locations/sections/create.twig.html', array(
 		"errors" => $errors
 	));
 
