@@ -8,11 +8,11 @@
 
     <form class="form-horizontal" action="{{ path('admin_sections_create', {id:location.id}) }}" method="POST">
       <div class="control-group {% if errors.section_name is defined %} error {% endif %}">
-        <label for="sections_name" class="control-label">Name</label>
+        <label for="section_name" class="control-label">Name</label>
         <div class="controls">
           <input type="text" name="section_name" id="section_name" value="{{ app.request.get( 'section_name' ) }}" >
-          {% if errors.sections_name is defined %}
-          <span class="help-inline">{{ errors.sections_name }}</span>
+          {% if errors.section_name is defined %}
+          <span class="help-inline">{{ errors.section_name }}</span>
           {% endif %}
         </div>
       </div>

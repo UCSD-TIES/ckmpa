@@ -201,7 +201,7 @@ $routes->match('{id}/create/', function(Request $request, $id) use ($app){
 
     $location = $app['paris']->getModel('Coastkeeper\Location')->find_one($id);
 
-    if('POST' == $request->getMethod())
+   if('POST' == $request->getMethod())
     {
 
         $section_name = $request->get('section_name');
@@ -215,7 +215,8 @@ $routes->match('{id}/create/', function(Request $request, $id) use ($app){
             }
 
         /* Name must consist of letters and numbers */
-        if( !empty($section_name) && !ctype_alnum($section_name) ) {
+
+        if( !empty($section_name) && !ctype_alnum(str_replace(' ', '', $section_name) )) {
           $errors['section_name'] = "Please use only letters and/or numbers for the section's name";
         }
 
@@ -316,7 +317,7 @@ $routes->match( '/{id}/{section_id}/section_delete/', function( REQUEST $request
         }
 
         /* Name must consist of letters and numbers */
-        if( !empty($section_name) && !ctype_alnum($section_name) ) {
+        if( !empty($section_name) && !ctype_alnum(str_replace(' ', '', $section_name) )){
           $errors['section_name'] = "Please use only letters and/or numbers for the section's name";
         }
 

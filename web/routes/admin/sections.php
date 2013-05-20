@@ -22,7 +22,7 @@ $routes->get('/', function() use ($app){
         $sections = $app['paris']->getModel('Coastkeeper\Section')->find_many();
 
         /* Display the list of locations */
-        return $app['twig']->render('admin/sections/list.twig.html', array(
+        return $app['twig']->render('admin/locations/sections/list.twig.html', array(
             'section' => $sections,
         ));
         
@@ -48,10 +48,10 @@ $routes->match('/create/', function(Request $request) use ($app){
             $errors['section_name'] = "Please enter an name for the new section";
           }
 
-          /* Name must consist of letters and numbers */
-          if( !empty($section_name) && !ctype_alnum($section_name) ) {
-            $errors['section_name'] = "Please use only letters and/or numbers for the section's name";
-          }
+        /* Name must consist of letters and numbers */
+        if( !empty($section_name) && !ctype_alnum(str_replace(' ', '', $section_name) )) {
+          $errors['section_name'] = "Please use only letters and/or numbers for the section's name";
+        }
 
           /* Name must be unique */
           if( $app['paris']->getModel('Coastkeeper\Section')
@@ -77,7 +77,7 @@ $routes->match('/create/', function(Request $request) use ($app){
 	}
 
 	/* Render the create form. */
-	return $app['twig']->render('admin/sections/create.twig.html', array(
+	return $app['twig']->render('admin/locations/sections/create.twig.html', array(
 		"errors" => $errors
 	));
 
@@ -140,7 +140,7 @@ $routes->match( '/{id}/edit/', function( REQUEST $request, $id ) use ( $app ) {
         }
 
         /* Name must consist of letters and numbers */
-        if( !empty($section_name) && !ctype_alnum($section_name) ) {
+        if( !empty($section_name) && !ctype_alnum(str_replace(' ', '', $section_name) )){
           $errors['section_name'] = "Please use only letters and/or numbers for the section's name";
         }
 
