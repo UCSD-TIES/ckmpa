@@ -16,26 +16,26 @@
 
 <body> 
     <div data-role="page"> 
-        <div data-role="header" data-theme="b"> 
-            <header>
-                <h1>
-                    {% block header %}{% endblock %}
-                </h1>
-            </header>
-        </div>
-        <div data-role="content" data-theme="c">
+        <header data-role="header" class="theme-ck"> 
+            <h1>
+                MPA Watch
+            </h1>
+        </header>
+        <div data-role="content" class="wrapper content">
+            <h1 class="center-text">
+                {% block header %}{% endblock %}
+            </h1>
             {% block content %}
             {% endblock %}
         </div>
-        <div data-role="footer" data-theme="b">    
-            <footer>
-                {% block footer %}
-                <p>
-                    &copy; 2013 SDCoastkeeper
-                </p>
-                {% endblock %}
-            </footer>
-        </div>
+        <div class="push"></div>
+        <footer data-role="footer" class="footer theme-ck">    
+            {% block footer %}
+            <p>
+                &copy; 2013 San Diego Coastkeeper
+            </p>
+            {% endblock %}
+        </footer>
     </div>
 </body>
 </html>

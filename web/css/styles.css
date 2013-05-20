@@ -1,3 +1,7 @@
+html, body {
+    height: 100%;
+}
+
 header {
     text-align: center;
 }
@@ -6,11 +10,18 @@ footer {
     padding-left: 15px;
 }
 
+h1 {
+    font-size: 125%;
+}
 
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
+}
+
+.center-text {
+    text-align: center;
 }
 
 .entry-container {
@@ -32,6 +43,34 @@ input[type=number]::-webkit-outer-spin-button {
     overflow: auto;
 }
 
+.theme-ck {
+    border: 1px solid #072e5a;
+    background-image: none;
+    background-image: -webkit-gradient(linear, left top, left bottom, from( #3e74ae /*{a-bar-background-start}*/), to( #1E528B /*{a-bar-background-end}*/)); /* Saf4+, Chrome */
+    background-image: -webkit-linear-gradient( #3e74ae /*{a-bar-background-start}*/, #1E528B /*{a-bar-background-end}*/); /* Chrome 10+, Saf5.1+ */
+    background-image:    -moz-linear-gradient( #3e74ae /*{a-bar-background-start}*/, #1E528B /*{a-bar-background-end}*/); /* FF3.6 */
+    background-image:     -ms-linear-gradient( #3e74ae /*{a-bar-background-start}*/, #1E528B /*{a-bar-background-end}*/); /* IE10 */
+    background-image:      -o-linear-gradient( #3e74ae /*{a-bar-background-start}*/, #1E528B /*{a-bar-background-end}*/); /* Opera 11.10+ */
+    background-image:         linear-gradient( #3e74ae /*{a-bar-background-start}*/, #1E528B /*{a-bar-background-end}*/);
+    background-color: #1E528B;
+}
+
+.wrapper {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto 50px; /* the bottom margin is the negative value of the footer's height */
+}
+.footer, .push {
+    height: 50px; /* .push must be the same height as .footer */
+}
+
+.footer {
+    display: block; 
+    position: absolute; 
+    width: 100%; 
+    bottom: 0px; 
+}
 
 
 @media screen and (min-width: 320px) {
