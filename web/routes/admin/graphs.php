@@ -5,7 +5,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session;
 
 /*
- *  All URLS will be prefixed with /admin/locations/ automatically
+ *  All URLS will be prefixed with /admin/graphs/ automatically
  *  by admin.php
  */
 
