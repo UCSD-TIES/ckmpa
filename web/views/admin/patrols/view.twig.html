@@ -1,0 +1,32 @@
+{% extends 'admin/base.twig.html' %}
+
+{% block title %}Patrols{% endblock %}
+
+{% block content %}
+<div class="span12"> 
+    <h2>
+    	{% if location is defined %}
+    		{{location.name}}{% if section is defined %} - {{section.name}}{% endif %}
+    	{% else %}
+    		Patrol
+    	{% endif %}
+    </h2>
+    {% if patrol is defined %}
+	    <p>
+	    	{{ patrol.startTime }}
+	    	{% if patrol.endTime is defined %} - {{ patrol.endTime }}{% endif %}
+	    </p>
+	{% endif %}
+		{% for category in categories %}
+		<h2>{{ category.name }}</h2>
+		<table class="table table-hover">
+			{% for tally in tallies %}
+		    
+		        <tr>
+		            <td>{{tally.tally}}</td>
+		        </tr>
+		    {% endfor %}   
+			</table> 
+	    {% endfor %}
+</div>
+{% endblock %}

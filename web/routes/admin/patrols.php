@@ -35,10 +35,11 @@ $routes->get('/', function() use ($app) {
 					$data['volunteer'] = $volunteer->first_name . ' ' . $volunteer->last_name;
 				}
 
+				$data['id'] 	   = $patrol_entry->id;
 				$data['location']  = $location;
 				$data['section']   = $section;
-				$data['date'] = $patrol->date;
-				$data['finished'] = $patrol->finished;
+				$data['date']      = $patrol->date;
+				$data['finished']  = $patrol->finished;
 
 
 				array_push($patrols, $data);
@@ -85,10 +86,11 @@ $routes->get('/{location_id}/', function($location_id) use ($app) {
 				$data['volunteer'] = $volunteer->first_name . ' ' . $volunteer->last_name;
 			}
 
+			$data['id'] 	   = $patrol_entry->id;
 			$data['location']  = $location;
 			$data['section']   = $section;
-			$data['date'] = $patrol->date;
-			$data['finished'] = $patrol->finished;
+			$data['date']      = $patrol->date;
+			$data['finished']  	= $patrol->finished;
 
 
 			array_push($patrols, $data);
@@ -133,10 +135,11 @@ $routes->match('/{location_id}/{section_id}/', function($location_id, $section_i
 			$data['volunteer'] = $volunteer->first_name . ' ' . $volunteer->last_name;
 		}
 
-		$data['location']  = $location;
-		$data['section']   = $section;
-		$data['date'] = $patrol->date;
-		$data['finished'] = $patrol->finished;
+		$data['id'] 		= $patrol_entry->id;
+		$data['location']  	= $location;
+		$data['section']   	= $section;
+		$data['date'] 		= $patrol->date;
+		$data['finished'] 	= $patrol->finished;
 
 
 		array_push($patrols, $data);
@@ -145,16 +148,55 @@ $routes->match('/{location_id}/{section_id}/', function($location_id, $section_i
 	/* Render the html file, passing in the values */
 	return $app['twig']->render('admin/patrols/list.twig.html', array(
 		'patrols' => $patrols,
-                'location' => $location,
-                'section' => $section
+        'location' => $location,
+        'section' => $section
 	));
 
-})->value('location_id', 0)
-  ->value('section_id', 0)
+})->value('location_id', 1)
+  ->value('section_id', 1)
   ->assert('location_id', '\d+')
   ->assert('section_id', '\d+')
   ->before($admin_login_check)
   ->bind('admin_patrols');
+
+$routes->match('{location_id}/{section_id}/{patrol_id}', function($location_id, $section_id, $patrol_id) use ($app) {
+
+	$data = array();
+
+	$location = $app['paris']->getModel('Coastkeeper\Location')->find_one($location_id);
+	if (!$location) {
+		$app->abort(404, 'Section does not exist');
+	}
+
+	$section = $location->sections()->find_one($section_id);
+	if (!$section) {
+		$app->abort(404, 'Section does not exist');
+	}
+
+	$datasheet = $location->datasheet()->find_one();
+	$categories = $datasheet->categories()->find_many();
+
+	$patrol_entry = $section->patrol_entry()->find_one($patrol_id);
+	$patrol_tallies = $patrol_entry->patrol_tallies()->find_many();
+
+	for( $categories as $category ) {
+		
+	}
+
+
+
+	return $app['twig']->render('admin/patrols/view.twig.html', array(
+		'location'   => $location,
+		'section'    => $section,
+		'categories' => $categories,	
+		'tallies'    => $patrol_tallies
+	));
+
+})->assert('location_id', '\d+')
+  ->assert('section_id', '\d+')
+  ->assert('patrol_id', '\d+')
+  ->before($admin_login_check)
+  ->bind('admin_patrols_view');
 
 
 
