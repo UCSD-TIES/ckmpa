@@ -26,8 +26,8 @@ on
 			Data for the {{section.name}} section of {{location.name}}
 		</h2>
 	{% endif %}
-{%endfor %}
-{%if patrol.finished %}
+
+{%if patrol.finished and patrolEntry.end_time is defined %}
 Time of patrol: <strong>{{patrolEntry.start_time}} </strong> to <strong>{{patrolEntry.end_time}}</strong>
 {%else%}
 Start of patrol: <strong>{{patrolEntry.start_time}}
@@ -68,8 +68,11 @@ Start of patrol: <strong>{{patrolEntry.start_time}}
    {% endfor %}
 </ul>
 {% endfor %}
+{%endfor %}
+
 {%else%}
 No Patrol Found.
+
 {%endif%}
 
 
