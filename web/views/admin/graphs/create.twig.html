@@ -6,15 +6,29 @@
 {% block content %}
 <div class="span12">
     <h1>Graph</h1> 
-	<div class="form-actions">
-        <button type="submit" class="btn btn-primary">Create Graph</button>
-        <a href="{{ path('admin_graphs') }}" class="btn">Cancel</a>
-    </div>
+	<form class="form-horizontal">
+		 <div>
+		 	<label>X-Axis</label>
+		 	<select required>
+ 				<option value="Days">Days</option>
+  				<option value="Weeks">Weeks</option>
+				<option value="Months">Months</option>
+  				<option value="Years">Years</option>
+			</select>
+		</div> 
+		<div>
+			<label>Y-Axis</label>
+			<input type="number">Total Volunteers</input>
+			<input type="number">Total Observations</input>
+		</div>
+	
+	
+		<div class="form-actions">
+        	<button type="submit" class="btn btn-primary">Create Graph</button>
+        	<a href="{{ path('admin_graphs') }}" class="btn">Cancel</a>
+    	</div>
    
-    
-    
+	</form>   
 	<canvas id="myChart" width="400" height="400"></canvas>  	
-  
-             
 </div>
 {% endblock %}
