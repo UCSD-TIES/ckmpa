@@ -13,20 +13,28 @@
     </h2>
     {% if patrol is defined %}
 	    <p>
-	    	{{ patrol.startTime }}
-	    	{% if patrol.endTime is defined %} - {{ patrol.endTime }}{% endif %}
+	    	{{ patrol.start_time }}
+	    	{% if patrol.end_time is defined %} - {{ patrol.end_time }}{% endif %}
 	    </p>
 	{% endif %}
+		<table class="table table-hover table-bordered">
 		{% for category in categories %}
-		<h2>{{ category.name }}</h2>
-		<table class="table table-hover">
-			{% for tally in tallies %}
-		    
-		        <tr>
-		            <td>{{tally.tally}}</td>
-		        </tr>
-		    {% endfor %}   
-			</table> 
-	    {% endfor %}
+                <thead>
+                  <tr>
+                    <th colspan="2">{{category.name}}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for tally in tallies %}
+                    {% if tally.category_id == category.id %}		    
+                      <tr>
+                          <td>{{tally.field}}</td>
+                          <td>{{tally.tally}}</td>
+                      </tr>
+                    {% endif %}
+                  {% endfor %}   
+                </tbody>
+                {% endfor %}
+                </table> 
 </div>
 {% endblock %}

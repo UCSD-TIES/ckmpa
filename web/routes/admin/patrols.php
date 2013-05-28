@@ -179,17 +179,27 @@ $routes->match('{location_id}/{section_id}/{patrol_id}', function($location_id, 
 	$patrol_entry = $section->patrol_entry()->find_one($patrol_id);
 	$patrol_tallies = $patrol_entry->patrol_tallies()->find_many();
 
-	for( $categories as $category ) {
-		
-	}
+        foreach ($patrol_tallies as $patrol_tally) {
+          $category_array = array();
+          $patrol_field_array = array();
 
+          $patrol_field = $patrol_tally->datasheet_entry()->find_one();
+          $category = $patrol_field->datasheet_category()->find_one();
+
+          $arr["category_id"] = $category->id;
+          $arr["field"] = $patrol_field->name;
+          $arr["tally"] = $patrol_tally->tally;
+
+          array_push($data, $arr);
+        }
 
 
 	return $app['twig']->render('admin/patrols/view.twig.html', array(
 		'location'   => $location,
 		'section'    => $section,
-		'categories' => $categories,	
-		'tallies'    => $patrol_tallies
+                'categories' => $categories,
+                'patrol'     => $patrol_entry,
+		'tallies'    => $data
 	));
 
 })->assert('location_id', '\d+')
