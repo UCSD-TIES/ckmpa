@@ -1,0 +1,26 @@
+{% extends 'admin/base.twig.html' %}
+
+{% block title %} Delete category {% endblock %}
+
+{% block content %}
+<div span="12">
+{% if category %}
+    <h1>Delete category named {{ category.name }}?</h1>
+    <div class="alert">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Warning!</strong> This action cannot be undone!
+    </div>
+    <form action="{{ path('admin_category_delete', {datasheet_id:datasheet.id, category_id:category.id}) }}" method="POST">
+        <input type="hidden" name="approve_delete" value="1">
+        <button type="submit" class="btn btn-danger">Yes, delete {{category.name}}</button>
+        <a href="{{ path('admin_categories_list', {datasheet_id:datasheet.id}) }}" class="btn">Cancel</a>
+    </form>
+{% else %}
+    <h1>This category doesn't exist</h1>
+    <a href="{{ path('admin_categories_list', {datasheet_id:datasheet.id}) }}" class="btn btn-primary">
+        Return to categorys
+    </a>
+{% endif %}
+</div>
+{% endblock %}
+

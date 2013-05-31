@@ -16,7 +16,7 @@
           </td>
           <td>
             <a href="{{ path('admin_category_edit', {datasheet_id:datasheet.id, category_id:category.id})}}"><i class="icon-edit"></i></a> 
-            <a href=""><i class="icon-trash"></i></a>
+            <a href="{{ path('admin_category_delete', {datasheet_id:datasheet.id, category_id:category.id})}}"><i class="icon-trash"></i></a>
           </td>
         </tr>
         {% endfor %}

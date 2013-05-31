@@ -133,26 +133,29 @@ $routes->match( '/{datasheet_id}/{category_id}/edit/', function( REQUEST $reques
 
  $routes->match( '/{datasheet_id}/{category_id}/delete/', function( REQUEST $request, $datasheet_id, $category_id) use ( $app ) {
 
-    /* get the datasheet */
+    /* get the category */
     $datasheet = $app['paris']->getModel('Coastkeeper\Datasheet')->find_one($datasheet_id);
+    $category = $datasheet->categories()->find_one($category_id);
 
-    if( 'POST' == $request->getMethod() && $datasheet ) {
+    if( 'POST' == $request->getMethod() && $category ) {
 
         // check for delete approval
         if( $request->get('approve_delete')) {
 
-            /* Delete the datasheet */
-            $datasheet->delete();
+            /* Delete the category */
+            $category->delete();
 
             /* Return to the categories list */
-            return $app->redirect( $app['url_generator']->generate('admin_categories_list'));
+            return $app->redirect($app['url_generator']->generate('admin_categories_list', array('datasheet_id' => $datasheet_id)));
+
         }
 
     }
 
     /* display delete confirmation form */
     return $app['twig']->render('admin/categories/delete.twig.html', array(
-        "datasheet" => $datasheet
+        "datasheet" => $datasheet,
+        "category" => $category
     ));
 
 })->assert('datasheet_id','\d+')
