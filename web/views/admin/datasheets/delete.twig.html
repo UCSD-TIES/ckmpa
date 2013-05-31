@@ -1,0 +1,26 @@
+{% extends 'admin/base.twig.html' %}
+
+{% block title %} Delete Datasheet {% endblock %}
+
+{% block content %}
+<div span="12">
+{% if datasheet %}
+    <h1>Delete datasheet named {{ datasheet.name }}?</h1>
+    <div class="alert">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Warning!</strong> This action cannot be undone!
+    </div>
+    <form action="{{ path('admin_datasheet_delete', {datasheet_id:datasheet.id}) }}" method="POST">
+        <input type="hidden" name="approve_delete" value="1">
+        <button type="submit" class="btn btn-danger">Yes, delete {{datasheet.name}}</button>
+        <a href="{{ path('admin_datasheets_list') }}" class="btn">Cancel</a>
+    </form>
+{% else %}
+    <h1>This datasheet doesn't exist</h1>
+    <a href="{{ path('admin_datasheets_list') }}" class="btn btn-primary">
+        Return to datasheets
+    </a>
+{% endif %}
+</div>
+{% endblock %}
+
