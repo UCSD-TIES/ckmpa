@@ -83,8 +83,9 @@ $routes->match( '/{datasheet_id}/{category_id}/edit/', function( REQUEST $reques
 
     /* get the datasheet */
     $datasheet = $app['paris']->getModel('Coastkeeper\Datasheet')->find_one($datasheet_id);
+    $category = $datasheet->categories()->find_one($category_id);
 
-    if( 'POST' == $request->getMethod() && $datasheet ) {
+    if( 'POST' == $request->getMethod() && $category && $datasheet ) {
 
         /* Get the user input */
         $category_name = $request->get('category_name');
@@ -93,37 +94,36 @@ $routes->match( '/{datasheet_id}/{category_id}/edit/', function( REQUEST $reques
          * Validity checks
          */
 
-        /* datasheet name cannot be blank */
+        /* category name cannot be blank */
         if( empty($category_name) )
         {
-            $errors['category_name'] = "Please enter an name for the datasheet";
+            $errors['category_name'] = "Please enter an name for the category";
         }
 
         /* Name must be unique */
-        if( $app['paris']->getModel('Coastkeeper\Datasheet')
-                                      ->where_equal('name', $category_name)
-                                      ->find_one()) {
-            $errors['category_name'] = "There is already a datasheet with that name";
+        if( $datasheet->categories()->where_equal('name', $category_name)->find_one()) {
+            $errors['category_name'] = "There is already a category with that name";
         }
 
-        /* If everything is ok, update the datasheet */
+        /* If everything is ok, update the category */
         if(count($errors) <= 0)
         {
-            $datasheet->name = $category_name;
+            $category->name = $category_name;
 
-            /* Update the datasheet */
-            $datasheet->save();
+            /* Update the category */
+            $category->save();
 
             $categories = $app['paris']->getModel('Coastkeeper\datasheet')->find_many();
 
-            return $app->redirect($app['url_generator']->generate('admin_categories_list'));
+            return $app->redirect($app['url_generator']->generate('admin_categories_list', array('datasheet_id' => $datasheet_id)));
         }
     }
 
     /* Render the edit categories form */
     return $app['twig']->render('admin/categories/edit.twig.html', array(
         "errors"   => $errors,
-        "datasheet" => $datasheet
+        "datasheet" => $datasheet,
+        "category" => $category
     ));
 
 })->assert('datasheet_id', '\d+')
