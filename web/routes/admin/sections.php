@@ -69,7 +69,7 @@ $routes->match('/create/', function(Request $request) use ($app){
 
             $section->save();
 
-            $section = $app['paris']->getModel('Coastkeeper\Location\Section')->find_many();
+            $section = $app['paris']->getModel('Coastkeeper\Section')->find_many();
 
             return $app->redirect($app['url_generator']->generate('admin_sections'));
           }
@@ -77,7 +77,7 @@ $routes->match('/create/', function(Request $request) use ($app){
 	}
 
 	/* Render the create form. */
-	return $app['twig']->render('admin/locations/sections/create.twig.html', array(
+	return $app['twig']->render('admin/sections/create.twig.html', array(
 		"errors" => $errors
 	));
 
@@ -115,66 +115,66 @@ $routes->match( '/{id}/delete/', function( REQUEST $request, $id ) use ( $app ) 
 
 
 
-////////////////// EDIT ////////////////
-$routes->match( '/{id}/edit/', function( REQUEST $request, $id ) use ( $app ) {
+// ////////////////// EDIT ////////////////
+// $routes->match( '/{id}/edit/', function( REQUEST $request, $id ) use ( $app ) {
 
-    /* Array for errors */
-    $errors = array();
+//     /* Array for errors */
+//     $errors = array();
 
-    /* get the section */
-    $section = $app['paris']->getModel('Coastkeeper\Section')->find_one($id);
+//     /* get the section */
+//     $section = $app['paris']->getModel('Coastkeeper\Section')->find_one($id);
 
-    if( 'POST' == $request->getMethod() && $section ) {
+//     if( 'POST' == $request->getMethod() && $section ) {
 
-        /* Get the user input */
-        $section_name = $request->get('section_name');
+//         /* Get the user input */
+//         $section_name = $request->get('section_name');
 
-        /*
-         * Validity checks
-         */
+//         /*
+//          * Validity checks
+//          */
 
-        /* Section name cannot be blank */
-        if( empty($section_name) )
-        {
-            $errors['section_name'] = "Please enter an name for the section";
-        }
+//         /* Section name cannot be blank */
+//         if( empty($section_name) )
+//         {
+//             $errors['section_name'] = "Please enter an name for the section";
+//         }
 
-        /* Name must consist of letters and numbers */
-        if( !empty($section_name) && !ctype_alnum(str_replace(' ', '', $section_name) )){
-          $errors['section_name'] = "Please use only letters and/or numbers for the section's name";
-        }
+//         /* Name must consist of letters and numbers */
+//         if( !empty($section_name) && !ctype_alnum(str_replace(' ', '', $section_name) )){
+//           $errors['section_name'] = "Please use only letters and/or numbers for the section's name";
+//         }
 
-        /* Name must be unique */
-        if( $app['paris']->getModel('Coastkeeper\Location\Section')
-                                      ->where_equal('name', $section_name)
-                                      ->find_one()) {
-            $errors['section_name'] = "There is already a section with that name";
-        }
+//         /* Name must be unique */
+//         if( $app['paris']->getModel('Coastkeeper\Location\Section')
+//                                       ->where_equal('name', $section_name)
+//                                       ->find_one()) {
+//             $errors['section_name'] = "There is already a section with that name";
+//         }
 
-        /* If everything is ok, update the section */
-        if(count($errors) <= 0)
-        {
-            $section->name = $section_name;
+//         /* If everything is ok, update the section */
+//         if(count($errors) <= 0)
+//         {
+//             $section->name = $section_name;
 
-            /* Update the section */
-            $section->save();
+//             /* Update the section */
+//             $section->save();
 
 
-            $sections = $app['paris']->getModel('Coastkeeper\Section')->find_many();
+//             $sections = $app['paris']->getModel('Coastkeeper\Section')->find_many();
 
-            return $app->redirect($app['url_generator']->generate('admin_sections'));
-        }
-    }
+//             return $app->redirect($app['url_generator']->generate('admin_sections'));
+//         }
+//     }
 
-    /* Render the edit section form */
-    return $app['twig']->render('admin/locations/sections/edit.twig.html', array(
-        "errors"   => $errors,
-        "section" => $section
-    ));
+//     /* Render the edit section form */
+//     return $app['twig']->render('admin/locations/sections/edit.twig.html', array(
+//         "errors"   => $errors,
+//         "section" => $section
+//     ));
 
-})->assert('id', '\d+')
- ->before($admin_login_check)
- ->bind('admin_sections_edit');
+// })->assert('id', '\d+')
+//  ->before($admin_login_check)
+//  ->bind('admin_sections_edit');
 
 
 return $routes;

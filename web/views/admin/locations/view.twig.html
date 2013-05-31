@@ -22,7 +22,7 @@
     <table>
       <tr>
         <td>
-          <a href="{{ path('admin_sections_create') }}" class="btn"><i class="icon-plus"></i> Add new section</a>
+          <a href="{{ path('admin_section_create', {id:location.id}) }}" class="btn"><i class="icon-plus"></i> Add new section</a>
           <a href="{{ path('admin_patrols_one', {location_id:location.id}) }}" class="btn"><i class="icon-eye-open"></i> View Patrols </a> 
           <a href="{{ path('admin_export_data', {id:location.id}) }}" class="btn"><i class="icon-download"></i> Export Data</a>
         </td>

@@ -24,6 +24,7 @@
                             <li><a href="{{ path('admin_locations') }}">Locations</a></li>
                             <li><a href="{{ path('admin_patrols_all') }}">Patrols</a></li>
                             <li><a href="{{ path('admin_graphs') }}">Graphs</a></li>
+                            <li><a href="{{ path('admin_datasheets_list') }}">Data Fields</a></li>
 							<li><a href="{{ path('admin_logout') }}">Logout</a></li>
 						</ul>
 					</div>
@@ -36,8 +37,6 @@
 		{% block scripts %}
 		<script src="http://code.jquery.com/jquery-latest.js"></script>
 		<script src="web/js/bootstrap.js"></script>
-		<script src="web/js/Chart.min.js"></script> 
-		<script src="web/js/graphs.js"></script>
 		{% endblock %}
 	</body>
 </html>

@@ -16,6 +16,20 @@
           {% endif %}
         </div>
       </div>
+      <div class="control-group {% if errors.datasheet is defined %} error {% endif %}">
+        <label class="control-label" for="datasheet">Datasheet:</label>
+        <div class="controls">
+          <select name="datasheet" id="datasheet">
+            <option value="" selected>Select a datasheet</option>
+            {% for datasheet in datasheets %}
+            <option value="{{datasheet.id}}">{{datasheet.name}}</option>
+            {% endfor %}
+          </select>
+          {% if errors.datasheet is defined %}
+          <span class="help-inline">{{ errors.datasheet }}</span>
+          {% endif %}
+        </div>
+      </div>
       <div class="form-actions">
         <button type="submit" class="btn btn-primary">Create location</button>
         <a href="{{ path('admin_locations') }}" class="btn">Cancel</a>

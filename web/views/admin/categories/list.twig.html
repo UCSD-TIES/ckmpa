@@ -1,0 +1,32 @@
+{% extends 'admin/base.twig.html' %}
+
+{% block title %}Select a category{% endblock %}
+
+{% block content %}
+<div class="span12">
+    <h1>Categories for {{datasheet.name}}</h1>
+    {% if categories %}
+    <table class="table table-hover">
+        {% for category in categories %}
+        <tr>
+          <td>
+            <a href="{{ path( 'admin_fields_list', {datasheet_id:datasheet.id, category_id:category.id})}}">
+              {{ category.name }}
+            </a>
+          </td>
+          <td>
+            <a href="{{ path('admin_category_edit', {datasheet_id:datasheet.id, category_id:category.id})}}"><i class="icon-edit"></i></a> 
+            <a href="{{ path('admin_category_delete', {datasheet_id:datasheet.id, category_id:category.id})}}"><i class="icon-trash"></i></a>
+          </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
+    <div>
+        <a href="{{ path('admin_category_create', {datasheet_id:datasheet.id}) }} " class="btn"><i class="icon-plus"></i> Create new category</a>
+    </div>
+    
+          
+</div>
+{% endblock %}
