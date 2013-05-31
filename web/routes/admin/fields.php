@@ -27,7 +27,6 @@ $routes->get('/{datasheet_id}/{category_id}/', function($datasheet_id, $category
         $category = $datasheet->categories()->find_one($category_id);
 
         $fields = $category->entries()->find_many();
-        
 
         /* Display the list of fields */
         return $app['twig']->render('admin/fields/list.twig.html', array(
@@ -35,175 +34,169 @@ $routes->get('/{datasheet_id}/{category_id}/', function($datasheet_id, $category
             'category' => $category,
             'fields' => $fields
         ));
-        
 
 })->assert('datasheet_id', '\d+')
   ->assert('category_id', '\d+')
   ->before($admin_login_check)
   ->bind('admin_fields_list');
 
-// /*
-//  * Display a specific location's sections
-//  */
-// $routes->get('/{datasheet_id}/{category_id}/', function($datasheet_id, $category_id) use ($app){
+$routes->match('/{datasheet_id}/{category_id}/create/', 
+          function(Request $request, $datasheet_id, $category_id) use ($app){
 
-//     $datasheet = $app['paris']->getModel('Coastkeeper\Datasheet')->find_one($datasheet_id);
-//     $category = $datasheet->categories()->find_one($category_id);
+    /* Errors */
+    $errors = array();
 
-//     /* Get information on a certain location */
-//     return $app['twig']->render('admin/fields/category_view.twig.html', array(
-//         "category" => $category,
-//         "fields" => $fields
-//     )); 
+    $datasheet = $app['paris']->getModel('Coastkeeper\Datasheet')->find_one($datasheet_id);
+    $category = $datasheet->categories()->find_one($category_id);
 
-// })->assert('id','\d+')
-//   ->before($admin_login_check)
-//   ->bind('admin_category_view');
+    if('POST' == $request->getMethod() && $category)
+    {
 
+        $field_name = $request->get('field_name');
 
-$routes->match('/{datasheet_id}/{category_id}/create/', function(Request $request, $datasheet_id, $category_id) use ($app){
+        /* Validity Checks. */
 
-	/* Errors */
-	$errors = array();
-
-	if('POST' == $request->getMethod())
-	{
-
-		$category_name = $request->get('category_name');
-
-		/* Validity Checks. */
-
-            /* Location name cannot be blank */
-            if( empty($category_name) )
+            /* field name cannot be blank */
+            if( empty($field_name) )
             {
-                    $errors['category_name'] = "Please enter an name for the new location";
+                    $errors['field_name'] = "Please enter an name for the new field";
             }
 
         /* Name must be unique */
-        if( $app['paris']->getModel('Coastkeeper\Location')
-                                      ->where_equal('name', $category_name)
-                                      ->find_one()) {
-          $errors['category_name'] = "There is already a location with that name";
+        if( $category->entries()->where_equal('name', $field_name)->find_one()) {
+          $errors['field_name'] = "There is already a field with that name";
         }
 
-		/* If everything is ok, create the new location */
-		if(count($errors) <= 0)
-		{
-			$category = $app['paris']->getModel('Coastkeeper\category')->create();
-			$category->name = $category_name;
-                        $category->coastkeeper_datasheet_id = 1;
+        /* If everything is ok, create the new field */
+        if(count($errors) <= 0)
+        {
+            $field = $category->entries()->create();
+            $field->name = $field_name;
+            $field->coastkeeper_datasheet_category_id = $category->id;
+            $field->use_report = 0;
 
-			$category->save();
+            $field->save();
 
-			return $app->redirect($app['url_generator']->generate('admin_locations'));
-		}
+            return $app->redirect($app['url_generator']
+                          ->generate('admin_fields_list', 
+                                     array(
+                                      'datasheet_id' => $datasheet_id,
+                                      'category_id' => $category_id
+                                    )));
+        }
 
-	}
+    }
 
-	/* Render the create form. */
-	return $app['twig']->render('admin/fields/create.twig.html', array(
-		"errors" => $errors,
-	));
+    /* Render the create form. */
+    return $app['twig']->render('admin/fields/create.twig.html', array(
+        "errors" => $errors,
+        "datasheet" => $datasheet,
+        "category" => $category
+    ));
 
 })->assert('datasheet_id', '\d+')
   ->assert('category_id', '\d+')
   ->before($admin_login_check)
   ->bind('admin_field_create');
 
-// $routes->match( '/{id}/delete/', function( REQUEST $request, $id ) use ( $app ) {
+$routes->match( '/{datasheet_id}/{category_id}/{field_id}/edit/', 
+          function( REQUEST $request, $datasheet_id, $category_id, $field_id ) use ( $app ) {
 
-//     /* get the location */
-//     $location = $app['paris']->getModel('Coastkeeper\Location')->find_one($id);
+    /* Array for errors */
+    $errors = array();
 
-//     if( 'POST' == $request->getMethod() && $location ) {
+    /* get the datasheet */
+    $datasheet = $app['paris']->getModel('Coastkeeper\Datasheet')->find_one($datasheet_id);
+    $category = $datasheet->categories()->find_one($category_id);
+    $field = $category->entries()->find_one($field_id);
 
-//         // check for delete approval
-//         if( $request->get('approve_delete')) {
+    if( 'POST' == $request->getMethod() && $category && $field ) {
 
-//             /* Delete the location */
-//             $location->delete();
+        /* Get the user input */
+        $field_name = $request->get('field_name');
 
-//             /* Return to the locations list */
-//             return $app->redirect( $app['url_generator']->generate('admin_locations'));
-//         }
+        /*
+         * Validity checks
+         */
 
-//     }
+        /* field name cannot be blank */
+        if( empty($field_name) )
+        {
+            $errors['field_name'] = "Please enter an name for the field";
+        }
 
-//     /* display delete confirmation form */
-//     return $app['twig']->render('admin/locations/delete.twig.html', array(
-//         "location" => $location
-//     ));
+        /* Name must be unique */
+        if( $category->entries()->where_equal('name', $field_name)->find_one()) {
+            $errors['field_name'] = "There is already a field with that name";
+        }
 
-// })->assert('id','\d+')
-//     ->before( $admin_login_check )
-//     ->bind('admin_locations_delete');
+        /* If everything is ok, update the field */
+        if(count($errors) <= 0)
+        {
+            $field->name = $field_name;
 
-// $routes->match( '/{id}/edit/', function( REQUEST $request, $id ) use ( $app ) {
+            /* Update the field */
+            $field->save();
 
-//     /* Array for errors */
-//     $errors = array();
+            return $app->redirect($app['url_generator']
+              ->generate('admin_fields_list', 
+                         array(
+                          'datasheet_id' => $datasheet_id,
+                          'category_id' => $category_id
+                        )));
+        }
+    }
 
-//     /* get the location */
-//     $location = $app['paris']->getModel('Coastkeeper\Location')->find_one($id);
+    /* Render the edit fields form */
+    return $app['twig']->render('admin/fields/edit.twig.html', array(
+        "errors"   => $errors,
+        "datasheet" => $datasheet,
+        "category" => $category
+    ));
 
-//     if( 'POST' == $request->getMethod() && $location ) {
+})->assert('datasheet_id', '\d+')
+  ->assert('category_id', '\d+')
+  ->assert('field_id', '\d+')
+  ->before($admin_login_check)
+  ->bind('admin_field_edit');
 
-//         /* Get the user input */
-//         $location_name = $request->get('location_name');
+ $routes->match( '/{datasheet_id}/{category_id}/{field_id}/delete/', 
+            function( REQUEST $request, $datasheet_id, $category_id, $field_id) use ( $app ) {
 
-//         /*
-//          * Validity checks
-//          */
+    /* get the category */
+    $datasheet = $app['paris']->getModel('Coastkeeper\Datasheet')->find_one($datasheet_id);
+    $category = $datasheet->categories()->find_one($category_id);
+    $field = $category->entries()->find_one($field_id);
 
-//         /* Location name cannot be blank */
-//         if( empty($location_name) )
-//         {
-//             $errors['location_name'] = "Please enter an name for the location";
-//         }
+    if( 'POST' == $request->getMethod() && $field ) {
 
-//         /* Name must consist of letters and numbers */
-//         if( !empty($location_name) && !ctype_alnum($location_name) ) {
-//           $errors['location_name'] = "Please use only letters and/or numbers for the location's name";
-//         }
+        // check for delete approval
+        if( $request->get('approve_delete')) {
 
-//         /* Name must be unique */
-//         if( $app['paris']->getModel('Coastkeeper\Location')
-//                                       ->where_equal('name', $location_name)
-//                                       ->find_one()) {
-//             $errors['location_name'] = "There is already a location with that name";
-//         }
+            /* Delete the field */
+            $field->delete();
 
-//         /* If everything is ok, update the location */
-//         if(count($errors) <= 0)
-//         {
-//             $location->name = $location_name;
+            /* Return to the fields list */
+            return $app->redirect($app['url_generator']
+              ->generate('admin_fields_list', 
+                         array(
+                          'datasheet_id' => $datasheet_id,
+                          'category_id' => $category_id
+                        )));
+        }
+    }
 
-//             /* Update the location */
-//             $location->save();
+    /* display delete confirmation form */
+    return $app['twig']->render('admin/fields/delete.twig.html', array(
+        "datasheet" => $datasheet,
+        "category" => $category,
+        "field" => $field
+    ));
 
-
-//             $locations = $app['paris']->getModel('Coastkeeper\Location')->find_many();
-
-//             return $app->redirect($app['url_generator']->generate('admin_locations'));
-//         }
-//     }
-
-//     /* Render the edit locations form */
-//     return $app['twig']->render('admin/locations/edit.twig.html', array(
-//         "errors"   => $errors,
-//         "location" => $location
-//     ));
-
-// })->assert('id', '\d+')
-//  ->before($admin_login_check)
-//  ->bind('admin_locations_edit');
+})->assert('datasheet_id','\d+')
+  ->assert('category_id', '\d+')
+  ->assert('field_id', '\d+')
+  ->before( $admin_login_check )
+   ->bind('admin_field_delete');
 
 return $routes;
-
-function array_pshift(&$array) {
-    $keys = array_keys($array);
-    $key = array_shift($keys);
-    $element = $array[$key];
-    unset($array[$key]);
-    return $element;
-} 
