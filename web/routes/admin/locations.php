@@ -61,6 +61,11 @@ $routes->match('/create/', function(Request $request) use ($app){
 
 		$location_name = $request->get('location_name');
 
+        $datasheet = $request->get('datasheet');
+        $datasheet = $app['paris']->getModel('Coastkeeper\Datasheet')
+                                    ->where_equal('id', $datasheet)
+                                    ->find_one();
+
 		/* Validity Checks. */
 
             /* Location name cannot be blank */
@@ -76,12 +81,16 @@ $routes->match('/create/', function(Request $request) use ($app){
           $errors['location_name'] = "There is already a location with that name";
         }
 
+        if (!$datasheet) {
+            $errors['datasheet'] = "That datasheet doesn't exist";
+        }
+
 		/* If everything is ok, create the new location */
 		if(count($errors) <= 0)
 		{
 			$location = $app['paris']->getModel('Coastkeeper\Location')->create();
 			$location->name = $location_name;
-                        $location->coastkeeper_datasheet_id = 1;
+                        $location->coastkeeper_datasheet_id = $datasheet->id;
 
 			$location->save();
 
@@ -92,12 +101,16 @@ $routes->match('/create/', function(Request $request) use ($app){
 
 	}
 
+    $datasheets = $app['paris']->getModel('Coastkeeper\Datasheet')->find_many();
+
 	/* Render the create form. */
 	return $app['twig']->render('admin/locations/create.twig.html', array(
 		"errors" => $errors,
+        "datasheets" => $datasheets
 	));
 
-})->before($admin_login_check)->bind('admin_locations_create');
+})->before($admin_login_check)
+  ->bind('admin_locations_create');
 
 $routes->match( '/{id}/delete/', function( REQUEST $request, $id ) use ( $app ) {
 
