@@ -11,7 +11,7 @@
         <tr>
           <td>{{ field.name }}</td>
           <td>
-            <a href=""><i class="icon-edit"></i></a> 
+            <a href="{{ path('admin_field_edit', {datasheet_id:datasheet.id, category_id:category.id, field_id:field.id}) }}"><i class="icon-edit"></i></a> 
             <a href=""><i class="icon-trash"></i></a>
           </td>
         </tr>

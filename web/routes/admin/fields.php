@@ -151,7 +151,8 @@ $routes->match( '/{datasheet_id}/{category_id}/{field_id}/edit/',
     return $app['twig']->render('admin/fields/edit.twig.html', array(
         "errors"   => $errors,
         "datasheet" => $datasheet,
-        "category" => $category
+        "category" => $category,
+        "field" => $field
     ));
 
 })->assert('datasheet_id', '\d+')
