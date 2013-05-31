@@ -4,17 +4,12 @@
 
 {% block content %}
 <div class="span12">
-    <h1>Data Fields</h1>
-    {% if data %}
+    <h1>{{datasheet.name}} - {{category.name}}</h1>
+    {% if fields %}
     <table class="table table-hover">
+        {% for field in fields %}
         <tr>
-          <th>Data Field</th>
-          <th colspan="2" >Category</th>
-        </tr>
-        {% for field in data %}
-        <tr>
-          <td>{{ field.entry.name }}</td>
-          <td>{{ field.category.name }}</td>
+          <td>{{ field.name }}</td>
           <td>
             <a href=""><i class="icon-edit"></i></a> 
             <a href=""><i class="icon-trash"></i></a>
@@ -25,8 +20,7 @@
     {% endif %}
 
     <div>
-        <a href="" class="btn"><i class="icon-plus"></i> Create new field category</a>
-        <a href="" class="btn"><i class="icon-plus"></i> Create new field</a>
+        <a href="{{ path('admin_field_create', {datasheet_id:datasheet.id, category_id:category.id}) }} " class="btn"><i class="icon-plus"></i> Create new field</a>
     </div>
     
           

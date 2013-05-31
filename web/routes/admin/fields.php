@@ -11,113 +11,104 @@ use Symfony\Component\HttpFoundation\Session;
 
 $routes = $app['controllers_factory'];
 
+require_once __DIR__ . '/datasheet.php';
+require_once __DIR__ . '/categories.php';
+
 /* NOTE: $admin_login_check is defined in admin.php */
 
 /*
 	MPA (Locations) Management
  */
-$routes->get('/', function() use ($app){
+$routes->get('/{datasheet_id}/{category_id}/', function($datasheet_id, $category_id) use ($app){
 
         $data = array();
 
-        /* Get a list of mpas */
-        $datasheets = $app['paris']->getModel('Coastkeeper\Datasheet')->find_many();
+        $datasheet = $app['paris']->getModel('Coastkeeper\Datasheet')->find_one($datasheet_id);
+        $category = $datasheet->categories()->find_one($category_id);
 
-        foreach ($datasheets as $sheet) {
-            $categories = $sheet->categories()->find_many();
-
-            foreach ($categories as $category) {
-                $entries = $category->entries()->find_many();
-
-                foreach ($entries as $entry) {
-                    $fields = array();
-                    $fields["category"] = $category;
-                    $fields["entry"] = $entry;
-
-                    array_push($data, $fields);
-                }
-
-            }
-
-        }
+        $fields = $category->entries()->find_many();
+        
 
         /* Display the list of fields */
         return $app['twig']->render('admin/fields/list.twig.html', array(
-            'data'     => $data
+            'datasheet' => $datasheet,
+            'category' => $category,
+            'fields' => $fields
         ));
         
 
-})->before($admin_login_check)->bind('admin_fields');
+})->assert('datasheet_id', '\d+')
+  ->assert('category_id', '\d+')
+  ->before($admin_login_check)
+  ->bind('admin_fields_list');
 
 // /*
 //  * Display a specific location's sections
 //  */
-// $routes->get('/{id}/', function($id) use ($app){
+// $routes->get('/{datasheet_id}/{category_id}/', function($datasheet_id, $category_id) use ($app){
 
-//     /* Find the sections with the same coastkeeper_location_id and send it to the template. */
-//     $location = $app['paris']->getModel('Coastkeeper\Location')->find_one($id);
-
-//     $section = $app['paris']->getModel('Coastkeeper\Section')
-//         ->where_equal('coastkeeper_location_id', $id)
-//         ->find_many();
+//     $datasheet = $app['paris']->getModel('Coastkeeper\Datasheet')->find_one($datasheet_id);
+//     $category = $datasheet->categories()->find_one($category_id);
 
 //     /* Get information on a certain location */
-//     return $app['twig']->render('admin/locations/view.twig.html', array(
-//         "section" => $section,
-//         "location" => $location
+//     return $app['twig']->render('admin/fields/category_view.twig.html', array(
+//         "category" => $category,
+//         "fields" => $fields
 //     )); 
 
 // })->assert('id','\d+')
 //   ->before($admin_login_check)
-//   ->bind('admin_locations_view');
+//   ->bind('admin_category_view');
 
-// $routes->match('/create/', function(Request $request) use ($app){
 
-// 	/* Errors */
-// 	$errors = array();
+$routes->match('/{datasheet_id}/{category_id}/create/', function(Request $request, $datasheet_id, $category_id) use ($app){
 
-// 	if('POST' == $request->getMethod())
-// 	{
+	/* Errors */
+	$errors = array();
 
-// 		$location_name = $request->get('location_name');
+	if('POST' == $request->getMethod())
+	{
 
-// 		/* Validity Checks. */
+		$category_name = $request->get('category_name');
 
-//             /* Location name cannot be blank */
-//             if( empty($location_name) )
-//             {
-//                     $errors['location_name'] = "Please enter an name for the new location";
-//             }
+		/* Validity Checks. */
 
-//         /* Name must be unique */
-//         if( $app['paris']->getModel('Coastkeeper\Location')
-//                                       ->where_equal('name', $location_name)
-//                                       ->find_one()) {
-//           $errors['location_name'] = "There is already a location with that name";
-//         }
+            /* Location name cannot be blank */
+            if( empty($category_name) )
+            {
+                    $errors['category_name'] = "Please enter an name for the new location";
+            }
 
-// 		/* If everything is ok, create the new location */
-// 		if(count($errors) <= 0)
-// 		{
-// 			$location = $app['paris']->getModel('Coastkeeper\Location')->create();
-// 			$location->name = $location_name;
-//                         $location->coastkeeper_datasheet_id = 1;
+        /* Name must be unique */
+        if( $app['paris']->getModel('Coastkeeper\Location')
+                                      ->where_equal('name', $category_name)
+                                      ->find_one()) {
+          $errors['category_name'] = "There is already a location with that name";
+        }
 
-// 			$location->save();
+		/* If everything is ok, create the new location */
+		if(count($errors) <= 0)
+		{
+			$category = $app['paris']->getModel('Coastkeeper\category')->create();
+			$category->name = $category_name;
+                        $category->coastkeeper_datasheet_id = 1;
 
-//             $locations = $app['paris']->getModel('Coastkeeper\Location')->find_many();
+			$category->save();
 
-// 			return $app->redirect($app['url_generator']->generate('admin_locations'));
-// 		}
+			return $app->redirect($app['url_generator']->generate('admin_locations'));
+		}
 
-// 	}
+	}
 
-// 	/* Render the create form. */
-// 	return $app['twig']->render('admin/locations/create.twig.html', array(
-// 		"errors" => $errors,
-// 	));
+	/* Render the create form. */
+	return $app['twig']->render('admin/fields/create.twig.html', array(
+		"errors" => $errors,
+	));
 
-// })->before($admin_login_check)->bind('admin_locations_create');
+})->assert('datasheet_id', '\d+')
+  ->assert('category_id', '\d+')
+  ->before($admin_login_check)
+  ->bind('admin_field_create');
 
 // $routes->match( '/{id}/delete/', function( REQUEST $request, $id ) use ( $app ) {
 
