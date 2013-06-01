@@ -258,7 +258,7 @@ $routes->match('{id}/create/', function(Request $request, $id) use ($app){
     }
 
     /* Render the create form. */
-    return $app['twig']->render('admin/locations/sections/section_create.twig.html', array(
+    return $app['twig']->render('admin/sections/create.twig.html', array(
         "errors" => $errors,
         "section" => $section,
         "location" => $location
@@ -266,11 +266,11 @@ $routes->match('{id}/create/', function(Request $request, $id) use ($app){
 
 })->assert('id', '\d+')
   ->before($admin_login_check)
-  ->bind('admin_section_create');
+  ->bind('admin_sections_create');
 
 
 /////////////// DELETE section ROUTE /////////////
-$routes->match( '/{id}/{section_id}/section_delete/', function( REQUEST $request, $id, $section_id ) use ( $app ) {
+$routes->match( '/{id}/{section_id}/delete/', function( REQUEST $request, $id, $section_id ) use ( $app ) {
 
      /* get the location */
     $location = $app['paris']->getModel('Coastkeeper\Location')->find_one($id);
@@ -293,7 +293,7 @@ $routes->match( '/{id}/{section_id}/section_delete/', function( REQUEST $request
     }
 
     /* display delete confirmation form */
-    return $app['twig']->render('admin/locations/sections/section_delete.twig.html', array(
+    return $app['twig']->render('admin/sections/delete.twig.html', array(
         "section" => $section,
         "location" => $location
     ));
@@ -304,7 +304,7 @@ $routes->match( '/{id}/{section_id}/section_delete/', function( REQUEST $request
 
 
 //////////////// EDIT section ROUTE ////////////////////////
-    $routes->match( '/{id}/{section_id}/section_edit/', function( REQUEST $request, $id, $section_id ) use ( $app ) {
+    $routes->match( '/{id}/{section_id}/edit/', function( REQUEST $request, $id, $section_id ) use ( $app ) {
 
     /* Array for errors */
     $errors = array();
@@ -358,7 +358,7 @@ $routes->match( '/{id}/{section_id}/section_delete/', function( REQUEST $request
     }
 
     /* Render the edit locations form */
-    return $app['twig']->render('admin/locations/sections/section_edit.twig.html', array(
+    return $app['twig']->render('admin/sections/edit.twig.html', array(
         "errors"   => $errors,
         "section" => $section,
         "location" => $location
@@ -367,40 +367,5 @@ $routes->match( '/{id}/{section_id}/section_delete/', function( REQUEST $request
 })->assert('id', '\d+')
  ->before($admin_login_check)
  ->bind('admin_sections_edit');
-
-//////////// VIEW a SECTION's Patrols  //////////////////
-
-$routes->match( '/{id}/section_view/', function( REQUEST $request, $id ) use ( $app ) {
-//$routes->get('/{id}/{section_id}/section_view/', function($id, $section_id) use ($app){
-
-    $volunteer = $app['paris']->getModel('Coastkeeper\Volunteer')->find_many();
-
-    $patrol = $app['paris']->getModel('Coastkeeper\Patrol')
-                                        ->where_equal('coastkeeper_location_id', $id)
-                                        ->find_many();
-
-    $location = $app['paris']->getModel('Coastkeeper\Location')->find_one($id);
-
-    $patrolEntry = $app['paris']->getModel('Coastkeeper\Location')->find_many();
-
-    
-
-       
-    /*$section = $app['paris']->getModel('Coastkeeper\Section')
-        ->where_equal('coastkeeper_location_id', $id)
-        ->find_many();
-*/
-
-    /* Get information on a certain section */
-    return $app['twig']->render('admin/locations/sections/section_view.twig.html', array(
-        "patrol" => $patrol,
-        "location" => $location,
-        "volunteer" => $volunteer,
-	"patrolEntry" => $patrolEntry
-    )); 
-
-})->assert('id','\d+')
-  ->before($admin_login_check)
-  ->bind('admin_sections_view');
 
 return $routes;
