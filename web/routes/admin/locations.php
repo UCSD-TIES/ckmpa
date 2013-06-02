@@ -114,10 +114,18 @@ $routes->match('/create/', function(Request $request) use ($app){
 
 $routes->match( '/{id}/delete/', function( REQUEST $request, $id ) use ( $app ) {
 
+    $errors = array();
+
     /* get the location */
     $location = $app['paris']->getModel('Coastkeeper\Location')->find_one($id);
 
-    if( 'POST' == $request->getMethod() && $location ) {
+    $sections = $location->sections()->find_many();
+
+    if ($sections) {
+        $errors['location_delete'] = "This location still has sections attached. Delete all sections first.";
+    }
+
+    if( 'POST' == $request->getMethod() && $location && count($errors) <= 0 ) {
 
         // check for delete approval
         if( $request->get('approve_delete')) {
@@ -133,7 +141,8 @@ $routes->match( '/{id}/delete/', function( REQUEST $request, $id ) use ( $app ) 
 
     /* display delete confirmation form */
     return $app['twig']->render('admin/locations/delete.twig.html', array(
-        "location" => $location
+        "location" => $location,
+        "errors" => $errors
     ));
 
 })->assert('id','\d+')

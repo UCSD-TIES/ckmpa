@@ -10,11 +10,20 @@
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         <strong>Warning!</strong> This action cannot be undone!
     </div>
+     {% if errors.location_delete is defined %}
+        <div class="alert alert-error">
+            <button type="button" class="close" data-dismiss="error">&times;</button>
+            <strong>Error!</strong> {{errors.location_delete}}
+        </div>
+        <a href="{{path('admin_locations_view', {id:location.id})}}" class="btn">View sections</a>
+        <a href="{{path('admin_locations')}}" class="btn">Back to all locations</a>
+     {% else %}
     <form action="{{ path('admin_locations_delete', {id:location.id}) }}" method="POST">
         <input type="hidden" name="approve_delete" value="1">
         <button type="submit" class="btn btn-danger">Yes, delete {{location.name}}</button>
         <a href="{{ path('admin_locations') }}" class="btn">Cancel</a>
     </form>
+    {% endif %}
 {% else %}
     <h1>This location doesn't exist</h1>
     <a href="{{ path('admin_locations') }}" class="btn btn-primary">
