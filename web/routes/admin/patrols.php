@@ -12,48 +12,6 @@ use Symfony\Component\HttpFoundation\Session;
 
 $routes = $app['controllers_factory'];
 
-// /*
-//  * Route to display all patrols
-//  */
-// $routes->get('/', function() use ($app) {
-// 	$patrols = array();
-// 	$locations = $app['paris']->getModel('Coastkeeper\Location')->find_many();
-
-// 	foreach ($locations as $location) {
-// 		$sections = $location->sections()->find_many();
-
-// 		foreach ($sections as $section) {
-// 			$patrol_entries = $section->patrol_entry()->find_many();
-
-// 			foreach ($patrol_entries as $patrol_entry) {
-// 				$data = array();
-// 				$patrol = $patrol_entry->patrol()->find_one();
-
-// 				$volunteer = $patrol->volunteer()->find_one();
-
-// 				if ($volunteer) {
-// 					$data['volunteer'] = $volunteer->first_name . ' ' . $volunteer->last_name;
-// 				}
-
-// 				$data['id'] 	   = $patrol_entry->id;
-// 				$data['location']  = $location;
-// 				$data['section']   = $section;
-// 				$data['date']      = $patrol->date;
-// 				$data['finished']  = $patrol->finished;
-
-
-// 				array_push($patrols, $data);
-// 			}
-// 		}
-// 	}
-
-// 	/* Render the html file, passing in the values */
-// 	return $app['twig']->render('admin/patrols/list.twig.html', array(
-// 		'patrols' => $patrols,
-// 	));
-// })->before($admin_login_check)
-//   ->bind('admin_patrols_all');
-
 /*
  * Route to display all patrols
  */
@@ -81,20 +39,6 @@ $routes->get('/{location_id}/', function($location_id) use ($app) {
   ->before($admin_login_check)
   ->bind('admin_patrols_entries_locations_list');
 
-$routes->get('/{section_id}/', function($section_id) use ($app) {
-	$patrols = $app['paris']->getModel('Coastkeeper\Patrol')
-					->where_equals('section_id', $section_id)
-					->find_many();
-
-	/* Render the html file, passing in the values */
-	return $app['twig']->render('admin/patrols/list.twig.html', array(
-		'patrols' => $patrols,
-	));
-	
-})->assert('section_id', '\d+')
-  ->before($admin_login_check)
-  ->bind('admin_patrols_entries_sections_list');
-
 /*
  * Route to display a patrols entries
  */
@@ -120,8 +64,6 @@ $routes->get('/{patrol_id}', function($patrol_id) use ($app) {
  * Route to display a patrols entries
  */
 $routes->get('/{patrol_id}/{entry_id}', function($patrol_id, $entry_id) use ($app) {
-
-
 
 	$patrol = $app['paris']->getModel('Coastkeeper\Patrol')->find_one($patrol_id);
 
