@@ -22,7 +22,7 @@ $routes->get('/', function(Request $request) use ($app){
 
 
     /* Render the html file, passing in the values */
-	return $app['twig']->render('admin/graphs/create.twig.html', array(
+	return $app['twig']->render('admin/graphs/view.twig.html', array(
 		'datasheets' => $datasheets
 	));
         
