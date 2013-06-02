@@ -62,10 +62,12 @@ $routes->get('/data', function(Request $request) use ($app) {
 
 				foreach($tallies as $tally) {
 					if ($tally->tally === "1") {
-						if (array_key_exists($tally->coastkeeper_datasheet_entry_id, $data)) {
-							$data[$tally->coastkeeper_datasheet_entry_id] += 1;
+						$datasheet_entry = $tally->datasheet_entry()->find_one();
+
+						if (array_key_exists($datasheet_entry->name , $data)) {
+							$data[$datasheet_entry->name ] += 1;
 						} else {
-							$data[$tally->coastkeeper_datasheet_entry_id] = 1;
+							$data[$datasheet_entry->name ] = 1;
 						}
 					}
 				}
