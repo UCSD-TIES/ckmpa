@@ -132,12 +132,19 @@ $routes->match( '/{datasheet_id}/{category_id}/edit/', function( REQUEST $reques
   ->bind('admin_category_edit');
 
  $routes->match( '/{datasheet_id}/{category_id}/delete/', function( REQUEST $request, $datasheet_id, $category_id) use ( $app ) {
+    $errors = array();
 
     /* get the category */
     $datasheet = $app['paris']->getModel('Coastkeeper\Datasheet')->find_one($datasheet_id);
     $category = $datasheet->categories()->find_one($category_id);
 
-    if( 'POST' == $request->getMethod() && $category ) {
+    $fields = $category->entries()->find_many();
+
+    if ($fields) {
+        $errors['category_delete'] = "There are fields attached to this category. Delete those first.";
+    }
+
+    if( 'POST' == $request->getMethod() && $category && count($errors) <= 0 ) {
 
         // check for delete approval
         if( $request->get('approve_delete')) {
@@ -155,7 +162,8 @@ $routes->match( '/{datasheet_id}/{category_id}/edit/', function( REQUEST $reques
     /* display delete confirmation form */
     return $app['twig']->render('admin/categories/delete.twig.html', array(
         "datasheet" => $datasheet,
-        "category" => $category
+        "category" => $category,
+        "errors" => $errors
     ));
 
 })->assert('datasheet_id','\d+')
