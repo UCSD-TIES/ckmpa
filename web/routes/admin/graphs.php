@@ -38,6 +38,8 @@ $routes->get('/data', function(Request $request) use ($app) {
 	$endMonth = $app['request']->get('endMonth');
 	$endDay = $app['request']->get('endDay');
 
+	$finishedPatrols = $app['request']->get('completePatrol');
+
 	$datasheet_id = $app['request']->get('datasheet');
 
 	$datasheet = $app['paris']->getModel('Coastkeeper\Datasheet')->find_one($datasheet_id);
@@ -57,17 +59,40 @@ $routes->get('/data', function(Request $request) use ($app) {
 				/* Get the parent patrol. */
 				$patrol = $patrol_entry->patrol()->find_one();
 
-				/* Now get all the tallies for this patrol... */
-				$tallies = $patrol_entry->patrol_tallies()->find_many();
+				if ($finishedPatrols) {
 
-				foreach($tallies as $tally) {
-					if ($tally->tally === "1") {
-						$datasheet_entry = $tally->datasheet_entry()->find_one();
+					if ($patrol->finished) {
 
-						if (array_key_exists($datasheet_entry->name , $data)) {
-							$data[$datasheet_entry->name ] += 1;
-						} else {
-							$data[$datasheet_entry->name ] = 1;
+						/* Now get all the tallies for this patrol... */
+						$tallies = $patrol_entry->patrol_tallies()->find_many();
+
+						foreach($tallies as $tally) {
+							if ($tally->tally === "1") {
+
+								$datasheet_entry = $tally->datasheet_entry()->find_one();
+
+								if (array_key_exists($datasheet_entry->name , $data)) {
+									$data[$datasheet_entry->name ] += 1;
+								} else {
+									$data[$datasheet_entry->name ] = 1;
+								}
+							}
+						}
+					}
+				} else {
+					/* Now get all the tallies for this patrol... */
+					$tallies = $patrol_entry->patrol_tallies()->find_many();
+
+					foreach($tallies as $tally) {
+						if ($tally->tally === "1") {
+
+							$datasheet_entry = $tally->datasheet_entry()->find_one();
+
+							if (array_key_exists($datasheet_entry->name , $data)) {
+								$data[$datasheet_entry->name ] += 1;
+							} else {
+								$data[$datasheet_entry->name ] = 1;
+							}
 						}
 					}
 				}
