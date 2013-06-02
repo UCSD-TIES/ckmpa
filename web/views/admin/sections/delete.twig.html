@@ -15,6 +15,10 @@
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         <strong>Warning!</strong> This action cannot be undone!
     </div>
+    <div class="alert">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Warning!</strong> Deleting a section also removes all patrols associated with the section!
+    </div>
     <form action="{{ path('admin_sections_delete', {id:section.coastkeeper_location_id, section_id:section.id}) }}" method="POST">
         <input type="hidden" name="approve_delete" value="1">
         <button type="submit" class="btn btn-danger">Yes, delete {{section.name}}</button>

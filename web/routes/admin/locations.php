@@ -292,6 +292,25 @@ $routes->match( '/{id}/{section_id}/delete/', function( REQUEST $request, $id, $
         // check for delete approval
         if( $request->get('approve_delete')) {
 
+            /* 
+             * We want to remove the patrols associated with the section because
+             * Once the section is removed, there is no way of identifiying what section
+             * a patrol belongs to
+             */
+            $patrol_entries = $section->patrol_entry()->find_many();
+
+            foreach($patrol_entries as $patrol_entry) {
+
+                /* Now get all the tallies for this patrol... */
+                $tallies = $patrol_entry->patrol_tallies()->find_many();
+
+                foreach($tallies as $tally) {
+                    $tally->delete();
+                }
+
+                $patrol_entry->delete();
+            }
+
             /* Delete the location */
             $section->delete();
 
