@@ -10,6 +10,10 @@
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         <strong>Warning!</strong> This action cannot be undone!
     </div>
+    <div class="alert">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Warning!</strong> Deleting a field also removes all patrols associated with the field!
+    </div>
     <form 
         action="{{ path('admin_field_delete', {datasheet_id:datasheet.id, category_id:category.id, field_id:field.id}) }}" 
         method="POST">

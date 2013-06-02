@@ -174,6 +174,22 @@ $routes->match( '/{datasheet_id}/{category_id}/{field_id}/edit/',
         // check for delete approval
         if( $request->get('approve_delete')) {
 
+            /* Delete all patrols, entries and tallies associated with the field */
+            $tallies = $field->patrol_tallies()->find_many();
+
+            foreach( $tallies as $tally ) {
+              $patrol_entry = $tally->patrol_entries()->find_one();
+
+              $patrol = $patrol_entry->patrol()->find_one();
+              if ($patrol) {
+                $patrol->delete();
+              }
+
+              $patrol_entry->delete();
+              $tally->delete();
+
+            }
+
             /* Delete the field */
             $field->delete();
 
