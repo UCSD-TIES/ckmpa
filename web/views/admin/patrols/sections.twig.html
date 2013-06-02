@@ -21,16 +21,11 @@
 
                 <td>
                     {% if patrol.location.find_one %}
-                        <a href="{{ path('admin_patrols_entries_locations_list', {location_id:patrol.location.find_one.id}) }}">
-                            {{ patrol.location.find_one.name }}
-                        </a>
+                        <a href="">{{ patrol.location.find_one.name }}</a></td>
                     {% endif %}
-                </td>
                 <td>
                     {% if patrol.volunteer.find_one %}
-                        <a href="{{ path('admin_volunteer_view', {id:patrol.volunteer.find_one.id}) }}">
-                            {{ patrol.volunteer.find_one.first_name }} {{ patrol.volunteer.find_one.last_name }}
-                        </a>
+                        {{ patrol.volunteer.find_one.first_name }} {{ patrol.volunteer.find_one.last_name }}
                     {% endif %}
                 </td>
                 <td>{% if patrol.finished %}<i class="icon-ok"></i>{% endif %}</td>

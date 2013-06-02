@@ -164,10 +164,13 @@ $routes->get('/{id}/', function($id) use ($app){
 	/* Find all the locations */
 	$locations = $app['paris']->getModel('Coastkeeper\Location')->find_many();
 
+	$patrols = $volunteer->patrols()->find_many();
+
 	/* Get information on a certain volunteer */
 	return $app['twig']->render('admin/volunteers/view.twig.html', array(
 		"volunteer" => $volunteer,
-		"locations" => $locations
+		"locations" => $locations,
+		"patrols" => $patrols
 	));
 
 })->assert('id','\d+')

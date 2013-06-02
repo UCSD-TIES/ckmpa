@@ -20,7 +20,7 @@
 		<tbody>
 			{% for patrol in volunteer.patrols.find_many %}
 			<tr><td>
-				<a href="{{ path('admin_patrol_view', {id:volunteer.id, patrolEntryID:patrol.id, patrol:patrol.id, lid:patrol.coastkeeper_location_id}) }}">
+				<a href="{{ path('admin_patrol_entries_list', {patrol_id:patrol.id }) }}">
 				Patrol on {{ patrol.date }}
 				{% if not patrol.finished %}
 				<small class="uncompleted">(incomplete)</small>
