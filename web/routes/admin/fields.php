@@ -178,16 +178,25 @@ $routes->match( '/{datasheet_id}/{category_id}/{field_id}/edit/',
             $tallies = $field->patrol_tallies()->find_many();
 
             foreach( $tallies as $tally ) {
-              $patrol_entry = $tally->patrol_entries()->find_one();
 
+              /* Grab the patrol entry for this tally */
+              $patrol_entry = $tally->patrol_entry()->find_one();
+
+              /* Grab the patrol for this tally */
               $patrol = $patrol_entry->patrol()->find_one();
-              if ($patrol) {
-                $patrol->delete();
-              }
 
-              $patrol_entry->delete();
+
               $tally->delete();
 
+              /* If there are no tallies left in the patrol entry, remove it */
+              if (!$patrol_entry->patrol_tallies()->find_one()) {
+                $patrol_entry->delete();
+              }
+
+              /* If there are no entries left in the patrol, remove the patrol */
+              if (!$patrol->patrol_entries()->find_one()) {
+                $patrol->delete();
+              }
             }
 
             /* Delete the field */
