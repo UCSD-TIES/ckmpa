@@ -30,82 +30,87 @@ $routes->get('/', function(Request $request) use ($app){
 
 $routes->get('/data', function(Request $request) use ($app) {
 
-	$startYear = $app['request']->get('startYear');
-	$startMonth = $app['request']->get('startMonth');
-	$startDay = $app['request']->get('startDay');
+	$messages = array();
 
-	$endYear = $app['request']->get('endYear');
-	$endMonth = $app['request']->get('endMonth');
-	$endDay = $app['request']->get('endDay');
+	$startDate = $app['request']->get('startDate');
+	$endDate = $app['request']->get('endDate');
+
+	$startDate = DateTime::createFromFormat('m/d/Y', $startDate);
+	$endDate = DateTime::createFromFormat('m/d/Y', $endDate);
 
 	$finishedPatrols = $app['request']->get('completePatrol');
 
 	$datasheet_id = $app['request']->get('datasheet');
 
-	$datasheet = $app['paris']->getModel('Coastkeeper\Datasheet')->find_one($datasheet_id);
+	if (!$datasheet_id) {
+		$messages['errors'] = "Please select a datasheet";
+	}
 
-	$locations = $datasheet->locations()->find_many();
+	if (count($messages) <= 0) {
+		$datasheet = $app['paris']->getModel('Coastkeeper\Datasheet')->find_one($datasheet_id);
+		$locations = $datasheet->locations()->find_many();
+		$data = array();
+		foreach ($locations as $location) {
+			$sections = $location->sections()->find_many();
 
-	$data = array();
-	foreach ($locations as $location) {
-		$sections = $location->sections()->find_many();
+			foreach($sections as $section) {
+				$patrol_entries = $section->patrol_entry()->find_many();
 
-		foreach($sections as $section) {
-			$patrol_entries = $section->patrol_entry()->find_many();
+				/* For each patrol entry, fill out a row */
+				foreach($patrol_entries as $patrol_entry) {
 
-			/* For each patrol entry, fill out a row */
-			foreach($patrol_entries as $patrol_entry) {
+					/* Get the parent patrol. */
+					$patrol = $patrol_entry->patrol()->find_one();
 
-				/* Get the parent patrol. */
-				$patrol = $patrol_entry->patrol()->find_one();
-
-				/* 
-				 * If the finished Patrol filter is on,
-				 * ignore any patrols that arent finished
-				 */
-				if ($finishedPatrols && !$patrol->finished) {
-					continue;
-				}
-
-				/*
-				 * Filter out any patrols not in between the given dates
-				 */
-				if ($startYear && $startMonth && $startDay &&
-					$endYear && $endMonth && $endDay) {
-					
-					$startDate = DateTime::createFromFormat('j-n-Y', $startDay.'-'.$startMonth.'-'.$startYear);
-					$endDate = DateTime::createFromFormat('j-n-Y', $endDay.'-'.$endMonth.'-'.$endYear);
-					$patrolDate = DateTime::createFromFormat('Y-m-d', $patrol->date);
-
-					if( ($patrolDate < $startDate) || ($patrolDate > $endDate) ) {
+					/* 
+					 * If the finished Patrol filter is on,
+					 * ignore any patrols that arent finished
+					 */
+					if ($finishedPatrols && !$patrol->finished) {
 						continue;
 					}
-				}
 
-				/* Now get all the tallies for this patrol... */
-				$tallies = $patrol_entry->patrol_tallies()->find_many();
+					/*
+					 * Filter out any patrols not in between the given dates
+					 */
+					if ($startDate && $endDate) {
 
-				foreach($tallies as $tally) {
-					if ($tally->tally === "1") {
+						$patrolDate = DateTime::createFromFormat('Y-m-d', $patrol->date);
 
-						$datasheet_entry = $tally->datasheet_entry()->find_one();
+						if( ($patrolDate < $startDate) || ($patrolDate > $endDate) ) {
+							continue;
+						}
+					}
 
-						if (array_key_exists($datasheet_entry->name , $data)) {
-							$data[$datasheet_entry->name ] += 1;
-						} else {
-							$data[$datasheet_entry->name ] = 1;
+					/* Now get all the tallies for this patrol... */
+					$tallies = $patrol_entry->patrol_tallies()->find_many();
+
+					foreach($tallies as $tally) {
+						if ($tally->tally === "1") {
+
+							$datasheet_entry = $tally->datasheet_entry()->find_one();
+
+							if (array_key_exists($datasheet_entry->name , $data)) {
+								$data[$datasheet_entry->name ] += 1;
+							} else {
+								$data[$datasheet_entry->name ] = 1;
+							}
 						}
 					}
 				}
 			}
 		}
+
+		return $app->json($data, 201);
 	}
+
+	return $app->json($messages, 201);
 
 	// echo '<pre>';
 	// var_dump($data);
 	// echo '</pre>';
 
-	return $app->json($data, 201);
+
 })->before($admin_login_check)->bind('admin_graphs_data');
 
 

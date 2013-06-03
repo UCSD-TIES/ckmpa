@@ -14,7 +14,7 @@
           <div class="control-group">
             <label class="control-label" for="datasheet">DataSheet</label>
             <div class="controls">
-              <select name="datasheet" id="datasheet">
+              <select name="datasheet" id="datasheet" >
                 <option value="">Select a data source</option>
                 {% for datasheet in datasheets %}
                 <option value="{{datasheet.id}}">{{datasheet.name}}</option>
@@ -23,156 +23,36 @@
             </div>
           </div>
           {% endif %}
-      		 <div class="control-group">
-      		 	<label class="control-label" for="startYear">Start Year</label>
+          <div class="control-group">
+            <label for="startDate" class="control-label">Start Date</label>
             <div class="controls">
-        		 	<select id="startYear" name="startYear" required>
-         				<option value="2012">2012</option>
-          				<option value="2013">2013</option>
-        				<option value="2014">2014</option>
-          				<option value="2015">2015</option>
-        			</select>
+              <input type="text" name="startDate" id="startDate" required>
             </div>
           </div>
           <div class="control-group">
-            <label for="startMonth" class="control-label">Start Month</label>
+            <label for="endDate" class="control-label">End Date</label>
             <div class="controls">
-        			<select id="startMonth" name="startMonth" required>
-         				<option value="1">Jan</option>
-          				<option value="2">Feb</option>
-        				<option value="3">Mar</option>
-          				<option value="4">Apr</option>
-          				<option value="5">May</option>
-          				<option value="6">Jun</option>
-        				<option value="7">Jul</option>
-          				<option value="8">Aug</option>
-          				<option value="9">Sept</option>
-          				<option value="10">Oct</option>
-        				<option value="11">Nov</option>
-          				<option value="12">Dec</option>
-        			</select>
+              <input type="text" id="endDate" name="endDate" required>
             </div>
           </div>
-          <div class="control-group">
-            <label for="startDay" class="control-label">Start Day</label>
-            <div class="controls">
-        			<select id="startDay" name="startDay" required>
-         				<option value="1">1</option>
-          				<option value="2">2</option>
-        				<option value="3">3</option>
-          				<option value="4">4</option>
-          				<option value="5">5</option>
-          				<option value="6">6</option>
-        				<option value="7">7</option>
-          				<option value="8">8</option>
-          				<option value="9">9</option>
-          				<option value="10">10</option>
-        				<option value="11">11</option>
-          				<option value="12">12</option>
-          				<option value="13">13</option>
-          				<option value="14">14</option>
-        				<option value="15">15</option>
-          				<option value="16">16</option>
-          				<option value="17">17</option>
-          				<option value="18">18</option>
-        				<option value="19">19</option>
-          				<option value="20">20</option>
-          				<option value="21">21</option>
-          				<option value="22">22</option>
-        				<option value="23">23</option>
-          				<option value="24">24</option>
-          				<option value="25">25</option>
-          				<option value="26">26</option>
-        				<option value="27">27</option>
-          				<option value="28">28</option>
-          				<option value="29">29</option>
-          				<option value="30">30</option>
-        				<option value="31">31</option>
-        			</select>
-            </div>
-          </div>
-      		<div>
-            <div class="control-group">
-        		 	<label for="endYear" class="control-label">End Year</label>
-              <div class="controls">
-          		 	<select name= "endYear" id="endYear" required>
-           				<option value="2012">2012</option>
-            				<option value="2013">2013</option>
-          				<option value="2014">2014</option>
-            				<option value="2015">2015</option>
-          			</select>
-              </div>
-            </div>
-            <div class="control-group">
-              <label for="endMonth" class="control-label">End Month</label>
-              <div class="controls">
-          			<select name="endMonth" id="endMonth" required>
-           				<option value="1">Jan</option>
-            				<option value="2">Feb</option>
-          				<option value="3">Mar</option>
-            				<option value="4">Apr</option>
-            				<option value="5">May</option>
-            				<option value="6">Jun</option>
-          				<option value="7">Jul</option>
-            				<option value="8">Aug</option>
-            				<option value="9">Sept</option>
-            				<option value="10">Oct</option>
-          				<option value="11">Nov</option>
-            				<option value="12">Dec</option>
-          			</select>
-              </div>
-            </div>
-            <div class="control-group">
-              <label for="endDay" class="control-label">End Day</label>
-              <div class="controls">
-          			<select name = "endDay" required>
-           				<option value="1">1</option>
-            				<option value="2">2</option>
-          				<option value="3">3</option>
-            				<option value="4">4</option>
-            				<option value="5">5</option>
-            				<option value="6">6</option>
-          				<option value="7">7</option>
-            				<option value="8">8</option>
-            				<option value="9">9</option>
-            				<option value="10">10</option>
-          				<option value="11">11</option>
-            				<option value="12">12</option>
-            				<option value="13">13</option>
-            				<option value="14">14</option>
-          				<option value="15">15</option>
-            				<option value="16">16</option>
-            				<option value="17">17</option>
-            				<option value="18">18</option>
-          				<option value="19">19</option>
-            				<option value="20">20</option>
-            				<option value="21">21</option>
-            				<option value="22">22</option>
-          				<option value="23">23</option>
-            				<option value="24">24</option>
-            				<option value="25">25</option>
-            				<option value="26">26</option>
-          				<option value="27">27</option>
-            				<option value="28">28</option>
-            				<option value="29">29</option>
-            				<option value="30">30</option>
-          				<option value="31">31</option>
-          			</select>
-              </div>
-            </div>
-      		</div> 
       		<div class="control-group">
             <label class="checkbox">
       			 <input type="checkbox" name= "completePatrol"> Show Only Completed Patrols</input>
             </label>
       		</div>
       		<div>
-          	<button type="submit" class="btn btn-primary">Create Graph</button>
-          	<a href="{{ path('admin_graphs') }}" class="btn">Cancel</a>
+          	<button type="submit" 
+                    id="create-graphs-btn"
+                    class="btn btn-primary" 
+                    data-loading-text="Generating..." 
+                    autocomplete="off">
+                    Create Graph
+            </button>
+          	<a href="{{ path('admin_graphs') }}" class="btn">Clear</a>
         	</div>
       	</form>  
       </div> 
-      <div class="span8">
+      <div class="span8 chart-container">
     	 <canvas id="myChart" width="620px" height="600px"></canvas>  	
       </div>
     </div>
