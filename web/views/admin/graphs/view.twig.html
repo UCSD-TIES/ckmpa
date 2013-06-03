@@ -167,7 +167,13 @@
             </label>
       		</div>
       		<div>
-          	<button type="submit" class="btn btn-primary">Create Graph</button>
+          	<button type="submit" 
+                    id="create-graphs-btn"
+                    class="btn btn-primary" 
+                    data-loading-text="Generating..." 
+                    autocomplete="off">
+                    Create Graph
+            </button>
           	<a href="{{ path('admin_graphs') }}" class="btn">Cancel</a>
         	</div>
       	</form>  

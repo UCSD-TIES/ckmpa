@@ -1,12 +1,13 @@
 (function() {
 	$('#graphs-form').on('submit', function(e) {
-		$('.chart-error-container').removeClass('alert-error').removeClass('alert-info').hide();
-
 		var graphLabels = [],
 			graphData = [],
-			$this = $(this);
+			$this = $(this),
+			generateBtn = $('#create-graphs-btn');
 			
 		e.preventDefault();
+
+		generateBtn.button('loading');
 
 		console.log($this.attr('action'));
 		$.ajax({
@@ -15,6 +16,8 @@
 			data: $this.serialize(),
 			dataType: "json"
 		}).done(function(data) {
+			generateBtn.button('reset');
+
 			console.log(data);
 
 			if (data.errors) {
@@ -43,7 +46,7 @@
 			closeBtn 		= $(document.createElement('button'))
 								.addClass('close')
 								.attr('data-dismiss', 'alert')
-								.text('X'),
+								.text('x'),
 			msgContainer 	= $(document.createElement('span'))
 								.text(message);
 
