@@ -121,11 +121,16 @@ $routes->match( '/{datasheet_id}/edit/', function( REQUEST $request, $datasheet_
  ->bind('admin_datasheet_edit');
 
  $routes->match( '/{datasheet_id}/delete/', function( REQUEST $request, $datasheet_id ) use ( $app ) {
+    $errors = array();
 
     /* get the datasheet */
     $datasheet = $app['paris']->getModel('Coastkeeper\Datasheet')->find_one($datasheet_id);
 
-    if( 'POST' == $request->getMethod() && $datasheet ) {
+    if ($datasheet->categories()->find_many()) {
+        $errors['datasheet_delete'] = "There are categories attached to this datasheet. Please remove those first";
+    }
+
+    if( 'POST' == $request->getMethod() && $datasheet && count($errors) <= 0) {
 
         // check for delete approval
         if( $request->get('approve_delete')) {
@@ -141,7 +146,8 @@ $routes->match( '/{datasheet_id}/edit/', function( REQUEST $request, $datasheet_
 
     /* display delete confirmation form */
     return $app['twig']->render('admin/datasheets/delete.twig.html', array(
-        "datasheet" => $datasheet
+        "datasheet" => $datasheet,
+        "errors" => $errors
     ));
 
 })->assert('datasheet_id','\d+')

@@ -59,40 +59,34 @@ $routes->get('/data', function(Request $request) use ($app) {
 				/* Get the parent patrol. */
 				$patrol = $patrol_entry->patrol()->find_one();
 
-				if ($finishedPatrols) {
+				/* 
+				 * If the finished Patrol filter is on,
+				 * ignore any patrols that arent finished
+				 */
+				if ($finishedPatrols && !$patrol->finished) {
+					continue;
+				}
 
-					if ($patrol->finished) {
+				/*
+				 * Filter out any patrols not in between the given dates
+				 */
+				if ($startYear && $startMonth && $startDay &&
+					$endYear && $endMonth && $endDay) {
+					
+				}
 
-						/* Now get all the tallies for this patrol... */
-						$tallies = $patrol_entry->patrol_tallies()->find_many();
+				/* Now get all the tallies for this patrol... */
+				$tallies = $patrol_entry->patrol_tallies()->find_many();
 
-						foreach($tallies as $tally) {
-							if ($tally->tally === "1") {
+				foreach($tallies as $tally) {
+					if ($tally->tally === "1") {
 
-								$datasheet_entry = $tally->datasheet_entry()->find_one();
+						$datasheet_entry = $tally->datasheet_entry()->find_one();
 
-								if (array_key_exists($datasheet_entry->name , $data)) {
-									$data[$datasheet_entry->name ] += 1;
-								} else {
-									$data[$datasheet_entry->name ] = 1;
-								}
-							}
-						}
-					}
-				} else {
-					/* Now get all the tallies for this patrol... */
-					$tallies = $patrol_entry->patrol_tallies()->find_many();
-
-					foreach($tallies as $tally) {
-						if ($tally->tally === "1") {
-
-							$datasheet_entry = $tally->datasheet_entry()->find_one();
-
-							if (array_key_exists($datasheet_entry->name , $data)) {
-								$data[$datasheet_entry->name ] += 1;
-							} else {
-								$data[$datasheet_entry->name ] = 1;
-							}
+						if (array_key_exists($datasheet_entry->name , $data)) {
+							$data[$datasheet_entry->name ] += 1;
+						} else {
+							$data[$datasheet_entry->name ] = 1;
 						}
 					}
 				}
