@@ -14,7 +14,7 @@
           <div class="control-group">
             <label class="control-label" for="datasheet">DataSheet</label>
             <div class="controls">
-              <select name="datasheet" id="datasheet">
+              <select name="datasheet" id="datasheet" >
                 <option value="">Select a data source</option>
                 {% for datasheet in datasheets %}
                 <option value="{{datasheet.id}}">{{datasheet.name}}</option>
@@ -172,7 +172,7 @@
         	</div>
       	</form>  
       </div> 
-      <div class="span8">
+      <div class="span8 chart-container">
     	 <canvas id="myChart" width="620px" height="600px"></canvas>  	
       </div>
     </div>
