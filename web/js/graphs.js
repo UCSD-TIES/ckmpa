@@ -1,4 +1,7 @@
 (function() {
+	$('#startDate').datepicker();
+	$('#endDate').datepicker();
+	
 	$('#graphs-form').on('submit', function(e) {
 		var graphLabels = [],
 			graphData = [],

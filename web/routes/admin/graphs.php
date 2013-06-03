@@ -32,13 +32,11 @@ $routes->get('/data', function(Request $request) use ($app) {
 
 	$messages = array();
 
-	$startYear = $app['request']->get('startYear');
-	$startMonth = $app['request']->get('startMonth');
-	$startDay = $app['request']->get('startDay');
+	$startDate = $app['request']->get('startDate');
+	$endDate = $app['request']->get('endDate');
 
-	$endYear = $app['request']->get('endYear');
-	$endMonth = $app['request']->get('endMonth');
-	$endDay = $app['request']->get('endDay');
+	$startDate = DateTime::createFromFormat('m/d/Y', $startDate);
+	$endDate = DateTime::createFromFormat('m/d/Y', $endDate);
 
 	$finishedPatrols = $app['request']->get('completePatrol');
 
@@ -75,11 +73,8 @@ $routes->get('/data', function(Request $request) use ($app) {
 					/*
 					 * Filter out any patrols not in between the given dates
 					 */
-					if ($startYear && $startMonth && $startDay &&
-						$endYear && $endMonth && $endDay) {
-						
-						$startDate = DateTime::createFromFormat('j-n-Y', $startDay.'-'.$startMonth.'-'.$startYear);
-						$endDate = DateTime::createFromFormat('j-n-Y', $endDay.'-'.$endMonth.'-'.$endYear);
+					if ($startDate && $endDate) {
+
 						$patrolDate = DateTime::createFromFormat('Y-m-d', $patrol->date);
 
 						if( ($patrolDate < $startDate) || ($patrolDate > $endDate) ) {
