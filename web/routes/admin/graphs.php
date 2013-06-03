@@ -73,6 +73,13 @@ $routes->get('/data', function(Request $request) use ($app) {
 				if ($startYear && $startMonth && $startDay &&
 					$endYear && $endMonth && $endDay) {
 					
+					$startDate = DateTime::createFromFormat('j-n-Y', $startDay.'-'.$startMonth.'-'.$startYear);
+					$endDate = DateTime::createFromFormat('j-n-Y', $endDay.'-'.$endMonth.'-'.$endYear);
+					$patrolDate = DateTime::createFromFormat('Y-m-d', $patrol->date);
+
+					if( ($patrolDate < $startDate) || ($patrolDate > $endDate) ) {
+						continue;
+					}
 				}
 
 				/* Now get all the tallies for this patrol... */
