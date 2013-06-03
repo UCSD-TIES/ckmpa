@@ -9,9 +9,7 @@
             {% for section in section %}
             <tr>
               <td>
-                <a href="{{ path('admin_patrols', {location_id:section.coastkeeper_location_id, section_id:section.id}) }}"> 
                   {{ section.name }}
-                </a>
               </td>              
               <td>
                 <a href="{{ path('admin_sections_edit', {id:section.coastkeeper_location_id, section_id:section.id}) }}"><i class="icon-edit"></i></a> 
