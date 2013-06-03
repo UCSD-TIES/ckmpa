@@ -23,7 +23,7 @@
 			if (data.errors) {
 				createAlert('error', data.errors);
 			} else {
-				if (data.length > 0) {
+				if (Object.keys(data).length > 0) {
 					$.each(data, function(i, obj) {
 						graphLabels.push(i);
 					    graphData.push(obj);
