@@ -12,6 +12,7 @@ footer {
 
 h1 {
     font-size: 125%;
+    padding-bottom: 20px;
 }
 
 input[type=number]::-webkit-inner-spin-button,
@@ -72,6 +73,63 @@ input[type=number]::-webkit-outer-spin-button {
     bottom: 0px; 
 }
 
+/* UI Modifications */
+
+.errors {
+    text-align: center;
+}
+
+.ui-li {
+    border-width: 1px 1px 0px;
+}
+
+.ui-corner-all {
+    -webkit-border-radius:   .25em /*{global-radii-blocks}*/;
+    border-radius:           .25em /*{global-radii-blocks}*/;
+}
+
+.ui-btn-corner-all {
+    -webkit-border-radius:     .25em /*{global-radii-buttons}*/;
+    border-radius:             .25em /*{global-radii-buttons}*/;
+}
+
+.ui-shadow {
+    -moz-box-shadow: 0 1px 3px /*{global-box-shadow-size}*/             rgba(0,0,0,.1) /*{global-box-shadow-color}*/;
+    -webkit-box-shadow: 0 1px 3px /*{global-box-shadow-size}*/      rgba(0,0,0,.1) /*{global-box-shadow-color}*/;
+    box-shadow: 0 1px 3px /*{global-box-shadow-size}*/              rgba(0,0,0,.1) /*{global-box-shadow-color}*/
+}
+
+.ui-focus,
+.ui-btn:focus {
+    -moz-box-shadow: inset 0 0 3px      #3e74ae /*{global-active-background-color}*/, 0 0 3px       #3e74ae /*{global-active-background-color}*/;
+    -webkit-box-shadow: inset 0 0 3px   #3e74ae /*{global-active-background-color}*/, 0 0 3px       #3e74ae /*{global-active-background-color}*/;
+    box-shadow: inset 0 0 3px           #3e74ae /*{global-active-background-color}*/, 0 0 3px       #3e74ae /*{global-active-background-color}*/;
+}
+
+.ui-input-text.ui-focus,
+.ui-input-search.ui-focus {
+    -moz-box-shadow: 0 0 6px           #3e74ae /*{global-active-background-color}*/;
+    -webkit-box-shadow: 0 0 6px        #3e74ae /*{global-active-background-color}*/;
+    box-shadow: 0 0 6px                    #3e74ae /*{global-active-background-color}*/;
+    background-color: rgba(59,112,170,0.25);   
+}
+
+.ui-btn-active {
+    border: 1px solid       #2373a5 /*{global-active-border}*/;
+    background:             #5393c5 /*{global-active-background-color}*/;
+    font-weight: bold;
+    color:                  #fff /*{global-active-color}*/;
+    cursor: pointer;
+    text-shadow: 0 /*{global-active-shadow-x}*/ 1px /*{global-active-shadow-y}*/ 0 /*{global-active-shadow-radius}*/ #3373a5 /*{global-active-shadow-color}*/;
+    text-decoration: none;
+    background-image: -webkit-gradient(linear, left top, left bottom, from( #1E528B /*{global-active-background-start}*/), to( #3e74ae /*{global-active-background-end}*/)); /* Saf4+, Chrome */
+    background-image: -webkit-linear-gradient( #1E528B /*{global-active-background-start}*/, #3e74ae /*{global-active-background-end}*/); /* Chrome 10+, Saf5.1+ */
+    background-image:    -moz-linear-gradient( #1E528B /*{global-active-background-start}*/, #3e74ae /*{global-active-background-end}*/); /* FF3.6 */
+    background-image:     -ms-linear-gradient( #1E528B /*{global-active-background-start}*/, #3e74ae /*{global-active-background-end}*/); /* IE10 */
+    background-image:      -o-linear-gradient( #1E528B /*{global-active-background-start}*/, #3e74ae /*{global-active-background-end}*/); /* Opera 11.10+ */
+    background-image:         linear-gradient( #1E528B /*{global-active-background-start}*/, #3e74ae /*{global-active-background-end}*/);
+    font-family: Helvetica, Arial, sans-serif /*{global-font-family}*/;
+}
 
 @media screen and (min-width: 320px) {
     #start-time, #end-time {
@@ -125,9 +183,12 @@ input[type=number]::-webkit-outer-spin-button {
 
 @media screen and (min-width: 720px) {
     .entry-container, .content {
-        width: 665px;
         margin-left: auto;
         margin-right: auto;
+    }
+
+    .wrapper {
+        width: 720px;
     }
 
 }
