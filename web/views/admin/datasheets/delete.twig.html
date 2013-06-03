@@ -12,6 +12,7 @@
             <strong>Error!</strong> {{errors.datasheet_delete}}
         </div>
         <a href="{{ path('admin_categories_list', {datasheet_id:datasheet.id}) }}" class="btn">View categories</a>
+        <a href="{{ path('admin_locations') }}" class="btn">View locations</a>
         <a href="{{ path('admin_datasheets_list') }}" class="btn">Back to datasheets</a>
     {% else %}
     <div class="alert">

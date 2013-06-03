@@ -126,6 +126,10 @@ $routes->match( '/{datasheet_id}/edit/', function( REQUEST $request, $datasheet_
     /* get the datasheet */
     $datasheet = $app['paris']->getModel('Coastkeeper\Datasheet')->find_one($datasheet_id);
 
+    if ($datasheet->locations()->find_many()) {
+        $errors['datasheet_delete'] = "There are still locations attached to this datasheet. Remove those first";
+    }
+
     if ($datasheet->categories()->find_many()) {
         $errors['datasheet_delete'] = "There are categories attached to this datasheet. Please remove those first";
     }

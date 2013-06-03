@@ -7,17 +7,23 @@
     <h1>Select a location</h1>
     {% if locations %}
     <table class="table table-hover">
-            {% for location in locations %}
-            <tr>
-              <td><a href="{{ path('admin_locations_view', {id:location.id}) }}"> {{ location.name }}</a></td>
-              <td>
-                <a href="{{ path('admin_locations_view', {id:location.id}) }}"><i class="icon-eye-open"></i></a> 
-                <a href="{{ path('admin_export_data', {id:location.id}) }}"<i class="icon-download"></i></a>
-                <a href="{{ path('admin_locations_edit', {id:location.id}) }}"><i class="icon-edit"></i></a> 
-                <a href="{{ path('admin_locations_delete', {id:location.id}) }}"><i class="icon-trash"></i></a>
-              </td>
-            </tr>
-            {% endfor %}
+        <tr>
+          <th>Location</th>
+          <th>Datasheet</th>
+          <th>Actions</th>
+        </tr>
+        {% for location in locations %}
+        <tr>
+          <td><a href="{{ path('admin_locations_view', {id:location.id}) }}"> {{ location.name }}</a></td>
+          <td>{{location.datasheet.find_one.name}}</td>
+          <td>
+            <a href="{{ path('admin_locations_view', {id:location.id}) }}"><i class="icon-eye-open"></i></a> 
+            <a href="{{ path('admin_export_data', {id:location.id}) }}"<i class="icon-download"></i></a>
+            <a href="{{ path('admin_locations_edit', {id:location.id}) }}"><i class="icon-edit"></i></a> 
+            <a href="{{ path('admin_locations_delete', {id:location.id}) }}"><i class="icon-trash"></i></a>
+          </td>
+        </tr>
+        {% endfor %}
     </table>
     {% endif %}
 
