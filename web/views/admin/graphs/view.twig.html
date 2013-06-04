@@ -19,7 +19,7 @@
         <h1>Patrol Graphs</h1> 
         <div class="row">
           <div class="span4">
-            <form class="form-vertical" id="graphs-form" method="get" action="{{path('admin_graphs_data')}}">
+            <form class="form-vertical" id="patrols-form" method="get" action="{{path('admin_graphs_data')}}">
               {% if datasheets %}
               <div class="control-group">
                 <label class="control-label" for="datasheet">DataSheet</label>
@@ -36,13 +36,13 @@
               <div class="control-group">
                 <label for="startDate" class="control-label">Start Date</label>
                 <div class="controls">
-                  <input type="text" name="startDate" id="startDate" required>
+                  <input type="text" name="startDate" id="startDate">
                 </div>
               </div>
               <div class="control-group">
                 <label for="endDate" class="control-label">End Date</label>
                 <div class="controls">
-                  <input type="text" id="endDate" name="endDate" required>
+                  <input type="text" id="endDate" name="endDate">
                 </div>
               </div>
                     <div class="control-group">
@@ -52,8 +52,7 @@
                     </div>
                     <div>
                     <button type="submit" 
-                        id="create-graphs-btn"
-                        class="btn btn-primary" 
+                        class="btn btn-primary create-graphs-btn" 
                         data-loading-text="Generating..." 
                         autocomplete="off">
                         Create Graph
@@ -62,8 +61,8 @@
                     </div>
             </form>  
           </div> 
-          <div class="span8 chart-container">
-             <canvas id="myChart" width="620" height="600"></canvas>  	
+          <div class="span8 patrols-chart-container">
+             <canvas id="patrolsChart" width="620" height="600"></canvas>  	
           </div>
         </div>
       </div>
@@ -71,7 +70,7 @@
         <h1>Volunteer Observations</h1> 
         <div class="row">
           <div class="span4">
-            <form class="form-vertical" id="graphs-form" method="get" action="{{path('admin_graphs_data')}}">
+            <form class="form-vertical" id="observations-form" method="get" action="{{path('admin_graphs_observations')}}">
               {% if datasheets %}
               <div class="control-group">
                 <label class="control-label" for="datasheet">DataSheet</label>
@@ -86,15 +85,15 @@
               </div>
               {% endif %}
               <div class="control-group">
-                <label for="startDate" class="control-label">Start Date</label>
+                <label for="observationsStartDate" class="control-label">Start Date</label>
                 <div class="controls">
-                  <input type="text" name="startDate" id="startDate" required>
+                  <input type="text" name="startDate" id="observationsStartDate">
                 </div>
               </div>
               <div class="control-group">
-                <label for="endDate" class="control-label">End Date</label>
+                <label for="observationsEndDate" class="control-label">End Date</label>
                 <div class="controls">
-                  <input type="text" id="endDate" name="endDate" required>
+                  <input type="text" id="observationsEndDate" name="endDate">
                 </div>
               </div>
                     <div class="control-group">
@@ -104,8 +103,7 @@
                     </div>
                     <div>
                     <button type="submit" 
-                        id="create-graphs-btn"
-                        class="btn btn-primary" 
+                        class="btn btn-primary create-graphs-btn"
                         data-loading-text="Generating..." 
                         autocomplete="off">
                         Create Graph
@@ -114,8 +112,8 @@
                     </div>
             </form>  
           </div> 
-          <div class="span8 chart-container">
-             <canvas id="observationChart" width="620" height="600"></canvas>  	
+          <div class="span8 observations-chart-container">
+             <canvas id="observationsChart" width="620" height="600"></canvas>  	
           </div>
         </div>
     </div>

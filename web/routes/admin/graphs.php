@@ -113,5 +113,95 @@ $routes->get('/data', function(Request $request) use ($app) {
 
 })->before($admin_login_check)->bind('admin_graphs_data');
 
+$routes->get('/observations', function(Request $request) use ($app) {
+
+	$messages = array();
+
+	$startDate = $app['request']->get('startDate');
+	$endDate = $app['request']->get('endDate');
+
+	$startDate = DateTime::createFromFormat('m/d/Y', $startDate);
+	$endDate = DateTime::createFromFormat('m/d/Y', $endDate);
+
+	$finishedPatrols = $app['request']->get('completePatrol');
+
+	$datasheet_id = $app['request']->get('datasheet');
+
+	if (!$datasheet_id) {
+		$messages['errors'] = "Please select a datasheet";
+	}
+
+	if (count($messages) <= 0) {
+		$datasheet = $app['paris']->getModel('Coastkeeper\Datasheet')->find_one($datasheet_id);
+		$locations = $datasheet->locations()->find_many();
+		$data = array();
+		foreach ($locations as $location) {
+			$sections = $location->sections()->find_many();
+
+			foreach($sections as $section) {
+				$patrol_entries = $section->patrol_entry()->find_many();
+
+				/* For each patrol entry, fill out a row */
+				foreach($patrol_entries as $patrol_entry) {
+
+					/* Get the parent patrol. */
+					$patrol = $patrol_entry->patrol()->find_one();
+
+					/* 
+					 * If the finished Patrol filter is on,
+					 * ignore any patrols that arent finished
+					 */
+					if ($finishedPatrols && !$patrol->finished) {
+						continue;
+					}
+
+					/*
+					 * Filter out any patrols not in between the given dates
+					 */
+					$patrolDate = DateTime::createFromFormat('Y-m-d', $patrol->date);
+					if ($startDate && $endDate) {
+						if( ($patrolDate < $startDate) || ($patrolDate > $endDate) ) {
+							continue;
+						}
+					}
+
+					if(!array_key_exists($patrolDate->format('M Y'), $data)) {
+						$data[$patrolDate->format('M Y')] = array();
+					}
+					
+					if(!array_key_exists('patrols', $data[$patrolDate->format('M Y')])) {
+						$data[$patrolDate->format('M Y')]['patrols'] = 1;
+					} else {
+						$data[$patrolDate->format('M Y')]['patrols'] += 1;
+					}
+
+					/* Now get all the tallies for this patrol... */
+					$tallies = $patrol_entry->patrol_tallies()->find_many();
+
+
+					foreach($tallies as $tally) {
+						if(!array_key_exists('observations', $data[$patrolDate->format('M Y')])) {
+							$data[$patrolDate->format('M Y')]['observations'] = 1;
+						} else {
+							$data[$patrolDate->format('M Y')]['observations'] += 1;
+						}
+					}
+				}
+			}
+		}
+
+		return $app->json($data, 201);
+	}
+
+	return $app->json($messages, 201);
+
+	// echo '<pre>';
+	// var_dump($data);
+	// echo '</pre>';
+
+
+})->before($admin_login_check)->bind('admin_graphs_observations');
+
+
 
 return $routes;
