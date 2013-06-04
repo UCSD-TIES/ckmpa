@@ -15,6 +15,9 @@
 		
 		e.preventDefault();
 
+		// clear alerts
+		$(".alert").alert('close');
+
 		// clear the canvas
 		if (patrolCtx) {
 			var canvas = document.getElementById('patrolsChart');
@@ -72,6 +75,9 @@
 			
 		e.preventDefault();
 
+		// clear alerts
+		$(".alert").alert('close');
+
 		// clear the canvas
 		if (observationsCtx) {
 			var canvas = document.getElementById('observationsChart');
@@ -127,7 +133,7 @@
 
 	var createAlert = function (alertType, message, container) {
 		var alertContainer  = $(document.createElement('div'))
-								.addClass('alert')
+								.addClass('alert fade in')
 								.addClass('alert-' + alertType),
 			closeBtn 		= $(document.createElement('button'))
 								.addClass('close')
