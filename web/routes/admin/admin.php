@@ -251,7 +251,9 @@ $admin->get('/export/{id}/', function($id) use ($app){
 			$volunteer = $patrol->volunteer()->find_one();
 
 			/* Set the values */
-			$sheet->setCellValue('B' . $row_index, $volunteer->first_name . ' ' . $volunteer->last_name);
+			if ($volunteer) {
+				$sheet->setCellValue('B' . $row_index, $volunteer->first_name . ' ' . $volunteer->last_name);
+			}
 			if($patrol->coastkeeper_partner_id){
 				$partner = $app['paris']->getModel('Coastkeeper\Volunteer')
 									->find_one($patrol->coastkeeper_partner_id);
@@ -397,7 +399,9 @@ $admin->get('/export/{lid}/{sid}', function($lid, $sid) use ($app){
 		$volunteer = $patrol->volunteer()->find_one();
 
 		/* Set the values */
-		$sheet->setCellValue('B' . $row_index, $volunteer->first_name . ' ' . $volunteer->last_name);
+		if ($volunteer) {
+			$sheet->setCellValue('B' . $row_index, $volunteer->first_name . ' ' . $volunteer->last_name);
+		}
 		if($patrol->coastkeeper_partner_id){
 			$partner = $app['paris']->getModel('Coastkeeper\Volunteer')
 								->find_one($patrol->coastkeeper_partner_id);
