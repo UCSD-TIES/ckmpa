@@ -3,14 +3,32 @@
 	$('#endDate').datepicker();
 	$('#observationsStartDate').datepicker();
 	$('#observationsEndDate').datepicker();
+
+	var patrolCtx,
+		observationsCtx;
 	
 	$('#patrols-form').on('submit', function(e) {
 		var graphLabels = [],
 			graphData = [],
 			$this = $(this),
 			generateBtn = $this.find('.create-graphs-btn');
-			
+		
 		e.preventDefault();
+
+		// clear the canvas
+		if (patrolCtx) {
+			var canvas = document.getElementById('patrolsChart');
+
+			// Store the current transformation matrix
+			patrolCtx.save();
+
+			// Use the identity matrix while clearing the canvas
+			patrolCtx.setTransform(1, 0, 0, 1, 0, 0);
+			patrolCtx.clearRect(0, 0, canvas.width, canvas.height);
+
+			// Restore the transform
+			patrolCtx.restore();
+		}
 
 		generateBtn.button('loading');
 
@@ -53,6 +71,21 @@
 			generateBtn = $this.find('.create-graphs-btn');
 			
 		e.preventDefault();
+
+		// clear the canvas
+		if (observationsCtx) {
+			var canvas = document.getElementById('observationsChart');
+
+			// Store the current transformation matrix
+			observationsCtx.save();
+
+			// Use the identity matrix while clearing the canvas
+			observationsCtx.setTransform(1, 0, 0, 1, 0, 0);
+			observationsCtx.clearRect(0, 0, canvas.width, canvas.height);
+
+			// Restore the transform
+			observationsCtx.restore();
+		}
 
 		generateBtn.button('loading');
 
@@ -120,8 +153,8 @@
 				},
 			]
 		}
-		var ctx = document.getElementById("patrolsChart").getContext("2d");			
-		var myNewChart = new Chart(ctx).Bar(data,null);	
+		patrolCtx = document.getElementById("patrolsChart").getContext("2d");			
+		var myNewChart = new Chart(patrolCtx).Bar(data,null);	
 	};	
 
 	var displayLineGraph = function(labels, pData, oData) {
@@ -144,7 +177,7 @@
 				},
 			]
 		}
-		var ctx = document.getElementById("observationsChart").getContext("2d");			
-		var observationChart = new Chart(ctx).Line(data,null);	
+		observationsCtx = document.getElementById("observationsChart").getContext("2d");			
+		var observationChart = new Chart(observationsCtx).Line(data,null);	
 	}
 })();
