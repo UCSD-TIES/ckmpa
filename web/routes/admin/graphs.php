@@ -133,57 +133,63 @@ $routes->get('/observations', function(Request $request) use ($app) {
 
 	if (count($messages) <= 0) {
 		$datasheet = $app['paris']->getModel('Coastkeeper\Datasheet')->find_one($datasheet_id);
-		$locations = $datasheet->locations()->find_many();
+		$patrols = $app['paris']->getModel('Coastkeeper\Patrol')
+								->order_by_asc('date')
+								->find_many();
+
+		// return array
 		$data = array();
-		foreach ($locations as $location) {
-			$sections = $location->sections()->find_many();
 
-			foreach($sections as $section) {
-				$patrol_entries = $section->patrol_entry()->find_many();
+		foreach ($patrols as $patrol) {
+			if ($patrol->location() && $patrol->location()->find_one()) {
+				$patrol_datasheet = $patrol->location()->find_one()->datasheet()->find_one();
 
-				/* For each patrol entry, fill out a row */
-				foreach($patrol_entries as $patrol_entry) {
+				// check if patrols is in the datasheet
+				if ($patrol_datasheet->id == $datasheet->id) {
 
-					/* Get the parent patrol. */
-					$patrol = $patrol_entry->patrol()->find_one();
+					$patrol_entries = $patrol->patrol_entries()->find_many();
 
-					/* 
-					 * If the finished Patrol filter is on,
-					 * ignore any patrols that arent finished
-					 */
-					if ($finishedPatrols && !$patrol->finished) {
-						continue;
-					}
+					/* For each patrol entry, fill out a row */
+					foreach($patrol_entries as $patrol_entry) {
 
-					/*
-					 * Filter out any patrols not in between the given dates
-					 */
-					$patrolDate = DateTime::createFromFormat('Y-m-d', $patrol->date);
-					if ($startDate && $endDate) {
-						if( ($patrolDate < $startDate) || ($patrolDate > $endDate) ) {
+						/* 
+						 * If the finished Patrol filter is on,
+						 * ignore any patrols that arent finished
+						 */
+						if ($finishedPatrols && !$patrol->finished) {
 							continue;
 						}
-					}
 
-					if(!array_key_exists($patrolDate->format('M Y'), $data)) {
-						$data[$patrolDate->format('M Y')] = array();
-					}
-					
-					if(!array_key_exists('patrols', $data[$patrolDate->format('M Y')])) {
-						$data[$patrolDate->format('M Y')]['patrols'] = 1;
-					} else {
-						$data[$patrolDate->format('M Y')]['patrols'] += 1;
-					}
+						/*
+						 * Filter out any patrols not in between the given dates
+						 */
+						$patrolDate = DateTime::createFromFormat('Y-m-d', $patrol->date);
+						if ($startDate && $endDate) {
+							if( ($patrolDate < $startDate) || ($patrolDate > $endDate) ) {
+								continue;
+							}
+						}
 
-					/* Now get all the tallies for this patrol... */
-					$tallies = $patrol_entry->patrol_tallies()->find_many();
-
-
-					foreach($tallies as $tally) {
-						if(!array_key_exists('observations', $data[$patrolDate->format('M Y')])) {
-							$data[$patrolDate->format('M Y')]['observations'] = 1;
+						if(!array_key_exists($patrolDate->format('M Y'), $data)) {
+							$data[$patrolDate->format('M Y')] = array();
+						}
+						
+						if(!array_key_exists('patrols', $data[$patrolDate->format('M Y')])) {
+							$data[$patrolDate->format('M Y')]['patrols'] = 1;
 						} else {
-							$data[$patrolDate->format('M Y')]['observations'] += 1;
+							$data[$patrolDate->format('M Y')]['patrols'] += 1;
+						}
+
+						/* Now get all the tallies for this patrol... */
+						$tallies = $patrol_entry->patrol_tallies()->find_many();
+
+
+						foreach($tallies as $tally) {
+							if(!array_key_exists('observations', $data[$patrolDate->format('M Y')])) {
+								$data[$patrolDate->format('M Y')]['observations'] = 1;
+							} else {
+								$data[$patrolDate->format('M Y')]['observations'] += 1;
+							}
 						}
 					}
 				}
