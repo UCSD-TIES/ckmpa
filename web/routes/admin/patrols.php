@@ -17,7 +17,7 @@ $routes = $app['controllers_factory'];
  */
 $routes->get('/', function() use ($app) {
 
-	$patrols = $app['paris']->getModel('Coastkeeper\Patrol')->find_many();
+	$patrols = $app['paris']->getModel('Coastkeeper\Patrol')->order_by_desc('date')->find_many();
 
 	/* Render the html file, passing in the values */
 	return $app['twig']->render('admin/patrols/list.twig.html', array(
