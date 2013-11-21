@@ -168,9 +168,9 @@
 				labels : labels,
 				datasets : [
 				{
-					fillColor : "rgba(100,100,100,0.5)",
-					strokeColor : "rgba(100,100,100,1)",
-					pointColor : "rgba(100,100,100,1)",
+					fillColor : "rgba(170,1,20,0.5)",
+					strokeColor : "rgba(170,1,20,1)",
+					pointColor : "rgba(170,1,20,1)",
 					pointStrokeColor : "#fff",
 					data : pData
 				},
