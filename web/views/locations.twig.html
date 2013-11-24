@@ -15,7 +15,7 @@
 {% if locations is defined %}
 	<form action="{{ path('patrol_location_select') }}" method="POST" id="primary-location-form" data-ajax="false">
 		<label for="primary-location" class="ui-hidden-accessible">Location:</label>
-		<select name="primary-location" id="primary-location">
+		<select name="primary-location" id="primary-location" stlye="font-size:30px">
 			<option value="" selected>Choose A Location</option>
 			{% for location in locations %}
 				<option value="{{ location.id }}">{{ location.name }}</option>
