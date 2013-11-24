@@ -120,7 +120,7 @@
 
 					displayLineGraph(graphLabels, pData, oData);
 					createAlert('info', 
-								'Foreground data (gray) is # of observations, Background data (blue) is # of patrols', 
+								'Blue is # of observations, Red is # of patrols', 
 								$('.observations-chart-container'));
 				} else {
 					createAlert('info', 
