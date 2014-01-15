@@ -2,5 +2,7 @@ vendor/*
 composer.lock
 *.sublime-project
 *.sublime-workspace
+.idea
+.directory
 sftp-config.json
 .DS_Store
