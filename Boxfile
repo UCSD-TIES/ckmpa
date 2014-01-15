@@ -1,0 +1,16 @@
+global:
+  env:
+    - APP_NAME: ckmpa
+    - ENV: production
+
+web1: #component type & number
+  name: ckmpa            #component settings
+  document_root: /
+  php_version: 5.4.14
+  php_extensions:
+    - pdo_mysql
+    - zip
+
+db1: #component type & number
+  name: coastkeeper            #component settings
+  type: mysql

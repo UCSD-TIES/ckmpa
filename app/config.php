@@ -13,7 +13,7 @@ define('APP_PATH', __DIR__ . '/../web');
 /* 
  * Database Configuration Options for MySQL
  */
-define('DBHOST', 'localhost');
-define('DBNAME', 'coastkeeper');
-define('DBUSER', 'root');
-define('DBPASS', 'ck');
+define('DBHOST', 'ckmpa.mysql.eu1.frbit.com');
+define('DBNAME', 'ckmpa');
+define('DBUSER', 'ckmpa');
+define('DBPASS', 'n2D8EAqSOZz68SwC');

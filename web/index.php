@@ -125,7 +125,24 @@ $app->match('/logout/', function() use ($app){
 
 	/* user is logging out so invalidate current session */
 
-        $app['session']->set('user', null);
+
+    $patrol_id = $app['session']->get('patrol');
+    $patrol = $app['paris']->getModel('Coastkeeper\Patrol')
+        ->find_one($patrol_id);
+    $section_patrol_id = $app['session']->get('section_patrol');
+    $section_patrol = $app['paris']->getModel('Coastkeeper\PatrolEntry')
+        ->find_one($section_patrol_id);
+    if($patrol)
+    {
+        $patrol->delete();
+    }
+    if($section_patrol)
+    {
+        $section_patrol->delete();
+    }
+    $app['session']->set('user', null);
+    $app['session']->set('patrol', null);
+    $app['session']->set('section_patrol', null);
 	$app['session']->invalidate();
 
 	/* Redirect to login page. */

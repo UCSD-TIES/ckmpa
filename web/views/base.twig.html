@@ -16,7 +16,7 @@
 
 <body> 
     <div data-role="page"> 
-        <header data-role="header" class="theme-ck"> 
+        <header data-role="header" class="theme-ck">
             <h1>
                 MPA Watch
             </h1>
@@ -27,12 +27,15 @@
             </h1>
             {% block content %}
             {% endblock %}
+
         </div>
         <div class="push"></div>
         <footer data-role="footer" class="footer theme-ck">    
             {% block footer %}
             <p>
-                &copy; 2013 San Diego Coastkeeper
+                {% if app.session.get('user') %}
+                    <a href="{{ path('logout') }}" data-role="button" data-ajax="false">Logout</a>
+                {% endif %}
             </p>
             {% endblock %}
         </footer>
