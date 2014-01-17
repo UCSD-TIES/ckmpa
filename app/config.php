@@ -10,10 +10,20 @@ date_default_timezone_set('America/Los_Angeles');
  */
 define('APP_PATH', __DIR__ . '/../web');
 
+
 /* 
  * Database Configuration Options for MySQL
  */
-define('DBHOST', 'ckmpa.mysql.eu1.frbit.com');
-define('DBNAME', 'ckmpa');
-define('DBUSER', 'ckmpa');
-define('DBPASS', 'n2D8EAqSOZz68SwC');
+if (getenv("ENV") == "production")
+{
+	define('DBHOST', 'tunnel.pagodabox.com');
+	define('DBNAME', 'coastkeeper');
+	define('DBUSER', 'dena');
+	define('DBPASS', 'vR5diEtJ');
+} else
+{
+	define('DBHOST', 'localhost');
+	define('DBNAME', 'coastkeeper');
+	define('DBUSER', 'root');
+	define('DBPASS', 'ck');
+}
