@@ -1,0 +1,32 @@
+{% extends 'admin/base' %}
+
+{% block title %} Create new datasheet {% endblock %}
+
+{% block content %} 
+  <div span="12">
+    <h1>Create a New Datasheet</h1>
+
+    <form class="form-horizontal" action="{{ url_route('admin.datasheets.store') }}" method="POST">
+      <div class="control-group {% if errors.datasheet_name is defined %} error {% endif %}">
+        <label for="datasheet_name" class="control-label">Name</label>
+        <div class="controls">
+          <input type="text" name="name" id="datasheet_name" value="{{ app.request.get( 'datasheet_name' ) }}" >
+          {% if errors.datasheet_name is defined %}
+          <span class="help-inline">{{ errors.datasheet_name }}</span>
+          {% endif %}
+        </div>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Create datasheet</button>
+        <a href="{{ url_route('admin.datasheets.index') }}" class="btn btn-default">Cancel</a>
+      </div>
+
+
+
+    </form>
+
+
+
+  </div>
+{% endblock %}
+

@@ -1,28 +1,38 @@
 {
-    "require": {
-        "silex/silex": "1.1.*",
-        "symfony/browser-kit": "2.4.*",
-        "symfony/console": "2.4.*",
-        "symfony/config": "2.4.*",
-        "symfony/css-selector": "2.4.*",
-        "symfony/dom-crawler": "2.4.*",
-        "symfony/filesystem": "2.4.*",
-        "symfony/finder": "2.4.*",
-        "symfony/form": "2.4.*",
-        "symfony/locale": "2.4.*",
-        "symfony/process": "2.4.*",
-        "symfony/security": "2.4.*",
-        "symfony/serializer": "2.4.*",
-        "symfony/translation": "2.4.*",
-        "symfony/validator": "2.4.*",
-        "symfony/twig-bridge": "2.4.*",
-        "twig/twig": ">=1.8.0,<2.0-dev",
-        "j4mie/paris": "1.4.*",
-        "phpexcel/phpexcel": "1.7.*"
-    },
-    "autoload": {
-        "psr-0" : {
-            "Coastkeeper" : "src/"
-        }
-    }
+	"name": "laravel/laravel",
+	"description": "The Laravel Framework.",
+	"keywords": ["framework", "laravel"],
+	"license": "MIT",
+	"require": {
+		"laravel/framework": "4.1.*",
+        "rcrowe/twigbridge": "0.5.*",
+        "way/generators": "dev-master",
+        "phpexcel/phpexcel": "dev-master"
+	},
+	"autoload": {
+		"classmap": [
+			"app/commands",
+			"app/controllers",
+			"app/models",
+			"app/database/migrations",
+			"app/database/seeds",
+			"app/tests/TestCase.php"
+		]
+	},
+	"scripts": {
+		"post-install-cmd": [
+			"php artisan optimize"
+		],
+		"post-update-cmd": [
+			"php artisan clear-compiled",
+			"php artisan optimize"
+		],
+		"post-create-project-cmd": [
+			"php artisan key:generate"
+		]
+	},
+	"config": {
+		"preferred-install": "dist"
+	},
+	"minimum-stability": "dev"
 }

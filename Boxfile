@@ -1,16 +1,37 @@
 global:
   env:
     - APP_NAME: ckmpa
-    - ENV: production
+    - LARAVEL_ENV: production
 
 web1: #component type & number
   name: ckmpa            #component settings
-  document_root: /
+  shared_writable_dirs:
+    - app/storage/cache
+    - app/storage/logs
+    - app/storage/sessions
+    - app/storage/views
+    - app/storage/meta
+  document_root: public
   php_version: 5.4.14
+  php_session_save_handler: redis
+  php_session_save_path: "tcp://tunnel.pagodabox.com:6379"
   php_extensions:
+    - mbstring
+    - mcrypt
     - pdo_mysql
+    - redis
     - zip
+    - xcache
+  before_deploy:
+    - "php artisan migrate:install"
+    - "php artisan migrate"
+  after_deploy:
+    - "php artisan cache:clear"
+    - "rm -f app/storage/views/*"
 
 db1: #component type & number
   name: coastkeeper            #component settings
   type: mysql
+
+cache1:
+  type: redis

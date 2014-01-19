@@ -1,0 +1,36 @@
+{% extends 'admin/base' %}
+
+{% block title %}View Location's Sections{% endblock %}
+
+{% block content %}
+<div class="span12">
+    <h1>{{ location.name }}</h1> 
+  
+    <table class="table table-hover">
+            {% for section in sections %}
+            <tr>
+              <td>{{ section.name }}</td>
+              <td>
+                  {{ form_open({'method': 'DELETE', 'class': 'form-inline', 'route': ['admin.sections.destroy', location.id] })|raw }}
+                  <a class="btn btn-default btn-small" href="{{ url_route('export-data', {lid:location.id, sid:section.id}) }}"><i class="glyphicon glyphicon-download"></i> Export</a>
+                  <a class="btn btn-default btn-small" href="{{ url_route('admin.sections.edit', {id:location.id, section_id:section.id}) }}"><i class="glyphicon glyphicon-edit"></i> Edit</a>
+                  <input type="hidden" name="section_id" value="{{ section.id }}">
+                  <button type='submit' class="btn btn-small btn-danger"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+                  {{ form_close()|raw }}
+              </td>
+            </tr>
+            {% endfor %}
+    </table>
+    
+    <table>
+      <tr>
+        <td>
+          <a href="{{ url_route('admin.sections.create', {id:location.id}) }}" class="btn btn-default"><i class="glyphicon glyphicon-plus"></i> Add new section</a>
+          <a href="{{ url_route('patrols-entries-locations-list', {location_id:location.id}) }}" class="btn btn-default"><i class="glyphicon glyphicon-eye-open"></i> View Patrols </a>
+          <a href="{{ url_route('export-data', {id:location.id}) }}" class="btn btn-default"><i class="glyphicon glyphicon-download"></i> Export Data</a>
+        </td>
+      </tr>
+    </table>    
+          
+</div>
+{% endblock %}

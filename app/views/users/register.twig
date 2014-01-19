@@ -1,0 +1,15 @@
+{%  extends("admin.base") %}
+{%   block content %}
+<h2>Please Register</h2>
+{{ form_open({'url': 'users/register'})|raw }}
+
+{{ form_text('first_name', null, {'class': 'form-control', 'placeholder': 'First Name'})|raw }}
+{{ form_text('last_name', null, {'class': 'form-control', 'placeholder': 'Last Name'})|raw }}
+{{ form_text('username', null, {'class': 'form-control', 'placeholder': 'User Name'})|raw }}
+{{ form_text('email', null, {'class': 'form-control', 'placeholder': 'Email'})|raw }}
+{{ form_password('password', {'class': 'form-control', 'placeholder': 'Password'})|raw }}
+{{ form_password('password_confirmation', {'class': 'form-control', 'placeholder': 'Confirm Password'})|raw }}
+
+{{ form_submit('Register', {'class': 'btn btn-large btn-primary btn-block'})|raw }}
+{{ form_close()|raw }}
+{% endblock %}

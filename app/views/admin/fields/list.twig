@@ -1,0 +1,29 @@
+{% extends 'admin/base' %}
+
+{% block title %}Select a field{% endblock %}
+
+{% block content %}
+<div class="span12">
+    <h1>{{datasheet.name}} - {{category.name}}</h1>
+    {% if fields %}
+    <table class="table table-hover">
+        {% for field in fields %}
+        <tr>
+          <td>{{ field.name }}</td>
+          <td>
+            <a href="{{ url_route('admin.fields.edit', {datasheet_id:datasheet.id, category_id:category.id, field_id:field.id}) }}"><i class="glyphicon glyphicon-edit"></i></a>
+            <a href="{{ url_route('admin.fields.destroy', {datasheet_id:datasheet.id, category_id:category.id, field_id:field.id}) }}"><i class="glyphicon glyphicon-trash"></i></a>
+          </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
+    <div>
+        <a class="btn btn-default" href="{{ url_route('admin.fields.create', {datasheet_id:datasheet.id, category_id:category.id}) }} " class="btn"><i class="glyphicon glyphicon-plus"></i> Create new field</a>
+         <a class="btn btn-default" href="{{ url_route('admin.categories.index', {datasheet_id:datasheet.id}) }} " class="btn">Back to datasheet '{{datasheet.name}}'</a>
+    </div>
+    
+          
+</div>
+{% endblock %}

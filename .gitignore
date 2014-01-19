@@ -1,7 +1,7 @@
-composer.lock
-*.sublime-project
-*.sublime-workspace
-.idea
+/bootstrap/compiled.php
 .directory
-sftp-config.json
+.idea
+composer.phar
+composer.lock
 .DS_Store
+Thumbs.db
