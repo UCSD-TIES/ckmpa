@@ -15,5 +15,5 @@
 	<input type="submit" value="LOGIN" class="submit" data-role="button" >
 </form>
 <a data-role="button" href="{{ URL::to('users/register') }}" data-ajax="false">Register</a>
-<img src="{{ URL::asset('img/lobster.png') }}" class="footer-logo"></img>
+<img src="{{ URL::asset('img/lobster.png') }}" class="footer-logo">
 @stop

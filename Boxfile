@@ -23,15 +23,15 @@ web1: #component type & number
     - zip
     - xcache
   before_deploy:
-    - "php artisan migrate:install"
     - "php artisan migrate"
   after_deploy:
     - "php artisan cache:clear"
-    - "rm -f app/storage/views/*"
+    - "rm -rf app/storage/views/*"
 
-db1: #component type & number
-  name: coastkeeper            #component settings
+db1:
+  name: coastkeeper
   type: mysql
 
 cache1:
+  name: coastkeeper
   type: redis
