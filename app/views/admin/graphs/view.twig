@@ -16,7 +16,7 @@
     </ul>
     <div id="graphsTabContent" class="tab-content">
       <div id="patrols" class="tab-pane fade active in">
-        <h1>Patrol Graphs</h1> 
+        <h1>Patrol Graphs</h1>
         <div class="row">
           <div class="col-sm-4">
             <form class="form-vertical" id="patrols-form" method="GET" action="{{url_route('graphs-data')}}">
@@ -47,27 +47,26 @@
               </div>
                     <div class="control-group">
                 <label class="checkbox">
-                             <input type="checkbox" name= "completePatrol"> Show Only Completed Patrols</input>
+                             <input type="checkbox" name= "completePatrol"> Show Only Completed Patrols
                 </label>
                     </div>
                     <div>
-                    <button type="submit" 
-                        class="btn btn-primary create-graphs-btn" 
-                        data-loading-text="Generating..." 
-                        autocomplete="off">
+                    <button type="submit"
+                        class="btn btn-primary create-graphs-btn"
+                        data-loading-text="Generating...">
                         Create Graph
                 </button>
-                    <a href="{{ url_route('graphs') }}" class="btn">Clear</a>
+                    <a href="{{ url_route('graphs') }}" class="btn btn-warning">Clear</a>
                     </div>
-            </form>  
-          </div> 
+            </form>
+          </div>
           <div class="col-sm-8 patrols-chart-container">
-             <canvas id="patrolsChart" width="620" height="600"></canvas>  	
+             <canvas id="patrolsChart" width="620" height="600"></canvas>
           </div>
         </div>
       </div>
       <div id="observations" class="tab-pane fade">
-        <h1>Volunteer Observations</h1> 
+        <h1>Volunteer Observations</h1>
         <div class="row">
           <div class="col-sm-4">
             <form class="form-vertical" id="observations-form" method="get" action="{{url_route('graphs-observations')}}">
@@ -98,25 +97,29 @@
               </div>
                     <div class="control-group">
                 <label class="checkbox">
-                             <input type="checkbox" name= "completePatrol"> Show Only Completed Patrols</input>
+                             <input type="checkbox" name= "completePatrol"> Show Only Completed Patrols
                 </label>
                     </div>
                     <div>
-                    <button type="submit" 
+                    <button type="submit"
                         class="btn btn-primary create-graphs-btn"
-                        data-loading-text="Generating..." 
-                        autocomplete="off">
+                        data-loading-text="Generating...">
                         Create Graph
                 </button>
-                    <a href="{{ url_route('graphs') }}" class="btn">Clear</a>
+                    <a href="{{ url_route('graphs') }}" class="btn btn-warning">Clear</a>
                     </div>
-            </form>  
-          </div> 
+            </form>
+          </div>
           <div class="col-sm-8 observations-chart-container">
-             <canvas id="observationsChart" width="620" height="600"></canvas>  	
+             <canvas id="observationsChart" width="620" height="600"></canvas>
           </div>
         </div>
     </div>
   </div>
 </div>
+</div>
+{% endblock %}
+{% block scripts %}
+    {{ parent() }}
+    <script src="{{ url_asset('js/graphs.js') }}"></script>
 {% endblock %}

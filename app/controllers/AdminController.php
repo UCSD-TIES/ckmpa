@@ -193,10 +193,8 @@ class AdminController extends BaseController
 	{
 		$messages = array();
 
-
 		$startDate = Input::get('startDate');
 		$endDate = Input::get('endDate');
-
 
 		$startDate = DateTime::createFromFormat('m/d/Y', $startDate);
 		$endDate = DateTime::createFromFormat('m/d/Y', $endDate);

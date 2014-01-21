@@ -1,8 +1,8 @@
 (function() {
-	$('#startDate').datepicker();
-	$('#endDate').datepicker();
-	$('#observationsStartDate').datepicker();
-	$('#observationsEndDate').datepicker();
+	$('#startDate, #endDate, #observationsStartDate, #observationsEndDate').datepicker({
+        autoclose: true,
+        todayHighlight: true
+    });
 
 	var patrolCtx,
 		observationsCtx;

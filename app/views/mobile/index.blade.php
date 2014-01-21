@@ -12,8 +12,8 @@
 	<input type="text" name="username" id="username" value="" placeholder="Username">
 	<label for="password" class="ui-hidden-accessible">Password:</label>
 	<input type="password" name="password" id="password" value="" placeholder="Password">
-	<input type="submit" value="LOGIN" class="submit" data-role="button" >
+	<input type="submit" value="Login" class="submit" data-role="button" >
 </form>
 <a data-role="button" href="{{ URL::to('users/register') }}" data-ajax="false">Register</a>
-<img src="{{ URL::asset('img/lobster.png') }}" class="footer-logo">
+<img src="{{ URL::asset('img/lobster.png') }}" alt="Logo" class="footer-logo">
 @stop
