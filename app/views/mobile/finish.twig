@@ -1,0 +1,11 @@
+{% extends "mobile.base" %}
+
+{% block title %}Patrol Finished {% endblock %}
+
+{% block header %}Patrol Finished {% endblock %}
+
+{% block content %}
+<h4 class="center-text"> Want to patrol more sections?</h4>
+<a class="ui-btn" href="{{url_route('select-section')}}"> Yes</a>
+<a class="ui-btn ui-btn-d" href="{{url_to('users/logout')}}"> Done</a>
+{% endblock %}

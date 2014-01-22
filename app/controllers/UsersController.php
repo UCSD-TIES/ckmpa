@@ -33,8 +33,9 @@ class UsersController extends BaseController
 		return View::make('mobile/index');
 	}
 
-	public function postSignin() {
+	public function postLogin() {
 		if (Auth::attempt(array('username'=>Input::get('username'), 'password'=>Input::get('password')))) {
+			Session::put("start_time", date('H:i:s'));
 			return Redirect::to('mobile/select-location');
 		} else {
 			return Redirect::to('/')
@@ -48,6 +49,7 @@ class UsersController extends BaseController
 	}
 
 	public function getLogout() {
+		Session::flush();
 		Auth::logout();
 		return Redirect::route('login')->with('message', 'Your are now logged out!');
 	}

@@ -18,9 +18,9 @@ $(document).bind('pageinit', function() {
    * Data entry page scripts
    */
   $('#data-entry-form').on('click', 'a', function() {
-      var operator = $(this).data('icon'),                                
-          input    = $(this).siblings('input'),    
-          val      = input.attr('value');                                      
+      var operator = $(this).attr('name'),
+          input    = $(this).siblings('.ui-input-text').children('input'),
+          val      = input.attr('value');
 
       if( operator === 'minus' ) {
 
@@ -30,6 +30,7 @@ $(document).bind('pageinit', function() {
           }
 
       } else {
+
           input.attr( 'value', ++val );
       }
   });

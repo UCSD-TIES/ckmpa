@@ -1,0 +1,20 @@
+{% extends "mobile.base" %}
+
+{% block title %}Coastkeeper Volunteer - Select A Section {% endblock %}
+
+{% block header %}Select A Section {% endblock %}
+
+{% block content %}
+
+{% if sections %}
+<ul data-role="listview">
+  {% for section in sections %}
+	<li><a href="{{ url_route('get-data-collection', section.id ) }}">{{ section.name }}</a></li>
+  {% endfor %}
+</ul>
+
+{% else %}
+No sections available for selection.
+{% endif %}
+
+{% endblock %}

@@ -24,21 +24,23 @@ class MobileController extends BaseController
 	public function getSelectLocation()
 	{
 		$locations = Location::all();
-		return View::make('mobile.select-location', array('locations' => $locations));
+		$data['locations'] = $locations;
+
+		return View::make('mobile.select-location', $data);
 	}
 
-	public function postSelectLocation()
+	public function getSelectSection($id)
 	{
-		$location = Input::get('primary-location');
-		Session::put('location', $location);
-		return Redirect::to('mobile/select-section');
-	}
+		if(Session::has('location'))
+			$id = Session::get('location');
+		else
+			Session::set('location', $id);
 
-	public function getSelectSection()
-	{
-		$location = Location::find(Session::get('location'));
+		$location = Location::find($id);
 		$sections = $location->sections;
-		return View::make('mobile.select-section', array('sections' => $sections, 'location' => $location));
+		$data['sections'] = $sections;
+
+		return View::make('mobile.select-section', $data);
 	}
 
 	public function getDataCollection($id)
@@ -70,7 +72,7 @@ class MobileController extends BaseController
 		$section = Section::find(Session::get('section'));
 
 		/* Get the TIME string. */
-		$start_time = date('H:i:s');
+		$start_time = Session::get('start_time');
 
 		/* Create a new patrol. */
 		$section_patrol = new PatrolEntry;
@@ -81,6 +83,7 @@ class MobileController extends BaseController
 
 		/* Set the start time. */
 		$section_patrol->start_time = $start_time;
+		$section_patrol->end_time = date('H:i:s');
 
 		// Save
 		$section_patrol->save();
