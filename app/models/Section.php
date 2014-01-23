@@ -1,21 +1,23 @@
 <?php
 
 class Section extends Eloquent {
-	protected $table = 'coastkeeper_section';
-
 	public static $rules = array(
-		'name'=>'required|min:2|unique:coastkeeper_section'
+		'name'=>'required|min:2|unique:sections'
 	);
 
-	protected $fillable = array('name', 'coastkeeper_location_id');
-
+	protected $table = 'sections';
+	public $timestamps = true;
+	protected $softDelete = false;
+	protected $fillable = array('name', 'location_id');
+	protected $visible = array('name', 'location_id');
 
 	public function location()
 	{
-		return $this->belongsTo('Location', 'coastkeeper_location_id');
+		return $this->belongsTo('Location');
 	}
 
-	public function patrolEntries(){
-		return $this->hasMany('PatrolEntry', 'coastkeeper_section_id');
+	public function segments()
+	{
+		return $this->hasMany('Segment');
 	}
 }

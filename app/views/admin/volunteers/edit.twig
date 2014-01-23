@@ -3,67 +3,66 @@
 {% block title %}Edit Volunteer{% endblock %}
 
 {% block content %}
-<div class="span12">
-	<h1>Edit Volunteer</h1>
-{% if volunteer %}
-    {{ form_open({'method': 'PATCH', 'class': 'form-horizontal', 'route': ['admin.volunteers.update', volunteer.id] })|raw }}
-		<div class="control-group{% if errors.first_name is defined %} error{% endif %}">
-			<label class="control-label" for="first_name">First Name</label>
-			<div class="controls">
-				<input type="text" id="first_name" name="first_name" value="{{ volunteer.first_name }}">
-				{% if errors.first_name is defined %}
-				<span class="help-inline">{{ errors.first_name }}</span>
-				{% endif %}
-			</div>
-		</div>
-		<div class="control-group{% if errors.last_name is defined %} error{% endif %}">
-			<label class="control-label" for="last_name">Last Name</label>
-			<div class="controls">
-				<input type="text" id="last_name" name="last_name" value="{{ volunteer.last_name }}">
-				{% if errors.last_name is defined %}
-				<span class="help-inline">{{ errors.last_name }}</span>
-				{% endif %}
-			</div>
-		</div>
-		<div class="control-group{% if errors.username is defined %} error{% endif %}">
-			<label class="control-label" for="username">Login Name</label>
-			<div class="controls">
-				<input type="text" id="username" name="username" value="{{ volunteer.username }}">
-				{% if errors.username is defined %}
-				<span class="help-inline">{{ errors.username }}</span>
-				{% endif %}
-			</div>
-		</div>
-		<div class="control-group">
-			<div class="controls">
-				<label class="checkbox" for="is_admin">
-					<input type="checkbox" id="is_admin" name="is_admin" value="1"{% if volunteer.is_admin %} checked="1"{% endif %}> Is Administrator
-				</label>
-			</div>
-		</div>
-		<b>Change Password</b> <small>(leave blank to keep it the same)</small>:
-		<div class="control-group{% if errors.new_password is defined %} error{% endif %}">
-			<label class="control-label" for="new_password">New Password:</label>
-			<div class="controls">
-				<input type="password" id="new_password" name="new_password">
-				{% if errors.new_password is defined %}
-				<span class="help-inline">{{ errors.new_password }}</span>
-				{% endif %}
-			</div>
-		</div>
-		<div class="control-group{% if errors.new_password is defined %} error{% endif %}">
-			<label class="control-label" for="new_password_b">Renter New Password:</label>
-			<div class="controls">
-				<input type="password" id="new_password_b" name="new_password_b">
-			</div>
-		</div>
-		<div class="form-actions">
-			<button type="submit" class="btn btn-primary">Save Changes</button>
-			<a class="btn" href="{{ url_route('admin.volunteers.show', {id:volunteer.id}) }}">Cancel</a>
-		</div>
-	</form>
-{% else %}
-	Volunteer doesn't exist.
-{% endif %}
-</div>
+  <div class="span12">
+    <h1>Edit Volunteer</h1>
+    {% if volunteer %}
+      {{ form_open({'method': 'PATCH', 'class': 'form-horizontal', 'route': ['admin.volunteers.update', volunteer.id] })|raw }}
+      <div class="control-group{% if errors.first_name is defined %} error{% endif %}">
+        <label class="control-label" for="first_name">First Name</label>
+
+        <div class="controls">
+          <input type="text" id="first_name" name="first_name" value="{{ volunteer.first_name }}">
+          {% if errors.first_name is defined %}
+            <span class="help-inline">{{ errors.first_name }}</span>
+          {% endif %}
+        </div>
+      </div>
+      <div class="control-group{% if errors.last_name is defined %} error{% endif %}">
+        <label class="control-label" for="last_name">Last Name</label>
+
+        <div class="controls">
+          <input type="text" id="last_name" name="last_name" value="{{ volunteer.last_name }}">
+          {% if errors.last_name is defined %}
+            <span class="help-inline">{{ errors.last_name }}</span>
+          {% endif %}
+        </div>
+      </div>
+      <div class="control-group{% if errors.username is defined %} error{% endif %}">
+        <label class="control-label" for="username">Login Name</label>
+
+        <div class="controls">
+          <input type="text" id="username" name="username" value="{{ volunteer.username }}">
+          {% if errors.username is defined %}
+            <span class="help-inline">{{ errors.username }}</span>
+          {% endif %}
+        </div>
+      </div>
+      <div class="control-group{% if errors.email is defined %} error{% endif %}">
+        <label class="control-label" for="email">Email</label>
+
+        <div class="controls">
+          <input type="text" id="email" name="email" value="{{ volunteer.email }}">
+          {% if errors.email is defined %}
+            <span class="help-inline">{{ errors.email }}</span>
+          {% endif %}
+        </div>
+      </div>
+      <div class="control-group">
+        <div class="controls">
+          <label class="checkbox" for="is_admin">
+            <input type="checkbox" id="is_admin" name="is_admin"
+                   value="1"{% if volunteer.is_admin %} checked="1"{% endif %}> Is Administrator
+          </label>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <a class="btn btn-default" href="{{ url_route('admin.volunteers.show', {id:volunteer.id}) }}">Cancel</a>
+      </div>
+      </form>
+    {% else %}
+      Volunteer doesn't exist.
+    {% endif %}
+  </div>
 {% endblock %}

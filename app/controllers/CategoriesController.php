@@ -35,14 +35,14 @@ class CategoriesController extends BaseController {
 	public function store()
 	{
 		$input = Input::all();
-		$validation = Validator::make($input, DatasheetCategory::$rules);
+		$validation = Validator::make($input, Category::$rules);
 
 		if ($validation->passes())
 		{
-			DatasheetCategory::create($input);
+			Category::create($input);
 			$datasheet_id = Input::get('datasheet_id');
 
-			return Redirect::route('admin.categories.index', compact('datasheet_id'));
+			return Redirect::route('admin.datasheets.show', compact('datasheet_id'));
 		}
 
 		return Redirect::route('admin.categories.create')
@@ -58,7 +58,12 @@ class CategoriesController extends BaseController {
 	 */
 	public function show($id)
 	{
-        return View::make('admin.categories.show');
+		$category = Category::find($id);
+		$data['category'] = $category;
+		$data['datasheet'] = $category->datasheet;
+		$data['fields'] = $category->fields;
+
+		return View::make('admin.categories.show', $data);
 	}
 
 	/**
@@ -69,8 +74,9 @@ class CategoriesController extends BaseController {
 	 */
 	public function edit($id)
 	{
-		$data['category'] = DatasheetCategory::find($id);
+		$data['category'] = Category::find($id);
 		$data['datasheet'] = $data['category']->datasheet;
+
         return View::make('admin.categories.edit', $data);
 	}
 
@@ -83,14 +89,14 @@ class CategoriesController extends BaseController {
 	public function update($id)
 	{
 		$input = array_except(Input::all(), '_method');
-		$validation = Validator::make($input, DatasheetCategory::$rules);
+		$validation = Validator::make($input, Category::$rules);
 
 		if ($validation->passes())
 		{
-			$category = DatasheetCategory::find($id);
+			$category = Category::find($id);
 			$category->update($input);
 
-			$data['datasheet_id'] = Input::get('coastkeeper_datasheet_id');
+			$data['datasheet_id'] = Input::get('datasheet_id');
 
 			return Redirect::route('admin.categories.index', $data);
 		}
@@ -109,10 +115,10 @@ class CategoriesController extends BaseController {
 	 */
 	public function destroy($id)
 	{
-		DatasheetCategory::find($id)->delete();
+		Category::find($id)->delete();
 		$datasheet_id = Input::get('datasheet_id');
 
-		return Redirect::route('admin.categories.index', compact('datasheet_id'));
+		return Redirect::route('admin.datasheets.show', compact('datasheet_id'));
 	}
 
 }

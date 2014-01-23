@@ -36,8 +36,14 @@ class VolunteersController extends BaseController {
 
 		if ($validation->passes())
 		{
-			unset($input['password_confirmation']);
-			User::create($input);
+			$user = new User;
+			$user->first_name = Input::get('first_name');
+			$user->last_name = Input::get('last_name');
+			$user->username = Input::get('username');
+			$user->email = Input::get('email');
+			$user->password = Hash::make(Input::get('password'));
+			$user->is_admin = Input::get('is_admin')?1:0;
+			$user->save();
 
 			return Redirect::route('admin.volunteers.index');
 		}
@@ -72,6 +78,7 @@ class VolunteersController extends BaseController {
 	{
 		$volunteer = User::find($id);
 		$data['volunteer'] = $volunteer;
+
         return View::make('admin.volunteers.edit', $data);
 	}
 
@@ -83,9 +90,9 @@ class VolunteersController extends BaseController {
 	 */
 	public function update($id)
 	{
-		$input = array_except(Input::all(), '_method');
+		$input = Input::except('_method');
 		$rules = User::$rules;
-		$rules['username'] = 'required|unique:coastkeeper_volunteer,username,'.$id;
+		$rules['username'] = 'required|unique:users,username,'.$id;
 		unset($rules['password']);
 		unset($rules['password_confirmation']);
 		$validation = Validator::make($input, $rules);
@@ -94,6 +101,8 @@ class VolunteersController extends BaseController {
 		{
 			$volunteer = User::find($id);
 			$volunteer->update($input);
+			$volunteer->is_admin = Input::get('is_admin');
+			$volunteer->save();
 
 			return Redirect::route('admin.volunteers.show', $id);
 		}

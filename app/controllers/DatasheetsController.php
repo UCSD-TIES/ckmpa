@@ -53,7 +53,11 @@ class DatasheetsController extends BaseController {
 	 */
 	public function show($id)
 	{
-        return View::make('admin.datasheets.show');
+		$datasheet = Datasheet::find($id);
+		$data['datasheet'] = $datasheet;
+		$data['categories'] = $datasheet->categories;
+
+        return View::make('admin.datasheets.show', $data);
 	}
 
 	/**

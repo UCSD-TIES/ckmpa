@@ -33,7 +33,7 @@ class MobileController extends BaseController
 
 	public function getSelectSection($id)
 	{
-		if(Session::has('location'))
+		if (Session::has('location'))
 			$id = Session::get('location');
 		else
 			Session::set('location', $id);
@@ -56,19 +56,25 @@ class MobileController extends BaseController
 
 	public function postDataCollection()
 	{
-		$patrol = new Patrol;
+		if (Session::has('patrol'))
+			$patrol = Session::get('patrol');
+		else
+		{
+			$patrol = new Patrol;
 
-		/* Set the owner of the patrol */
-		$patrol->coastkeeper_volunteer_id = Auth::user()->id;
-		$patrol->coastkeeper_location_id = Session::get('location');
+			/* Set the owner of the patrol */
+			$patrol->user_id = Auth::user()->id;
+			$patrol->location_id = Session::get('location');
 
-		/* Set the date of the current patrol */
-		$patrol->date = date('Y-m-d');
+			/* Set the date of the current patrol */
+			$patrol->date = date('Y-m-d');
 
-		/* Set as current patrol */
-		$patrol->finished = 1;
+			/* Set as current patrol */
+			$patrol->is_finished = 1;
 
-		$patrol->save();
+			$patrol->save();
+			Session::set('patrol', $patrol);
+		}
 
 		/* Start the patrol entry for the section. */
 		$section = Section::find(Session::get('section'));
@@ -77,18 +83,18 @@ class MobileController extends BaseController
 		$start_time = Session::get('start_time');
 
 		/* Create a new patrol. */
-		$section_patrol = new PatrolEntry;
+		$segment = new Segment;
 
 		/* Set the proper ID's */
-		$section_patrol->coastkeeper_patrol_id = $patrol->id;
-		$section_patrol->coastkeeper_section_id = $section->id;
+		$segment->patrol_id = $patrol->id;
+		$segment->section_id = $section->id;
 
 		/* Set the start time. */
-		$section_patrol->start_time = $start_time;
-		$section_patrol->end_time = date('H:i:s');
+		$segment->start_time = $start_time;
+		$segment->end_time = date('H:i:s');
 
 		// Save
-		$section_patrol->save();
+		$segment->save();
 
 		$datasheet = $section->location->datasheet;
 
@@ -96,21 +102,21 @@ class MobileController extends BaseController
 		/* For each category, get the entries. */
 		foreach ($categories as $category)
 		{
-			$entries = $category->entries;
+			$fields = $category->fields;
 			/* For each entry, save the data. */
-			foreach ($entries as $entry)
+			foreach ($fields as $field)
 			{
 				/* Create a new tally */
-				$tally = new PatrolTally;
+				$tally = new Tally;
 
 				/* Link it to the patrol */
-				$tally->coastkeeper_patrol_entry_id = $section_patrol->id;
+				$tally->segment_id = $segment->id;
 
 				/* Link it to the datasheet entry */
-				$tally->coastkeeper_datasheet_entry_id = $entry->id;
+				$tally->field_id = $field->id;
 
 				/* Fill in the tally */
-				$tally->tally = (int)Input::get('entry-' . $entry->id);
+				$tally->tally = (int)Input::get('field-' . $field->id);
 
 				/* Save the information */
 				$tally->save();

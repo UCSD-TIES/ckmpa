@@ -14,7 +14,7 @@
       {% for datasheet in datasheets %}
       <tr>
         <td>
-          <a href="{{ url_route( 'admin.categories.index', {datasheet_id:datasheet.id})}}">
+          <a href="{{ url_route( 'admin.datasheets.show', datasheet.id)}}">
             {{ datasheet.name }}
           </a>
         </td>

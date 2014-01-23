@@ -4,7 +4,6 @@ class UsersController extends BaseController
 {
 	public function __construct() {
 		$this->beforeFilter('csrf', array('on'=>'post'));
-		$this->beforeFilter('auth', array('only'=>array('getDashboard')));
 	}
 
 	public function getRegister()
@@ -20,6 +19,7 @@ class UsersController extends BaseController
 			$user->first_name = Input::get('first_name');
 			$user->last_name = Input::get('last_name');
 			$user->username = Input::get('username');
+			$user->email = Input::get('email');
 			$user->password = Hash::make(Input::get('password'));
 			$user->save();
 

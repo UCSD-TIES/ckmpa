@@ -10,8 +10,8 @@ class FieldsController extends BaseController {
 	public function index()
 	{
 		$datasheet = Datasheet::find(Input::get('datasheet_id'));
-		$category = DatasheetCategory::find(Input::get('category_id'));
-		$fields = $category->entries;
+		$category = Category::find(Input::get('category_id'));
+		$fields = $category->fields;
 
 		$data['datasheet'] = $datasheet;
 		$data['category'] = $category;
@@ -40,11 +40,11 @@ class FieldsController extends BaseController {
 	public function store()
 	{
 		$input = Input::all();
-		$validation = Validator::make($input, DatasheetEntry::$rules);
+		$validation = Validator::make($input, Field::$rules);
 
 		if ($validation->passes())
 		{
-			DatasheetEntry::create($input);
+			Field::create($input);
 			$data['datasheet_id'] = Input::get('datasheet_id');
 			$data['category_id'] = Input::get('category_id');
 
@@ -75,7 +75,11 @@ class FieldsController extends BaseController {
 	 */
 	public function edit($id)
 	{
-        return View::make('admin.fields.edit');
+		$data['field'] = Field::find($id);
+		$data['datasheet'] = Datasheet::find(Input::get('datasheet_id'));
+		$data['category'] = Category::find(Input::get('category_id'));
+
+        return View::make('admin.fields.edit', $data);
 	}
 
 	/**
@@ -87,14 +91,14 @@ class FieldsController extends BaseController {
 	public function update($id)
 	{
 		$input = array_except(Input::all(), '_method');
-		$validation = Validator::make($input, DatasheetEntry::$rules);
+		$validation = Validator::make($input, Field::$rules);
 
 		if ($validation->passes())
 		{
-			$field = DatasheetEntry::find($id);
+			$field = Field::find($id);
 			$field->update($input);
 
-			return Redirect::route('admin.fields.index', $id);
+			return Redirect::route('admin.categories.show', $field->category->id);
 		}
 
 		return Redirect::route('admin.fields.edit', $id)
@@ -110,9 +114,10 @@ class FieldsController extends BaseController {
 	 */
 	public function destroy($id)
 	{
-		DatasheetEntry::find($id)->delete();
+		$category_id = Field::find($id)->category->id;
+		Field::find($id)->delete();
 
-		return Redirect::route('admin.fields.index');
+		return Redirect::route('admin.categories.show', $category_id);
 	}
 
 }

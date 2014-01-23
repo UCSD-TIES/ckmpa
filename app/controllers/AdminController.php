@@ -129,13 +129,13 @@ class AdminController extends BaseController
 			$row_index++;
 
 			/* Get all of the PatrolEntries for this section */
-			$patrol_entries = $section->patrolEntries;
+			$segments = $section->patrolEntries;
 
 			/* For each patrol entry, fill out a row */
-			foreach ($patrol_entries as $patrol_entry)
+			foreach ($segments as $segment)
 			{
 				/* Get the parent patrol. */
-				$patrol = $patrol_entry->patrol;
+				$patrol = $segment->patrol;
 
 				/* Set the date */
 				$sheet->setCellValue('A' . $row_index, $patrol->date);
@@ -150,11 +150,11 @@ class AdminController extends BaseController
 				}
 
 				/* Set the start time and end time */
-				$sheet->setCellValue('D' . $row_index, $patrol_entry->start_time);
-				$sheet->setCellValue('E' . $row_index, $patrol_entry->end_time);
+				$sheet->setCellValue('D' . $row_index, $segment->start_time);
+				$sheet->setCellValue('E' . $row_index, $segment->end_time);
 
 				/* Now get all the tallies for this patrol... */
-				$tallies = $patrol_entry->patrolTallies;
+				$tallies = $segment->patrolTallies;
 
 				foreach ($tallies as $tally)
 				{
@@ -220,21 +220,21 @@ class AdminController extends BaseController
 
 				foreach ($sections as $section)
 				{
-					$patrol_entries = $section->patrolEntries;
+					$segments = $section->segments;
 
 					/* For each patrol entry, fill out a row */
-					foreach ($patrol_entries as $patrol_entry)
+					foreach ($segments as $segment)
 					{
 
 						/* Get the parent patrol. */
-						$patrol = $patrol_entry->patrol;
+						$patrol = $segment->patrol;
 
 
 						/*
 						 * If the finished Patrol filter is on,
 						 * ignore any patrols that arent finished
 						 */
-						if ($finishedPatrols && !$patrol->finished)
+						if ($finishedPatrols && !$patrol->is_finished)
 						{
 							continue;
 						}
@@ -254,20 +254,21 @@ class AdminController extends BaseController
 						}
 
 						/* Now get all the tallies for this patrol... */
-						$tallies = $patrol_entry->patrolTallies;
+						$tallies = $segment->tallies;
 
 						foreach ($tallies as $tally)
 						{
 							if ($tally->tally)
 							{
-								$datasheet_entry = $tally->datasheetEntry;
+								$field = $tally->field;
 
-								if (array_key_exists($datasheet_entry->name, $data))
+
+								if (array_key_exists($field->name, $data))
 								{
-									$data[$datasheet_entry->name] += $tally->tally;
+									$data[$field->name] += $tally->tally;
 								} else
 								{
-									$data[$datasheet_entry->name] = $tally->tally;
+									$data[$field->name] = $tally->tally;
 								}
 							}
 						}
@@ -319,17 +320,17 @@ class AdminController extends BaseController
 					if ($patrol_datasheet->id == $datasheet->id)
 					{
 
-						$patrol_entries = $patrol->patrolEntries;
+						$segments = $patrol->segments;
 
 						/* For each patrol entry, fill out a row */
-						foreach ($patrol_entries as $patrol_entry)
+						foreach ($segments as $segment)
 						{
 
 							/*
 							 * If the finished Patrol filter is on,
 							 * ignore any patrols that arent finished
 							 */
-							if ($finishedPatrols && !$patrol->finished)
+							if ($finishedPatrols && !$patrol->is_finished)
 							{
 								continue;
 							}
@@ -360,7 +361,7 @@ class AdminController extends BaseController
 							}
 
 							/* Now get all the tallies for this patrol... */
-							$tallies = $patrol_entry->patrolTallies;
+							$tallies = $segment->tallies;
 
 
 							foreach ($tallies as $tally)

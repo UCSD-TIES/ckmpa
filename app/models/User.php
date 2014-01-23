@@ -8,29 +8,17 @@ use Illuminate\Auth\Reminders\RemindableInterface;
 class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	public static $rules = array(
-		'first_name'=>'required|alpha|min:2',
-		'last_name'=>'required|alpha|min:2',
+		'first_name'=>'required|min:2',
+		'last_name'=>'required|min:2',
 		'username'=>'required|unique:users',
 		'email'=>'required|email',
-		'password'=>'required|alpha_num|between:6,20|confirmed',
-		'password_confirmation'=>'required|alpha_num|between:6,20'
+		'password'=>'required|between:6,30|confirmed',
+		'password_confirmation'=>'required|alpha_num|between:6,30'
 	);
 
-	protected $fillable = array('first_name', 'last_name', 'username', 'password', 'password_confirmation', 'is_admin');
-
-
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
-	protected $table = 'users';
-
-	/**
-	 * The attributes excluded from the model's JSON form.
-	 *
-	 * @var array
-	 */
+	protected $guarded = array('is_admin');
+	protected $fillable = array('first_name', 'last_name', 'username', 'email', 'password', 'password_confirmation');
+	protected $visible = array('first_name', 'last_name', 'username', 'email', 'is_admin');
 	protected $hidden = array('password');
 
 	/**
@@ -65,7 +53,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	public function patrols()
 	{
-		return $this->hasMany('Patrol', 'coastkeeper_volunteer_id');
+		return $this->hasMany('Patrol');
 	}
 
 }

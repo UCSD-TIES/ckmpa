@@ -11,8 +11,10 @@
         <tr>
           <td>{{ field.name }}</td>
           <td>
-            <a href="{{ url_route('admin.fields.edit', {datasheet_id:datasheet.id, category_id:category.id, field_id:field.id}) }}"><i class="glyphicon glyphicon-edit"></i></a>
-            <a href="{{ url_route('admin.fields.destroy', {datasheet_id:datasheet.id, category_id:category.id, field_id:field.id}) }}"><i class="glyphicon glyphicon-trash"></i></a>
+            {{ form_open({'method': 'DELETE', 'class': 'form-inline', 'route': ['admin.fields.destroy', field.id] })|raw }}
+            <a class="btn btn-default" href="{{ url_route('admin.fields.edit', {field_id:field.id, category_id:category.id, datasheet_id:datasheet.id}) }}"><i class="glyphicon glyphicon-edit"> Edit</i></a>
+            <button type="submit" class="btn btn-small btn-danger"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+            </form>
           </td>
         </tr>
         {% endfor %}

@@ -1,22 +1,25 @@
 <?php
 
 class Datasheet extends Eloquent {
-	protected $table = 'coastkeeper_datasheet';
-
 	public static $rules = array(
-		'name'=>'required|min:2|unique:coastkeeper_datasheet'
+		'name'=>'required|min:2|unique:datasheets'
 	);
 
-	protected $fillable = ['name'];
-
-	public function categories()
-	{
-		return $this->hasMany('DatasheetCategory', 'coastkeeper_datasheet_id');
-	}
+	protected $table = 'datasheets';
+	public $timestamps = true;
+	protected $softDelete = false;
+	protected $fillable = array('name');
+	protected $visible = array('name');
 
 	public function locations()
 	{
-		return $this->hasMany('Location', 'coastkeeper_datasheet_id');
+		return $this->hasMany('Location');
 	}
+
+	public function categories()
+	{
+		return $this->hasMany('Category');
+	}
+
 
 }

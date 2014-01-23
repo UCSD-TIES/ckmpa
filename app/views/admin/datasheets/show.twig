@@ -10,7 +10,7 @@
         {% for category in categories %}
         <tr>
           <td>
-            <a href="{{ url_route( 'admin.fields.index', {datasheet_id:datasheet.id, category_id:category.id})}}">
+            <a href="{{ url_route( 'admin.categories.show', category.id)}}">
               {{ category.name }}
             </a>
           </td>

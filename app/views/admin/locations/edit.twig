@@ -10,6 +10,7 @@
         Editing location  {{location.name}}
     </div>
     {{ form_open({'method': 'PATCH', 'class': 'form-horizontal', 'route': ['admin.locations.update', location.id] })|raw }}
+        <input type="hidden" name="datasheet_id" value="{{ location.datasheet.id }}">
         <div class="control-group {% if errors.location_name is defined %} error {% endif %}">
         <label for="name" class="control-label">New name:</label>
         <div class="controls">

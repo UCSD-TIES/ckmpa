@@ -6,18 +6,15 @@
   <div class="span12">
     {% if volunteer is defined %}
       <h2>{{ volunteer.last_name }}, {{ volunteer.first_name }}{% if volunteer.is_admin %}
-          <small>Administrator</small>{% endif %}</h2>
+          <span class="label label-primary">Administrator</span>{% endif %}</h2>
       <p>
         Login Name: {{ volunteer.username }}
-
             {{ locations }}
-
-
       </p>
       <p>
         {{ form_open({'method': 'DELETE', 'class': 'form-inline', 'route': ['admin.volunteers.destroy', volunteer.id] })|raw }}
-        <a class="btn btn-small" href="{{ url_route('admin.volunteers.edit', {id:volunteer.id}) }}"><i
-                  class="glyphicon glyphicon-pencil"></i> Edit</a>
+        <a class="btn btn-default btn-small" href="{{ url_route('admin.volunteers.edit', {id:volunteer.id}) }}">
+          <i class="glyphicon glyphicon-pencil"></i> Edit</a>
         <button type="submit" class="btn btn-small btn-danger"><i class="glyphicon glyphicon-trash"></i> Delete</button>
         </form>
       </p>

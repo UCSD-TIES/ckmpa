@@ -1,18 +1,25 @@
 <?php
 
 class Patrol extends Eloquent {
-	protected $table = 'coastkeeper_patrol';
+	protected $table = 'patrols';
+	public $timestamps = true;
+	protected $softDelete = false;
+	protected $fillable = array('date', 'is_finished', 'user_id', 'location_id');
+	protected $visible = array('date', 'is_finished', 'user_id', 'location_id');
 
-	public function location(){
-		return $this->hasOne('Location', 'id', 'coastkeeper_location_id');
+	public function segments()
+	{
+		return $this->hasMany('Segment');
 	}
 
-	public function volunteer(){
-		return $this->hasOne('User', 'id', 'coastkeeper_volunteer_id');
+	public function location()
+	{
+		return $this->belongsTo('Location');
 	}
 
-	public function patrolEntries(){
-		return $this->hasMany('PatrolEntry', 'coastkeeper_patrol_id');
+	public function user()
+	{
+		return $this->belongsTo('User');
 	}
 
 }
