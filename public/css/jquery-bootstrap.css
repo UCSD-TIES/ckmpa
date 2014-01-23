@@ -782,7 +782,8 @@ html head + body .ui-btn.ui-btn-d:visited {
 	background: #51A351 /*{d-bup-background-color}*/;
 	border-color: #00a84c /*{d-bup-border}*/;
 	color: #ffffff /*{d-bup-color}*/;
-	text-shadow: undefined /*{d-bup-shadow-x}*/ undefined /*{d-bup-shadow-y}*/ undefined /*{d-bup-shadow-radius}*/ undefined /*{d-bup-shadow-color}*/;
+	text-shadow: 0 /*{d-bup-shadow-x}*/ 0 /*{d-bup-shadow-y}*/ 0 /*{d-bup-shadow-radius}*/ #000000 /*{d-bup-shadow-color}*/;
+    font-weight: bolder;
 }
 /* Button hover */
 .ui-page-theme-d .ui-btn:hover,
@@ -793,7 +794,7 @@ html head + body .ui-btn.ui-btn-d:hover {
 	background: #5BB75B /*{d-bhover-background-color}*/;
 	border-color: #00a84c /*{d-bhover-border}*/;
 	color: #ffffff /*{d-bhover-color}*/;
-	text-shadow: undefined /*{d-bhover-shadow-x}*/ undefined /*{d-bhover-shadow-y}*/ undefined /*{d-bhover-shadow-radius}*/ undefined /*{d-bhover-shadow-color}*/;
+	text-shadow: 0 /*{d-bhover-shadow-x}*/ 0 /*{d-bhover-shadow-y}*/ 0 /*{d-bhover-shadow-radius}*/ #000000 /*{d-bhover-shadow-color}*/;
 }
 /* Button down */
 .ui-page-theme-d .ui-btn:active,
