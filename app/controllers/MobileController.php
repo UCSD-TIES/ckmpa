@@ -23,8 +23,10 @@ class MobileController extends BaseController
 
 	public function getSelectLocation()
 	{
+		Session::forget('location');
 		$locations = Location::all();
 		$data['locations'] = $locations;
+		$data['url'] = "data-url=/mobile/select-location";
 
 		return View::make('mobile.select-location', $data);
 	}

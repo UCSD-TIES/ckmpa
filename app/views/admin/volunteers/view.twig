@@ -3,48 +3,55 @@
 {% block title %}Volunteer Administration{% endblock %}
 
 {% block content %}
-<div class="span12">
-{% if volunteer is defined %}
-	<h2>{{ volunteer.last_name }}, {{ volunteer.first_name }}{% if volunteer.is_admin %} <small>Administrator</small>{% endif %}</h2>
-	<p>
-		Login Name: {{ volunteer.username }}
-	</p>
-	<p>
+  <div class="span12">
+    {% if volunteer is defined %}
+      <h2>{{ volunteer.last_name }}, {{ volunteer.first_name }}{% if volunteer.is_admin %}
+          <small>Administrator</small>{% endif %}</h2>
+      <p>
+        Login Name: {{ volunteer.username }}
+
+            {{ locations }}
+
+
+      </p>
+      <p>
         {{ form_open({'method': 'DELETE', 'class': 'form-inline', 'route': ['admin.volunteers.destroy', volunteer.id] })|raw }}
-        <a class="btn btn-small" href="{{ url_route('admin.volunteers.edit', {id:volunteer.id}) }}"><i class="glyphicon glyphicon-pencil"></i> Edit</a>
-		<button type="submit" class="btn btn-small btn-danger"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+        <a class="btn btn-small" href="{{ url_route('admin.volunteers.edit', {id:volunteer.id}) }}"><i
+                  class="glyphicon glyphicon-pencil"></i> Edit</a>
+        <button type="submit" class="btn btn-small btn-danger"><i class="glyphicon glyphicon-trash"></i> Delete</button>
         </form>
-	</p>
-	{% if volunteer.patrols.count %}
-	<table class="table table-bordered">
-		<thead><tr><th>Patrols</th>
-				<th>Location</th></tr></thead>
-		<tbody>
-			{% for patrol in patrols %}
-			<tr><td>
-				<a href="{{ url_route('admin.patrols.index', {patrol_id:patrol.id }) }}">
-				Patrol on {{ patrol.date }}
-				{% if not patrol.finished %}
-				<small class="uncompleted">(incomplete)</small>
-				{% endif %}</a>
-		</td>
-		<td>
-			{% for location in locations%}
-			{%if patrol.coastkeeper_location_id == location.id%}
-			   {{location.name}}
-			   {%endif%}
-			   {%endfor%}
-		</td>		
-</tr>
-			{% endfor %}
-		</tbody>
-	</table>
-	{% endif %}
+      </p>
+      {% if volunteer.patrols.count %}
+        <table class="table table-bordered">
+          <thead>
+          <tr>
+            <th>Patrols</th>
+            <th>Location</th>
+          </tr>
+          </thead>
+          <tbody>
+          {% for patrol in patrols %}
+            <tr>
+              <td>
+                <a href="{{ url_route('admin.patrols.index', {patrol_id:patrol.id }) }}">
+                  Patrol on {{ patrol.date }}
+                  {% if not patrol.finished %}
+                    <small class="uncompleted">(incomplete)</small>
+                  {% endif %}</a>
+              </td>
+              <td>
+                  {{ patrol.location.name }}
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      {% endif %}
 
-{% else %}
+    {% else %}
 
-	Volunteer not found.
+      Volunteer not found.
 
-{% endif %}
-</div>
+    {% endif %}
+  </div>
 {% endblock %}

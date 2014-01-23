@@ -58,6 +58,7 @@ class VolunteersController extends BaseController {
 		$volunteer = User::find($id);
 		$data['volunteer'] = $volunteer;
 		$data['patrols'] = $volunteer->patrols;
+
         return View::make('admin.volunteers.view', $data);
 	}
 

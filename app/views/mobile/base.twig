@@ -7,11 +7,14 @@
   <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.css"/>
   <link href="{{ url_asset('css/mobile.css') }}" rel="stylesheet">
   <link href="{{ url_asset('css/jquery-bootstrap.css') }}" rel="stylesheet">
+  <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+  <script src="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
+  <script src="{{ url_asset('js/main.js') }}"></script>
 </head>
 
 <body>
-<div data-role="page">
-  <div data-role="header" data-theme="b">
+<div data-role="page" {{ url }}>
+  <div data-role="header" data-theme="b" >
     <h1>MPA Watch</h1>
   </div>
   <div data-role="content">
@@ -41,9 +44,6 @@
     {% endblock %}
   </div>
 </div>
-<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-<script src="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
-<script src="{{ url_asset('js/main.js') }}"></script>
 </body>
 
 </html>

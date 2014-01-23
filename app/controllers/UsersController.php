@@ -36,7 +36,7 @@ class UsersController extends BaseController
 	public function postLogin() {
 		if (Auth::attempt(array('username'=>Input::get('username'), 'password'=>Input::get('password')))) {
 			Session::put("start_time", date('H:i:s'));
-			return Redirect::to('mobile/select-location');
+			return Redirect::route('select-location');
 		} else {
 			return Redirect::to('/')
 				->with('message', 'Your username/password combination was incorrect')
