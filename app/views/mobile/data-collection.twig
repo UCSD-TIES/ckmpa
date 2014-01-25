@@ -2,11 +2,12 @@
 
 {% block title %}Coastkeeper Volunteer - Patrol {% endblock %}
 
-{% block header %}Data Collection {% endblock %}
+{% block header %}Collecting Data for<br> {{ section.name }}{% endblock %}
 
 {% block content %}
   <div class="center-text">
-    <form id="data-entry-form" name="data-entry-form" action="{{ url_route('data-collection') }}" method="POST">
+    <form id="data-entry-form" name="data-entry-form" action="{{ url_route('data-collection') }}" method="POST" data-ajax="false">
+      <input type="hidden" name="section_id" value="{{ section.id }}">
       {% for category in datasheet.categories %}
         <fieldset data-role="collapsible">
           <legend>{{ category.name }}</legend>

@@ -23,7 +23,6 @@ class MobileController extends BaseController
 
 	public function getSelectLocation()
 	{
-		Session::forget('location');
 		$locations = Location::all();
 		$data['locations'] = $locations;
 		$data['url'] = "data-url=/mobile/select-location";
@@ -31,65 +30,64 @@ class MobileController extends BaseController
 		return View::make('mobile.select-location', $data);
 	}
 
-	public function getSelectSection($id)
+	public function getSelectSection($location_id)
 	{
-		if (Session::has('location'))
-			$id = Session::get('location');
-		else
-			Session::set('location', $id);
-
-		$location = Location::find($id);
+		$location = Location::find($location_id);
 		$sections = $location->sections;
 		$data['sections'] = $sections;
+		$data['location'] = $location;
 
 		return View::make('mobile.select-section', $data);
 	}
 
-	public function getDataCollection($id)
+	public function getDataCollection($section_id)
 	{
-		Session::set('section', $id);
-		$datasheet = Location::find(Session::get('location'))->datasheet;
+		$section = Section::find($section_id);
+		$data['section'] = $section;
+		$data['datasheet'] = $section->location->datasheet;
 
-		return View::make('mobile.data-collection', array('datasheet' => $datasheet));
+		return View::make('mobile.data-collection', $data);
 
 	}
 
 	public function postDataCollection()
 	{
+		//Get the current section
+		$section = Section::find(Input::get('section_id'));
+
+		//Get the current patrol if on one
+		//Else create a new patrol
 		if (Session::has('patrol'))
 			$patrol = Session::get('patrol');
 		else
 		{
 			$patrol = new Patrol;
 
-			/* Set the owner of the patrol */
-			$patrol->user_id = Auth::user()->id;
-			$patrol->location_id = Session::get('location');
+			/* Set the owner and location of the patrol */
+			$patrol->user()->associate(Auth::user());
+			$patrol->location()->associate($section->location);
 
 			/* Set the date of the current patrol */
 			$patrol->date = date('Y-m-d');
-
-			/* Set as current patrol */
 			$patrol->is_finished = 1;
 
 			$patrol->save();
+
+			/* Set as current patrol */
 			Session::set('patrol', $patrol);
 		}
-
-		/* Start the patrol entry for the section. */
-		$section = Section::find(Session::get('section'));
 
 		/* Get the TIME string. */
 		$start_time = Session::get('start_time');
 
-		/* Create a new patrol. */
+		/* Create a new patrol segment. */
 		$segment = new Segment;
 
-		/* Set the proper ID's */
-		$segment->patrol_id = $patrol->id;
-		$segment->section_id = $section->id;
+		/* Set the patrol and section of the segment */
+		$segment->patrol()->associate($patrol);
+		$segment->section()->associate($section);
 
-		/* Set the start time. */
+		/* Set the times. */
 		$segment->start_time = $start_time;
 		$segment->end_time = date('H:i:s');
 
@@ -110,10 +108,10 @@ class MobileController extends BaseController
 				$tally = new Tally;
 
 				/* Link it to the patrol */
-				$tally->segment_id = $segment->id;
+				$tally->segment()->associate($segment);
 
 				/* Link it to the datasheet entry */
-				$tally->field_id = $field->id;
+				$tally->field()->associate($field);
 
 				/* Fill in the tally */
 				$tally->tally = (int)Input::get('field-' . $field->id);
@@ -124,8 +122,8 @@ class MobileController extends BaseController
 
 		}
 
-		return Redirect::route('finish');
-
+		$data['location'] = $section->location;
+		return View::make('mobile.finish', $data);
 	}
 
 	public function finish()

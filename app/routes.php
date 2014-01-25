@@ -16,7 +16,6 @@ Route::group(array('prefix' => 'mobile', 'before' => 'auth'), function()
 {
 	Route::any('/', array('as' => 'login', 'uses' => 'MobileController@getIndex'));
 	Route::get('select-location', array('as' => 'select-location', 'uses' => 'MobileController@getSelectLocation'));
-	Route::post('select-location', array('as' => 'select-location', 'uses' => 'MobileController@postSelectLocation'));
 	Route::get('select-section/{id}', array('as' => 'select-section', 'uses' => 'MobileController@getSelectSection'));
 	Route::get('data-collection/{id}', array('as' => 'get-data-collection', 'uses' => 'MobileController@getDataCollection'));
 	Route::post('data-collection', array('as' => 'data-collection', 'uses' => 'MobileController@postDataCollection'));
