@@ -8,12 +8,12 @@ San Diego Coastkeeper MPA Datasheet web application developed with PHP + [Larave
   - [TwigBridge](https://github.com/laravelbook/ardent) for twig templates
   - [PHPExcel](http://phpexcel.codeplex.com/) for exporting Excel sheets
 
-###Javascript dependencies"
+###Javascript dependencies:
   - [jQuery](http://jquery.com/) for everything
   - [Chart.js](http://www.chartjs.org/) for charts
   - [Datepicker](https://github.com/eternicode/bootstrap-datepicker) for bootstrap compatible datepicker
 
-###UI Frameworks"
+###UI Frameworks:
   - [Bootstrap](http://getbootstrap.com/) for admin side
   - [jQuery Mobile](http://jquerymobile.com/) for mobile side
 

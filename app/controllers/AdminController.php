@@ -60,17 +60,17 @@ class AdminController extends BaseController
 		/* Step through the categories to get the entires. */
 		foreach ($datasheet_categories as $category)
 		{
-			$entries = $category->entries;
+			$fields = $category->fields;
 
 			/* Step through each entry and add them to the entries array. */
-			foreach ($entries as $entry)
+			foreach ($fields as $field)
 			{
 				/* Get the next column */
 				$column = $sheet_header_prefix . chr($sheet_header_start_pos + $sheet_header_start_index);
 				/* Add it to the sheet header */
-				$sheet_header[$column] = $entry->name;
+				$sheet_header[$column] = $field->name;
 				/* Add this position to the entries_position array */
-				$entries_position[$entry->id] = $column;
+				$entries_position[$field->id] = $column;
 				/* Increase the index */
 				$sheet_header_start_index++;
 				/* If we've reached Z, we need to start doing Prefixes. */
@@ -129,7 +129,7 @@ class AdminController extends BaseController
 			$row_index++;
 
 			/* Get all of the PatrolEntries for this section */
-			$segments = $section->patrolEntries;
+			$segments = $section->segments;
 
 			/* For each patrol entry, fill out a row */
 			foreach ($segments as $segment)
@@ -141,7 +141,7 @@ class AdminController extends BaseController
 				$sheet->setCellValue('A' . $row_index, $patrol->date);
 
 				/* Get Volunteer information */
-				$volunteer = $patrol->volunteer;
+				$volunteer = $patrol->user;
 
 				/* Set the values */
 				if ($volunteer)
@@ -154,11 +154,11 @@ class AdminController extends BaseController
 				$sheet->setCellValue('E' . $row_index, $segment->end_time);
 
 				/* Now get all the tallies for this patrol... */
-				$tallies = $segment->patrolTallies;
+				$tallies = $segment->tallies;
 
 				foreach ($tallies as $tally)
 				{
-					$sheet->setCellValue($entries_position[$tally->coastkeeper_datasheet_entry_id] . $row_index, $tally->tally);
+					$sheet->setCellValue($entries_position[$tally->field->id] . $row_index, $tally->tally);
 				}
 
 				/* increase the row */
