@@ -18,6 +18,8 @@ class MobileController extends BaseController
 
 	public function getIndex()
 	{
+		$data['url'] = "data-url=/mobile";
+
 		return View::make('mobile.index');
 	}
 

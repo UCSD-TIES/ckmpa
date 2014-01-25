@@ -65,7 +65,7 @@ return array(
 	|
 	*/
 
-	'key' => 'YourSecretKey!!!',
+	'key' => 'ZLSx91rfSlotnDzvLtNWby4raVIWDDYS',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -107,7 +107,8 @@ return array(
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 		'TwigBridge\TwigServiceProvider',
-		'Way\Generators\GeneratorsServiceProvider'
+		'Way\Generators\GeneratorsServiceProvider',
+		'Zizaco\Confide\ConfideServiceProvider',
 	),
 
 	/*
