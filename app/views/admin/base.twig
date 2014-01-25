@@ -39,6 +39,7 @@
 	{% if session_has('message') %}
 	    <p class="alert">{{ session_get('message') }}</p>
 	{% endif %}
+
    {%  if errors.any %}
     <div class="alert alert-danger alert-block">
         <button type="button" class="close" data-dismiss="alert">&times;</button>

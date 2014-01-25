@@ -1,7 +1,7 @@
 {%  extends("admin.base") %}
 {%   block content %}
 <h2>Please Register</h2>
-{{ form_open({'url': 'users/register'})|raw }}
+{{ form_open({'url': 'users'})|raw }}
 
 {{ form_text('first_name', null, {'class': 'form-control', 'placeholder': 'First Name'})|raw }}
 {{ form_text('last_name', null, {'class': 'form-control', 'placeholder': 'Last Name'})|raw }}

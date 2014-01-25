@@ -5,7 +5,7 @@
 {% block header %}Volunteer Login {% endblock %}
 
 {% block content %}
-<form action="/users/login" method="POST">
+<form action="/users/login" method="POST" data-ajax="false">
 	{{ form_token()|raw }}
 	<label for="username" class="ui-hidden-accessible">Username:</label>
 	<input type="text" name="username" id="username" placeholder="Username">

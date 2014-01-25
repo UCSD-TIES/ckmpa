@@ -2,7 +2,7 @@ ckmpa
 ===============
 San Diego Coastkeeper MPA Datasheet web application developed with PHP + [Laravel 4](http://laravel.com/) framework.  
 ###Using additional packages:
-  - (Not integrated yet) [Confide](https://github.com/Zizaco/confide) for user management
+  - [Confide](https://github.com/Zizaco/confide) for user management
   - (Not integrated yet) [Entrust](https://github.com/Zizaco/entrust) for user permissions
   - (Not integrated yet) [Ardent](https://github.com/Zizaco/entrust) for "self-validating, secure and smart models" 
   - [TwigBridge](https://github.com/laravelbook/ardent) for twig templates

@@ -10,23 +10,38 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
-Route::get('/', "MobileController@getIndex");
+Route::get('/', array('as' => 'login', 'uses' => "UsersController@login"));
 
-Route::group(array('prefix' => 'mobile', 'before' => 'auth'), function()
+// Mobile routes
+Route::group(array('prefix' => 'mobile', 'before' => 'auth'), function ()
 {
-	Route::any('/', array('as' => 'login', 'uses' => 'MobileController@getIndex'));
 	Route::get('select-location', array('as' => 'select-location', 'uses' => 'MobileController@getSelectLocation'));
 	Route::get('select-section/{id}', array('as' => 'select-section', 'uses' => 'MobileController@getSelectSection'));
 	Route::get('data-collection/{id}', array('as' => 'get-data-collection', 'uses' => 'MobileController@getDataCollection'));
 	Route::post('data-collection', array('as' => 'data-collection', 'uses' => 'MobileController@postDataCollection'));
 	Route::get('finish', array('as' => 'finish', 'uses' => 'MobileController@finish'));
 });
-Route::controller('users', 'UsersController');
 
+// Confide User routes
+Route::group(array('prefix' => 'users'), function ()
+{
+	Route::get('login', array('as' => 'user-login', 'uses' => 'UsersController@login'));
+	Route::post('login', array('as' => 'user-login', 'uses' => 'UsersController@do_login'));
+	Route::get('register', array('as' => 'register', 'uses' => 'UsersController@register'));
+	Route::post('', array('as' => 'register', 'uses' => 'UsersController@store'));
+	Route::get('confirm/{code}', array('as' => 'confirm-password', 'uses' => 'UsersController@confirm'));
+	Route::get('forgot_password', array('as' => 'forgot_password', 'uses' => 'UsersController@forgot_password'));
+	Route::post('forgot_password', array('as' => 'forgot_password', 'uses' => 'UsersController@do_forgot_password'));
+	Route::get('reset_password/{token}', array('as' => 'reset_password', 'uses' => 'UsersController@reset_password'));
+	Route::post('reset_password', array('as' => 'reset_password', 'uses' => 'UsersController@do_reset_password'));
+	Route::get('logout', array('as' => 'register', 'uses' => 'UsersController@logout'));
+});
+
+// Admin routes
 Route::get('admin/login', array('as' => 'admin-login', 'uses' => 'AdminController@getLogin'));
 Route::post('admin/login', array('as' => 'admin-login', 'uses' => 'AdminController@postLogin'));
 
-Route::group(array('prefix' => 'admin', 'before' => 'auth.admin'), function()
+Route::group(array('prefix' => 'admin', 'before' => 'auth.admin'), function ()
 {
 	Route::any('/', array('as' => 'index', 'uses' => 'AdminController@getIndex'));
 	Route::get('logout', array('as' => 'logout', 'uses' => 'AdminController@getLogout'));
@@ -50,6 +65,3 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth.admin'), function()
 	Route::get('graphs-data', array('as' => 'graphs-data', 'uses' => 'AdminController@graphsData'));
 	Route::get('graphs-observations', array('as' => 'graphs-observations', 'uses' => 'AdminController@graphsObservations'));
 });
-//Route::resource('users', 'UsersController');
-
-
