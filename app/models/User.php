@@ -7,6 +7,22 @@ use Zizaco\Entrust\HasRole;
 
 
 
+/**
+ * An Eloquent Model: 'User'
+ *
+ * @property integer $id
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property string $first_name
+ * @property string $last_name
+ * @property string $username
+ * @property string $email
+ * @property string $password
+ * @property string $confirmation_code
+ * @property boolean $confirmed
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Patrol[] $patrols
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Role[] $roles
+ */
 class User extends ConfideUser implements UserInterface, RemindableInterface {
 	use HasRole;
 

@@ -1,5 +1,19 @@
 <?php
 
+/**
+ * An Eloquent Model: 'Segment'
+ *
+ * @property integer $id
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property string $start_time
+ * @property string $end_time
+ * @property integer $patrol_id
+ * @property integer $section_id
+ * @property-read \Patrol $patrol
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Tally[] $tallies
+ * @property-read \Section $section
+ */
 class Segment extends Eloquent {
 	protected $table = 'segments';
 	public $timestamps = true;

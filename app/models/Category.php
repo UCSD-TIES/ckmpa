@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * An Eloquent Model: 'Category'
+ *
+ * @property integer $id
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property string $name
+ * @property integer $datasheet_id
+ * @property-read \Datasheet $datasheet
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Field[] $fields
+ */
 class Category extends Eloquent {
 	public static $rules = array(
 		'name'=>'required|min:2',

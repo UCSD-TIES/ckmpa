@@ -1,9 +1,8 @@
 $(document).bind('pageinit', function() {
 
-  Number.prototype.pad = function(len)
-  {
-    return (new Array(len+1).join("0") + this).slice(-len)
-  }
+  Number.prototype.pad = function (len) {
+      return (new Array(len + 1).join("0") + this).slice(-len)
+  };
 
   /*
    * Start and end time form scripts

@@ -1,5 +1,17 @@
 <?php
 
+/**
+ * An Eloquent Model: 'Location'
+ *
+ * @property integer $id
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property string $name
+ * @property integer $datasheet_id
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Section[] $sections
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Patrol[] $patrols
+ * @property-read \Datasheet $datasheet
+ */
 class Location extends Eloquent {
 	public static $rules = array(
 		'name'=>'required|min:2|unique:locations',

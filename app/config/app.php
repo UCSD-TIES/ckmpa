@@ -110,6 +110,7 @@ return array(
 		'Way\Generators\GeneratorsServiceProvider',
 		'Zizaco\Confide\ConfideServiceProvider',
 		'Zizaco\Entrust\EntrustServiceProvider',
+		'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
 	),
 
 	/*

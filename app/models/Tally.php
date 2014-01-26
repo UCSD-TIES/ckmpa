@@ -1,5 +1,17 @@
 <?php
 
+/**
+ * An Eloquent Model: 'Tally'
+ *
+ * @property integer $id
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property integer $tally
+ * @property integer $segment_id
+ * @property integer $field_id
+ * @property-read \Segment $segment
+ * @property-read \Field $field
+ */
 class Tally extends Eloquent {
 	protected $table = 'tallies';
 	public $timestamps = true;

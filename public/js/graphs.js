@@ -149,41 +149,41 @@
 
 	var displayBarGraph = function(gData, gLabels) {
 		var data = {
-				labels : gLabels,
-				datasets : [
-				{
-					fillColor : "rgba(220,220,220,0.5)",
-					strokeColor : "rgba(220,220,220,1)",
-					pointColor : "rgba(220,220,220,1)",
-					pointStrokeColor : "#fff",
-					data : gData
-				},
-			]
-		}
+            labels: gLabels,
+            datasets: [
+                {
+                    fillColor: "rgba(220,220,220,0.5)",
+                    strokeColor: "rgba(220,220,220,1)",
+                    pointColor: "rgba(220,220,220,1)",
+                    pointStrokeColor: "#fff",
+                    data: gData
+                },
+            ]
+        };
 		patrolCtx = document.getElementById("patrolsChart").getContext("2d");			
 		var myNewChart = new Chart(patrolCtx).Bar(data,null);	
 	};	
 
 	var displayLineGraph = function(labels, pData, oData) {
 		var data = {
-				labels : labels,
-				datasets : [
-				{
-					fillColor : "rgba(170,1,20,0.5)",
-					strokeColor : "rgba(170,1,20,1)",
-					pointColor : "rgba(170,1,20,1)",
-					pointStrokeColor : "#fff",
-					data : pData
-				},
-				{
-					fillColor : "rgba(151,187,205,0.5)",
-					strokeColor : "rgba(151,187,205,1)",
-					pointColor : "rgba(151,187,205,1)",
-					pointStrokeColor : "#fff",
-					data : oData
-				},
-			]
-		}
+            labels: labels,
+            datasets: [
+                {
+                    fillColor: "rgba(170,1,20,0.5)",
+                    strokeColor: "rgba(170,1,20,1)",
+                    pointColor: "rgba(170,1,20,1)",
+                    pointStrokeColor: "#fff",
+                    data: pData
+                },
+                {
+                    fillColor: "rgba(151,187,205,0.5)",
+                    strokeColor: "rgba(151,187,205,1)",
+                    pointColor: "rgba(151,187,205,1)",
+                    pointStrokeColor: "#fff",
+                    data: oData
+                },
+            ]
+        };
 		observationsCtx = document.getElementById("observationsChart").getContext("2d");			
 		var observationChart = new Chart(observationsCtx).Line(data,null);	
 	}

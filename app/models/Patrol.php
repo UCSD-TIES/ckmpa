@@ -1,5 +1,19 @@
 <?php
 
+/**
+ * An Eloquent Model: 'Patrol'
+ *
+ * @property integer $id
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property string $date
+ * @property boolean $is_finished
+ * @property integer $user_id
+ * @property integer $location_id
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Segment[] $segments
+ * @property-read \Location $location
+ * @property-read \User $user
+ */
 class Patrol extends Eloquent {
 	protected $table = 'patrols';
 	public $timestamps = true;
