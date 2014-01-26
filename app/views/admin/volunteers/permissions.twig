@@ -1,0 +1,32 @@
+{% extends 'admin.base' %}
+
+{% block title %}Manage Roles and Permissions{% endblock %}
+
+{% block content %}
+  <h2>Manage Roles and Permissions</h2>
+  {{ form_open({'method': 'POST', 'route': ['permissions'] })|raw }}
+  <table class="table table-bordered">
+    <tr>
+      <th>Roles</th>
+      <th>Permissions</th>
+    </tr>
+  {% for role in roles %}
+    <tr>
+      <td>{{ role.name }}</td>
+      <td>
+        {% for permission in permissions %}
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" value="{{ permission.id }}" name="{{ role.name }}-{{ permission.name }}"
+                      {% if permission.roles.contains(role.id) %}checked{% endif %}>
+              {{ permission.display_name }}
+            </label>
+          </div>
+        {% endfor %}
+      </td>
+    </tr>
+  {% endfor %}
+  </table>
+  <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+{% endblock %}

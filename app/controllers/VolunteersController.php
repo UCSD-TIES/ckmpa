@@ -11,6 +11,7 @@ class VolunteersController extends BaseController {
 	{
 		$volunteers = User::all();
 		$data['volunteers'] = $volunteers;
+
 		return View::make('admin/volunteers/list', $data);
 	}
 
@@ -21,7 +22,9 @@ class VolunteersController extends BaseController {
 	 */
 	public function create()
 	{
-        return View::make('admin.volunteers.create');
+		$data['roles'] = Role::all();
+
+        return View::make('admin.volunteers.create', $data);
 	}
 
 	/**
@@ -31,26 +34,20 @@ class VolunteersController extends BaseController {
 	 */
 	public function store()
 	{
-		$input = Input::all();
-		$validation = Validator::make($input, User::$rules);
+		$user = new User;
 
-		if ($validation->passes())
+		if ($user->save())
 		{
-			$user = new User;
-			$user->first_name = Input::get('first_name');
-			$user->last_name = Input::get('last_name');
-			$user->username = Input::get('username');
-			$user->email = Input::get('email');
-			$user->password = Hash::make(Input::get('password'));
-			$user->is_admin = Input::get('is_admin')?1:0;
-			$user->save();
+			$role = Role::find(Input::get('role'));
+			$user->attachRole($role);
 
 			return Redirect::route('admin.volunteers.index');
 		}
 
+		$errors = $user->errors();
 		return Redirect::route('admin.volunteers.create')
 			->withInput()
-			->withErrors($validation);
+			->with('errors', $errors);
 	}
 
 	/**
@@ -78,6 +75,7 @@ class VolunteersController extends BaseController {
 	{
 		$volunteer = User::find($id);
 		$data['volunteer'] = $volunteer;
+		$data['roles'] = Role::all();
 
         return View::make('admin.volunteers.edit', $data);
 	}
@@ -90,26 +88,18 @@ class VolunteersController extends BaseController {
 	 */
 	public function update($id)
 	{
-		$input = Input::except('_method');
-		$rules = User::$rules;
-		$rules['username'] = 'required|unique:users,username,'.$id;
-		unset($rules['password']);
-		unset($rules['password_confirmation']);
-		$validation = Validator::make($input, $rules);
-
-		if ($validation->passes())
+		$user = User::find($id);
+		if($user->updateUniques())
 		{
-			$volunteer = User::find($id);
-			$volunteer->update($input);
-			$volunteer->is_admin = Input::get('is_admin');
-			$volunteer->save();
-
+			$user->roles()->sync(array(Input::get('role')));
 			return Redirect::route('admin.volunteers.show', $id);
 		}
 
+		$errors = $user->errors();
 		return Redirect::route('admin.volunteers.edit', $id)
 			->withInput()
-			->withErrors($validation);
+			->with('errors', $errors);
+
 	}
 
 	/**
@@ -123,5 +113,30 @@ class VolunteersController extends BaseController {
 		User::find($id)->delete();
 
 		return Redirect::route('admin.volunteers.index');
+	}
+
+	public function permissions()
+	{
+		$data['roles'] = Role::all();
+		$data['permissions'] = Permission::all();
+
+		return View::make('admin.volunteers.permissions', $data);
+
+	}
+
+	public function postPermissions()
+	{
+		$permissions = DB::table('permissions')->lists('name');
+		foreach(Role::all() as $role)
+		{
+			$perms = array();
+			foreach($permissions as $permission)
+				$perms[] = Input::get($role->name.'-'.$permission);
+
+			$role->perms()->sync(array_filter($perms));
+		}
+
+		return Redirect::route('permissions')->with('message', 'Saved');
+
 	}
 }

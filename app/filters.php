@@ -35,13 +35,23 @@ App::after(function($request, $response)
 
 Route::filter('auth', function()
 {
-	if (Auth::guest()) return Redirect::guest('users/login');
+	//if (Auth::guest()) return Redirect::guest('users/login');
+	if (! Entrust::can('can_patrol') )
+	{
+		return Redirect::guest('users/login')->with('message', 'Please Login');
+	}
 });
 
 Route::filter('auth.admin', function()
 {
-	if (Auth::guest()) return Redirect::guest('admin/login');
+	//if (Auth::guest()) return Redirect::guest('admin/login');
+	if (! Entrust::hasRole('Admin') ) // Checks the current user
+	{
+		return Redirect::guest('admin/login')->with('error','Please Login as Administrator' );
+	}
 });
+
+
 
 Route::filter('auth.basic', function()
 {

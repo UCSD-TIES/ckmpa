@@ -3,8 +3,8 @@ global:
     - APP_NAME: ckmpa
     - LARAVEL_ENV: production
 
-web1: #component type & number
-  name: ckmpa            #component settings
+web1:
+  name: ckmpa
   shared_writable_dirs:
     - app/storage/cache
     - app/storage/logs
@@ -23,7 +23,7 @@ web1: #component type & number
     - zip
     - xcache
   before_deploy:
-    - "php artisan migrate"
+    - "php artisan migrate:refresh --seed"
   after_deploy:
     - "php artisan cache:clear"
     - "rm -rf app/storage/views/*"

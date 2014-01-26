@@ -5,7 +5,7 @@
 {% block content %}
   <div class="span12">
     <h1>Create New Volunteer</h1>
-{{ session_get('is') }}
+
     <form class="form-horizontal" action="{{ url_route('admin.volunteers.store') }}" method="POST">
       <div class="form-group{% if errors.first_name is defined %} error{% endif %}">
         <label class="col-sm-2 control-label" for="first_name">First Name</label>
@@ -66,20 +66,23 @@
         </div>
       </div>
       <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-          <div class="checkbox">
-            <label class="checkbox" for="is_admin">
-              <input type="checkbox" id="is_admin" name="is_admin" value="1"> Is Administrator
-            </label>
-          </div>
+        <label class="col-sm-2 control-label" for="role">Role:</label>
+
+        <div class="col-sm-10">
+          <select multiple class="form-control" name="role">
+            {% for role in roles %}
+              <option value="{{ role.id }}" {% if role.name == 'Volunteer' %} selected="selected"{% endif %}>
+                {{ role.name }}</option>
+            {% endfor %}
+          </select>
         </div>
       </div>
-      <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-          <button type="submit" class="btn btn-primary">Save Changes</button>
-          <a class="btn btn-warning" href="{{ url_route('admin.volunteers.index') }}">Cancel</a>
-        </div>
-      </div>
-    </form>
   </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-primary">Save Changes</button>
+      <a class="btn btn-warning" href="{{ url_route('admin.volunteers.index') }}">Cancel</a>
+    </div>
+  </div>
+  </form>
 {% endblock %}

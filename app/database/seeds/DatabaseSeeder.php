@@ -1,7 +1,7 @@
 <?php
 
-class DatabaseSeeder extends Seeder {
 
+class DatabaseSeeder extends Seeder {
 	/**
 	 * Run the database seeds.
 	 *
@@ -9,10 +9,14 @@ class DatabaseSeeder extends Seeder {
 	 */
 	public function run()
 	{
-		Eloquent::unguard();
-
-		// $this->call('UserTableSeeder');
+		//Eloquent::unguard();
+		DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+		$this->call('RolesPermissionsTableSeeder');
 		$this->call('LocationsTableSeeder');
+		$this->call('DatasheetsTableSeeder');
+		$this->call('UsersTableSeeder');
+		DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
 	}
 
 }

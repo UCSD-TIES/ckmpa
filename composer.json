@@ -10,7 +10,8 @@
         "phpoffice/phpexcel": "dev-master",
         "zizaco/confide": "3.1.x",
         "zizaco/entrust": "dev-master",
-        "laravelbook/ardent": "2.4.x"
+        "laravelbook/ardent": "2.4.x",
+        "nesbot/Carbon": "*"
 	},
 	"autoload": {
 		"classmap": [

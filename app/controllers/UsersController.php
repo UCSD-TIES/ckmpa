@@ -12,8 +12,9 @@
 
 class UsersController extends BaseController
 {
-	public function __construct() {
-		$this->beforeFilter('csrf', array('on'=>'post'));
+	public function __construct()
+	{
+		$this->beforeFilter('csrf', array('on' => 'post'));
 	}
 
 	/**
@@ -35,6 +36,7 @@ class UsersController extends BaseController
 
 		if ($user->save())
 		{
+			$user->attachRole(2);
 			return Redirect::route('login')
 				->with('notice', Lang::get('confide::confide.alerts.account_created'));
 		} else
@@ -54,13 +56,11 @@ class UsersController extends BaseController
 	 */
 	public function login()
 	{
-		if (Confide::user())
-		{
+		if (Entrust::can('can_patrol'))
 			return Redirect::route('select-location');
-		} else
-		{
-			return View::make('mobile/index');
-		}
+
+		$error = ['Access Denied'];
+		return View::make('mobile/index')->with('errors', $error);
 	}
 
 	/**
@@ -90,23 +90,22 @@ class UsersController extends BaseController
 		} else
 		{
 			$user = new User;
-			$err_msg = array();
 
 			// Check if there was too many login attempts
 			if (Confide::isThrottled($input))
 			{
-				$err_msg[] = Lang::get('confide::confide.alerts.too_many_attempts');
+				$err_msg = Lang::get('confide::confide.alerts.too_many_attempts');
 			} elseif ($user->checkUserExists($input) and !$user->isConfirmed($input))
 			{
-				$err_msg[] = Lang::get('confide::confide.alerts.not_confirmed');
+				$err_msg = Lang::get('confide::confide.alerts.not_confirmed');
 			} else
 			{
-				$err_msg[] = Lang::get('confide::confide.alerts.wrong_credentials');
+				$err_msg = Lang::get('confide::confide.alerts.wrong_credentials');
 			}
 
 			return Redirect::route('login')
 				->withInput(Input::except('password'))
-				->with('errors', $err_msg);
+				->with('message', $err_msg);
 		}
 	}
 

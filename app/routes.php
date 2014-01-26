@@ -56,6 +56,9 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth.admin'), function ()
 	Route::resource('categories', 'CategoriesController');
 	Route::resource('fields', 'FieldsController');
 
+	Route::get('permissions', array('as' => 'permissions', 'uses' => 'VolunteersController@permissions'));
+	Route::post('permissions', array('as' => 'permissions', 'uses' => 'VolunteersController@postPermissions'));
+
 	//Patrols
 	Route::get('patrols-entries-locations-list', array('as' => 'patrols-entries-locations-list', 'uses' => 'PatrolsController@patrolEntries'));
 	Route::get('patrol-entries-list', array('as' => 'patrol-entries-list', 'uses' => 'PatrolsController@patrolEntries'));

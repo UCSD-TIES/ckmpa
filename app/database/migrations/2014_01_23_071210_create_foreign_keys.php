@@ -89,7 +89,7 @@ class CreateForeignKeys extends Migration {
 			$table->dropForeign('tallies_segment_id_foreign');
 		});
 		Schema::table('tallies', function(Blueprint $table) {
-			$table->dropForeign('tallies_item_id_foreign');
+			$table->dropForeign('tallies_field_id_foreign');
 		});
 	}
 }

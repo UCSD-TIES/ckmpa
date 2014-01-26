@@ -22,9 +22,9 @@
       {% block header %} {% endblock %}
     </h1>
     {% if session_has('message') %}
-      <div class="alert">{{ session_get('message') }}</div>
+      <div class="center-text">{{ session_get('message') }}</div>
     {% endif %}
-    {% if errors %}
+    {% if errors.any %}
       {% for error in errors %}
         {{ error }}<br>
       {% endfor %}

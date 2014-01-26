@@ -9,17 +9,26 @@ class AdminController extends BaseController
 
 	public function getLogin()
 	{
-		return View::make('admin/login');
+		if(Entrust::hasRole('Admin'))
+			return Redirect::route('index');
+
+		return View::make('admin.login');
 	}
 
 	public function postLogin()
 	{
-		if (Auth::attempt(array('username' => Input::get('username'), 'password' => Input::get('password'))))
+		$input = array(
+			'username' => Input::get('username'),
+			'password' => Input::get('password'),
+			'remember' => Input::get('remember'),
+		);
+
+		if (Confide::logAttempt($input, Config::get('confide::signup_confirm')))
 		{
-			return Redirect::intended('admin/')->with('message', 'You are now logged in!');
+			return Redirect::intended('admin/')->with('success', 'You are now logged in!');
 		} else
 		{
-			return Redirect::to('admin/login')
+			return Redirect::route('admin-login')
 				->with('message', 'Your username/password combination was incorrect')
 				->withInput();
 		}
@@ -27,8 +36,9 @@ class AdminController extends BaseController
 
 	public function getLogout()
 	{
-		Auth::logout();
-		return Redirect::to('admin/login')->with('message', 'Your are now logged out!');
+		Confide::logout();
+
+		return Redirect::route('admin-login')->with('message', 'Your are now logged out!');
 	}
 
 	public function exportData($id, $sid = null)

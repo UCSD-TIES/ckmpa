@@ -3,10 +3,12 @@
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
 use Zizaco\Confide\ConfideUser;
+use Zizaco\Entrust\HasRole;
 
 
 
 class User extends ConfideUser implements UserInterface, RemindableInterface {
+	use HasRole;
 
 	public static $rules = array(
 		'first_name'=>'required|min:2',
@@ -14,7 +16,11 @@ class User extends ConfideUser implements UserInterface, RemindableInterface {
 		'username'=>'required|unique:users',
 		'email'=>'required|email',
 		'password'=>'required|between:6,30|confirmed',
-		'password_confirmation'=>'required|between:6,30'
+		'password_confirmation'=>'required|between:6,30',
+	);
+
+	public static $relationsData = array(
+		'roles'  => array(self::HAS_MANY, 'Role'),
 	);
 
 	protected $guarded = array('is_admin');

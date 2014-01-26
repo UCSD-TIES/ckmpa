@@ -1,63 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
-	<link href="{{ url_asset('css/admin.css') }}" rel="stylesheet">
-    <link href="{{ url_asset('css/datepicker3.css') }}" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+  <link href="{{ url_asset('css/admin.css') }}" rel="stylesheet">
+  <link href="{{ url_asset('css/datepicker3.css') }}" rel="stylesheet">
 
-	<title>{% block title %}Volunteer Administration{% endblock %}</title>
+  <title>{% block title %}Volunteer Administration{% endblock %}</title>
 </head>
 
 <body>
 <div class="navbar navbar-default navbar-fixed-top">
-	<div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a href="{{ url_route('index') }}" class="navbar-brand">Coastkeeper</a>
-        </div>
-        <div class="collapse navbar-collapse" id="navbar-collapse-1">
-
-		<ul class="nav navbar-nav">
-			<li><a href="{{ url_route('admin.volunteers.index') }}">Volunteers</a></li>
-			<li><a href="{{ url_route('admin.locations.index') }}">Locations</a></li>
-			<li><a href="{{ url_route('admin.patrols.index') }}">Patrols</a></li>
-			<li><a href="{{ url_route('graphs') }}">Graphs</a></li>
-			<li><a href="{{ url_route('admin.datasheets.index') }}">Datasheets</a></li>
-			<li><a href="{{ url_route('logout') }}">Logout</a></li>
-		</ul>
-        </div>
-	</div>
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a href="{{ url_route('index') }}" class="navbar-brand">Coastkeeper</a>
+    </div>
+    <div class="collapse navbar-collapse" id="navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="{{ url_route('admin.volunteers.index') }}">Volunteers</a></li>
+        <li><a href="{{ url_route('admin.locations.index') }}">Locations</a></li>
+        <li><a href="{{ url_route('admin.patrols.index') }}">Patrols</a></li>
+        <li><a href="{{ url_route('graphs') }}">Graphs</a></li>
+        <li><a href="{{ url_route('admin.datasheets.index') }}">Datasheets</a></li>
+        <li><a href="{{ url_route('logout') }}">Logout</a></li>
+      </ul>
+    </div>
+  </div>
 </div>
 <div class="container">
-	{% if session_has('message') %}
-	    <p class="alert">{{ session_get('message') }}</p>
-	{% endif %}
+  {% include('layouts.notifications') %}
 
-   {%  if errors.any %}
-    <div class="alert alert-danger alert-block">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <h4>Error</h4>
-        <ul>
-            {%  for error in errors.all() %}
-                <li>{{ error }}</li>
-            {% endfor %}
-        </ul>
-    </div>
-    {% endif %}
-	{% block content %} {% endblock %}
+  {% block content %} {% endblock %}
 </div>
 {% block scripts %}
-<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-<script src="{{ url_asset('js/bootstrap-datepicker.min.js') }}"></script>
-<script src="{{ url_asset('js/Chart.min.js') }}"></script>
+  <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+  <script src="{{ url_asset('js/bootstrap-datepicker.min.js') }}"></script>
+  <script src="{{ url_asset('js/Chart.min.js') }}"></script>
 {% endblock %}
 </body>
 </html>

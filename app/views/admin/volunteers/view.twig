@@ -5,7 +5,7 @@
 {% block content %}
   <div class="span12">
     {% if volunteer is defined %}
-      <h2>{{ volunteer.last_name }}, {{ volunteer.first_name }}{% if volunteer.is_admin %}
+      <h2>{{ volunteer.last_name }}, {{ volunteer.first_name }}{% if volunteer.hasRole('Admin') %}
           <span class="label label-primary">Administrator</span>{% endif %}</h2>
       <p>
         Login Name: {{ volunteer.username }}
@@ -32,7 +32,7 @@
               <td>
                 <a href="{{ url_route('admin.patrols.index', {patrol_id:patrol.id }) }}">
                   Patrol on {{ patrol.date }}
-                  {% if not patrol.finished %}
+                  {% if not patrol.is_finished %}
                     <small class="uncompleted">(incomplete)</small>
                   {% endif %}</a>
               </td>

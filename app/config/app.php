@@ -109,6 +109,7 @@ return array(
 		'TwigBridge\TwigServiceProvider',
 		'Way\Generators\GeneratorsServiceProvider',
 		'Zizaco\Confide\ConfideServiceProvider',
+		'Zizaco\Entrust\EntrustServiceProvider',
 	),
 
 	/*
@@ -175,7 +176,8 @@ return array(
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
 		'Confide'         => 'Zizaco\Confide\ConfideFacade',
-
+		'Entrust'    => 'Zizaco\Entrust\EntrustFacade',
+		'Carbon'     => 'Carbon\Carbon'
 	),
 
 );
