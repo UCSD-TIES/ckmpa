@@ -51,7 +51,8 @@ Assuming default installation paths.
 3. Inside **/Application/XAMPP/phpMyAdmin**, open **config.inc.php** and change (may need sudo to edit)
     - $cfg['Servers'][$i]['auth_type'] = 'config'; to $cfg['Servers'][$i]['auth_type'] = 'cookie';
 4. After you are added as collaborator to UCSD-TIES on Github, from the command line in **/Application/XAMPP/htdocs**:
-  - `git clone https://github.com/UCSD-TIES/ckmpa.git`
+    - `git clone https://github.com/UCSD-TIES/ckmpa.git`
+    - `sudo chown -R daemon:daemon ckmpa/app/storage`
 5. Open XAMPP Control Panel and start both Apache and MySQL modules
 6. Visit [localhost/phpmyadmin](http://localhost/phpmyadmin/) and login as username **root** with **no password** 
 7. Under General Settings in the main page, change password to **ck**

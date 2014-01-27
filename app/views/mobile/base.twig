@@ -1,48 +1,48 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>{% block title %}{% endblock %}</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.css"/>
-  <link href="{{ url_asset('css/jquery-bootstrap.css') }}" rel="stylesheet">
-  <link href="{{ url_asset('css/mobile.css') }}" rel="stylesheet">
-  <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-  <script src="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
-  <script src="{{ url_asset('js/main.js') }}"></script>
+	<meta charset="utf-8">
+	<title>{% block title %}{% endblock %}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.css"/>
+	<link href="{{ url_asset('css/jquery-bootstrap.css') }}" rel="stylesheet">
+	<link href="{{ url_asset('css/mobile.css') }}" rel="stylesheet">
+	<script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
+	<script src="{{ url_asset('js/main.js') }}"></script>
 </head>
 
 <body>
 <div data-role="page" {{ url }}>
-  <div data-role="header" data-theme="b" >
-    <h1>MPA Watch</h1>
-  </div>
-  <div data-role="content">
-    <h1 class="center-text">
-      {% block header %} {% endblock %}
-    </h1>
-    {% if session_has('message') %}
-      <div class="center-text">{{ session_get('message') }}</div>
-    {% endif %}
-    {% if errors.any %}
-      {% for error in errors %}
-        {{ error }}<br>
-      {% endfor %}
-    {% endif %}
-    {% block content %} {% endblock %}
-  </div>
+	<div data-role="header" data-theme="b">
+		<h1>MPA Watch</h1>
+	</div>
+	<div data-role="content">
+		<h1 class="center-text">
+			{% block header %} {% endblock %}
+		</h1>
+		{% if session_has('message') %}
+			<div class="center-text">{{ session_get('message') }}</div>
+		{% endif %}
+		{% if errors.any %}
+			{% for error in errors %}
+				{{ error }}<br>
+			{% endfor %}
+		{% endif %}
+		{% block content %} {% endblock %}
+	</div>
 
-  <div data-role="footer" data-position="fixed" data-theme="b">
-    {% block footer %}
-      {% if auth_check() %}
-        <div data-role="navbar">
-          <ul>
-            <li><a class="ui-btn ui-btn-b" href="{{ url_to('users/logout') }}">Logout</a></li>
-          </ul>
-        </div>
-      {% endif %}
-    {% endblock %}
-  </div>
+	<div data-role="footer" data-position="fixed" data-theme="b">
+		{% block footer %}
+			{% if auth_check() %}
+				<div data-role="navbar">
+					<ul>
+						<li><a class="ui-btn ui-btn-b" href="{{ url_to('users/logout') }}">Logout</a></li>
+					</ul>
+				</div>
+			{% endif %}
+		{% endblock %}
+	</div>
 </div>
 </body>
 

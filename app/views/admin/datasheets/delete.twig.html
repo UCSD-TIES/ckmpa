@@ -4,33 +4,33 @@
 
 {% block content %}
 <div span="12">
-{% if datasheet %}
-    <h1>Delete datasheet named {{ datasheet.name }}?</h1>
-    {% if errors.datasheet_delete is defined %}
-        <div class="alert alert-error">
-            <button type="button" class="close" data-dismiss="error">&times;</button>
-            <strong>Error!</strong> {{errors.datasheet_delete}}
-        </div>
-        <a href="{{ path('admin_categories_list', {datasheet_id:datasheet.id}) }}" class="btn">View categories</a>
-        <a href="{{ path('admin_locations') }}" class="btn">View locations</a>
-        <a href="{{ path('admin_datasheets_list') }}" class="btn">Back to datasheets</a>
-    {% else %}
-    <div class="alert">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>Warning!</strong> This action cannot be undone!
-    </div>
-    <form action="{{ path('admin_datasheet_delete', {datasheet_id:datasheet.id}) }}" method="POST">
-        <input type="hidden" name="approve_delete" value="1">
-        <button type="submit" class="btn btn-danger">Yes, delete {{datasheet.name}}</button>
-        <a href="{{ path('admin_datasheets_list') }}" class="btn">Cancel</a>
-    </form>
-    {% endif %}
-{% else %}
-    <h1>This datasheet doesn't exist</h1>
-    <a href="{{ path('admin_datasheets_list') }}" class="btn btn-primary">
-        Return to datasheets
-    </a>
-{% endif %}
+  {% if datasheet %}
+  <h1>Delete datasheet named {{ datasheet.name }}?</h1>
+  {% if errors.datasheet_delete is defined %}
+  <div class="alert alert-error">
+    <button type="button" class="close" data-dismiss="error">&times;</button>
+    <strong>Error!</strong> {{errors.datasheet_delete}}
+  </div>
+  <a href="{{ path('admin_categories_list', {datasheet_id:datasheet.id}) }}" class="btn">View categories</a>
+  <a href="{{ path('admin_locations') }}" class="btn">View locations</a>
+  <a href="{{ path('admin_datasheets_list') }}" class="btn">Back to datasheets</a>
+  {% else %}
+  <div class="alert">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>Warning!</strong> This action cannot be undone!
+  </div>
+  <form action="{{ path('admin_datasheet_delete', {datasheet_id:datasheet.id}) }}" method="POST">
+    <input type="hidden" name="approve_delete" value="1">
+    <button type="submit" class="btn btn-danger">Yes, delete {{datasheet.name}}</button>
+    <a href="{{ path('admin_datasheets_list') }}" class="btn">Cancel</a>
+  </form>
+  {% endif %}
+  {% else %}
+  <h1>This datasheet doesn't exist</h1>
+  <a href="{{ path('admin_datasheets_list') }}" class="btn btn-primary">
+    Return to datasheets
+  </a>
+  {% endif %}
 </div>
 {% endblock %}
 

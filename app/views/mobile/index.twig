@@ -5,14 +5,14 @@
 {% block header %}Volunteer Login {% endblock %}
 
 {% block content %}
-<form action="/users/login" method="POST" data-ajax="false">
-	{{ form_token()|raw }}
-	<label for="username" class="ui-hidden-accessible">Username:</label>
-	<input type="text" name="username" id="username" placeholder="Username">
-	<label for="password" class="ui-hidden-accessible">Password:</label>
-	<input type="password" name="password" id="password" placeholder="Password">
-	<button type="submit" class="ui-btn">Login</button>
-</form>
-<a class="ui-btn" href="{{ url_to('users/register') }}" data-ajax="false">Register</a>
-<img src="{{ url_asset('img/lobster.png') }}" alt="Logo" class="footer-logo">
+	<form action="/users/login" method="POST" data-ajax="false">
+		{{ form_token()|raw }}
+		<label for="username" class="ui-hidden-accessible">Username:</label>
+		<input type="text" name="username" id="username" placeholder="Username">
+		<label for="password" class="ui-hidden-accessible">Password:</label>
+		<input type="password" name="password" id="password" placeholder="Password">
+		<button type="submit" class="ui-btn">Login</button>
+	</form>
+	<a class="ui-btn" href="{{ url_to('users/register') }}" data-ajax="false">Register</a>
+	<img src="{{ url_asset('img/lobster.png') }}" alt="Logo" class="footer-logo">
 {% endblock %}

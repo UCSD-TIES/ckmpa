@@ -1,6 +1,7 @@
 <?php
 
-class DatasheetsController extends BaseController {
+class DatasheetsController extends BaseController
+{
 
 	/**
 	 * Display a listing of the resource.
@@ -10,7 +11,7 @@ class DatasheetsController extends BaseController {
 	public function index()
 	{
 		$datasheets = Datasheet::all();
-        return View::make('admin.datasheets.list', compact('datasheets'));
+		return View::make('admin.datasheets.list', compact('datasheets'));
 	}
 
 	/**
@@ -20,7 +21,7 @@ class DatasheetsController extends BaseController {
 	 */
 	public function create()
 	{
-        return View::make('admin.datasheets.create');
+		return View::make('admin.datasheets.create');
 	}
 
 	/**
@@ -48,7 +49,7 @@ class DatasheetsController extends BaseController {
 	/**
 	 * Display the specified resource.
 	 *
-	 * @param  int  $id
+	 * @param  int $id datasheet id
 	 * @return Response
 	 */
 	public function show($id)
@@ -57,13 +58,13 @@ class DatasheetsController extends BaseController {
 		$data['datasheet'] = $datasheet;
 		$data['categories'] = $datasheet->categories;
 
-        return View::make('admin.datasheets.show', $data);
+		return View::make('admin.datasheets.show', $data);
 	}
 
 	/**
 	 * Show the form for editing the specified resource.
 	 *
-	 * @param  int  $id
+	 * @param  int $id datasheet id
 	 * @return Response
 	 */
 	public function edit($id)
@@ -81,7 +82,7 @@ class DatasheetsController extends BaseController {
 	/**
 	 * Update the specified resource in storage.
 	 *
-	 * @param  int  $id
+	 * @param  int $id
 	 * @return Response
 	 */
 	public function update($id)
@@ -94,7 +95,7 @@ class DatasheetsController extends BaseController {
 			$datasheet = Datasheet::find($id);
 			$datasheet->update($input);
 
-			return Redirect::route('admin.categories.index', array('datasheet_id'=>$id));
+			return Redirect::route('admin.categories.index', array('datasheet_id' => $id));
 		}
 
 		return Redirect::route('admin.datasheets.edit', $id)
@@ -105,7 +106,7 @@ class DatasheetsController extends BaseController {
 	/**
 	 * Remove the specified resource from storage.
 	 *
-	 * @param  int  $id
+	 * @param  int $id
 	 * @return Response
 	 */
 	public function destroy($id)

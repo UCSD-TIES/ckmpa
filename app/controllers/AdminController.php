@@ -2,19 +2,38 @@
 
 class AdminController extends BaseController
 {
+	/**
+	 * Shows the dashboard.
+	 *
+	 * @return \Illuminate\View\View
+	 */
 	public function getIndex()
 	{
 		return View::make('admin/index');
 	}
 
+	/**
+	 * Shows the login screen
+	 * or redirect to dashboard if already logged in as admin.
+	 *
+	 * @return \Illuminate\Http\RedirectResponse|\Illuminate\View\View
+	 */
 	public function getLogin()
 	{
-		if(Entrust::hasRole('Admin'))
+		if (Entrust::hasRole('Admin'))
 			return Redirect::route('index');
 
 		return View::make('admin.login');
 	}
 
+	/**
+	 * Posts login data from input.
+	 *
+	 * Redirects to dashboard if successful,
+	 * or back to login screen if not.
+	 *
+	 * @return \Illuminate\Http\RedirectResponse
+	 */
 	public function postLogin()
 	{
 		$input = array(
@@ -23,6 +42,7 @@ class AdminController extends BaseController
 			'remember' => Input::get('remember'),
 		);
 
+		// Signup confirm not implemented yet ignore for now.
 		if (Confide::logAttempt($input, Config::get('confide::signup_confirm')))
 		{
 			return Redirect::intended('admin/')->with('success', 'You are now logged in!');
@@ -34,13 +54,25 @@ class AdminController extends BaseController
 		}
 	}
 
+	/**
+	 * Logs out
+	 *
+	 * @return \Illuminate\Http\RedirectResponse
+	 */
 	public function getLogout()
 	{
 		Confide::logout();
 
-		return Redirect::route('admin-login')->with('message', 'Your are now logged out!');
+		return Redirect::route('admin-login')
+			->with('message', 'Your are now logged out!');
 	}
 
+	/**
+	 * Exports patrol data to Excel sheet for a selected location or section.
+	 *
+	 * @param int $id The location id
+	 * @param int $sid Optional section id
+	 */
 	public function exportData($id, $sid = null)
 	{
 		/* Set up the Top row for the sheet. */
@@ -60,7 +92,7 @@ class AdminController extends BaseController
 		/* Get the location */
 		$location = Location::find($id);
 
-		$filename = $location->name . '-' . date('Y-m-d');
+		$filename = $location->name . '-' . Carbon::now();
 
 		/* Get the datasheet, we'll need to set the header up */
 		$datasheet = $location->datasheet;
@@ -188,21 +220,30 @@ class AdminController extends BaseController
 		/* Write the information */
 		$writer = PHPExcel_IOFactory::createWriter($excel, "Excel5");
 		$writer->save("php://output");
-
-		/* exit, as we don't need silex to do anything */
-		exit;
 	}
 
+	/**
+	 * Shows the graphs view.
+	 *
+	 * @return \Illuminate\View\View
+	 */
 	public function graphs()
 	{
 		$data['datasheets'] = Datasheet::all();
+
 		return View::make('admin.graphs.view', $data);
 	}
 
+	/**
+	 * Produces JSON for client to render graphs from.
+	 *
+	 * @return \Illuminate\Http\JsonResponse
+	 */
 	public function graphsData()
 	{
 		$messages = array();
 
+		// Gets the dates
 		$startDate = Input::get('startDate');
 		$endDate = Input::get('endDate');
 
@@ -210,89 +251,89 @@ class AdminController extends BaseController
 		$endDate = DateTime::createFromFormat('m/d/Y', $endDate);
 
 		$finishedPatrols = Input::get('completePatrol');
-
 		$datasheet_id = Input::get('datasheet');
 
+		// Returns error if no datasheet selected.
 		if (!$datasheet_id)
 		{
 			$messages['errors'] = "Please select a datasheet";
+			return Response::json($messages, 201);
 		}
 
-		if (count($messages) <= 0)
+		$datasheet = Datasheet::find($datasheet_id);
+		$locations = $datasheet->locations;
+		$data = array();
+
+		foreach ($locations as $location)
 		{
-			$datasheet = Datasheet::find($datasheet_id);
-			$locations = $datasheet->locations;
-			$data = array();
+			$sections = $location->sections;
 
-			foreach ($locations as $location)
+			foreach ($sections as $section)
 			{
-				$sections = $location->sections;
+				$segments = $section->segments;
 
-				foreach ($sections as $section)
+				/* For each patrol entry, fill out a row */
+				foreach ($segments as $segment)
 				{
-					$segments = $section->segments;
 
-					/* For each patrol entry, fill out a row */
-					foreach ($segments as $segment)
+					/* Get the parent patrol. */
+					$patrol = $segment->patrol;
+
+
+					/*
+					 * If the finished Patrol filter is on,
+					 * ignore any patrols that arent finished
+					 */
+					if ($finishedPatrols && !$patrol->is_finished)
+					{
+						continue;
+					}
+
+					/*
+					 * Filter out any patrols not in between the given dates
+					 */
+					if ($startDate && $endDate)
 					{
 
-						/* Get the parent patrol. */
-						$patrol = $segment->patrol;
+						$patrolDate = DateTime::createFromFormat('Y-m-d', $patrol->date);
 
-
-						/*
-						 * If the finished Patrol filter is on,
-						 * ignore any patrols that arent finished
-						 */
-						if ($finishedPatrols && !$patrol->is_finished)
+						if (($patrolDate < $startDate) || ($patrolDate > $endDate))
 						{
 							continue;
 						}
-
-						/*
-						 * Filter out any patrols not in between the given dates
-						 */
-						if ($startDate && $endDate)
-						{
-
-							$patrolDate = DateTime::createFromFormat('Y-m-d', $patrol->date);
-
-							if (($patrolDate < $startDate) || ($patrolDate > $endDate))
-							{
-								continue;
-							}
-						}
-
-						/* Now get all the tallies for this patrol... */
-						$tallies = $segment->tallies;
-
-						foreach ($tallies as $tally)
-						{
-							if ($tally->tally)
-							{
-								$field = $tally->field;
-
-
-								if (array_key_exists($field->name, $data))
-								{
-									$data[$field->name] += $tally->tally;
-								} else
-								{
-									$data[$field->name] = $tally->tally;
-								}
-							}
-						}
-
 					}
+
+					/* Now get all the tallies for this patrol... */
+					$tallies = $segment->tallies;
+
+					foreach ($tallies as $tally)
+					{
+						if ($tally->tally)
+						{
+							$field = $tally->field;
+
+							if (array_key_exists($field->name, $data))
+							{
+								$data[$field->name] += $tally->tally;
+							} else
+							{
+								$data[$field->name] = $tally->tally;
+							}
+						}
+					}
+
 				}
 			}
-
-			return Response::json($data, 201);
 		}
 
-		return Response::json($messages, 201);
+		return Response::json($data, 201);
 	}
 
+	/**
+	 * Produces JSON for client to render graphs from.
+	 *
+	 * @return \Illuminate\Http\JsonResponse
+	 */
 	public function graphsObservations()
 	{
 		$messages = array();
@@ -307,91 +348,87 @@ class AdminController extends BaseController
 
 		$datasheet_id = Input::get('datasheet');
 
+		// Returns error if no datasheet selected.
 		if (!$datasheet_id)
 		{
 			$messages['errors'] = "Please select a datasheet";
+			return Response::json($messages);
 		}
 
-		if (count($messages) <= 0)
+		$datasheet = Datasheet::find($datasheet_id);
+		$patrols = Patrol::all();
+
+		// Return array
+		$data = array();
+
+		foreach ($patrols as $patrol)
 		{
-			$datasheet = Datasheet::find($datasheet_id);
-			$patrols = Patrol::all();
-
-			// return array
-			$data = array();
-
-			foreach ($patrols as $patrol)
+			if ($patrol->location && $patrol->location)
 			{
-				if ($patrol->location && $patrol->location)
-				{
-					$patrol_datasheet = $patrol->location->datasheet;
+				$patrol_datasheet = $patrol->location->datasheet;
 
-					// check if patrols is in the datasheet
-					if ($patrol_datasheet->id == $datasheet->id)
+				// check if patrols is in the datasheet
+				if ($patrol_datasheet->id == $datasheet->id)
+				{
+
+					$segments = $patrol->segments;
+
+					/* For each patrol entry, fill out a row */
+					foreach ($segments as $segment)
 					{
 
-						$segments = $patrol->segments;
-
-						/* For each patrol entry, fill out a row */
-						foreach ($segments as $segment)
+						/*
+						 * If the finished Patrol filter is on,
+						 * ignore any patrols that arent finished
+						 */
+						if ($finishedPatrols && !$patrol->is_finished)
 						{
+							continue;
+						}
 
-							/*
-							 * If the finished Patrol filter is on,
-							 * ignore any patrols that arent finished
-							 */
-							if ($finishedPatrols && !$patrol->is_finished)
+						/*
+						 * Filter out any patrols not in between the given dates
+						 */
+						$patrolDate = DateTime::createFromFormat('Y-m-d', $patrol->date);
+						if ($startDate && $endDate)
+						{
+							if (($patrolDate < $startDate) || ($patrolDate > $endDate))
 							{
 								continue;
 							}
+						}
 
-							/*
-							 * Filter out any patrols not in between the given dates
-							 */
-							$patrolDate = DateTime::createFromFormat('Y-m-d', $patrol->date);
-							if ($startDate && $endDate)
-							{
-								if (($patrolDate < $startDate) || ($patrolDate > $endDate))
-								{
-									continue;
-								}
-							}
+						if (!array_key_exists($patrolDate->format('M Y'), $data))
+						{
+							$data[$patrolDate->format('M Y')] = array();
+						}
 
-							if (!array_key_exists($patrolDate->format('M Y'), $data))
-							{
-								$data[$patrolDate->format('M Y')] = array();
-							}
+						if (!array_key_exists('patrols', $data[$patrolDate->format('M Y')]))
+						{
+							$data[$patrolDate->format('M Y')]['patrols'] = 1;
+						} else
+						{
+							$data[$patrolDate->format('M Y')]['patrols'] += 1;
+						}
 
-							if (!array_key_exists('patrols', $data[$patrolDate->format('M Y')]))
+						/* Now get all the tallies for this patrol... */
+						$tallies = $segment->tallies;
+
+						foreach ($tallies as $tally)
+						{
+							if (!array_key_exists('observations', $data[$patrolDate->format('M Y')]))
 							{
-								$data[$patrolDate->format('M Y')]['patrols'] = 1;
+								$data[$patrolDate->format('M Y')]['observations'] = 1;
 							} else
 							{
-								$data[$patrolDate->format('M Y')]['patrols'] += 1;
-							}
-
-							/* Now get all the tallies for this patrol... */
-							$tallies = $segment->tallies;
-
-
-							foreach ($tallies as $tally)
-							{
-								if (!array_key_exists('observations', $data[$patrolDate->format('M Y')]))
-								{
-									$data[$patrolDate->format('M Y')]['observations'] = 1;
-								} else
-								{
-									$data[$patrolDate->format('M Y')]['observations'] += 1;
-								}
+								$data[$patrolDate->format('M Y')]['observations'] += 1;
 							}
 						}
 					}
 				}
 			}
-
-			return Response::json($data);
 		}
 
-		return Response::json($messages);
+		return Response::json($data);
 	}
 }

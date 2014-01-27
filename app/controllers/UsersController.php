@@ -85,7 +85,7 @@ class UsersController extends BaseController
 			// caught by the authentication filter IE Redirect::guest('user/login').
 			// Otherwise fallback to '/'
 			// Fix pull #145
-			Session::put("start_time", date('H:i:s'));
+			Session::put("start_time", Carbon::now());
 			return Redirect::intended('/mobile/select-location');
 		} else
 		{
@@ -202,6 +202,7 @@ class UsersController extends BaseController
 	public function logout()
 	{
 		Confide::logout();
+		Session::flush();
 
 		return Redirect::to('/');
 	}

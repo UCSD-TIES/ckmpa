@@ -3,58 +3,61 @@
 {% block title %}Volunteers{% endblock %}
 
 {% block content %}
-  <div class="span12">
-    <h1>Volunteers</h1>
-    <a class="btn btn-primary" href="{{ url_route('admin.volunteers.create') }}">Create new Volunteer</a>
-    <a class="btn btn-primary" href="{{ url_route('permissions') }}">Manage Permissions</a>
-    <br><br>
-    Search for First or Last name only
-    <form name="search" action="{{ url_route('admin.volunteers.index') }}" method="POST">
-      <input type="text" name="search_string">
-      <button class="btn btn-success" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-    </form>
-    <br><br>
-    {% if volunteers %}
-      <table class="table table-bordered">
-        <thead>
-        <tr>
-          <th>Name</th>
-          <th>Role</th>
-          <th>Controls</th>
-        </tr>
-        </thead>
-        <tfoot>
-        <tr>
-          <td colspan="2"><span class="is_admin">Administrators</span> are in bold.</td>
-        </tr>
-        </tfoot>
-        <tbody>
-        {% for volunteer in volunteers %}
-          <tr>
-            <td>
-              <a {% if volunteer.hasRole("Admin") %}class="is_admin"{% endif %}
-                 href="{{ url_route('admin.volunteers.show', {id:volunteer.id}) }}">
-                {{ volunteer.last_name }}, {{ volunteer.first_name }}
-              </a>
+	<div class="span12">
+		<h1>Volunteers</h1>
+		<a class="btn btn-primary" href="{{ url_route('admin.volunteers.create') }}">Create new Volunteer</a>
+		<a class="btn btn-primary" href="{{ url_route('permissions') }}">Manage Permissions</a>
+		<br><br>
+		Search for First or Last name only
+		<form name="search" action="{{ url_route('admin.volunteers.index') }}" method="POST">
+			<input type="text" name="search_string">
+			<button class="btn btn-success" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+		</form>
+		<br><br>
+		{% if volunteers %}
+			<table class="table table-bordered">
+				<thead>
+				<tr>
+					<th>Name</th>
+					<th>Role</th>
+					<th>Controls</th>
+				</tr>
+				</thead>
+				<tfoot>
+				<tr>
+					<td colspan="2"><span class="is_admin">Administrators</span> are in bold.</td>
+				</tr>
+				</tfoot>
+				<tbody>
+				{% for volunteer in volunteers %}
+					<tr>
+						<td>
+							<a {% if volunteer.hasRole("Admin") %}class="is_admin"{% endif %}
+							   href="{{ url_route('admin.volunteers.show', {id:volunteer.id}) }}">
+								{{ volunteer.last_name }}, {{ volunteer.first_name }}
+							</a>
 
-            </td>
-            <td>{{ volunteer.roles.first.name }}</td>
-            <td>
-              {{ form_open({'method': 'DELETE', 'class': 'form-inline', 'route': ['admin.volunteers.destroy', volunteer.id] })|raw }}
-              <a class="btn btn-default btn-small" href="{{ url_route('admin.volunteers.show', {id:volunteer.id}) }}"><i
-                        class="glyphicon glyphicon-eye-open"></i> View</a>
-              <a class="btn btn-default btn-small" href="{{ url_route('admin.volunteers.edit', {id:volunteer.id}) }}"><i
-                        class="glyphicon glyphicon-pencil"></i> Edit</a>
-              <button type='submit' class="btn btn-small btn-danger"><i class="glyphicon glyphicon-trash"></i> Delete
-              </button>
-              {{ form_close()|raw }}
-            </td>
-          </tr>
-        {% endfor %}
-        </tbody>
-      </table>
-    {% else %}
-      There are no volunteers available. <a href="{{ url_route('admin.volunteers.create') }}">Create a new one?</a>
-    {% endif %}
-  </div>
+						</td>
+						<td>{{ volunteer.roles.first.name }}</td>
+						<td>
+							{{ form_open({'method': 'DELETE', 'class': 'form-inline', 'route': ['admin.volunteers.destroy', volunteer.id] })|raw }}
+							<a class="btn btn-default btn-small"
+							   href="{{ url_route('admin.volunteers.show', {id:volunteer.id}) }}">
+								<i class="glyphicon glyphicon-eye-open"></i> View</a>
+							<a class="btn btn-default btn-small"
+							   href="{{ url_route('admin.volunteers.edit', {id:volunteer.id}) }}">
+								<i class="glyphicon glyphicon-pencil"></i> Edit</a>
+							<button type='submit' class="btn btn-small btn-danger">
+								<i class="glyphicon glyphicon-trash"></i>Delete
+							</button>
+							{{ form_close()|raw }}
+						</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		{% else %}
+			There are no volunteers available. <a href="{{ url_route('admin.volunteers.create') }}">Create a new one?</a>
+		{% endif %}
+	</div>
 {% endblock %}

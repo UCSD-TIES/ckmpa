@@ -5,11 +5,11 @@
 {% block header %}Patrol Finished {% endblock %}
 
 {% block content %}
-<h4 class="center-text"> Want to patrol more sections?</h4>
-<a class="ui-btn" href="{{url_route('select-section', location.id)}}"> Yes</a>
-<a class="ui-btn" href="{{url_to('users/logout')}}"> Done</a>
+	<h4 class="center-text"> Want to patrol more sections?</h4>
+	<a class="ui-btn" href="{{ url_route('select-section', location.id) }}"> Yes</a>
+	<a class="ui-btn" href="{{ url_to('users/logout') }}"> Done</a>
 
-{#<a class="ui-btn" href="{{url_route('select-location')}}"> Change Location</a>#}
+	{#<a class="ui-btn" href="{{url_route('select-location')}}"> Change Location</a>#}
 {% endblock %}
 
 {% block footer %} {% endblock %}

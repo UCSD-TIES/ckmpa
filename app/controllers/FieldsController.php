@@ -1,6 +1,7 @@
 <?php
 
-class FieldsController extends BaseController {
+class FieldsController extends BaseController
+{
 
 	/**
 	 * Display a listing of the resource.
@@ -16,7 +17,7 @@ class FieldsController extends BaseController {
 		$data['datasheet'] = $datasheet;
 		$data['category'] = $category;
 		$data['fields'] = $fields;
-        return View::make('admin.fields.list', $data);
+		return View::make('admin.fields.list', $data);
 	}
 
 	/**
@@ -29,7 +30,7 @@ class FieldsController extends BaseController {
 		$data['datasheet_id'] = Input::get('datasheet_id');
 		$data['category_id'] = Input::get('category_id');
 
-        return View::make('admin.fields.create', $data);
+		return View::make('admin.fields.create', $data);
 	}
 
 	/**
@@ -57,35 +58,37 @@ class FieldsController extends BaseController {
 	}
 
 	/**
-	 * Display the specified resource.
+	 * (Not Used) Display the specified resource.
 	 *
-	 * @param  int  $id
+	 *
+	 * @param  int $id
 	 * @return Response
 	 */
 	public function show($id)
 	{
-        return View::make('admin.fields.show');
+		return View::make('admin.fields.show');
 	}
 
 	/**
 	 * Show the form for editing the specified resource.
 	 *
-	 * @param  int  $id
+	 * @param  int $id
 	 * @return Response
 	 */
 	public function edit($id)
 	{
-		$data['field'] = Field::find($id);
-		$data['datasheet'] = Datasheet::find(Input::get('datasheet_id'));
-		$data['category'] = Category::find(Input::get('category_id'));
+		$field = Field::find($id);
+		$data['field'] = $field;
+		$data['category'] = $field->category;
+		$data['datasheet'] = $field->category->datasheet;
 
-        return View::make('admin.fields.edit', $data);
+		return View::make('admin.fields.edit', $data);
 	}
 
 	/**
 	 * Update the specified resource in storage.
 	 *
-	 * @param  int  $id
+	 * @param  int $id
 	 * @return Response
 	 */
 	public function update($id)
@@ -109,7 +112,7 @@ class FieldsController extends BaseController {
 	/**
 	 * Remove the specified resource from storage.
 	 *
-	 * @param  int  $id
+	 * @param  int $id
 	 * @return Response
 	 */
 	public function destroy($id)

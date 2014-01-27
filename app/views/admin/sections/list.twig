@@ -3,21 +3,23 @@
 {% block title %}View All Sections{% endblock %}
 
 {% block content %}
-<div class="span12">
-    <h1>Sections</h1> 
-    <table class="table table-hover">
-            {% for section in sections %}
-            <tr>
-              <td>
-                  {{ section.name }}
-              </td>              
-              <td>
-                <a href="{{ url_route('admin.sections.edit', {id:section.coastkeeper_location_id, section_id:section.id}) }}"><i class="glyphicon glyphicon-edit"></i></a>
-                <a href="{{ url_route('admin.sections.destroy', {id:section.coastkeeper_location_id, section_id:section.id}) }}"><i class="glyphicon glyphicon-trash"></i></a>
-              </td>
-            </tr>
-            {% endfor %}
-    </table>
-    
-</div>
+	<div class="span12">
+		<h1>Sections</h1>
+		<table class="table table-hover">
+			{% for section in sections %}
+				<tr>
+					<td>
+						{{ section.name }}
+					</td>
+					<td>
+						<a href="{{ url_route('admin.sections.edit', {id:section.coastkeeper_location_id, section_id:section.id}) }}"><i
+									class="glyphicon glyphicon-edit"></i></a>
+						<a href="{{ url_route('admin.sections.destroy', {id:section.coastkeeper_location_id, section_id:section.id}) }}"><i
+									class="glyphicon glyphicon-trash"></i></a>
+					</td>
+				</tr>
+			{% endfor %}
+		</table>
+
+	</div>
 {% endblock %}

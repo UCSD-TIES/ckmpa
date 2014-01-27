@@ -3,47 +3,49 @@
 {% block title %}Patrols{% endblock %}
 
 {% block content %}
-<div class="span12"> 
-    <h2>{% if location is defined %}{{location.name}}{% if section is defined %} - {{section.name}}{% endif %}{% else %}Patrols{% endif %}</h2>
-    {% if patrols is defined %}
-    <table class="table table-hover">
-        <tr>
-            <th>Date</th>
-            <th>Location</th>
-            <th>Volunteer</th>
-            <th>Completed</th>
-            <th></th>
-        </tr>   
+	<div class="span12">
+		<h2>{% if location is defined %}{{ location.name }}{% if section is defined %} - {{ section.name }}{% endif %}{% else %}Patrols{% endif %}</h2>
+		{% if patrols is defined %}
+			<table class="table table-hover">
+				<tr>
+					<th>Date</th>
+					<th>Location</th>
+					<th>Volunteer</th>
+					<th>Completed</th>
+					<th></th>
+				</tr>
 
-            {% for patrol in patrols %}
-            <tr>
-                
-                <td><a href="{{ url_route('patrol-entries-list', {patrol_id:patrol.id}) }}">{{patrol.date}}</td>
+				{% for patrol in patrols %}
+					<tr>
 
-                <td>
-                    {% if patrol.location %}
-                        <a href="{{ url_route('patrols-entries-locations-list', {location_id:patrol.location.id}) }}">
-                            {{ patrol.location.name }}
-                        </a>
-                    {% endif %}
-                </td>
-                <td>
-                    {% if patrol.user %}
-                        <a href="{{ url_route('admin.volunteers.show', {id:patrol.user.id}) }}">
-                            {{ patrol.user.first_name }} {{ patrol.user.last_name }}
-                        </a>
-                    {% endif %}
-                </td>
-                <td>{% if patrol.is_finished %}<i class="glyphicon glyphicon-ok"></i>{% endif %}</td>
-              <td>
-                  {{ form_open({'method': 'DELETE', 'class': 'form-inline', 'route': ['admin.patrols.destroy', patrol.id] })|raw }}
-                  <button type="submit" class="btn btn-small btn-danger"><i class="glyphicon glyphicon-trash"></i> Delete</button>
-                  </form>
-              </td>
-            </tr>
-            {% endfor %}
-    </table>    
-    {% endif %}
-          
-</div>
+						<td><a href="{{ url_route('patrol-entries-list', {patrol_id:patrol.id}) }}">{{ patrol.date }}</td>
+
+						<td>
+							{% if patrol.location %}
+								<a href="{{ url_route('patrols-entries-locations-list', {location_id:patrol.location.id}) }}">
+									{{ patrol.location.name }}
+								</a>
+							{% endif %}
+						</td>
+						<td>
+							{% if patrol.user %}
+								<a href="{{ url_route('admin.volunteers.show', {id:patrol.user.id}) }}">
+									{{ patrol.user.first_name }} {{ patrol.user.last_name }}
+								</a>
+							{% endif %}
+						</td>
+						<td>{% if patrol.is_finished %}<i class="glyphicon glyphicon-ok"></i>{% endif %}</td>
+						<td>
+							{{ form_open({'method': 'DELETE', 'class': 'form-inline', 'route': ['admin.patrols.destroy', patrol.id] })|raw }}
+							<button type="submit" class="btn btn-small btn-danger"><i class="glyphicon glyphicon-trash"></i>
+								Delete
+							</button>
+							</form>
+						</td>
+					</tr>
+				{% endfor %}
+			</table>
+		{% endif %}
+
+	</div>
 {% endblock %}

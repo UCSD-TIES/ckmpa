@@ -3,29 +3,35 @@
 {% block title %}Select a field{% endblock %}
 
 {% block content %}
-<div class="span12">
-    <h1>{{datasheet.name}} - {{category.name}}</h1>
-    {% if fields %}
-    <table class="table table-hover">
-        {% for field in fields %}
-        <tr>
-          <td>{{ field.name }}</td>
-          <td>
-            {{ form_open({'method': 'DELETE', 'class': 'form-inline', 'route': ['admin.fields.destroy', field.id] })|raw }}
-            <a class="btn btn-default" href="{{ url_route('admin.fields.edit', {field_id:field.id, category_id:category.id, datasheet_id:datasheet.id}) }}"><i class="glyphicon glyphicon-edit"> Edit</i></a>
-            <button type="submit" class="btn btn-small btn-danger"><i class="glyphicon glyphicon-trash"></i> Delete</button>
-            </form>
-          </td>
-        </tr>
-        {% endfor %}
-    </table>
-    {% endif %}
+	<div class="span12">
+		<h1>{{ datasheet.name }} - {{ category.name }}</h1>
+		{% if fields %}
+			<table class="table table-hover">
+				{% for field in fields %}
+					<tr>
+						<td>{{ field.name }}</td>
+						<td>
+							{{ form_open({'method': 'DELETE', 'class': 'form-inline', 'route': ['admin.fields.destroy', field.id] })|raw }}
+							<a class="btn btn-default" href="{{ url_route('admin.fields.edit', field.id) }}">
+								<i	class="glyphicon glyphicon-edit"> Edit</i></a>
+							<button type="submit" class="btn btn-small btn-danger">
+								<i class="glyphicon glyphicon-trash"></i> Delete
+							</button>
+							</form>
+						</td>
+					</tr>
+				{% endfor %}
+			</table>
+		{% endif %}
 
-    <div>
-        <a class="btn btn-default" href="{{ url_route('admin.fields.create', {datasheet_id:datasheet.id, category_id:category.id}) }} " class="btn"><i class="glyphicon glyphicon-plus"></i> Create new field</a>
-         <a class="btn btn-default" href="{{ url_route('admin.categories.index', {datasheet_id:datasheet.id}) }} " class="btn">Back to datasheet '{{datasheet.name}}'</a>
-    </div>
-    
-          
-</div>
+		<div>
+			<a class="btn btn-default"
+			   href="{{ url_route('admin.fields.create', {datasheet_id:datasheet.id, category_id:category.id}) }} "
+			   class="btn"><i class="glyphicon glyphicon-plus"></i> Create new field</a>
+			<a class="btn btn-default" href="{{ url_route('admin.categories.index', {datasheet_id:datasheet.id}) }} "
+			   class="btn">Back to datasheet '{{ datasheet.name }}'</a>
+		</div>
+
+
+	</div>
 {% endblock %}

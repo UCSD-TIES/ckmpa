@@ -115,6 +115,12 @@ class VolunteersController extends BaseController {
 		return Redirect::route('admin.volunteers.index');
 	}
 
+	/**
+	 * Shows all the roles and permissions
+	 * with the ability to edit them.
+	 *
+	 * @return \Illuminate\View\View
+	 */
 	public function permissions()
 	{
 		$data['roles'] = Role::all();
@@ -124,6 +130,11 @@ class VolunteersController extends BaseController {
 
 	}
 
+	/**
+	 * Modifies permissions and roles from input.
+	 *
+	 * @return \Illuminate\Http\RedirectResponse
+	 */
 	public function postPermissions()
 	{
 		$permissions = DB::table('permissions')->lists('name');
@@ -136,7 +147,7 @@ class VolunteersController extends BaseController {
 			$role->perms()->sync(array_filter($perms));
 		}
 
-		return Redirect::route('permissions')->with('message', 'Saved');
+		return Redirect::route('permissions')->with('success', 'Saved');
 
 	}
 }

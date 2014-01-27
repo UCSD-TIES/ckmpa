@@ -5,16 +5,17 @@
 {% block content %}
 {% if volunteer %}
 <div class="span12">
-	<h1>Delete {{ volunteer.last_name }}, {{ volunteer.first_name }}?</h1>
-	<h4>Warning: This cannot be undone.</h4>
-	<br>
-	<form action="{{ path('admin_volunteer_delete', {id:volunteer.id}) }}" method="POST">
-		<input type="hidden" name="approve_delete" value="1">
-		<button type="submit" class="btn btn-danger">Yes, Delete this Volunteer.</button>
-		<a class="btn" href="{{ path('admin_volunteer_view', {id:volunteer.id}) }}">No, I've changed my mind.</a>
-	</form>
+  <h1>Delete {{ volunteer.last_name }}, {{ volunteer.first_name }}?</h1>
+  <h4>Warning: This cannot be undone.</h4>
+  <br>
+
+  <form action="{{ path('admin_volunteer_delete', {id:volunteer.id}) }}" method="POST">
+    <input type="hidden" name="approve_delete" value="1">
+    <button type="submit" class="btn btn-danger">Yes, Delete this Volunteer.</button>
+    <a class="btn" href="{{ path('admin_volunteer_view', {id:volunteer.id}) }}">No, I've changed my mind.</a>
+  </form>
 </div>
 {% else %}
-	Volunteer doesn't exist.
+Volunteer doesn't exist.
 {% endif %}
 {% endblock %}

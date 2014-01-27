@@ -6,13 +6,13 @@
 
 {% block content %}
 
-{% if locations %}
-<ul data-role="listview">
-  {% for location in locations %}
-    <li><a href="{{ url_route('select-section', location.id ) }}">{{ location.name }}</a></li>
-  {% endfor %}
-</ul>
-{% else %}
-There are currently no locations to choose from.
-{% endif %}
+	{% if locations %}
+		<ul data-role="listview">
+			{% for location in locations %}
+				<li><a href="{{ url_route('select-section', location.id ) }}">{{ location.name }}</a></li>
+			{% endfor %}
+		</ul>
+	{% else %}
+		There are currently no locations to choose from.
+	{% endif %}
 {% endblock %}

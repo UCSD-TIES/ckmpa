@@ -2,36 +2,40 @@
 
 class MobileController extends BaseController
 {
-
-	/*
-	|--------------------------------------------------------------------------
-	| Default Home Controller
-	|--------------------------------------------------------------------------
-	|
-	| You may wish to use controllers instead of, or in addition to, Closure
-	| based routes. That's great! Here is an example controller method to
-	| get you started. To route to this controller, just add the route:
-	|
-	|	Route::get('/', 'HomeController@showWelcome');
-	|
-	*/
-
+	/**
+	 * Shows the login view.
+	 *
+	 * @return \Illuminate\View\View
+	 */
 	public function getIndex()
 	{
-		$data['url'] = "data-url=/mobile";
+		//$data['url'] = "data-url=/mobile";
 
 		return View::make('mobile.index');
 	}
 
+	/**
+	 * Shows the select location view.
+	 *
+	 * @return \Illuminate\View\View
+	 */
 	public function getSelectLocation()
 	{
 		$locations = Location::all();
 		$data['locations'] = $locations;
+
+		// jQuery Mobile hack to show correct url after a post
 		$data['url'] = "data-url=/mobile/select-location";
 
 		return View::make('mobile.select-location', $data);
 	}
 
+	/**
+	 * Shows the select section view.
+	 *
+	 * @param $location_id
+	 * @return \Illuminate\View\View
+	 */
 	public function getSelectSection($location_id)
 	{
 		$location = Location::find($location_id);
@@ -42,6 +46,12 @@ class MobileController extends BaseController
 		return View::make('mobile.select-section', $data);
 	}
 
+	/**
+	 * Shows the data collection view.
+	 *
+	 * @param $section_id
+	 * @return \Illuminate\View\View
+	 */
 	public function getDataCollection($section_id)
 	{
 		$section = Section::find($section_id);
@@ -49,16 +59,20 @@ class MobileController extends BaseController
 		$data['datasheet'] = $section->location->datasheet;
 
 		return View::make('mobile.data-collection', $data);
-
 	}
 
+	/**
+	 * Posts the data collected.
+	 *
+	 * @return \Illuminate\View\View
+	 */
 	public function postDataCollection()
 	{
-		//Get the current section
+		// Get the current section
 		$section = Section::find(Input::get('section_id'));
 
-		//Get the current patrol if on one
-		//Else create a new patrol
+		// Get the current patrol from session if there is one
+		// Else create a new patrol and store in session
 		if (Session::has('patrol'))
 			$patrol = Session::get('patrol');
 		else
@@ -70,7 +84,7 @@ class MobileController extends BaseController
 			$patrol->location()->associate($section->location);
 
 			/* Set the date of the current patrol */
-			$patrol->date = date('Y-m-d');
+			$patrol->date = Carbon::now();
 			$patrol->is_finished = 1;
 
 			$patrol->save();
@@ -79,7 +93,7 @@ class MobileController extends BaseController
 			Session::set('patrol', $patrol);
 		}
 
-		/* Get the TIME string. */
+		/* Get the start time from login. */
 		$start_time = Session::get('start_time');
 
 		/* Create a new patrol segment. */
@@ -91,7 +105,7 @@ class MobileController extends BaseController
 
 		/* Set the times. */
 		$segment->start_time = $start_time;
-		$segment->end_time = date('H:i:s');
+		$segment->end_time = Carbon::now();
 
 		// Save
 		$segment->save();
@@ -128,6 +142,11 @@ class MobileController extends BaseController
 		return View::make('mobile.finish', $data);
 	}
 
+	/**
+	 * Shows the finish view.
+	 *
+	 * @return \Illuminate\View\View
+	 */
 	public function finish()
 	{
 		return View::make('mobile.finish');

@@ -3,60 +3,60 @@
 {% block title %}Patrol Entries{% endblock %}
 
 {% block content %}
-<div class="span12"> 
-    <h2>
-        Patrol Entries
-    </h2>
-    {% if patrol.volunteer.find_one %}
-    <h3>
-        Taken by {{ patrol.volunteer.find_one.first_name }} {{ patrol.volunteer.find_one.last_name }}
-        {% if patrol.coastkeeper_partner_id is defined %}
-            {% for volunteer in volunteers %}
-                {% if volunteer.id == patrol.coastkeeper_partner_id %}
-                with {{ volunteer.first_name }} {{ volunteer.last_name }}
-                {% endif %}
-            {% endfor %}
+<div class="span12">
+  <h2>
+    Patrol Entries
+  </h2>
+  {% if patrol.volunteer.find_one %}
+  <h3>
+    Taken by {{ patrol.volunteer.find_one.first_name }} {{ patrol.volunteer.find_one.last_name }}
+    {% if patrol.coastkeeper_partner_id is defined %}
+    {% for volunteer in volunteers %}
+    {% if volunteer.id == patrol.coastkeeper_partner_id %}
+    with {{ volunteer.first_name }} {{ volunteer.last_name }}
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+  </h3>
+  {% endif %}
+  {% if patrol.location.find_one %}
+  <h4>at {{patrol.location.find_one.name}} MPA</h4>
+  {% endif %}
+  {% if entries is defined %}
+  <table class="table table-hover">
+    <tr>
+      <th>Date</th>
+      <th>Section</th>
+      <th>Start Time</th>
+      <th>End Time</th>
+    </tr>
+    {% for entry in entries %}
+    <tr>
+      <td>
+        <a href="{{ path('admin_patrol_data_view', {patrol_id:patrol.id, entry_id:entry.id}) }}">
+          {{patrol.date}}
+        </a>
+      </td>
+      <td>
+        {% if entry.section.find_one %}
+        {{entry.section.find_one.name}}
         {% endif %}
-    </h3>
-    {% endif %}
-    {% if patrol.location.find_one %}
-    <h4>at {{patrol.location.find_one.name}} MPA</h4>
-    {% endif %}
-    {% if entries is defined %}
-    <table class="table table-hover">
-        <tr>
-            <th>Date</th>
-            <th>Section</th>
-            <th>Start Time</th>
-            <th>End Time</th>
-        </tr>   
-            {% for entry in entries %}
-            <tr>
-                <td>
-                    <a href="{{ path('admin_patrol_data_view', {patrol_id:patrol.id, entry_id:entry.id}) }}">
-                        {{patrol.date}}
-                    </a>
-                </td>
-                <td>
-                    {% if entry.section.find_one %}
-                        {{entry.section.find_one.name}}
-                    {% endif %}
-                </td>
-                <td>
-                    {% if entry.start_time is defined %}
-                        {{ entry.start_time }}
-                    {% endif %}
-                </td>
-                <td>
-                    {% if entry.end_time is defined %}
-                        {{ entry.end_time }}
-                    {% endif %}
-                </td>
-                
-            </tr>
-            {% endfor %}
-    </table>    
-    {% endif %}
-          
+      </td>
+      <td>
+        {% if entry.start_time is defined %}
+        {{ entry.start_time }}
+        {% endif %}
+      </td>
+      <td>
+        {% if entry.end_time is defined %}
+        {{ entry.end_time }}
+        {% endif %}
+      </td>
+
+    </tr>
+    {% endfor %}
+  </table>
+  {% endif %}
+
 </div>
 {% endblock %}

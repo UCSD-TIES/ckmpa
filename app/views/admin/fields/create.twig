@@ -2,31 +2,35 @@
 
 {% block title %} Create new field {% endblock %}
 
-{% block content %} 
-  <div span="12">
-    <h1>Create a new field</h1>
-    <form class="form-horizontal" action="{{ url_route('admin.fields.store', {datasheet_id:datasheet_id, category_id:category_id}) }}" method="POST">
-      <input type="hidden" name="coastkeeper_datasheet_category_id" value="{{ category_id }}">
-        <div class="control-group {% if errors.field_name is defined %} error {% endif %}">
-        <label for="field_name" class="control-label">Name</label>
-        <div class="controls">
-          <input type="text" name="name" id="field_name" value="{{ app.request.get( 'field_name' ) }}" >
-          {% if errors.field_name is defined %}
-          <span class="help-inline">{{ errors.field_name }}</span>
-          {% endif %}
-        </div>
-      </div>
-      <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Create field</button>
-        <a href="{{ url_route('admin.fields.index', {datasheet_id:datasheet.id, category_id:category.id}) }}" class="btn">Cancel</a>
-      </div>
+{% block content %}
+	<div span="12">
+		<h1>Create a new field</h1>
+
+		<form class="form-horizontal"
+		      action="{{ url_route('admin.fields.store', {datasheet_id:datasheet_id, category_id:category_id}) }}"
+		      method="POST">
+			<input type="hidden" name="coastkeeper_datasheet_category_id" value="{{ category_id }}">
+
+			<div class="control-group {% if errors.field_name is defined %} error {% endif %}">
+				<label for="field_name" class="control-label">Name</label>
+
+				<div class="controls">
+					<input type="text" name="name" id="field_name" value="{{ app.request.get( 'field_name' ) }}">
+					{% if errors.field_name is defined %}
+						<span class="help-inline">{{ errors.field_name }}</span>
+					{% endif %}
+				</div>
+			</div>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary">Create field</button>
+				<a href="{{ url_route('admin.fields.index', {datasheet_id:datasheet.id, category_id:category.id}) }}"
+				   class="btn">Cancel</a>
+			</div>
 
 
-
-    </form>
-
+		</form>
 
 
-  </div>
+	</div>
 {% endblock %}
 

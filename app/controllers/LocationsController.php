@@ -1,20 +1,7 @@
 <?php
 
-class LocationsController extends BaseController {
-
-	/**
-	 * Location Repository
-	 *
-	 * @var Location
-	 */
-	protected $location;
-
-
-	public function __construct(Location $location)
-	{
-		$this->location = $location;
-	}
-
+class LocationsController extends BaseController
+{
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -22,7 +9,7 @@ class LocationsController extends BaseController {
 	 */
 	public function index()
 	{
-		$locations = $this->location->all();
+		$locations = Location::all();
 
 		return View::make('admin.locations.list', compact('locations'));
 	}
@@ -63,12 +50,12 @@ class LocationsController extends BaseController {
 	/**
 	 * Display the specified resource.
 	 *
-	 * @param  int  $id
+	 * @param  int $id
 	 * @return Response
 	 */
 	public function show($id)
 	{
-		$location = $this->location->findOrFail($id);
+		$location = Location::findOrFail($id);
 		$sections = $location->sections;
 
 		return View::make('admin.locations.view', compact('location', 'sections'));
@@ -77,12 +64,12 @@ class LocationsController extends BaseController {
 	/**
 	 * Show the form for editing the specified resource.
 	 *
-	 * @param  int  $id
+	 * @param  int $id
 	 * @return Response
 	 */
 	public function edit($id)
 	{
-		$location = $this->location->find($id);
+		$location = Location::find($id);
 
 		if (is_null($location))
 		{
@@ -95,7 +82,7 @@ class LocationsController extends BaseController {
 	/**
 	 * Update the specified resource in storage.
 	 *
-	 * @param  int  $id
+	 * @param  int $id
 	 * @return Response
 	 */
 	public function update($id)
@@ -105,7 +92,7 @@ class LocationsController extends BaseController {
 
 		if ($validation->passes())
 		{
-			$location = $this->location->find($id);
+			$location = Location::find($id);
 			$location->update($input);
 
 			return Redirect::route('admin.locations.show', $id);
@@ -119,12 +106,12 @@ class LocationsController extends BaseController {
 	/**
 	 * Remove the specified resource from storage.
 	 *
-	 * @param  int  $id
+	 * @param  int $id
 	 * @return Response
 	 */
 	public function destroy($id)
 	{
-		$this->location->find($id)->delete();
+		Location::find($id)->delete();
 
 		return Redirect::route('admin.locations.index');
 	}

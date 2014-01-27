@@ -1,9 +1,10 @@
 <?php
 
-class CategoriesController extends BaseController {
+class CategoriesController extends BaseController
+{
 
 	/**
-	 * Display a listing of the resource.
+	 * Shows all categories for a given datasheet
 	 *
 	 * @return Response
 	 */
@@ -13,22 +14,22 @@ class CategoriesController extends BaseController {
 		$data['datasheet'] = $datasheet;
 		$data['categories'] = $datasheet->categories;
 
-        return View::make('admin.categories.list', $data);
+		return View::make('admin.categories.list', $data);
 	}
 
 	/**
-	 * Show the form for creating a new resource.
+	 * Show the form for creating a new category.
 	 *
 	 * @return Response
 	 */
 	public function create()
 	{
 		$id = Input::get('datasheet_id');
-        return View::make('admin.categories.create', compact('id'));
+		return View::make('admin.categories.create', compact('id'));
 	}
 
 	/**
-	 * Store a newly created resource in storage.
+	 * Store a newly created category in storage.
 	 *
 	 * @return Response
 	 */
@@ -51,9 +52,9 @@ class CategoriesController extends BaseController {
 	}
 
 	/**
-	 * Display the specified resource.
+	 * Display the specified category.
 	 *
-	 * @param  int  $id
+	 * @param  int $id category id
 	 * @return Response
 	 */
 	public function show($id)
@@ -69,7 +70,7 @@ class CategoriesController extends BaseController {
 	/**
 	 * Show the form for editing the specified resource.
 	 *
-	 * @param  int  $id
+	 * @param  int $id category id
 	 * @return Response
 	 */
 	public function edit($id)
@@ -77,13 +78,13 @@ class CategoriesController extends BaseController {
 		$data['category'] = Category::find($id);
 		$data['datasheet'] = $data['category']->datasheet;
 
-        return View::make('admin.categories.edit', $data);
+		return View::make('admin.categories.edit', $data);
 	}
 
 	/**
 	 * Update the specified resource in storage.
 	 *
-	 * @param  int  $id
+	 * @param  int $id category id
 	 * @return Response
 	 */
 	public function update($id)
@@ -110,7 +111,7 @@ class CategoriesController extends BaseController {
 	/**
 	 * Remove the specified resource from storage.
 	 *
-	 * @param  int  $id
+	 * @param  int $id category id
 	 * @return Response
 	 */
 	public function destroy($id)

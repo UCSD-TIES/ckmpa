@@ -1,6 +1,7 @@
 <?php
 
-class PatrolsController extends BaseController {
+class PatrolsController extends BaseController
+{
 
 	/**
 	 * Display a listing of the resource.
@@ -11,21 +12,25 @@ class PatrolsController extends BaseController {
 	{
 		$data['patrols'] = Patrol::all();
 
-        return View::make('admin.patrols.list', $data);
+		return View::make('admin.patrols.list', $data);
 	}
 
 	/**
-	 * Show the form for creating a new resource.
+	 * (Not used) Show the form for creating a new resource.
+	 *
+	 * Create view is in MobileController.
 	 *
 	 * @return Response
 	 */
 	public function create()
 	{
-        return View::make('patrols.create');
+		return View::make('patrols.create');
 	}
 
 	/**
-	 * Store a newly created resource in storage.
+	 * (Not used) Store a newly created resource in storage
+	 *
+	 * Stored in MobileController instead.
 	 *
 	 * @return Response
 	 */
@@ -35,31 +40,31 @@ class PatrolsController extends BaseController {
 	}
 
 	/**
-	 * Display the specified resource.
+	 * (Not used) Display the specified resource.
 	 *
-	 * @param  int  $id
+	 * @param  int $id
 	 * @return Response
 	 */
 	public function show($id)
 	{
-        return View::make('patrols.show');
+		return View::make('patrols.show');
 	}
 
 	/**
-	 * Show the form for editing the specified resource.
+	 * (Not used) Show the form for editing the specified resource.
 	 *
-	 * @param  int  $id
+	 * @param  int $id
 	 * @return Response
 	 */
 	public function edit($id)
 	{
-        return View::make('patrols.edit');
+		return View::make('patrols.edit');
 	}
 
 	/**
-	 * Update the specified resource in storage.
+	 * (Not implemented) Update the specified resource in storage.
 	 *
-	 * @param  int  $id
+	 * @param  int $id
 	 * @return Response
 	 */
 	public function update($id)
@@ -70,7 +75,7 @@ class PatrolsController extends BaseController {
 	/**
 	 * Remove the specified resource from storage.
 	 *
-	 * @param  int  $id
+	 * @param  int $id
 	 * @return Response
 	 */
 	public function destroy($id)
@@ -80,6 +85,11 @@ class PatrolsController extends BaseController {
 		return Redirect::route('admin.patrols.index');
 	}
 
+	/**
+	 * Shows all patrols for a given location.
+	 *
+	 * @return \Illuminate\View\View
+	 */
 	public function patrolEntries()
 	{
 		$data['patrols'] = Location::find(Input::get('location_id'))->patrols;
