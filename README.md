@@ -5,7 +5,6 @@ San Diego Coastkeeper MPA Datasheet web application developed with PHP + [Larave
   - [Confide](https://github.com/Zizaco/confide) for user management
   - [Entrust](https://github.com/Zizaco/entrust) for user permissions
   - [Ardent](https://github.com/laravelbook/ardent) for "self-validating, secure and smart models"
-  - [TwigBridge](https://github.com/rcrowe/TwigBridge) for twig templates
   - [PHPExcel](http://phpexcel.codeplex.com/) for exporting Excel sheets
   - [Carbon](https://github.com/briannesbitt/Carbon) for dating. Get it?
 

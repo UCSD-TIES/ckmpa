@@ -5,7 +5,6 @@
 	"license": "MIT",
 	"require": {
 		"laravel/framework": "4.1.*",
-        "rcrowe/twigbridge": "0.5.*",
         "phpoffice/phpexcel": "dev-master",
         "zizaco/confide": "3.1.x",
         "zizaco/entrust": "dev-master",

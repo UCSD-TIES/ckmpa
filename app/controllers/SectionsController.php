@@ -43,7 +43,9 @@ class SectionsController extends BaseController
 			return Redirect::route('admin.locations.show', Input::get('id'));
 		}
 
-		return Redirect::route('admin.sections.create')
+		$data['id'] = Input::get('location_id');
+
+		return Redirect::route('admin.sections.create', $data)
 			->withInput()
 			->withErrors($validation);
 	}
@@ -67,7 +69,7 @@ class SectionsController extends BaseController
 	 */
 	public function edit($id)
 	{
-		$section = Section::find(Input::get('section_id'));
+		$section = Section::find($id);
 		$data['location'] = $section->location;
 		$data['section'] = $section;
 

@@ -24,8 +24,8 @@ class CategoriesController extends BaseController
 	 */
 	public function create()
 	{
-		$id = Input::get('datasheet_id');
-		return View::make('admin.categories.create', compact('id'));
+		$datasheet_id = Input::get('datasheet_id');
+		return View::make('admin.categories.create', compact('datasheet_id'));
 	}
 
 	/**
@@ -99,7 +99,7 @@ class CategoriesController extends BaseController
 
 			$data['datasheet_id'] = Input::get('datasheet_id');
 
-			return Redirect::route('admin.categories.index', $data);
+			return Redirect::route('admin.datasheets.show', $data);
 		}
 		$data['category_id'] = $id;
 
