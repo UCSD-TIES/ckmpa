@@ -341,8 +341,8 @@ class AdminController extends BaseController
 		$startDate = Input::get('startDate');
 		$endDate = Input::get('endDate');
 
-		$startDate = DateTime::createFromFormat('m/d/Y', $startDate);
-		$endDate = DateTime::createFromFormat('m/d/Y', $endDate);
+		$startDate = Carbon::createFromFormat('m/d/Y', $startDate);
+		$endDate = Carbon::createFromFormat('m/d/Y', $endDate);
 
 		$finishedPatrols = Input::get('completePatrol');
 
@@ -355,78 +355,73 @@ class AdminController extends BaseController
 			return Response::json($messages);
 		}
 
-		$datasheet = Datasheet::find($datasheet_id);
-		$patrols = Patrol::all();
+		$patrols = Patrol::whereIn('location_id', Location::where('datasheet_id', $datasheet_id)->lists('id'))->get();
 
 		// Return array
 		$data = array();
 
 		foreach ($patrols as $patrol)
 		{
-			if ($patrol->location && $patrol->location)
-			{
-				$patrol_datasheet = $patrol->location->datasheet;
 
-				// check if patrols is in the datasheet
-				if ($patrol_datasheet->id == $datasheet->id)
+			$segments = $patrol->segments;
+
+			/* For each patrol entry, fill out a row */
+			foreach ($segments as $segment) 
+			{
+
+				/*
+				 * If the finished Patrol filter is on,
+				 * ignore any patrols that arent finished
+				 */
+				if ($finishedPatrols && !$patrol->is_finished)
+				{
+					continue;
+				}
+
+				/*
+				 * Filter out any patrols not in between the given dates
+				 */
+				$patrolDate = Carbon::createFromFormat('Y-m-d', $patrol->date);
+
+				if ($startDate && $endDate)
+				{
+					if (($patrolDate < $startDate) || ($patrolDate > $endDate))
+					{
+						continue;
+					}
+				}
+
+
+				if (!array_key_exists($patrolDate->format('d-M-y'), $data))
+				{
+					$data[$patrolDate->format('d-M-y')] = array();
+				}
+
+				if (!array_key_exists('patrols', $data[$patrolDate->format('d-M-y')]))
+				{
+					$data[$patrolDate->format('d-M-y')]['patrols'] = 1;
+				} else
+				{
+					$data[$patrolDate->format('d-M-y')]['patrols'] += 1;
+				}
+
+				/* Now get all the tallies for this patrol... */
+				$tallies = $segment->tallies;
+
+				foreach ($tallies as $tally)
 				{
 
-					$segments = $patrol->segments;
-
-					/* For each patrol entry, fill out a row */
-					foreach ($segments as $segment)
+					if (!array_key_exists('observations', $data[$patrolDate->format('d-M-y')]))
 					{
-
-						/*
-						 * If the finished Patrol filter is on,
-						 * ignore any patrols that arent finished
-						 */
-						if ($finishedPatrols && !$patrol->is_finished)
-						{
-							continue;
-						}
-
-						/*
-						 * Filter out any patrols not in between the given dates
-						 */
-						$patrolDate = DateTime::createFromFormat('Y-m-d', $patrol->date);
-						if ($startDate && $endDate)
-						{
-							if (($patrolDate < $startDate) || ($patrolDate > $endDate))
-							{
-								continue;
-							}
-						}
-
-						if (!array_key_exists($patrolDate->format('M Y'), $data))
-						{
-							$data[$patrolDate->format('M Y')] = array();
-						}
-
-						if (!array_key_exists('patrols', $data[$patrolDate->format('M Y')]))
-						{
-							$data[$patrolDate->format('M Y')]['patrols'] = 1;
-						} else
-						{
-							$data[$patrolDate->format('M Y')]['patrols'] += 1;
-						}
-
-						/* Now get all the tallies for this patrol... */
-						$tallies = $segment->tallies;
-
-						foreach ($tallies as $tally)
-						{
-							if (!array_key_exists('observations', $data[$patrolDate->format('M Y')]))
-							{
-								$data[$patrolDate->format('M Y')]['observations'] = 1;
-							} else
-							{
-								$data[$patrolDate->format('M Y')]['observations'] += 1;
-							}
-						}
+						$data[$patrolDate->format('d-M-y')]['observations'] = $tally->tally;
+					} else
+					{
+						$data[$patrolDate->format('d-M-y')]['observations'] += $tally->tally;
 					}
 				}
 			}
+				
+			
 		}
 
 		return Response::json($data);

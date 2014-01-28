@@ -43,7 +43,6 @@
 	<script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
 	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 	<script src="{{ URL::asset('js/bootstrap-datepicker.min.js') }}"></script>
-	<script src="{{ URL::asset('js/Chart.min.js') }}"></script>
 @show
 </body>
 </html>

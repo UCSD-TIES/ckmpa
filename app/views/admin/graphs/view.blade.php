@@ -45,7 +45,7 @@
 									<label for="endDate" class="control-label">End Date</label>
 
 									<div class="controls">
-										<input type="text" id="endDate" name="endDate">
+										<input type="text" class='form-control' id="endDate" name="endDate">
 									</div>
 								</div>
 								<div class="control-group">
@@ -63,9 +63,7 @@
 								</div>
 							</form>
 						</div>
-						<div class="col-sm-9 patrols-chart-container">
-							<canvas id="patrolsChart" width="620" height="600"></canvas>
-						</div>
+						<svg id="barChart"></svg>
 					</div>
 				</div>
 				<div id="observations" class="tab-pane fade">
@@ -93,14 +91,14 @@
 									<label for="observationsStartDate" class="control-label">Start Date</label>
 
 									<div class="controls">
-										<input type="text" name="startDate" id="observationsStartDate">
+										<input type="text" class='form-control' name="startDate" id="observationsStartDate">
 									</div>
 								</div>
 								<div class="control-group">
 									<label for="observationsEndDate" class="control-label">End Date</label>
 
 									<div class="controls">
-										<input type="text" id="observationsEndDate" name="endDate">
+										<input type="text" class='form-control' id="observationsEndDate" name="endDate">
 									</div>
 								</div>
 								<div class="control-group">
@@ -118,9 +116,7 @@
 								</div>
 							</form>
 						</div>
-						<div class="col-sm-9 observations-chart-container">
-							<canvas id="observationsChart" width="620" height="600"></canvas>
-						</div>
+						<svg id="lineGraph"></svg>
 					</div>
 				</div>
 			</div>
@@ -128,6 +124,8 @@
 	</div>
 @stop
 @section('scripts')
-	@parent()
+	@parent
+	<link href="{{ URL::asset('css/graph.css') }}" rel="stylesheet">
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.1/d3.min.js"></script>
 	<script src="{{ URL::asset('js/graphs.js') }}"></script>
 @stop

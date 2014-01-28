@@ -10,7 +10,7 @@ San Diego Coastkeeper MPA Datasheet web application developed with PHP + [Larave
 
 ###Javascript dependencies:
   - [jQuery](http://jquery.com/) for everything
-  - [Chart.js](http://www.chartjs.org/) for charts
+  - [D3.js](http://d3js.org/) for awesome charts
   - [Datepicker](https://github.com/eternicode/bootstrap-datepicker) for bootstrap compatible datepicker
 
 ###UI Frameworks:
