@@ -35,14 +35,14 @@
                         @endforeach
                     </div>
                 @elseif($field->type == 'checkbox')
-                    <input name="{{ $field->name }}" type="hidden" value="Not Observed" />
-                    <input type="checkbox" name="{{ $field->name }}" id="{{ $field->id }}" value="Observed">
+                    <input name="{{ $field->name }}" type="hidden" value="No" />
+                    <input type="checkbox" name="{{ $field->name }}" id="{{ $field->id }}" value="Yes">
                     <label for="{{ $field->id }}">{{$field->name}}</label>
                 @endif
             @endforeach
         </fieldset>
         @endforeach
-        <button type="submit" class="ui-btn ui-btn-d">Next</button>
+        <button type="submit" class="ui-btn ui-btn-d">Confirm on Next Page</button>
     </form>
 </div>
 @stop

@@ -14,8 +14,12 @@
 
 <body>
 <div data-role="page" {{ $url or '' }}>
-	<div data-role="header" data-theme="b">
+	<div data-role="header" data-theme="b" data-position="fixed" style="margin-left: -1px">
 		<h1>MPA Watch</h1>
+		@if(Confide::user())
+		<a href="#popupDialog" data-rel="popup" data-position-to="window"
+		class="ui-btn-right ui-btn ui-btn-e ui-btn-inline ui-mini ui-btn-icon-left ui-icon-delete">Logout</a>
+		@endif
 	</div>
 	<div data-role="content">
 		<h1 class="center-text">
@@ -32,17 +36,17 @@
 		@yield('content')
 	</div>
 
-	<div data-role="footer" data-position="fixed" data-theme="b">
-		@section('footer')
-			@if(Auth::check())
-				<div data-role="navbar">
-					<ul>
-						<li><a class="ui-btn ui-btn-b" href="{{ URL::to('users/logout') }}">Logout</a></li>
-					</ul>
-				</div>
-			@endif 
-		@show
+	<div data-role="popup" id="popupDialog" data-dismissible="false" style="max-width:400px;">
+	    <div data-role="header" data-theme="b">
+	    <h1>Are You sure?</h1>
+	    </div>
+	    <div role="main" class="ui-content">
+	        <h3 class="ui-title">Are you sure you want to log out?</h3>
+	        <a href="{{ URL::to('users/logout') }}" class="ui-btn ui-btn-inline ui-btn-c">Yes</a>
+	        <a href="#" class="ui-btn ui-btn-inline ui-btn-b" data-rel="back">Cancel</a>
+	    </div>
 	</div>
+
 </div>
 </body>
 

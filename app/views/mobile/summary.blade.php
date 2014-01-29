@@ -2,13 +2,13 @@
 
 @section('title')Coastkeeper Volunteer - Patrol @stop
 
-@section('header')Summary for {{$section->name}} @stop
+@section('header')Confirmation for {{$section->name}} @stop
 
 @section('content')
 
 <ul data-role="listview">
 	@for($i = 0; $i < count($inputs); $i++)
-	    <li>{{$keys[$i]}} 
+	    <li>{{ str_replace('_', ' ', $keys[$i]) }} 
 	    	<span class="ui-li-count">
 	    		{{$inputs[$keys[$i]]}}
 	    	</span>
