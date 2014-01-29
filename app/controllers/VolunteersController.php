@@ -148,6 +148,14 @@ class VolunteersController extends BaseController {
 		}
 
 		return Redirect::route('permissions')->with('success', 'Saved');
+	}
 
+	public function search()
+	{
+		$search = Input::get('search_string');
+		$data['volunteers'] = User::where('first_name', $search)
+			->orWhere('last_name', $search)->get();
+
+		return View::make('admin.volunteers.list', $data);
 	}
 }

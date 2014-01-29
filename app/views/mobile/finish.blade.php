@@ -9,7 +9,7 @@
 	<a class="ui-btn" href="{{ URL::route('select-section', $location->id) }}"> Yes</a>
 	<a class="ui-btn" href="{{ URL::to('users/logout') }}"> Done</a>
 
-	{{--<a class="ui-btn" href="{{url_route('select-location')}}"> Change Location</a>--}}
+	<a class="ui-btn" href="{{ URL::route('select-location')}}"> Change Location</a>
 @stop
 
 @section('footer %} @overwrite

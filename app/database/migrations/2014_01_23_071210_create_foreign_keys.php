@@ -24,23 +24,23 @@ class CreateForeignKeys extends Migration {
 		});
 		Schema::table('categories', function(Blueprint $table) {
 			$table->foreign('datasheet_id')->references('id')->on('datasheets')
-						->onDelete('restrict')
-						->onUpdate('restrict');
+						->onDelete('cascade')
+						->onUpdate('cascade');
 		});
 		Schema::table('fields', function(Blueprint $table) {
 			$table->foreign('category_id')->references('id')->on('categories')
-						->onDelete('restrict')
-						->onUpdate('restrict');
+						->onDelete('cascade')
+						->onUpdate('cascade');
 		});
 		Schema::table('sections', function(Blueprint $table) {
 			$table->foreign('location_id')->references('id')->on('locations')
-						->onDelete('restrict')
-						->onUpdate('restrict');
+						->onDelete('cascade')
+						->onUpdate('cascade');
 		});
 		Schema::table('segments', function(Blueprint $table) {
 			$table->foreign('patrol_id')->references('id')->on('patrols')
-						->onDelete('restrict')
-						->onUpdate('restrict');
+						->onDelete('cascade')
+						->onUpdate('cascade');
 		});
 		Schema::table('segments', function(Blueprint $table) {
 			$table->foreign('section_id')->references('id')->on('sections')
@@ -49,13 +49,13 @@ class CreateForeignKeys extends Migration {
 		});
 		Schema::table('tallies', function(Blueprint $table) {
 			$table->foreign('segment_id')->references('id')->on('segments')
-						->onDelete('restrict')
-						->onUpdate('restrict');
+						->onDelete('cascade')
+						->onUpdate('cascade');
 		});
 		Schema::table('tallies', function(Blueprint $table) {
 			$table->foreign('field_id')->references('id')->on('fields')
-						->onDelete('restrict')
-						->onUpdate('restrict');
+						->onDelete('cascade')
+						->onUpdate('cascade');
 		});
 	}
 

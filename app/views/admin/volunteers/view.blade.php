@@ -30,7 +30,7 @@
 					@foreach($patrols as $patrol)
 						<tr>
 							<td>
-								<a href="{{ URL::route('admin.patrols.index') }}">
+								<a href="{{ URL::route('patrol-user', array('user' => $volunteer->id)) }}">
 									Patrol on {{ $patrol->date }}
 									@if(!$patrol->is_finished)
 										<small class="uncompleted">(incomplete)</small>

@@ -33,7 +33,7 @@
 				<td>
 					<a href="{{ URL::route('admin.sections.create', array('id'=> $location->id)) }}" class="btn btn-default"><i
 								class="glyphicon glyphicon-plus"></i> Add new section</a>
-					<a href="{{ URL::route('patrols-entries-locations-list', array('location_id'=> $location->id)) }}"
+					<a href="{{ URL::route('patrol-list', array('location'=> $location->id)) }}"
 					   class="btn btn-default"><i class="glyphicon glyphicon-eye-open"></i> View Patrols </a>
 					<a href="{{ URL::route('export-data', array('id'=> $location->id)) }}" class="btn btn-default"><i
 								class="glyphicon glyphicon-download"></i> Export Data</a>

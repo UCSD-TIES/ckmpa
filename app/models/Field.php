@@ -20,8 +20,8 @@ class Field extends Eloquent {
 	protected $table = 'fields';
 	public $timestamps = true;
 	protected $softDelete = false;
-	protected $fillable = array('name', 'category_id');
-	protected $visible = array('name', 'category_id');
+	protected $fillable = array('name', 'category_id', 'type');
+	protected $visible = array('name', 'category_id', 'type');
 
 	public function category()
 	{
@@ -31,6 +31,11 @@ class Field extends Eloquent {
 	public function tallies()
 	{
 		return $this->hasMany('Tally');
+	}
+
+	public function options()
+	{
+		return $this->hasMany('Option');
 	}
 
 }

@@ -40,7 +40,7 @@ class SectionsController extends BaseController
 		{
 			Section::create($input);
 
-			return Redirect::route('admin.locations.show', Input::get('id'));
+			return Redirect::route('admin.locations.show', Input::get('location_id'));
 		}
 
 		$data['id'] = Input::get('location_id');

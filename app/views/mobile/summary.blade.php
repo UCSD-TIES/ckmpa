@@ -1,0 +1,31 @@
+@extends("mobile.base")
+
+@section('title')Coastkeeper Volunteer - Patrol @stop
+
+@section('header')Summary for {{$section->name}} @stop
+
+@section('content')
+
+<ul data-role="listview">
+	@for($i = 0; $i < count($inputs); $i++)
+	    <li>{{$keys[$i]}} 
+	    	<span class="ui-li-count">
+	    		{{$inputs[$keys[$i]]}}
+	    	</span>
+	    </li>
+	@endfor
+</ul>
+
+<br><br>
+<div class="center-text">
+	<form action="{{ URL::route('data-collection') }}" data-ajax='false' method="POST">
+	    <label for="comments">Comments:</label>
+	    <textarea name="comments" id="comments" rows=6></textarea>
+	    <input type='hidden' name='section_id' value='{{$section->id}}'>
+	    @for($i = 0; $i < count($inputs); $i++)
+	    	<input type='hidden' name='{{$keys[$i]}}' value='{{$inputs[$keys[$i]]}}'>
+	    @endfor
+	    <button type="submit" class="ui-btn ui-btn-d">Submit</button>
+	</form>
+</div>
+@stop

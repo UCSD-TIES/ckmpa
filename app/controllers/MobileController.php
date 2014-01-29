@@ -102,9 +102,12 @@ class MobileController extends BaseController
 		/* Set the patrol and section of the segment */
 		$segment->patrol()->associate($patrol);
 		$segment->section()->associate($section);
+		$segment->comment = Input::get('comments');
 
 		/* Set the times. */
-		$segment->start_time = $start_time;
+
+		// TEMPORARY
+		$segment->start_time = Carbon::now();
 		$segment->end_time = Carbon::now();
 
 		// Save
@@ -114,6 +117,7 @@ class MobileController extends BaseController
 
 		$categories = $datasheet->categories;
 		/* For each category, get the entries. */
+		
 		foreach ($categories as $category)
 		{
 			$fields = $category->fields;
@@ -130,7 +134,10 @@ class MobileController extends BaseController
 				$tally->field()->associate($field);
 
 				/* Fill in the tally */
-				$tally->tally = (int)Input::get('field-' . $field->id);
+				// TODO tally the non numerics
+				$underscored = str_replace(' ', '_', $field->name);
+				$tally->tally = (int)Input::get($underscored);
+
 
 				/* Save the information */
 				$tally->save();
@@ -142,6 +149,18 @@ class MobileController extends BaseController
 		return View::make('mobile.finish', $data);
 	}
 
+	/**
+	 * Shows the summary and comments view/
+	 *
+	 */
+	public function summary()
+	{
+		$data['inputs'] = Input::except('section_id');
+		$data['keys'] = array_keys(Input::except('section_id'));
+		$data['section'] = Section::find(Input::get('section_id'));
+
+		return View::make('mobile.summary', $data);
+	}
 	/**
 	 * Shows the finish view.
 	 *

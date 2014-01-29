@@ -29,6 +29,7 @@ class FieldsController extends BaseController
 	{
 		$data['datasheet_id'] = Input::get('datasheet_id');
 		$data['category_id'] = Input::get('category_id');
+		$data['types'] = Field::select('type')->distinct()->get();
 
 		return View::make('admin.fields.create', $data);
 	}
@@ -46,10 +47,8 @@ class FieldsController extends BaseController
 		if ($validation->passes())
 		{
 			Field::create($input);
-			$data['datasheet_id'] = Input::get('datasheet_id');
-			$data['category_id'] = Input::get('category_id');
 
-			return Redirect::route('admin.fields.index', $data);
+			return Redirect::route('admin.categories.show', Input::get('category_id'));
 		}
 
 		return Redirect::route('admin.fields.create')
@@ -80,7 +79,8 @@ class FieldsController extends BaseController
 		$field = Field::find($id);
 		$data['field'] = $field;
 		$data['category'] = $field->category;
-		$data['datasheet'] = $field->category->datasheet;
+		$data['options'] = $field->options;
+		$data['types'] = Field::select('type')->distinct()->get();
 
 		return View::make('admin.fields.edit', $data);
 	}
@@ -102,6 +102,7 @@ class FieldsController extends BaseController
 			$field->update($input);
 
 			return Redirect::route('admin.categories.show', $field->category->id);
+			
 		}
 
 		return Redirect::route('admin.fields.edit', $id)
@@ -121,6 +122,27 @@ class FieldsController extends BaseController
 		Field::find($id)->delete();
 
 		return Redirect::route('admin.categories.show', $category_id);
+	}
+
+	public function deleteOption($id)
+	{
+		Option::find($id)->delete();
+
+		return Redirect::back();
+	}
+
+	public function addOption($id)
+	{
+		if(Input::get('option')){
+			$option = new Option;
+			$option->name = Input::get('option');
+
+			$field = Field::find($id);
+			$field->options()->save($option);
+		}
+
+		return Redirect::back();
+
 	}
 
 }

@@ -7,9 +7,15 @@
 		<h1>{{ $datasheet->name }} - {{ $category->name }}</h1>
 		@if($fields)
 			<table class="table table-hover">
+				<tr>
+				<th>Field</th>
+				<th>Type</th>
+				<th></th>
+				</tr>
 				@foreach($fields as $field)
 					<tr>
 						<td>{{ $field->name }}</td>
+						<td>{{ $field->type }}</td>
 						<td>
 							{{ Form::open(array('method'=> 'DELETE', 'class'=> 'form-inline', 'route'=> array('admin.fields.destroy', $field->id) )) }}
 							<a class="btn btn-default" href="{{ URL::route('admin.fields.edit', $field->id) }}">
@@ -28,8 +34,7 @@
 			<a class="btn btn-default"
 			   href="{{ URL::route('admin.fields.create', array('datasheet_id'=>$datasheet->id, 'category_id'=>$category->id)) }} "
 			   class="btn"><i class="glyphicon glyphicon-plus"></i> Create new field</a>
-			<a class="btn btn-default" href="{{ URL::route('admin.categories.index', array('datasheet_id'=> $datasheet->id)) }} "
-			   class="btn">Back to datasheet '{{ $datasheet->name }}'</a>
+			<a class="btn btn-default" href="{{ URL::route('admin.datasheets.show', array('datasheet_id'=> $datasheet->id)) }} ">Back to datasheet '{{ $datasheet->name }}'</a>
 		</div>
 
 	</div>

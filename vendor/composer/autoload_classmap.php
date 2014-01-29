@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'AddConfideUser' => $baseDir . '/app/database/migrations/2014_01_24_195440_add_confide_user.php',
+    'AddFields' => $baseDir . '/app/database/migrations/2014_01_28_210500_add_fields.php',
     'AdminController' => $baseDir . '/app/controllers/AdminController.php',
     'Barryvdh\\LaravelIdeHelper\\GeneratorCommand' => $vendorDir . '/barryvdh/laravel-ide-helper/src/Barryvdh/LaravelIdeHelper/GeneratorCommand.php',
     'Barryvdh\\LaravelIdeHelper\\IdeHelperServiceProvider' => $vendorDir . '/barryvdh/laravel-ide-helper/src/Barryvdh/LaravelIdeHelper/IdeHelperServiceProvider.php',
@@ -1200,6 +1201,7 @@ return array(
     'Patchwork\\Utf8\\Bootup' => $vendorDir . '/patchwork/utf8/class/Patchwork/Utf8/Bootup.php',
     'Patrol' => $baseDir . '/app/models/Patrol.php',
     'PatrolsController' => $baseDir . '/app/controllers/PatrolsController.php',
+    'PatrolsTableSeeder' => $baseDir . '/app/database/seeds/PatrolsTableSeeder.php',
     'Permission' => $baseDir . '/app/models/Permission.php',
     'Predis\\Autoloader' => $vendorDir . '/predis/predis/lib/Predis/Autoloader.php',
     'Predis\\BasicClientInterface' => $vendorDir . '/predis/predis/lib/Predis/BasicClientInterface.php',

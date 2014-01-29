@@ -9,7 +9,7 @@
 		<a class="btn btn-primary" href="{{ URL::route('permissions') }}">Manage Permissions</a>
 		<br><br>
 		Search for First or Last name only
-		<form name="search" action="{{ URL::route('admin.volunteers.index') }}" method="POST">
+		<form name="search" action="{{URL::action('VolunteersController@search') }}" method="GET">
 			<input type="text" name="search_string">
 			<button class="btn btn-success" type="submit"><i class="glyphicon glyphicon-search"></i></button>
 		</form>

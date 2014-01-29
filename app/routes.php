@@ -19,6 +19,7 @@ Route::group(array('prefix' => 'mobile', 'before' => 'auth'), function ()
 	Route::get('select-section/{id}', array('as' => 'select-section', 'uses' => 'MobileController@getSelectSection'));
 	Route::get('data-collection/{id}', array('as' => 'get-data-collection', 'uses' => 'MobileController@getDataCollection'));
 	Route::post('data-collection', array('as' => 'data-collection', 'uses' => 'MobileController@postDataCollection'));
+	Route::get('summary', array('as' => 'summary', 'uses' => 'MobileController@summary'));
 	Route::get('finish', array('as' => 'finish', 'uses' => 'MobileController@finish'));
 });
 
@@ -55,13 +56,16 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth.admin'), function ()
 	Route::resource('datasheets', 'DatasheetsController');
 	Route::resource('categories', 'CategoriesController');
 	Route::resource('fields', 'FieldsController');
+	Route::get('delete-option/{id}', 'FieldsController@deleteOption');
+	Route::get('add-option/{id}', 'FieldsController@addOption');
 
 	Route::get('permissions', array('as' => 'permissions', 'uses' => 'VolunteersController@permissions'));
 	Route::post('permissions', array('as' => 'permissions', 'uses' => 'VolunteersController@postPermissions'));
+	Route::get('search-user', 'VolunteersController@search');
 
 	//Patrols
-	Route::get('patrols-entries-locations-list', array('as' => 'patrols-entries-locations-list', 'uses' => 'PatrolsController@patrolEntries'));
-	Route::get('patrol-entries-list', array('as' => 'patrol-entries-list', 'uses' => 'PatrolsController@patrolEntries'));
+	Route::get('patrol-list/{location?}', array('as' => 'patrol-list', 'uses' => 'PatrolsController@patrolsList'));
+	Route::get('patrol-user/{user?}', array('as' => 'patrol-user', 'uses' => 'PatrolsController@patrolsUser'));
 
 	//Graphs
 	Route::get('graphs', array('as' => 'graphs', 'uses' => 'AdminController@graphs'));
