@@ -16,10 +16,12 @@
 <div data-role="page" {{ $url or '' }}>
 	<div data-role="header" data-theme="b" data-position="fixed" style="margin-left: -1px">
 		<h1>MPA Watch</h1>
+		@section('logoutBtn')
 		@if(Confide::user())
-		<a href="#popupDialog" data-rel="popup" data-position-to="window"
-		class="ui-btn-right ui-btn ui-btn-e ui-btn-inline ui-mini ui-btn-icon-left ui-icon-delete">Logout</a>
+			<a href="#popupDialog" data-rel="popup" data-position-to="window"
+			class="ui-btn-right ui-btn ui-btn-e ui-btn-inline ui-mini ui-btn-icon-left ui-icon-delete">Logout</a>
 		@endif
+		@show
 	</div>
 	<div data-role="content">
 		<h1 class="center-text">

@@ -10,21 +10,21 @@ class PatrolsController extends BaseController
 	 */
 	public function index()
 	{
-		$data['patrols'] = Patrol::all();
-		$data['tallies'] = Patrol::first()->segments->first()->tallies;
+		$data['patrols'] = Patrol::orderBy('start_time')->get();
+		$data['tallies'] = Patrol::first()->tallies;
 
 		return View::make('admin.patrols.list', $data);
 	}
 
 	/**
-	 * Shows all patrols for a given location.
+	 * Shows all patrols for a given transect.
 	 *
 	 * @return \Illuminate\View\View
 	 */
-	public function patrolsList($location)
+	public function patrolsList($transect)
 	{
-		$data['patrols'] = Location::find($location)->patrols;
-		$data['tallies'] = Patrol::first()->segments->first()->tallies;
+		$data['patrols'] = Transect::find($transect)->patrols;
+		$data['tallies'] = Patrol::first()->tallies;
 
 		return View::make('admin.patrols.list', $data);
 	}
@@ -32,7 +32,7 @@ class PatrolsController extends BaseController
 	public function patrolsUser($user_id)
 	{
 		$data['patrols'] = User::find($user_id)->patrols;
-		$data['tallies'] = Patrol::first()->segments->first()->tallies;
+		$data['tallies'] = Patrol::first()->tallies;
 
 		return View::make('admin.patrols.list', $data);
 	}

@@ -57,7 +57,7 @@ class UsersController extends BaseController
 	public function login()
 	{
 		if (Entrust::can('can_patrol'))
-			return Redirect::route('select-location');
+			return Redirect::route('select-MPA');
 
 		$error = ['Access Denied'];
 		return View::make('mobile/index')->with('errors', $error);
@@ -86,7 +86,7 @@ class UsersController extends BaseController
 			// Otherwise fallback to '/'
 			// Fix pull #145
 			Session::put("start_time", Carbon::now());
-			return Redirect::intended('/mobile/select-location');
+			return Redirect::intended('/mobile/select-MPA');
 		} else
 		{
 			$user = new User;

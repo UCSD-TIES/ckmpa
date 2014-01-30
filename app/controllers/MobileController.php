@@ -15,48 +15,47 @@ class MobileController extends BaseController
 	}
 
 	/**
-	 * Shows the select location view.
+	 * Shows the select MPA view.
 	 *
 	 * @return \Illuminate\View\View
 	 */
-	public function getSelectLocation()
+	public function getSelectMPA()
 	{
-		$locations = Location::all();
-		$data['locations'] = $locations;
+		$mpas = Mpa::all();
+		$data['mpas'] = $mpas;
 
 		// jQuery Mobile hack to show correct url after a post
-		$data['url'] = "data-url=/mobile/select-location";
+		$data['url'] = "data-url=/mobile/select-MPA";
 
-		return View::make('mobile.select-location', $data);
+		return View::make('mobile.select-MPA', $data);
 	}
 
 	/**
-	 * Shows the select section view.
+	 * Shows the select transect view.
 	 *
-	 * @param $location_id
+	 * @param $MPA_id
 	 * @return \Illuminate\View\View
 	 */
-	public function getSelectSection($location_id)
+	public function getSelectTransect($mpa_id)
 	{
-		$location = Location::find($location_id);
-		$sections = $location->sections;
-		$data['sections'] = $sections;
-		$data['location'] = $location;
+		$mpa = Mpa::find($mpa_id);
+		$data['transects'] = $mpa->transects;;
+		$data['mpa'] = $mpa;
 
-		return View::make('mobile.select-section', $data);
+		return View::make('mobile.select-transect', $data);
 	}
 
 	/**
 	 * Shows the data collection view.
 	 *
-	 * @param $section_id
+	 * @param $transect_id
 	 * @return \Illuminate\View\View
 	 */
-	public function getDataCollection($section_id)
+	public function getDataCollection($transect_id)
 	{
-		$section = Section::find($section_id);
-		$data['section'] = $section;
-		$data['datasheet'] = $section->location->datasheet;
+		$transect = Transect::find($transect_id);
+		$data['transect'] = $transect;
+		$data['datasheet'] = $transect->mpa->datasheet;
 
 		return View::make('mobile.data-collection', $data);
 	}
@@ -68,52 +67,27 @@ class MobileController extends BaseController
 	 */
 	public function postDataCollection()
 	{
-		// Get the current section
-		$section = Section::find(Input::get('section_id'));
+		// Get the current transect
+		$transect = Transect::find(Input::get('transect_id'));
 
-		// Get the current patrol from session if there is one
-		// Else create a new patrol and store in session
-		if (Session::has('patrol'))
-			$patrol = Session::get('patrol');
-		else
-		{
-			$patrol = new Patrol;
+		$patrol = new Patrol;
 
-			/* Set the owner and location of the patrol */
-			$patrol->user()->associate(Auth::user());
-			$patrol->location()->associate($section->location);
-
-			/* Set the date of the current patrol */
-			$patrol->date = Carbon::now();
-			$patrol->is_finished = 1;
-
-			$patrol->save();
-
-			/* Set as current patrol */
-			Session::set('patrol', $patrol);
-		}
+		/* Set the owner and MPA of the patrol */
+		$patrol->user()->associate(Auth::user());
+		$patrol->transect()->associate($transect);
 
 		/* Get the start time from login. */
 		$start_time = Session::get('start_time');
 
-		/* Create a new patrol segment. */
-		$segment = new Segment;
-
-		/* Set the patrol and section of the segment */
-		$segment->patrol()->associate($patrol);
-		$segment->section()->associate($section);
-		$segment->comment = Input::get('comments');
-
-		/* Set the times. */
-
+		/* Set the date of the current patrol */
 		// TEMPORARY
-		$segment->start_time = Carbon::now();
-		$segment->end_time = Carbon::now();
+		$patrol->start_time = Carbon::now();
+		$patrol->end_time = Carbon::now();
+		$patrol->comments = Input::get('comments');
 
-		// Save
-		$segment->save();
+		$patrol->save();
 
-		$datasheet = $section->location->datasheet;
+		$datasheet = $transect->mpa->datasheet;
 
 		$categories = $datasheet->categories;
 		/* For each category, get the entries. */
@@ -128,7 +102,7 @@ class MobileController extends BaseController
 				$tally = new Tally;
 
 				/* Link it to the patrol */
-				$tally->segment()->associate($segment);
+				$tally->patrol()->associate($patrol);
 
 				/* Link it to the datasheet entry */
 				$tally->field()->associate($field);
@@ -138,14 +112,13 @@ class MobileController extends BaseController
 				$underscored = str_replace(' ', '_', $field->name);
 				$tally->tally = (int)Input::get($underscored);
 
-
 				/* Save the information */
 				$tally->save();
 			}
 
 		}
 
-		$data['location'] = $section->location;
+		$data['mpa'] = $transect->mpa;
 		return View::make('mobile.finish', $data);
 	}
 
@@ -155,9 +128,9 @@ class MobileController extends BaseController
 	 */
 	public function summary()
 	{
-		$data['inputs'] = Input::except('section_id');
-		$data['keys'] = array_keys(Input::except('section_id'));
-		$data['section'] = Section::find(Input::get('section_id'));
+		$data['inputs'] = Input::except('transect_id');
+		$data['keys'] = array_keys(Input::except('transect_id'));
+		$data['transect'] = Transect::find(Input::get('transect_id'));
 
 		return View::make('mobile.summary', $data);
 	}

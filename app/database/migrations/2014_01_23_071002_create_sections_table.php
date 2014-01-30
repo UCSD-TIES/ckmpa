@@ -7,16 +7,16 @@ class CreateSectionsTable extends Migration {
 
 	public function up()
 	{
-		Schema::create('sections', function(Blueprint $table) {
+		Schema::create('transects', function(Blueprint $table) {
 			$table->increments('id');
 			$table->timestamps();
 			$table->string('name');
-			$table->integer('location_id')->unsigned()->index();
+			$table->integer('mpa_id')->unsigned()->index();
 		});
 	}
 
 	public function down()
 	{
-		Schema::drop('sections');
+		Schema::drop('transects');
 	}
 }

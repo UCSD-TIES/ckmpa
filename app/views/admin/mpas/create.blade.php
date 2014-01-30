@@ -1,19 +1,19 @@
 @extends('admin/base')
 
-@section('title')Create new Location @stop
+@section('title')Create New MPA @stop
 
 @section('content')
 	<div span="12">
-		<h1>Create a New Location</h1>
+		<h1>Create a New MPA</h1>
 
-		<form class="form-horizontal" action="{{ URL::route('admin.locations.store') }}" method="POST">
+		<form class="form-horizontal" action="{{ URL::route('admin.mpas.store') }}" method="POST">
 			<div class="control-group">
-				<label for="location_name" class="control-label">Name</label>
+				<label for="mpa_name" class="control-label">Name</label>
 
 				<div class="controls">
-					<input type="text" name="name" id="location_name" value="{{ Input::old( 'location_name' ) }}">
-					@if($errors->has('location_name'))
-						<span class="help-inline">{{ $errors->first('location_name') }}</span>
+					<input type="text" name="name" id="mpa_name" value="{{ Input::old( 'mpa_name' ) }}">
+					@if($errors->has('mpa_name'))
+						<span class="help-inline">{{ $errors->first('mpa_name') }}</span>
 					@endif
 				</div>
 			</div>
@@ -33,8 +33,8 @@
 				</div>
 			</div>
 			<div class="form-actions">
-				<button type="submit" class="btn btn-primary">Create location</button>
-				<a class="btn btn-default" href="{{ URL::route('admin.locations.index') }}" class="btn">Cancel</a>
+				<button type="submit" class="btn btn-primary">Create MPA</button>
+				<a class="btn btn-default" href="{{ URL::route('admin.mpas.index') }}" class="btn">Cancel</a>
 			</div>
 		</form>
 	</div>

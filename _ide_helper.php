@@ -2233,6 +2233,18 @@ class Cache extends Illuminate\Support\Facades\Cache{
 		 Illuminate\Cache\Repository::offsetUnset($key);
 	 }
 
+	/**
+	 * Register a macro with the Cache class.
+	 *
+	 * @param string $name
+	 * @param callable $callback
+	 * @return void
+	 * @static 
+	 */
+	 public static function macro($name, $callback){
+		 Illuminate\Cache\Repository::macro($name, $callback);
+	 }
+
 }
 
 class ClassLoader extends Illuminate\Support\ClassLoader{
@@ -3554,6 +3566,33 @@ class Eloquent extends Illuminate\Database\Eloquent\Model{
 	 }
 
 	/**
+	 * Add a basic where clause to the query.
+	 *
+	 * @param string  $column
+	 * @param string  $operator
+	 * @param mixed   $value
+	 * @param string  $boolean
+	 * @return \Illuminate\Database\Eloquent\Builder|static
+	 * @static 
+	 */
+	 public static function where($column, $operator = null, $value = null, $boolean = 'and'){
+		return Illuminate\Database\Eloquent\Builder::where($column, $operator, $value, $boolean);
+	 }
+
+	/**
+	 * Add an "or where" clause to the query.
+	 *
+	 * @param string  $column
+	 * @param string  $operator
+	 * @param mixed   $value
+	 * @return \Illuminate\Database\Eloquent\Builder|static
+	 * @static 
+	 */
+	 public static function orWhere($column, $operator = null, $value = null){
+		return Illuminate\Database\Eloquent\Builder::orWhere($column, $operator, $value);
+	 }
+
+	/**
 	 * Add a relationship count condition to the query.
 	 *
 	 * @param string  $relation
@@ -3775,34 +3814,6 @@ class Eloquent extends Illuminate\Database\Eloquent\Model{
 	 }
 
 	/**
-	 * Add a basic where clause to the query.
-	 *
-	 * @param string  $column
-	 * @param string  $operator
-	 * @param mixed   $value
-	 * @param string  $boolean
-	 * @return \Illuminate\Database\Query\Builder|static
-	 * @throws \InvalidArgumentException
-	 * @static 
-	 */
-	 public static function where($column, $operator = null, $value = null, $boolean = 'and'){
-		return Illuminate\Database\Query\Builder::where($column, $operator, $value, $boolean);
-	 }
-
-	/**
-	 * Add an "or where" clause to the query.
-	 *
-	 * @param string  $column
-	 * @param string  $operator
-	 * @param mixed   $value
-	 * @return \Illuminate\Database\Query\Builder|static
-	 * @static 
-	 */
-	 public static function orWhere($column, $operator = null, $value = null){
-		return Illuminate\Database\Query\Builder::orWhere($column, $operator, $value);
-	 }
-
-	/**
 	 * Add a raw where clause to the query.
 	 *
 	 * @param string  $sql
@@ -3889,6 +3900,18 @@ class Eloquent extends Illuminate\Database\Eloquent\Model{
 	 */
 	 public static function whereNested($callback, $boolean = 'and'){
 		return Illuminate\Database\Query\Builder::whereNested($callback, $boolean);
+	 }
+
+	/**
+	 * Add another query builder as a nested where to the query builder.
+	 *
+	 * @param \Illuminate\Database\Query\Builder|static $query
+	 * @param string  $boolean
+	 * @return \Illuminate\Database\Query\Builder|static
+	 * @static 
+	 */
+	 public static function addNestedWhereQuery($query, $boolean = 'and'){
+		return Illuminate\Database\Query\Builder::addNestedWhereQuery($query, $boolean);
 	 }
 
 	/**
@@ -7248,6 +7271,27 @@ class Lang extends Illuminate\Support\Facades\Lang{
 	 }
 
 	/**
+	 * Set the fallback locale being used.
+	 *
+	 * @return string
+	 * @static 
+	 */
+	 public static function getFallback(){
+		return Illuminate\Translation\Translator::getFallback();
+	 }
+
+	/**
+	 * Set the fallback locale being used.
+	 *
+	 * @param string  $fallback
+	 * @return void
+	 * @static 
+	 */
+	 public static function setFallback($fallback){
+		 Illuminate\Translation\Translator::setFallback($fallback);
+	 }
+
+	/**
 	 * Set the parsed value of a key.
 	 *
 	 * @param string  $key
@@ -7342,6 +7386,17 @@ class Log extends Illuminate\Support\Facades\Log{
 	 */
 	 public static function setEventDispatcher($dispatcher){
 		 Illuminate\Log\Writer::setEventDispatcher($dispatcher);
+	 }
+
+	/**
+	 * Dynamically pass log calls into the writer.
+	 *
+	 * @param dynamic (level, param, param)
+	 * @return mixed
+	 * @static 
+	 */
+	 public static function write(){
+		return Illuminate\Log\Writer::write();
 	 }
 
 	/**
@@ -9923,6 +9978,17 @@ class Route extends Illuminate\Support\Facades\Route{
 	 }
 
 	/**
+	 * Register a route matched event listener.
+	 *
+	 * @param callable  $callback
+	 * @return void
+	 * @static 
+	 */
+	 public static function matched($callback){
+		 Illuminate\Routing\Router::matched($callback);
+	 }
+
+	/**
 	 * Register a new "before" filter with the router.
 	 *
 	 * @param mixed  $callback
@@ -9966,6 +10032,19 @@ class Route extends Illuminate\Support\Facades\Route{
 	 */
 	 public static function when($pattern, $name, $methods = null){
 		 Illuminate\Routing\Router::when($pattern, $name, $methods);
+	 }
+
+	/**
+	 * Register a regular expression based filter with the router.
+	 *
+	 * @param string     $pattern
+	 * @param string     $name
+	 * @param array|null $methods
+	 * @return void
+	 * @static 
+	 */
+	 public static function whenRegex($pattern, $name, $methods = null){
+		 Illuminate\Routing\Router::whenRegex($pattern, $name, $methods);
 	 }
 
 	/**
@@ -10347,6 +10426,18 @@ class Schema extends Illuminate\Support\Facades\Schema{
 	 public static function setConnection($connection){
 		//Method inherited from Illuminate\Database\Schema\Builder
 		return Illuminate\Database\Schema\MySqlBuilder::setConnection($connection);
+	 }
+
+	/**
+	 * Set the Schema Blueprint resolver callback.
+	 *
+	 * @param \Closure  $resolver
+	 * @return void
+	 * @static 
+	 */
+	 public static function blueprintResolver($resolver){
+		//Method inherited from Illuminate\Database\Schema\Builder
+		 Illuminate\Database\Schema\MySqlBuilder::blueprintResolver($resolver);
 	 }
 
 }
@@ -11224,19 +11315,6 @@ class Validator extends Illuminate\Support\Facades\Validator{
 
 class View extends Illuminate\Support\Facades\View{
 	/**
-	 * Get the evaluated view contents for the given view.
-	 *
-	 * @param string  $view
-	 * @param array   $data
-	 * @param array   $mergeData
-	 * @return \Illuminate\View\View
-	 * @static 
-	 */
-	 public static function make($view, $data = array(), $mergeData = array()){
-		return TwigBridge\View\Environment::make($view, $data, $mergeData);
-	 }
-
-	/**
 	 * Create a new view environment instance.
 	 *
 	 * @param \Illuminate\View\Engines\EngineResolver  $engines
@@ -11246,8 +11324,20 @@ class View extends Illuminate\Support\Facades\View{
 	 * @static 
 	 */
 	 public static function __construct($engines, $finder, $events){
-		//Method inherited from Illuminate\View\Environment
-		 TwigBridge\View\Environment::__construct($engines, $finder, $events);
+		 Illuminate\View\Environment::__construct($engines, $finder, $events);
+	 }
+
+	/**
+	 * Get the evaluated view contents for the given view.
+	 *
+	 * @param string  $view
+	 * @param array   $data
+	 * @param array   $mergeData
+	 * @return \Illuminate\View\View
+	 * @static 
+	 */
+	 public static function make($view, $data = array(), $mergeData = array()){
+		return Illuminate\View\Environment::make($view, $data, $mergeData);
 	 }
 
 	/**
@@ -11259,8 +11349,7 @@ class View extends Illuminate\Support\Facades\View{
 	 * @static 
 	 */
 	 public static function of($view, $data = array()){
-		//Method inherited from Illuminate\View\Environment
-		return TwigBridge\View\Environment::of($view, $data);
+		return Illuminate\View\Environment::of($view, $data);
 	 }
 
 	/**
@@ -11272,8 +11361,7 @@ class View extends Illuminate\Support\Facades\View{
 	 * @static 
 	 */
 	 public static function name($view, $name){
-		//Method inherited from Illuminate\View\Environment
-		 TwigBridge\View\Environment::name($view, $name);
+		 Illuminate\View\Environment::name($view, $name);
 	 }
 
 	/**
@@ -11284,8 +11372,7 @@ class View extends Illuminate\Support\Facades\View{
 	 * @static 
 	 */
 	 public static function exists($view){
-		//Method inherited from Illuminate\View\Environment
-		return TwigBridge\View\Environment::exists($view);
+		return Illuminate\View\Environment::exists($view);
 	 }
 
 	/**
@@ -11299,8 +11386,7 @@ class View extends Illuminate\Support\Facades\View{
 	 * @static 
 	 */
 	 public static function renderEach($view, $data, $iterator, $empty = 'raw|'){
-		//Method inherited from Illuminate\View\Environment
-		return TwigBridge\View\Environment::renderEach($view, $data, $iterator, $empty);
+		return Illuminate\View\Environment::renderEach($view, $data, $iterator, $empty);
 	 }
 
 	/**
@@ -11312,8 +11398,7 @@ class View extends Illuminate\Support\Facades\View{
 	 * @static 
 	 */
 	 public static function share($key, $value = null){
-		//Method inherited from Illuminate\View\Environment
-		 TwigBridge\View\Environment::share($key, $value);
+		 Illuminate\View\Environment::share($key, $value);
 	 }
 
 	/**
@@ -11325,8 +11410,7 @@ class View extends Illuminate\Support\Facades\View{
 	 * @static 
 	 */
 	 public static function creator($views, $callback){
-		//Method inherited from Illuminate\View\Environment
-		return TwigBridge\View\Environment::creator($views, $callback);
+		return Illuminate\View\Environment::creator($views, $callback);
 	 }
 
 	/**
@@ -11337,8 +11421,7 @@ class View extends Illuminate\Support\Facades\View{
 	 * @static 
 	 */
 	 public static function composers($composers){
-		//Method inherited from Illuminate\View\Environment
-		return TwigBridge\View\Environment::composers($composers);
+		return Illuminate\View\Environment::composers($composers);
 	 }
 
 	/**
@@ -11350,8 +11433,7 @@ class View extends Illuminate\Support\Facades\View{
 	 * @static 
 	 */
 	 public static function composer($views, $callback, $priority = null){
-		//Method inherited from Illuminate\View\Environment
-		return TwigBridge\View\Environment::composer($views, $callback, $priority);
+		return Illuminate\View\Environment::composer($views, $callback, $priority);
 	 }
 
 	/**
@@ -11362,8 +11444,7 @@ class View extends Illuminate\Support\Facades\View{
 	 * @static 
 	 */
 	 public static function callComposer($view){
-		//Method inherited from Illuminate\View\Environment
-		 TwigBridge\View\Environment::callComposer($view);
+		 Illuminate\View\Environment::callComposer($view);
 	 }
 
 	/**
@@ -11374,8 +11455,7 @@ class View extends Illuminate\Support\Facades\View{
 	 * @static 
 	 */
 	 public static function callCreator($view){
-		//Method inherited from Illuminate\View\Environment
-		 TwigBridge\View\Environment::callCreator($view);
+		 Illuminate\View\Environment::callCreator($view);
 	 }
 
 	/**
@@ -11387,8 +11467,7 @@ class View extends Illuminate\Support\Facades\View{
 	 * @static 
 	 */
 	 public static function startSection($section, $content = ''){
-		//Method inherited from Illuminate\View\Environment
-		 TwigBridge\View\Environment::startSection($section, $content);
+		 Illuminate\View\Environment::startSection($section, $content);
 	 }
 
 	/**
@@ -11400,8 +11479,7 @@ class View extends Illuminate\Support\Facades\View{
 	 * @static 
 	 */
 	 public static function inject($section, $content){
-		//Method inherited from Illuminate\View\Environment
-		 TwigBridge\View\Environment::inject($section, $content);
+		 Illuminate\View\Environment::inject($section, $content);
 	 }
 
 	/**
@@ -11411,8 +11489,7 @@ class View extends Illuminate\Support\Facades\View{
 	 * @static 
 	 */
 	 public static function yieldSection(){
-		//Method inherited from Illuminate\View\Environment
-		return TwigBridge\View\Environment::yieldSection();
+		return Illuminate\View\Environment::yieldSection();
 	 }
 
 	/**
@@ -11423,8 +11500,7 @@ class View extends Illuminate\Support\Facades\View{
 	 * @static 
 	 */
 	 public static function stopSection($overwrite = false){
-		//Method inherited from Illuminate\View\Environment
-		return TwigBridge\View\Environment::stopSection($overwrite);
+		return Illuminate\View\Environment::stopSection($overwrite);
 	 }
 
 	/**
@@ -11434,8 +11510,7 @@ class View extends Illuminate\Support\Facades\View{
 	 * @static 
 	 */
 	 public static function appendSection(){
-		//Method inherited from Illuminate\View\Environment
-		return TwigBridge\View\Environment::appendSection();
+		return Illuminate\View\Environment::appendSection();
 	 }
 
 	/**
@@ -11447,8 +11522,7 @@ class View extends Illuminate\Support\Facades\View{
 	 * @static 
 	 */
 	 public static function yieldContent($section, $default = ''){
-		//Method inherited from Illuminate\View\Environment
-		return TwigBridge\View\Environment::yieldContent($section, $default);
+		return Illuminate\View\Environment::yieldContent($section, $default);
 	 }
 
 	/**
@@ -11458,8 +11532,7 @@ class View extends Illuminate\Support\Facades\View{
 	 * @static 
 	 */
 	 public static function flushSections(){
-		//Method inherited from Illuminate\View\Environment
-		 TwigBridge\View\Environment::flushSections();
+		 Illuminate\View\Environment::flushSections();
 	 }
 
 	/**
@@ -11469,8 +11542,7 @@ class View extends Illuminate\Support\Facades\View{
 	 * @static 
 	 */
 	 public static function flushSectionsIfDoneRendering(){
-		//Method inherited from Illuminate\View\Environment
-		 TwigBridge\View\Environment::flushSectionsIfDoneRendering();
+		 Illuminate\View\Environment::flushSectionsIfDoneRendering();
 	 }
 
 	/**
@@ -11480,8 +11552,7 @@ class View extends Illuminate\Support\Facades\View{
 	 * @static 
 	 */
 	 public static function incrementRender(){
-		//Method inherited from Illuminate\View\Environment
-		 TwigBridge\View\Environment::incrementRender();
+		 Illuminate\View\Environment::incrementRender();
 	 }
 
 	/**
@@ -11491,8 +11562,7 @@ class View extends Illuminate\Support\Facades\View{
 	 * @static 
 	 */
 	 public static function decrementRender(){
-		//Method inherited from Illuminate\View\Environment
-		 TwigBridge\View\Environment::decrementRender();
+		 Illuminate\View\Environment::decrementRender();
 	 }
 
 	/**
@@ -11502,8 +11572,7 @@ class View extends Illuminate\Support\Facades\View{
 	 * @static 
 	 */
 	 public static function doneRendering(){
-		//Method inherited from Illuminate\View\Environment
-		return TwigBridge\View\Environment::doneRendering();
+		return Illuminate\View\Environment::doneRendering();
 	 }
 
 	/**
@@ -11514,8 +11583,7 @@ class View extends Illuminate\Support\Facades\View{
 	 * @static 
 	 */
 	 public static function addLocation($location){
-		//Method inherited from Illuminate\View\Environment
-		 TwigBridge\View\Environment::addLocation($location);
+		 Illuminate\View\Environment::addLocation($location);
 	 }
 
 	/**
@@ -11527,8 +11595,7 @@ class View extends Illuminate\Support\Facades\View{
 	 * @static 
 	 */
 	 public static function addNamespace($namespace, $hints){
-		//Method inherited from Illuminate\View\Environment
-		 TwigBridge\View\Environment::addNamespace($namespace, $hints);
+		 Illuminate\View\Environment::addNamespace($namespace, $hints);
 	 }
 
 	/**
@@ -11540,8 +11607,7 @@ class View extends Illuminate\Support\Facades\View{
 	 * @static 
 	 */
 	 public static function prependNamespace($namespace, $hints){
-		//Method inherited from Illuminate\View\Environment
-		 TwigBridge\View\Environment::prependNamespace($namespace, $hints);
+		 Illuminate\View\Environment::prependNamespace($namespace, $hints);
 	 }
 
 	/**
@@ -11554,8 +11620,7 @@ class View extends Illuminate\Support\Facades\View{
 	 * @static 
 	 */
 	 public static function addExtension($extension, $engine, $resolver = null){
-		//Method inherited from Illuminate\View\Environment
-		 TwigBridge\View\Environment::addExtension($extension, $engine, $resolver);
+		 Illuminate\View\Environment::addExtension($extension, $engine, $resolver);
 	 }
 
 	/**
@@ -11565,8 +11630,7 @@ class View extends Illuminate\Support\Facades\View{
 	 * @static 
 	 */
 	 public static function getExtensions(){
-		//Method inherited from Illuminate\View\Environment
-		return TwigBridge\View\Environment::getExtensions();
+		return Illuminate\View\Environment::getExtensions();
 	 }
 
 	/**
@@ -11576,8 +11640,7 @@ class View extends Illuminate\Support\Facades\View{
 	 * @static 
 	 */
 	 public static function getEngineResolver(){
-		//Method inherited from Illuminate\View\Environment
-		return TwigBridge\View\Environment::getEngineResolver();
+		return Illuminate\View\Environment::getEngineResolver();
 	 }
 
 	/**
@@ -11587,8 +11650,7 @@ class View extends Illuminate\Support\Facades\View{
 	 * @static 
 	 */
 	 public static function getFinder(){
-		//Method inherited from Illuminate\View\Environment
-		return TwigBridge\View\Environment::getFinder();
+		return Illuminate\View\Environment::getFinder();
 	 }
 
 	/**
@@ -11598,8 +11660,7 @@ class View extends Illuminate\Support\Facades\View{
 	 * @static 
 	 */
 	 public static function setFinder($finder){
-		//Method inherited from Illuminate\View\Environment
-		 TwigBridge\View\Environment::setFinder($finder);
+		 Illuminate\View\Environment::setFinder($finder);
 	 }
 
 	/**
@@ -11609,8 +11670,7 @@ class View extends Illuminate\Support\Facades\View{
 	 * @static 
 	 */
 	 public static function getDispatcher(){
-		//Method inherited from Illuminate\View\Environment
-		return TwigBridge\View\Environment::getDispatcher();
+		return Illuminate\View\Environment::getDispatcher();
 	 }
 
 	/**
@@ -11621,8 +11681,7 @@ class View extends Illuminate\Support\Facades\View{
 	 * @static 
 	 */
 	 public static function setDispatcher($events){
-		//Method inherited from Illuminate\View\Environment
-		 TwigBridge\View\Environment::setDispatcher($events);
+		 Illuminate\View\Environment::setDispatcher($events);
 	 }
 
 	/**
@@ -11632,8 +11691,7 @@ class View extends Illuminate\Support\Facades\View{
 	 * @static 
 	 */
 	 public static function getContainer(){
-		//Method inherited from Illuminate\View\Environment
-		return TwigBridge\View\Environment::getContainer();
+		return Illuminate\View\Environment::getContainer();
 	 }
 
 	/**
@@ -11644,8 +11702,7 @@ class View extends Illuminate\Support\Facades\View{
 	 * @static 
 	 */
 	 public static function setContainer($container){
-		//Method inherited from Illuminate\View\Environment
-		 TwigBridge\View\Environment::setContainer($container);
+		 Illuminate\View\Environment::setContainer($container);
 	 }
 
 	/**
@@ -11657,8 +11714,7 @@ class View extends Illuminate\Support\Facades\View{
 	 * @static 
 	 */
 	 public static function shared($key, $default = null){
-		//Method inherited from Illuminate\View\Environment
-		return TwigBridge\View\Environment::shared($key, $default);
+		return Illuminate\View\Environment::shared($key, $default);
 	 }
 
 	/**
@@ -11668,8 +11724,7 @@ class View extends Illuminate\Support\Facades\View{
 	 * @static 
 	 */
 	 public static function getShared(){
-		//Method inherited from Illuminate\View\Environment
-		return TwigBridge\View\Environment::getShared();
+		return Illuminate\View\Environment::getShared();
 	 }
 
 	/**
@@ -11679,8 +11734,7 @@ class View extends Illuminate\Support\Facades\View{
 	 * @static 
 	 */
 	 public static function getSections(){
-		//Method inherited from Illuminate\View\Environment
-		return TwigBridge\View\Environment::getSections();
+		return Illuminate\View\Environment::getSections();
 	 }
 
 	/**
@@ -11690,8 +11744,7 @@ class View extends Illuminate\Support\Facades\View{
 	 * @static 
 	 */
 	 public static function getNames(){
-		//Method inherited from Illuminate\View\Environment
-		return TwigBridge\View\Environment::getNames();
+		return Illuminate\View\Environment::getNames();
 	 }
 
 }

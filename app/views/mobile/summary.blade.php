@@ -2,7 +2,7 @@
 
 @section('title')Coastkeeper Volunteer - Patrol @stop
 
-@section('header')Confirmation for {{$section->name}} @stop
+@section('header')Confirmation for {{$transect->name}} @stop
 
 @section('content')
 
@@ -21,7 +21,7 @@
 	<form action="{{ URL::route('data-collection') }}" data-ajax='false' method="POST">
 	    <label for="comments">Comments:</label>
 	    <textarea name="comments" id="comments" rows=6></textarea>
-	    <input type='hidden' name='section_id' value='{{$section->id}}'>
+	    <input type='hidden' name='transect_id' value='{{$transect->id}}'>
 	    @for($i = 0; $i < count($inputs); $i++)
 	    	<input type='hidden' name='{{$keys[$i]}}' value='{{$inputs[$keys[$i]]}}'>
 	    @endfor

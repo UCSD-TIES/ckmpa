@@ -2,13 +2,13 @@
 
 @section('title')Coastkeeper Volunteer - Patrol @stop
 
-@section('header')Collecting Data for<br> {{ $section->name }} @stop
+@section('header')Collecting Data for<br> {{ $transect->name }} @stop
 
 @section('content')
 <div class="center-text">
     <form id="data-entry-form" name="data-entry-form" action="{{ URL::route('summary') }}" method="GET"
           data-ajax="false">
-        <input type="hidden" name="section_id" value="{{ $section->id }}">
+        <input type="hidden" name="transect_id" value="{{ $transect->id }}">
         @foreach($datasheet->categories as $category)
         <fieldset data-role="collapsible">
             <legend>{{ $category->name }}</legend>

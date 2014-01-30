@@ -9,21 +9,20 @@
 			<table class="table table-hover">
 				<tr>
 					<th>Date</th>
-					<th>Location</th>
+					<th>Transect</th>
 					<th>Volunteer</th>
-					<th>Completed</th>
 					<th></th>
 				</tr>
 
 				@foreach($patrols as $patrol)
 					<tr>
 
-						<td>{{ $patrol->date }}</td>
+						<td>{{ $patrol->start_time->toDateString() }}</td>
 
 						<td>
-							@if($patrol->location)
-								<a href="{{ URL::route('patrol-list', array('location'=>$patrol->location->id)) }}">
-									{{ $patrol->location->name }}
+							@if($patrol->transect)
+								<a href="{{ URL::route('patrol-list', array('transect'=>$patrol->transect->id)) }}">
+									{{ $patrol->transect->name }}
 								</a>
 							@endif
 						</td>
@@ -34,7 +33,7 @@
 								</a>
 							@endif
 						</td>
-						<td>@if($patrol->is_finished)<i class="glyphicon glyphicon-ok"></i>@endif</td>
+
 						<td>
 							{{ Form::open(array('method'=> 'DELETE', 'class'=> 'form-inline', 'route'=> array('admin.patrols.destroy', $patrol->id) )) }}
 							<div class='form-group'>
@@ -58,13 +57,14 @@
 					      <div class="modal-header">
 					        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 					        <h4 class="modal-title" id="myModalLabel">
-					        	Details for Patrol on {{ $patrol->date }} by {{ $patrol->user->first_name }}
+					        	Details for Patrol on {{ $patrol->start_time->toDateString() }} by {{ $patrol->user->first_name }}
 					        </h4>
 					      </div>
 					      <div class="modal-body">
-					      	<ul>
+					      	<ul class="list-group">
 					      	@foreach($tallies as $tally)
-					      		<li>{{ $tally->field->name }} {{ $tally->tally }}</li>
+					      		<li class="list-group-item">{{ $tally->field->name }} 
+					      		<span class="badge">{{ $tally->tally }}</span></li>
 					      	@endforeach
 					      	</ul>
 					        Comments here
@@ -77,7 +77,6 @@
 					</div>
 				@endforeach
 			</table>
-
 		@endif
 
 	</div>

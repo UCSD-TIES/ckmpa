@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder {
 		//Eloquent::unguard();
 		DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 		$this->call('RolesPermissionsTableSeeder');
-		$this->call('LocationsTableSeeder');
+		$this->call('MpasTableSeeder');
 		$this->call('DatasheetsTableSeeder');
 		$this->call('UsersTableSeeder');
 		$this->call('PatrolsTableSeeder');

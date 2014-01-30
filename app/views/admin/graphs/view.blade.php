@@ -21,8 +21,8 @@
 						<div class="col-sm-3">
 							<form class="form-vertical" id="patrols-form" method="GET" action="{{ URL::route('graphs-data') }}">
 								@if($datasheets)
-									<div class="control-group">
-										<label class="control-label" for="datasheet">DataSheet</label>
+									<div class="form-group">
+										<label class="form-label" for="datasheet">DataSheet</label>
 
 										<div class="controls">
 											<select name="datasheet" id="datasheet">
@@ -34,24 +34,19 @@
 										</div>
 									</div>
 								@endif
-								<div class="control-group">
-									<label for="startDate" class="control-label">Start Date</label>
+								<div class="form-group">
+									<label for="startDate" class="form-label">Start Date</label>
 
 									<div class="controls">
 										<input type="text" class='form-control' name="startDate" id="startDate">
 									</div>
 								</div>
-								<div class="control-group">
-									<label for="endDate" class="control-label">End Date</label>
+								<div class="form-group">
+									<label for="endDate" class="form-label">End Date</label>
 
 									<div class="controls">
 										<input type="text" class='form-control' id="endDate" name="endDate">
 									</div>
-								</div>
-								<div class="control-group">
-									<label class="checkbox">
-										<input type="checkbox" name="completePatrol"> Show Only Completed Patrols
-									</label>
 								</div>
 								<div>
 									<button type="submit"
@@ -74,8 +69,8 @@
 							<form class="form-vertical" id="observations-form" method="GET"
 							      action="{{ URL::route('graphs-observations') }}">
 								@if($datasheets)
-									<div class="control-group">
-										<label class="control-label" for="datasheet">DataSheet</label>
+									<div class="form-group">
+										<label class="form-label" for="datasheet">DataSheet</label>
 
 										<div class="controls">
 											<select name="datasheet" id="datasheet">
@@ -87,24 +82,19 @@
 										</div>
 									</div>
 								@endif
-								<div class="control-group">
-									<label for="observationsStartDate" class="control-label">Start Date</label>
+								<div class="form-group">
+									<label for="observationsStartDate" class="form-label">Start Date</label>
 
 									<div class="controls">
 										<input type="text" class='form-control' name="startDate" id="observationsStartDate">
 									</div>
 								</div>
-								<div class="control-group">
-									<label for="observationsEndDate" class="control-label">End Date</label>
+								<div class="form-group">
+									<label for="observationsEndDate" class="form-label">End Date</label>
 
 									<div class="controls">
 										<input type="text" class='form-control' id="observationsEndDate" name="endDate">
 									</div>
-								</div>
-								<div class="control-group">
-									<label class="checkbox">
-										<input type="checkbox" name="completePatrol"> Show Only Completed Patrols
-									</label>
 								</div>
 								<div>
 									<button type="submit"

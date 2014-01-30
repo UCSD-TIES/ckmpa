@@ -11,7 +11,7 @@ class CreateTalliesTable extends Migration {
 			$table->increments('id');
 			$table->timestamps();
 			$table->integer('tally');
-			$table->integer('segment_id')->unsigned()->index();
+			$table->integer('patrol_id')->unsigned()->index();
 			$table->integer('field_id')->unsigned()->index();
 		});
 	}

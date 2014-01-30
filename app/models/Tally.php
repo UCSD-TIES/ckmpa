@@ -11,17 +11,19 @@
  * @property integer $field_id
  * @property-read \Segment $segment
  * @property-read \Field $field
+ * @property integer $patrol_id
+ * @property-read \Patrol $patrol
  */
 class Tally extends Eloquent {
 	protected $table = 'tallies';
 	public $timestamps = true;
 	protected $softDelete = false;
-	protected $fillable = array('tally', 'segment_id', 'item_id');
-	protected $visible = array('tally', 'segment_id', 'item_id');
+	protected $fillable = array('tally', 'patrol_id', 'field_id');
+	protected $visible = array('tally', 'patrol_id', 'field_id');
 
-	public function segment()
+	public function patrol()
 	{
-		return $this->belongsTo('Segment');
+		return $this->belongsTo('Patrol');
 	}
 
 	public function field()

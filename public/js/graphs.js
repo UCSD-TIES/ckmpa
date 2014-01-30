@@ -25,6 +25,7 @@
 			dataType: "json"
 		}).done(function(data) {
 			generateBtn.button('reset');
+			console.log(data);
 
 			if (data.errors) {
 				createAlert('danger', data.errors, $('.patrols-chart-container'));

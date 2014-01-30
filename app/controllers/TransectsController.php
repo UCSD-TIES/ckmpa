@@ -1,6 +1,6 @@
 <?php
 
-class SectionsController extends BaseController
+class TransectsController extends BaseController
 {
 
 	/**
@@ -10,8 +10,8 @@ class SectionsController extends BaseController
 	 */
 	public function index()
 	{
-		$data['sections'] = Section::all();
-		return View::make('admin.sections.list', $data);
+		$data['transects'] = Transect::all();
+		return View::make('admin.transects.list', $data);
 	}
 
 	/**
@@ -21,9 +21,9 @@ class SectionsController extends BaseController
 	 */
 	public function create()
 	{
-		$location = Location::find(Input::get('id'));
+		$data['mpa'] = Mpa::find(Input::get('id'));
 
-		return View::make('admin.sections.create', compact('location'));
+		return View::make('admin.transects.create', $data);
 	}
 
 	/**
@@ -34,18 +34,18 @@ class SectionsController extends BaseController
 	public function store()
 	{
 		$input = Input::all();
-		$validation = Validator::make($input, Section::$rules);
+		$validation = Validator::make($input, Transect::$rules);
 
 		if ($validation->passes())
 		{
-			Section::create($input);
+			Transect::create($input);
 
-			return Redirect::route('admin.locations.show', Input::get('location_id'));
+			return Redirect::route('admin.mpas.show', Input::get('mpa_id'));
 		}
 
-		$data['id'] = Input::get('location_id');
+		$data['id'] = Input::get('mpa_id');
 
-		return Redirect::route('admin.sections.create', $data)
+		return Redirect::route('admin.transects.create', $data)
 			->withInput()
 			->withErrors($validation);
 	}
@@ -58,7 +58,7 @@ class SectionsController extends BaseController
 	 */
 	public function show($id)
 	{
-		return View::make('admin.sections.show');
+		return View::make('admin.transects.show');
 	}
 
 	/**
@@ -69,11 +69,11 @@ class SectionsController extends BaseController
 	 */
 	public function edit($id)
 	{
-		$section = Section::find($id);
-		$data['location'] = $section->location;
-		$data['section'] = $section;
+		$transect = Transect::find($id);
+		$data['mpa'] = $transect->mpa;
+		$data['transect'] = $transect;
 
-		return View::make('admin.sections.edit', $data);
+		return View::make('admin.transects.edit', $data);
 	}
 
 	/**
@@ -85,17 +85,17 @@ class SectionsController extends BaseController
 	public function update($id)
 	{
 		$input = array_except(Input::all(), '_method');
-		$validation = Validator::make($input, Section::$rules);
+		$validation = Validator::make($input, Transect::$rules);
 
 		if ($validation->passes())
 		{
-			$section = Section::find(Input::get('section_id'));
-			$section->update($input);
+			$transect = Transect::find(Input::get('transect_id'));
+			$transect->update($input);
 
-			return Redirect::route('admin.locations.show', $id);
+			return Redirect::route('admin.mpas.show', $id);
 		}
 
-		return Redirect::route('admin.sections.edit', $id)
+		return Redirect::route('admin.transects.edit', $id)
 			->withInput()
 			->withErrors($validation);
 	}
@@ -108,9 +108,9 @@ class SectionsController extends BaseController
 	 */
 	public function destroy($id)
 	{
-		Section::find(Input::get('section_id'))->delete();
+		Transect::find(Input::get('transect_id'))->delete();
 
-		return Redirect::route('admin.locations.show', $id);
+		return Redirect::route('admin.mpas.show', $id);
 	}
 
 }

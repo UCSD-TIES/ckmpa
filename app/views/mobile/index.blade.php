@@ -5,7 +5,7 @@
 @section('header')Volunteer Login @stop
 
 @section('content')
-	<form action="/users/login" method="POST">
+	<form data-ajax='false' action="/users/login" method="POST">
 		{{ Form::token() }}
 		<label for="username" class="ui-hidden-accessible">Username:</label>
 		<input type="text" name="username" id="username" placeholder="Username">

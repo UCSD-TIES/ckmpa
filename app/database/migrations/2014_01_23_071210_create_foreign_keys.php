@@ -13,11 +13,11 @@ class CreateForeignKeys extends Migration {
 						->onUpdate('restrict');
 		});
 		Schema::table('patrols', function(Blueprint $table) {
-			$table->foreign('location_id')->references('id')->on('locations')
+			$table->foreign('transect_id')->references('id')->on('transects')
 						->onDelete('restrict')
 						->onUpdate('restrict');
 		});
-		Schema::table('locations', function(Blueprint $table) {
+		Schema::table('mpas', function(Blueprint $table) {
 			$table->foreign('datasheet_id')->references('id')->on('datasheets')
 						->onDelete('restrict')
 						->onUpdate('restrict');
@@ -32,23 +32,13 @@ class CreateForeignKeys extends Migration {
 						->onDelete('cascade')
 						->onUpdate('cascade');
 		});
-		Schema::table('sections', function(Blueprint $table) {
-			$table->foreign('location_id')->references('id')->on('locations')
+		Schema::table('transects', function(Blueprint $table) {
+			$table->foreign('mpa_id')->references('id')->on('mpas')
 						->onDelete('cascade')
 						->onUpdate('cascade');
-		});
-		Schema::table('segments', function(Blueprint $table) {
-			$table->foreign('patrol_id')->references('id')->on('patrols')
-						->onDelete('cascade')
-						->onUpdate('cascade');
-		});
-		Schema::table('segments', function(Blueprint $table) {
-			$table->foreign('section_id')->references('id')->on('sections')
-						->onDelete('restrict')
-						->onUpdate('restrict');
 		});
 		Schema::table('tallies', function(Blueprint $table) {
-			$table->foreign('segment_id')->references('id')->on('segments')
+			$table->foreign('patrol_id')->references('id')->on('patrols')
 						->onDelete('cascade')
 						->onUpdate('cascade');
 		});
@@ -65,10 +55,10 @@ class CreateForeignKeys extends Migration {
 			$table->dropForeign('patrols_user_id_foreign');
 		});
 		Schema::table('patrols', function(Blueprint $table) {
-			$table->dropForeign('patrols_location_id_foreign');
+			$table->dropForeign('patrols_transects_id_foreign');
 		});
-		Schema::table('locations', function(Blueprint $table) {
-			$table->dropForeign('locations_datasheet_id_foreign');
+		Schema::table('mpas', function(Blueprint $table) {
+			$table->dropForeign('mpas_datasheet_id_foreign');
 		});
 		Schema::table('categories', function(Blueprint $table) {
 			$table->dropForeign('categories_datasheet_id_foreign');
@@ -76,17 +66,11 @@ class CreateForeignKeys extends Migration {
 		Schema::table('fields', function(Blueprint $table) {
 			$table->dropForeign('fields_category_id_foreign');
 		});
-		Schema::table('sections', function(Blueprint $table) {
-			$table->dropForeign('sections_location_id_foreign');
-		});
-		Schema::table('segments', function(Blueprint $table) {
-			$table->dropForeign('segments_patrol_id_foreign');
-		});
-		Schema::table('segments', function(Blueprint $table) {
-			$table->dropForeign('segments_section_id_foreign');
+		Schema::table('transects', function(Blueprint $table) {
+			$table->dropForeign('transects_mpa_id_foreign');
 		});
 		Schema::table('tallies', function(Blueprint $table) {
-			$table->dropForeign('tallies_segment_id_foreign');
+			$table->dropForeign('tallies_patrol_id_foreign');
 		});
 		Schema::table('tallies', function(Blueprint $table) {
 			$table->dropForeign('tallies_field_id_foreign');

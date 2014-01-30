@@ -9,6 +9,8 @@
  * @property string $name
  * @property-read \Illuminate\Database\Eloquent\Collection|\Location[] $locations
  * @property-read \Illuminate\Database\Eloquent\Collection|\Category[] $categories
+ * @property-read \Illuminate\Database\Eloquent\Collection|\MPA[] $MPAs
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Mpa[] $mpas
  */
 class Datasheet extends Eloquent {
 	public static $rules = array(
@@ -21,9 +23,9 @@ class Datasheet extends Eloquent {
 	protected $fillable = array('name');
 	protected $visible = array('name');
 
-	public function locations()
+	public function mpas()
 	{
-		return $this->hasMany('Location');
+		return $this->hasMany('Mpa');
 	}
 
 	public function categories()

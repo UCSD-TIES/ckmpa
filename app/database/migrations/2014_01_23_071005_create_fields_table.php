@@ -11,6 +11,7 @@ class CreateFieldsTable extends Migration {
 			$table->increments('id');
 			$table->timestamps();
 			$table->string('name', 50);
+			$table->string('type');
 			$table->integer('category_id')->unsigned()->index();
 		});
 	}

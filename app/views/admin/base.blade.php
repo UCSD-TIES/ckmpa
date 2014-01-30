@@ -25,7 +25,7 @@
 		<div class="collapse navbar-collapse" id="navbar-collapse-1">
 			<ul class="nav navbar-nav">
 				<li><a href="{{ URL::route('admin.volunteers.index') }}">Volunteers</a></li>
-				<li><a href="{{ URL::route('admin.locations.index') }}">Locations</a></li>
+				<li><a href="{{ URL::route('admin.mpas.index') }}">MPAs</a></li>
 				<li><a href="{{ URL::route('admin.patrols.index') }}">Patrols</a></li>
 				<li><a href="{{ URL::route('graphs') }}">Graphs</a></li>
 				<li><a href="{{ URL::route('admin.datasheets.index') }}">Datasheets</a></li>

@@ -68,10 +68,10 @@ class AdminController extends BaseController
 	}
 
 	/**
-	 * Exports patrol data to Excel sheet for a selected location or section.
+	 * Exports patrol data to Excel sheet for a selected mpa or transect.
 	 *
-	 * @param int $id The location id
-	 * @param int $sid Optional section id
+	 * @param int $id The mpa id
+	 * @param int $sid Optional transect id
 	 */
 	public function exportData($id, $sid = null)
 	{
@@ -89,13 +89,13 @@ class AdminController extends BaseController
 		/* This will hold where the Entry is in the "Sheet_header" array */
 		$entries_position = array();
 
-		/* Get the location */
-		$location = Location::find($id);
+		/* Get the mpa */
+		$mpa = Mpa::find($id);
 
-		$filename = $location->name . '-' . Carbon::now();
+		$filename = $mpa->name . '-' . Carbon::now();
 
 		/* Get the datasheet, we'll need to set the header up */
-		$datasheet = $location->datasheet;
+		$datasheet = $mpa->datasheet;
 
 		/* We're going to need to all the Entries for the datasheet as well. */
 		$datasheet_categories = $datasheet->categories;
@@ -143,21 +143,21 @@ class AdminController extends BaseController
 		$excel = new PHPExcel();
 
 		/*
-			Lets get all the sections of the location.
+			Lets get all the transects of the mpa.
 		*/
 		if ($sid)
-			$sections = [Section::find($sid)];
+			$transects = [Transect::find($sid)];
 		else
-			$sections = $location->sections;
+			$transects = $mpa->transects;
 
-		/* For each section, lets make a sheet */
-		foreach ($sections as $section)
+		/* For each transect, lets make a sheet */
+		foreach ($transects as $transect)
 		{
 			/* Set the current sheet */
 			$sheet = $excel->createSheet();
 
 			/* Set the worksheet title */
-			$sheet->setTitle(substr(preg_replace("/[^A-Za-z0-9]/", "", $section->name), 0, 31));
+			$sheet->setTitle(substr(preg_replace("/[^A-Za-z0-9]/", "", $transect->name), 0, 31));
 
 			/* The current row we're working with */
 			$row_index = 1;
@@ -170,14 +170,12 @@ class AdminController extends BaseController
 
 			$row_index++;
 
-			/* Get all of the PatrolEntries for this section */
-			$segments = $section->segments;
+			/* Get all of the PatrolEntries for this transect */
+			$patrols = $transect->patrols;
 
 			/* For each patrol entry, fill out a row */
-			foreach ($segments as $segment)
+			foreach ($patrols as $patrol)
 			{
-				/* Get the parent patrol. */
-				$patrol = $segment->patrol;
 
 				/* Set the date */
 				$sheet->setCellValue('A' . $row_index, $patrol->date);
@@ -192,11 +190,11 @@ class AdminController extends BaseController
 				}
 
 				/* Set the start time and end time */
-				$sheet->setCellValue('D' . $row_index, $segment->start_time);
-				$sheet->setCellValue('E' . $row_index, $segment->end_time);
+				$sheet->setCellValue('D' . $row_index, $patrol->start_time->toDateString());
+				$sheet->setCellValue('E' . $row_index, $patrol->end_time->toDateString());
 
 				/* Now get all the tallies for this patrol... */
-				$tallies = $segment->tallies;
+				$tallies = $patrol->tallies;
 
 				foreach ($tallies as $tally)
 				{
@@ -250,7 +248,6 @@ class AdminController extends BaseController
 		$startDate = DateTime::createFromFormat('m/d/Y', $startDate);
 		$endDate = DateTime::createFromFormat('m/d/Y', $endDate);
 
-		$finishedPatrols = Input::get('completePatrol');
 		$datasheet_id = Input::get('datasheet');
 
 		// Returns error if no datasheet selected.
@@ -261,50 +258,36 @@ class AdminController extends BaseController
 		}
 
 		$datasheet = Datasheet::find($datasheet_id);
-		$locations = $datasheet->locations;
+		$mpas = $datasheet->mpas;
 		$data = array();
 
-		foreach ($locations as $location)
+		foreach ($mpas as $mpa)
 		{
-			$sections = $location->sections;
+			$transects = $mpa->transects;
 
-			foreach ($sections as $section)
+			foreach ($transects as $transect)
 			{
-				$segments = $section->segments;
+				$patrols = $transect->patrols;
 
 				/* For each patrol entry, fill out a row */
-				foreach ($segments as $segment)
+				foreach ($patrols as $patrol)
 				{
-
-					/* Get the parent patrol. */
-					$patrol = $segment->patrol;
-
-
-					/*
-					 * If the finished Patrol filter is on,
-					 * ignore any patrols that arent finished
-					 */
-					if ($finishedPatrols && !$patrol->is_finished)
-					{
-						continue;
-					}
-
 					/*
 					 * Filter out any patrols not in between the given dates
 					 */
 					if ($startDate && $endDate)
 					{
 
-						$patrolDate = DateTime::createFromFormat('Y-m-d', $patrol->date);
+						$patrolDate = $patrol->date;
 
 						if (($patrolDate < $startDate) || ($patrolDate > $endDate))
 						{
 							continue;
 						}
 					}
-
+					
 					/* Now get all the tallies for this patrol... */
-					$tallies = $segment->tallies;
+					$tallies = $patrol->tallies;
 
 					foreach ($tallies as $tally)
 					{
@@ -344,8 +327,6 @@ class AdminController extends BaseController
 		$startDate = Carbon::createFromFormat('m/d/Y', $startDate);
 		$endDate = Carbon::createFromFormat('m/d/Y', $endDate);
 
-		$finishedPatrols = Input::get('completePatrol');
-
 		$datasheet_id = Input::get('datasheet');
 
 		// Returns error if no datasheet selected.
@@ -355,33 +336,20 @@ class AdminController extends BaseController
 			return Response::json($messages);
 		}
 
-		$patrols = Patrol::whereIn('location_id', Location::where('datasheet_id', $datasheet_id)->lists('id'))->get();
+		$mpas = Datasheet::find($datasheet_id)->mpas;
+
+		$patrols = Patrol::whereIn('transect_id', Transect::whereIn('mpa_id', $mpas->lists('id'))->lists('id'))
+			->orderBy('start_time')->get();
 
 		// Return array
 		$data = array();
 
 		foreach ($patrols as $patrol)
 		{
-
-			$segments = $patrol->segments;
-
-			/* For each patrol entry, fill out a row */
-			foreach ($segments as $segment) 
-			{
-
-				/*
-				 * If the finished Patrol filter is on,
-				 * ignore any patrols that arent finished
-				 */
-				if ($finishedPatrols && !$patrol->is_finished)
-				{
-					continue;
-				}
-
 				/*
 				 * Filter out any patrols not in between the given dates
 				 */
-				$patrolDate = Carbon::createFromFormat('Y-m-d', $patrol->date);
+				$patrolDate = $patrol->date;
 
 				if ($startDate && $endDate)
 				{
@@ -406,7 +374,7 @@ class AdminController extends BaseController
 				}
 
 				/* Now get all the tallies for this patrol... */
-				$tallies = $segment->tallies;
+				$tallies = $patrol->tallies;
 
 				foreach ($tallies as $tally)
 				{
@@ -419,8 +387,6 @@ class AdminController extends BaseController
 						$data[$patrolDate->format('d-M-y')]['observations'] += $tally->tally;
 					}
 				}
-			}
-				
 			
 		}
 

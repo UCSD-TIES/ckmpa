@@ -10,10 +10,11 @@ class CreatePatrolsTable extends Migration {
 		Schema::create('patrols', function(Blueprint $table) {
 			$table->increments('id');
 			$table->timestamps();
-			$table->date('date');
-			$table->boolean('is_finished');
+			$table->dateTime('start_time');
+			$table->dateTime('end_time');
+			$table->text('comments');
 			$table->integer('user_id')->unsigned()->index();
-			$table->integer('location_id')->unsigned()->index();
+			$table->integer('transect_id')->unsigned()->index();
 		});
 	}
 

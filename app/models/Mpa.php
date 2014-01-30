@@ -11,22 +11,23 @@
  * @property-read \Illuminate\Database\Eloquent\Collection|\Section[] $sections
  * @property-read \Illuminate\Database\Eloquent\Collection|\Patrol[] $patrols
  * @property-read \Datasheet $datasheet
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Transect[] $transects
  */
-class Location extends Eloquent {
+class Mpa extends Eloquent {
 	public static $rules = array(
-		'name'=>'required|min:2|unique:locations',
+		'name'=>'required|min:2|unique:mpas',
 		'datasheet_id'=>'required'
 	);
 
-	protected $table = 'locations';
+	protected $table = 'mpas';
 	public $timestamps = true;
 	protected $softDelete = false;
 	protected $fillable = array('name', 'datasheet_id');
 	protected $visible = array('name', 'datasheet_id');
 
-	public function sections()
+	public function transects()
 	{
-		return $this->hasMany('Section');
+		return $this->hasMany('Transect');
 	}
 
 	public function patrols()

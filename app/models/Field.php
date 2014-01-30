@@ -10,6 +10,8 @@
  * @property integer $category_id
  * @property-read \Category $category
  * @property-read \Illuminate\Database\Eloquent\Collection|\Tally[] $tallies
+ * @property string $type
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Option[] $options
  */
 class Field extends Eloquent {
 	public static $rules = array(

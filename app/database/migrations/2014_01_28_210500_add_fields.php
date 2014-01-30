@@ -12,14 +12,6 @@ class AddFields extends Migration {
 	 */
 	public function up()
 	{
-		Schema::table('fields', function(Blueprint $table) {
-			$table->string('type');
-			
-		});
-		Schema::table('segments', function(Blueprint $table) {
-			$table->text('comment');
-			
-		});
 		Schema::create('options', function($table)
 		{
 		    $table->increments('id')->unsigned();
@@ -37,12 +29,6 @@ class AddFields extends Migration {
 	 */
 	public function down()
 	{
-		Schema::table('fields', function(Blueprint $table) {
-			$table->dropColumn('type');
-		});
-		Schema::table('segments', function(Blueprint $table) {
-			$table->dropColumn('comment');
-		});
 		Schema::drop('options');
 	}
 

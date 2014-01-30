@@ -7,7 +7,7 @@ class CreateLocationsTable extends Migration {
 
 	public function up()
 	{
-		Schema::create('locations', function(Blueprint $table) {
+		Schema::create('mpas', function(Blueprint $table) {
 			$table->increments('id');
 			$table->timestamps();
 			$table->string('name', 50);
@@ -17,6 +17,6 @@ class CreateLocationsTable extends Migration {
 
 	public function down()
 	{
-		Schema::drop('locations');
+		Schema::drop('mpas');
 	}
 }

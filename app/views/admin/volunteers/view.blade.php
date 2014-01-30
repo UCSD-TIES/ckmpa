@@ -23,7 +23,7 @@
 					<thead>
 					<tr>
 						<th>Patrols</th>
-						<th>Location</th>
+						<th>Transect</th>
 					</tr>
 					</thead>
 					<tbody>
@@ -31,13 +31,10 @@
 						<tr>
 							<td>
 								<a href="{{ URL::route('patrol-user', array('user' => $volunteer->id)) }}">
-									Patrol on {{ $patrol->date }}
-									@if(!$patrol->is_finished)
-										<small class="uncompleted">(incomplete)</small>
-									@endif</a>
+									Patrol on {{ $patrol->start_time }}
 							</td>
 							<td>
-								{{ $patrol->location->name }}
+								{{ $patrol->transect->name }}
 							</td>
 						</tr>
 					@endforeach

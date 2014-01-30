@@ -15,8 +15,8 @@ Route::get('/', array('as' => 'login', 'uses' => "UsersController@login"));
 // Mobile routes
 Route::group(array('prefix' => 'mobile', 'before' => 'auth'), function ()
 {
-	Route::get('select-location', array('as' => 'select-location', 'uses' => 'MobileController@getSelectLocation'));
-	Route::get('select-section/{id}', array('as' => 'select-section', 'uses' => 'MobileController@getSelectSection'));
+	Route::get('select-MPA', array('as' => 'select-MPA', 'uses' => 'MobileController@getSelectMPA'));
+	Route::get('select-transect/{id}', array('as' => 'select-transect', 'uses' => 'MobileController@getSelectTransect'));
 	Route::get('data-collection/{id}', array('as' => 'get-data-collection', 'uses' => 'MobileController@getDataCollection'));
 	Route::post('data-collection', array('as' => 'data-collection', 'uses' => 'MobileController@postDataCollection'));
 	Route::get('summary', array('as' => 'summary', 'uses' => 'MobileController@summary'));
@@ -51,8 +51,8 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth.admin'), function ()
 	//Resources
 	Route::resource('volunteers', 'VolunteersController');
 	Route::resource('patrols', 'PatrolsController');
-	Route::resource('locations', 'LocationsController');
-	Route::resource('sections', 'SectionsController');
+	Route::resource('mpas', 'MpasController');
+	Route::resource('transects', 'TransectsController');
 	Route::resource('datasheets', 'DatasheetsController');
 	Route::resource('categories', 'CategoriesController');
 	Route::resource('fields', 'FieldsController');
@@ -64,7 +64,7 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth.admin'), function ()
 	Route::get('search-user', 'VolunteersController@search');
 
 	//Patrols
-	Route::get('patrol-list/{location?}', array('as' => 'patrol-list', 'uses' => 'PatrolsController@patrolsList'));
+	Route::get('patrol-list/{MPA?}', array('as' => 'patrol-list', 'uses' => 'PatrolsController@patrolsList'));
 	Route::get('patrol-user/{user?}', array('as' => 'patrol-user', 'uses' => 'PatrolsController@patrolsUser'));
 
 	//Graphs

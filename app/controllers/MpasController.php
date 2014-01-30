@@ -1,6 +1,6 @@
 <?php
 
-class LocationsController extends BaseController
+class MpasController extends BaseController
 {
 	/**
 	 * Display a listing of the resource.
@@ -9,9 +9,9 @@ class LocationsController extends BaseController
 	 */
 	public function index()
 	{
-		$locations = Location::all();
+		$data['mpas'] = Mpa::all();
 
-		return View::make('admin.locations.list', compact('locations'));
+		return View::make('admin.mpas.list', $data);
 	}
 
 	/**
@@ -21,8 +21,9 @@ class LocationsController extends BaseController
 	 */
 	public function create()
 	{
-		$datasheets = Datasheet::all();
-		return View::make('admin.locations.create', compact('datasheets'));
+		$data['datasheets'] = Datasheet::all();
+
+		return View::make('admin.mpas.create', $data);
 	}
 
 	/**
@@ -33,16 +34,16 @@ class LocationsController extends BaseController
 	public function store()
 	{
 		$input = Input::all();
-		$validation = Validator::make($input, Location::$rules);
+		$validation = Validator::make($input, Mpa::$rules);
 
 		if ($validation->passes())
 		{
-			Location::create($input);
+			Mpa::create($input);
 
-			return Redirect::route('admin.locations.index');
+			return Redirect::route('admin.mpas.index');
 		}
 
-		return Redirect::route('admin.locations.create')
+		return Redirect::route('admin.mpas.create')
 			->withInput()
 			->withErrors($validation);
 	}
@@ -55,10 +56,11 @@ class LocationsController extends BaseController
 	 */
 	public function show($id)
 	{
-		$location = Location::findOrFail($id);
-		$sections = $location->sections;
+		$mpa = Mpa::findOrFail($id);
+		$data['mpa'] = $mpa;
+		$data['transects'] = $mpa->transects;
 
-		return View::make('admin.locations.view', compact('location', 'sections'));
+		return View::make('admin.mpas.view', $data);
 	}
 
 	/**
@@ -69,14 +71,15 @@ class LocationsController extends BaseController
 	 */
 	public function edit($id)
 	{
-		$location = Location::find($id);
+		$mpa = Mpa::find($id);
+		$data['mpa'] = $mpa;
 
-		if (is_null($location))
+		if (is_null($mpa))
 		{
-			return Redirect::route('locations.index');
+			return Redirect::route('mpas.index');
 		}
 
-		return View::make('admin.locations.edit', compact('location'));
+		return View::make('admin.mpas.edit', $data);
 	}
 
 	/**
@@ -88,17 +91,17 @@ class LocationsController extends BaseController
 	public function update($id)
 	{
 		$input = array_except(Input::all(), '_method');
-		$validation = Validator::make($input, Location::$rules);
+		$validation = Validator::make($input, Mpa::$rules);
 
 		if ($validation->passes())
 		{
-			$location = Location::find($id);
-			$location->update($input);
+			$mpa = Mpa::find($id);
+			$mpa->update($input);
 
-			return Redirect::route('admin.locations.show', $id);
+			return Redirect::route('admin.mpas.show', $id);
 		}
 
-		return Redirect::route('admin.locations.edit', $id)
+		return Redirect::route('admin.mpas.edit', $id)
 			->withInput()
 			->withErrors($validation);
 	}
@@ -111,9 +114,9 @@ class LocationsController extends BaseController
 	 */
 	public function destroy($id)
 	{
-		Location::find($id)->delete();
+		Mpa::find($id)->delete();
 
-		return Redirect::route('admin.locations.index');
+		return Redirect::route('admin.mpas.index');
 	}
 
 }
