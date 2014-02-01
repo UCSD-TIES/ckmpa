@@ -59,8 +59,7 @@ class UsersController extends BaseController
 		if (Entrust::can('can_patrol'))
 			return Redirect::route('select-MPA');
 
-		$error = ['Access Denied'];
-		return View::make('mobile/index')->with('errors', $error);
+		return View::make('mobile/index');
 	}
 
 	/**
@@ -85,6 +84,11 @@ class UsersController extends BaseController
 			// caught by the authentication filter IE Redirect::guest('user/login').
 			// Otherwise fallback to '/'
 			// Fix pull #145
+			if(!Entrust::can('can_patrol')) {
+				return Redirect::route('login')
+				->with('message', 'Access Denied');
+			}
+			
 			Session::put("start_time", Carbon::now());
 			return Redirect::intended('/mobile/select-MPA');
 		} else

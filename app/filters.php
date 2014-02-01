@@ -38,7 +38,7 @@ Route::filter('auth', function()
 	//if (Auth::guest()) return Redirect::guest('users/login');
 	if (! Entrust::can('can_patrol') )
 	{
-		return Redirect::guest('users/login')->with('message', 'Please Login');
+		return Redirect::guest('users/login');
 	}
 });
 
@@ -47,7 +47,7 @@ Route::filter('auth.admin', function()
 	//if (Auth::guest()) return Redirect::guest('admin/login');
 	if (! Entrust::hasRole('Admin') ) // Checks the current user
 	{
-		return Redirect::guest('admin/login')->with('error','Please Login as Administrator' );
+		return Redirect::guest('admin/login');
 	}
 });
 
@@ -119,6 +119,11 @@ View::composer('admin.datasheets.*', function($view)
 });
 
 View::composer('admin.index', function($view)
+{
+    $view->with('view', "dashboard");
+});
+
+View::composer('admin.login', function($view)
 {
     $view->with('view', "dashboard");
 });

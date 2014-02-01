@@ -45,11 +45,14 @@ class AdminController extends BaseController
 		// Signup confirm not implemented yet ignore for now.
 		if (Confide::logAttempt($input, Config::get('confide::signup_confirm')))
 		{
+			if(!Entrust::hasRole('Admin'))
+				return Redirect::route('admin-login')->with('error', 'Please Login as Administrator');
+				
 			return Redirect::intended('admin/')->with('success', 'You are now logged in!');
 		} else
 		{
 			return Redirect::route('admin-login')
-				->with('message', 'Your username/password combination was incorrect')
+				->with('error', 'Your username/password combination was incorrect')
 				->withInput();
 		}
 	}
