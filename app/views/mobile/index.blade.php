@@ -13,6 +13,6 @@
 		<input type="password" name="password" id="password" placeholder="Password">
 		<button type="submit" class="ui-btn">Login</button>
 	</form>
-	<a class="ui-btn" href="{{ URL::to('users/register') }}" data-ajax="false">Register</a>
+	<a class="" href="{{ URL::to('users/register') }}" data-ajax="false">Register</a>
 	<img src="{{ URL::asset('img/lobster.png') }}" alt="Logo" class="footer-logo">
 @stop

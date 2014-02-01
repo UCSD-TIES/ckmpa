@@ -19,7 +19,7 @@
 		@section('logoutBtn')
 		@if(Confide::user())
 			<a href="#popupDialog" data-rel="popup" data-position-to="window"
-			class="ui-btn-right ui-btn ui-btn-e ui-btn-inline ui-mini ui-btn-icon-left ui-icon-delete">Logout</a>
+			class="ui-btn-right ui-btn-inline">Logout</a>
 		@endif
 		@show
 	</div>

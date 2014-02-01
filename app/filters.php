@@ -92,3 +92,33 @@ Route::filter('csrf', function()
 		throw new Illuminate\Session\TokenMismatchException;
 	}
 });
+
+View::composer('admin.volunteers.*', function($view)
+{
+    $view->with('view', "volunteers");
+});
+
+View::composer('admin.mpas.*', function($view)
+{
+    $view->with('view', "mpas");
+});
+
+View::composer('admin.patrols.*', function($view)
+{
+    $view->with('view', "patrols");
+});
+
+View::composer('admin.graphs.*', function($view)
+{
+    $view->with('view', "graphs");
+});
+
+View::composer('admin.datasheets.*', function($view)
+{
+    $view->with('view', "datasheets");
+});
+
+View::composer('admin.index', function($view)
+{
+    $view->with('view', "dashboard");
+});

@@ -44,3 +44,28 @@ small.uncompleted
 {
 	font-weight: bold;
 }
+
+.navbar-default .navbar-nav > li > a {
+  color: #ffffff;
+}
+
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+  color: #aaa;
+  background-color: transparent;
+}
+
+.navbar-default {
+  background-color: #1e528b;
+  border-color: #e7e7e7;
+}
+
+.navbar-default .navbar-brand {
+  color: #ffffff;
+}
+
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+  color: #aaa;
+  background-color: transparent;
+}

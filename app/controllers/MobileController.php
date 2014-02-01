@@ -119,6 +119,7 @@ class MobileController extends BaseController
 		}
 
 		$data['mpa'] = $transect->mpa;
+		$data['url'] = "data-url=/mobile/finish";
 		return View::make('mobile.finish', $data);
 	}
 

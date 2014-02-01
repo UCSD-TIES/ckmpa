@@ -42,7 +42,7 @@
             @endforeach
         </fieldset>
         @endforeach
-        <button type="submit" class="ui-btn ui-btn-d">Confirm on Next Page</button>
+        <button type="submit" class="ui-btn ui-btn-a">Next</button>
     </form>
 </div>
 @stop

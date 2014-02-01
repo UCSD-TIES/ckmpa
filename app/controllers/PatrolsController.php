@@ -11,7 +11,6 @@ class PatrolsController extends BaseController
 	public function index()
 	{
 		$data['patrols'] = Patrol::orderBy('start_time')->get();
-		$data['tallies'] = Patrol::first()->tallies;
 
 		return View::make('admin.patrols.list', $data);
 	}
@@ -24,7 +23,6 @@ class PatrolsController extends BaseController
 	public function patrolsList($transect)
 	{
 		$data['patrols'] = Transect::find($transect)->patrols;
-		$data['tallies'] = Patrol::first()->tallies;
 
 		return View::make('admin.patrols.list', $data);
 	}
@@ -32,7 +30,6 @@ class PatrolsController extends BaseController
 	public function patrolsUser($user_id)
 	{
 		$data['patrols'] = User::find($user_id)->patrols;
-		$data['tallies'] = Patrol::first()->tallies;
 
 		return View::make('admin.patrols.list', $data);
 	}

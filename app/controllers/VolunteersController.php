@@ -12,7 +12,7 @@ class VolunteersController extends BaseController {
 		$volunteers = User::all();
 		$data['volunteers'] = $volunteers;
 
-		return View::make('admin/volunteers/list', $data);
+		return View::make('admin.volunteers.list', $data);
 	}
 
 	/**

@@ -25,7 +25,7 @@
 	    @for($i = 0; $i < count($inputs); $i++)
 	    	<input type='hidden' name='{{$keys[$i]}}' value='{{$inputs[$keys[$i]]}}'>
 	    @endfor
-	    <button type="submit" class="ui-btn ui-btn-d">Submit</button>
+	    <button type="submit" class="ui-btn ui-btn-a">Submit Patrol</button>
 	</form>
 </div>
 @stop
