@@ -1,0 +1,873 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"fi",
+				"field_count"
+			],
+			[
+				"end",
+				"end_time"
+			],
+			[
+				"tra",
+				"transect_count"
+			],
+			[
+				"user",
+				"user_count"
+			],
+			[
+				"section",
+				"section_id"
+			],
+			[
+				"option",
+				"option"
+			],
+			[
+				"Obers",
+				"Observations"
+			],
+			[
+				"patrol",
+				"patrolDate"
+			],
+			[
+				"data",
+				"datasheet_id"
+			],
+			[
+				"bar",
+				"barHeight"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "app/routes.php",
+			"settings":
+			{
+				"buffer_size": 4381,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "public/js/app.js",
+			"settings":
+			{
+				"buffer_size": 1917,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/views/index.php",
+			"settings":
+			{
+				"buffer_size": 1499,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "public/templates/header.html",
+			"settings":
+			{
+				"buffer_size": 866,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "public/templates/volunteers.html",
+			"settings":
+			{
+				"buffer_size": 1399,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "public/js/controllers.js",
+			"settings":
+			{
+				"buffer_size": 1711,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "public/templates/modal.html",
+			"settings":
+			{
+				"buffer_size": 3108,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "public/js/services.js",
+			"settings":
+			{
+				"buffer_size": 1217,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 364.0,
+		"selected_items":
+		[
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: install",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 417.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/alex/PhpstormProjects/ckmpa/app/views/admin/volunteers/edit.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/models/User.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/controllers/UsersController.php",
+		"/home/alex/PhpstormProjects/ckmpa/public/css/admin.css",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/index.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/models/Patrol.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/controllers/UserAPIController.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/admin/volunteers/list.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/admin/index.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/public/templates/dashboard.html",
+		"/home/alex/PhpstormProjects/ckmpa/public/templates/header.html",
+		"/home/alex/PhpstormProjects/ckmpa/public/js/app.js",
+		"/home/alex/PhpstormProjects/ckmpa/public/templates/login.html",
+		"/home/alex/PhpstormProjects/ckmpa/app/controllers/AuthController.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/controllers/VolunteersController.php",
+		"/home/alex/PhpstormProjects/ckmpa/public/js/services.js",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/admin/login.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/admin/base.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/public/js/directives.js",
+		"/home/alex/PhpstormProjects/ckmpa/public/js/filters.js",
+		"/home/alex/PhpstormProjects/ckmpa/public/js/controllers.js",
+		"/home/alex/PhpstormProjects/ckmpa/public/js/graphs.js",
+		"/home/alex/PhpstormProjects/ckmpa/public/js/main.js",
+		"/home/alex/angular-phonecat/app/index.html",
+		"/home/alex/PhpstormProjects/ckmpa/.sublime-project",
+		"/home/alex/PhpstormProjects/ckmpa/app/filters.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/controllers/AdminController.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/routes.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/controllers/MobileController.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/admin/patrols/list.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/controllers/PatrolsController.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/view_composers.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/controllers/MpasController.php",
+		"/home/alex/PhpstormProjects/ckmpa/public/css/jquery-bootstrap.css",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/mobile/index.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/mobile/base.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/mobile/data-collection.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/mobile/summary.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/mobile/finish.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/admin/transects/list.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/admin/transects/edit.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/admin/transects/create.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/admin/mpas/view.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/admin/mpas/list.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/admin/mpas/edit.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/admin/mpas/create.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/database/seeds/PatrolsTableSeeder.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/database/seeds/MpasTableSeeder.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/admin/graphs/view.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/models/Transect.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/models/Mpa.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/models/Category.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/models/Datasheet.php",
+		"/home/alex/PhpstormProjects/ckmpa/_ide_helper.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/models/Tally.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/models/Permission.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/models/Option.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/models/Field.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/database/seeds/DatabaseSeeder.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/database/migrations/2014_01_23_071002_create_sections_table.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/database/migrations/2014_01_23_071000_create_tallies_table.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/database/migrations/2014_01_23_071210_create_foreign_keys.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/admin/volunteers/view.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/models/Segment.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/controllers/TransectsController.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/mobile/select-transect.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/mobile/select-MPA.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/database/seeds/LocationsTableSeeder.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/database/migrations/2014_01_23_071004_create_locations_table.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/database/migrations/2014_01_23_071007_create_datasheets_table.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/database/migrations/2014_01_23_071006_create_categories_table.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/database/migrations/2014_01_23_071005_create_fields_table.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/database/migrations/2014_01_23_071003_create_patrols_table.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/models/MPA.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/database/migrations/2014_01_24_220656_entrust_setup_tables.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/database/seeds/DatasheetsTableSeeder.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/database/migrations/2014_01_28_210500_add_fields.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/database/migrations/2014_01_24_195440_add_confide_user.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/database/migrations/2014_01_29_210742_remove_unneeded_fields.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/database/migrations/2014_01_23_071159_create_users_table.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/database/migrations/2014_01_23_071001_create_segments_table.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/models/Role.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/models/Location.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/models/Section.php",
+		"/home/alex/PhpstormProjects/ckmpa/public/css/mobile.css",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/admin/volunteers/create.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/mobile/confirmation.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/admin/fields/create.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/admin/categories/show.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/controllers/SectionsController.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/admin/sections/create.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/admin/fields/edit.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/admin/locations/view.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/controllers/FieldsController.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/controllers/CategoriesController.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/database/migrations/2014_01_28_210408_addfields.php",
+		"/home/alex/PhpstormProjects/ckmpa/README.md",
+		"/home/alex/PhpstormProjects/ckmpa/public/css/graph.css",
+		"/home/alex/PhpstormProjects/ckmpa/public/js/Chart.min.js",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/admin/locations/create.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/admin/volunteers/permissions.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/admin/sections/list.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/admin/sections/edit.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/admin/locations/edit.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/admin/locations/list.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/admin/datasheets/show.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/admin/datasheets/list.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/admin/datasheets/edit.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/admin/datasheets/create.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/admin/categories/edit.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/admin/categories/create.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/layouts/notifications.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/config/app.php",
+		"/home/alex/PhpstormProjects/ckmpa/composer.json",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/admin/patrols/sections.twig.html",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/admin/patrols/locations.twig.html",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/admin/sections/list.twig",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/admin/patrols/view.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/admin/patrols/entries.twig.html",
+		"/home/alex/PhpstormProjects/ckmpa/app/controllers/DatasheetsController.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/admin/volunteers/create.twig",
+		"/home/alex/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
+		"/home/alex/PhpstormProjects/ckmpa/app/controllers/BaseController.php",
+		"/home/alex/.config/sublime-text-3/Packages/Default/Preferences.sublime-settings",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/mobile/register.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/mobile/select-location.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/mobile/select-section.blade.php",
+		"/home/alex/PhpstormProjects/ckmpa/app/views/mobile/start.blade.php"
+	],
+	"find":
+	{
+		"height": 34.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"control-",
+			"my",
+			"control-",
+			"filename",
+			"end_",
+			"start_time",
+			"segment",
+			"Section",
+			"Location",
+			"section",
+			"location",
+			"seg",
+			"locati",
+			"location",
+			"section",
+			"location",
+			"section",
+			"location",
+			"section",
+			"location",
+			"Section",
+			"section",
+			"location",
+			"section",
+			"location",
+			"section",
+			"location",
+			"locations",
+			"Location",
+			"section",
+			"location",
+			"MPA",
+			"location",
+			"sec",
+			"loc",
+			"seg",
+			"section",
+			"location",
+			"section",
+			"location",
+			"section",
+			"location",
+			"comm",
+			"datas",
+			"d-m-y",
+			"d b y",
+			"%d-%b-%y",
+			"toISO8601String()",
+			"String();",
+			"->format('M Y')",
+			"datasheet",
+			"inline",
+			"class=\"col-sm-10\"",
+			"get",
+			"url_route",
+			"url_",
+			"':",
+			"volunteer.",
+			"volunteer",
+			"url_",
+			"@if ",
+			"volunteer.",
+			"volunteer",
+			"errors.",
+			"{% endif %}",
+			" is defined %}",
+			"{% if errors.",
+			"':",
+			"@errors",
+			"':",
+			"url_",
+			"{% endif %}",
+			"input_",
+			"errors.",
+			" is defined %}",
+			"{% if errors.",
+			"url_",
+			"':",
+			"url",
+			"form_",
+			"url_",
+			"':",
+			"url_",
+			"':",
+			"form_",
+			"url_",
+			"url",
+			"':",
+			"url_",
+			"':",
+			"url_",
+			"':",
+			"form_",
+			"':",
+			"{'",
+			"form_",
+			"url_",
+			"{% block ",
+			"url_",
+			"{% block ",
+			"|raw",
+			"':",
+			"{'",
+			"url",
+			".",
+			"form_",
+			"{% endblock %}",
+			"{% block ",
+			"':",
+			"{% block ",
+			"url_",
+			"})",
+			"|raw",
+			"':",
+			"{'",
+			"form_",
+			"url_",
+			"'class'=> 'form-control', ",
+			"})",
+			"':",
+			"{'",
+			"{",
+			"|raw",
+			"form_",
+			"{% block ",
+			"url_",
+			".",
+			"{% endblock %}"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"form-",
+			"Transect",
+			"Mpa",
+			"transect",
+			"mpa",
+			"transect",
+			"mpa",
+			"transect",
+			"mpa",
+			"Transect",
+			"transect",
+			"mpa",
+			"transect",
+			"mpa",
+			"transect",
+			"mpa",
+			"mpas",
+			"Mpa",
+			"transect",
+			"mpa",
+			"MPA",
+			"transect",
+			"MPA",
+			"transect",
+			"MPA",
+			"transect",
+			"MPA",
+			"d-M-y",
+			"d-m-y",
+			"d b y",
+			"format('%d-%b-%y')",
+			"String()",
+			"->toISO8601String();",
+			"block",
+			"class=\"col-sm-10 @if($errors->has('first_name'))has-error@endif\"",
+			"first",
+			"URL::",
+			"'=>",
+			"$volunteer->",
+			"URL::",
+			"@if(",
+			"$volunteer->",
+			"$errors->get('",
+			"@endif",
+			"'))",
+			"@if $errors->has('",
+			"'=>",
+			"$errors",
+			"'=>",
+			"URL::",
+			"@endif",
+			"Input::",
+			"@errors->get('",
+			"'))",
+			"@if($errors->has('",
+			"URL::",
+			"'=>",
+			"URL::",
+			"Form::",
+			"URL::",
+			"'=>",
+			"URL::",
+			"'=>",
+			"Form::",
+			"URL::",
+			"URL",
+			"'=>",
+			"URL::",
+			"'=>",
+			"URL::",
+			"'=>",
+			"=>",
+			"Form::",
+			"'=>",
+			"array('",
+			"Form::",
+			"URL::",
+			"@section('",
+			"URL::",
+			"@section('",
+			"",
+			"'=>",
+			"array('",
+			"URL::",
+			"->",
+			"Form::",
+			"@stop",
+			"@section('",
+			"'=>",
+			"@section('",
+			"URL::",
+			"))",
+			"",
+			"'=>",
+			"array('",
+			"Form::",
+			"URL::",
+			"",
+			"))",
+			"'=>",
+			"array('",
+			"array(",
+			"",
+			"Form::",
+			"@section('",
+			"URL::",
+			"->",
+			"@stop",
+			"@section('",
+			"@stop",
+			"@section('",
+			"URL::",
+			"@stop",
+			"@section('",
+			"URL::"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 6,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "app/routes.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4381,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4377,
+								4377
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 720.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "public/js/app.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1917,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								83,
+								83
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "app/views/index.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1499,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								247,
+								247
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "public/templates/header.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 866,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								39,
+								39
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "public/templates/volunteers.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1399,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								819,
+								819
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 135.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "public/js/controllers.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1711,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1558,
+								1558
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 495.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "public/templates/modal.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3108,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2929,
+								2929
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "public/js/services.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1217,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								656,
+								656
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 270.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 32.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": ".sublime-project",
+	"replace":
+	{
+		"height": 64.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 268.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
