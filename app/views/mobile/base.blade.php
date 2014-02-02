@@ -5,11 +5,10 @@
 	<title>@yield('title')</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.css"/>
-	<link href="{{ URL::asset('css/jquery-bootstrap.css') }}" rel="stylesheet">
-	<link href="{{ URL::asset('css/mobile.css') }}" rel="stylesheet">
+	<?= stylesheet_link_tag('mobile/application') ?>
 	<script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
 	<script src="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
-	<script src="{{ URL::asset('js/main.js') }}"></script>
+	<?= javascript_include_tag('mobile/application') ?>
 </head>
 
 <body>

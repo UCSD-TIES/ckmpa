@@ -4,9 +4,9 @@ San Diego Coastkeeper MPA Datasheet web application developed with PHP + [Larave
 ###Using additional packages:
   - [Confide](https://github.com/Zizaco/confide) for user management
   - [Entrust](https://github.com/Zizaco/entrust) for user permissions
-  - [Ardent](https://github.com/laravelbook/ardent) for "self-validating, secure and smart models"
   - [PHPExcel](http://phpexcel.codeplex.com/) for exporting Excel sheets
-  - [Carbon](https://github.com/briannesbitt/Carbon) for dating. Get it?
+  - [Carbon](https://github.com/briannesbitt/Carbon) for dates. Get it?
+  - [Asset Pipeline](https://github.com/CodeSleeve/asset-pipeline) for, well, asset pipelining.
 
 ###Javascript dependencies:
   - [jQuery](http://jquery.com/) for everything

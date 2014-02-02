@@ -1,6 +1,7 @@
 /bootstrap/compiled.php
 .directory
 .idea
+.sublime*
 composer.phar
 composer.lock
 .DS_Store

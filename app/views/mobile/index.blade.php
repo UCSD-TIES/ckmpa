@@ -14,5 +14,5 @@
 		<button type="submit" class="ui-btn">Login</button>
 	</form>
 	<a class="" href="{{ URL::to('users/register') }}" data-ajax="false">Register</a>
-	<img src="{{ URL::asset('img/lobster.png') }}" alt="Logo" class="footer-logo">
+	<img src="{{ URL::asset('/assets/lobster.png') }}" alt="Logo" class="footer-logo">
 @stop

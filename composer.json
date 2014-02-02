@@ -7,9 +7,10 @@
 		"laravel/framework": "4.1.*",
         "phpoffice/phpexcel": "dev-master",
         "zizaco/confide": "3.1.x",
-        "zizaco/entrust": "dev-master",
+        "zizaco/entrust": "1.1.0",
         "laravelbook/ardent": "2.4.x",
-        "nesbot/Carbon": "*"
+        "nesbot/Carbon": "*",
+        "codesleeve/asset-pipeline": "dev-master"
 	},
     "require-dev": {
         "barryvdh/laravel-ide-helper": "1.*",
