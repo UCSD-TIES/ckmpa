@@ -10,8 +10,10 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
-Route::get('/', array('as' => 'login', 'uses' => "UsersController@login"));
-
+//Route::get('/', array('as' => 'login', 'uses' => "UsersController@login"));
+Route::get('/', function() {
+	return View::make('mobile');
+});
 // Mobile routes
 Route::group(array('prefix' => 'mobile', 'before' => 'auth'), function ()
 {
@@ -71,4 +73,12 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth.admin'), function ()
 	Route::get('graphs', array('as' => 'graphs', 'uses' => 'AdminController@graphs'));
 	Route::get('graphs-data', array('as' => 'graphs-data', 'uses' => 'AdminController@graphsData'));
 	Route::get('graphs-observations', array('as' => 'graphs-observations', 'uses' => 'AdminController@graphsObservations'));
+});
+
+Route::group(array('prefix' => 'api'), function ()
+{
+	Route::controller('auth', 'AuthController');
+	Route::controller('users', 'UserAPIController');
+	Route::controller('mpas', 'MpaAPIController');
+	Route::controller('datasheets', 'DatasheetAPIController');
 });

@@ -41,7 +41,7 @@ class User extends ConfideUser implements UserInterface, RemindableInterface {
 
 	protected $guarded = array('is_admin');
 	protected $fillable = array('first_name', 'last_name', 'username', 'email', 'password', 'password_confirmation');
-	protected $visible = array('first_name', 'last_name', 'username', 'email');
+	protected $visible = array('first_name', 'last_name', 'username', 'email', 'id', 'roles');
 	protected $hidden = array('password');
 
 	public $autoHydrateEntityFromInput = true;    // hydrates on new entries' validation

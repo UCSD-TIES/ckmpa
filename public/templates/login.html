@@ -1,15 +1,17 @@
 <h2 class='text-center'>Please Login</h2>
-<form class="form-horizontal form-signin" ng-submit="login()">
-    <div class="form-group">
-        <label class="form-label" for="inputUsername">Username</label>
-        <input class='form-control' type="text" id="inputUsername" placeholder="Username" ng-model="credentials.username" required>
-    </div>
-    <div class="form-group">
-        <label class="form-label" for="inputPassword">Password</label>
-        <input class='form-control' type="password" id="inputPassword" placeholder="Password" ng-model="credentials.password" required>
-    </div>
-    <div class="form-group">
-        <button type="submit" class="btn btn-block btn-primary">Sign in</button>
-    </div>
-    </div>
-</form>
+<div class='col-xs-10 col-xs-offset-1' ng-controller='LoginController'>
+    <form ng-submit="login()">
+        <div class="form-group">
+            <label class="form-label" for="inputUsername">Username</label>
+            <input class='form-control' type="text" id="inputUsername" placeholder="Username" ng-model="credentials.username" required>
+        </div>
+        <div class="form-group">
+            <label class="form-label" for="inputPassword">Password</label>
+            <input class='form-control' type="password" id="inputPassword" placeholder="Password" ng-model="credentials.password" required>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-block btn-primary">Sign in</button>
+        </div>
+        </div>
+    </form>
+</div>

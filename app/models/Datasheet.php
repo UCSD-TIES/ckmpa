@@ -21,7 +21,7 @@ class Datasheet extends Eloquent {
 	public $timestamps = true;
 	protected $softDelete = false;
 	protected $fillable = array('name');
-	protected $visible = array('name');
+	protected $visible = array('name', 'categories', 'mpas');
 
 	public function mpas()
 	{

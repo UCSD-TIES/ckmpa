@@ -1,0 +1,12 @@
+<div class='col-xs-10 col-xs-offset-1'>
+	<div class="form-group">
+		<div class='text-center'>
+			<label for="name" class="control-label">{{ field.name }}</label>
+		</div>
+		<div class="input-group">
+			<span class="input-group-addon"><span class="glyphicon glyphicon-plus" ng-click='inc()'></span></span>
+			<input type="number" class="form-control" id="name" ng-model="field.val" style="text-align: center;">
+			<span class="input-group-addon"><span class="glyphicon glyphicon-minus" ng-click='dec()'></span></span>
+		</div>
+	</div>
+</div>

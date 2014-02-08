@@ -21,7 +21,7 @@ class Category extends Eloquent {
 	public $timestamps = true;
 	protected $softDelete = false;
 	protected $fillable = array('name', 'datasheet_id');
-	protected $visible = array('name', 'datasheet_id');
+	protected $visible = array('name', 'datasheet_id', 'fields', 'id');
 
 	public function datasheet()
 	{

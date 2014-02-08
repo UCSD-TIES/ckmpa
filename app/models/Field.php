@@ -23,7 +23,7 @@ class Field extends Eloquent {
 	public $timestamps = true;
 	protected $softDelete = false;
 	protected $fillable = array('name', 'category_id', 'type');
-	protected $visible = array('name', 'category_id', 'type');
+	protected $visible = array('id', 'name', 'category_id', 'type', 'options');
 
 	public function category()
 	{

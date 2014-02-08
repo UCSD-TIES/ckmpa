@@ -23,7 +23,7 @@ class Transect extends Eloquent {
 	public $timestamps = true;
 	protected $softDelete = false;
 	protected $fillable = array('name', 'mpa_id');
-	protected $visible = array('name', 'mpa_id');
+	protected $visible = array('name', 'mpa_id', 'id');
 
 	public function mpa()
 	{

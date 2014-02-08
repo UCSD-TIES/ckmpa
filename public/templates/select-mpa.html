@@ -1,0 +1,5 @@
+<h2 class='text-center'>Select a MPA</h2>
+<div class="list-group">
+	<a class="list-group-item" ng-repeat='mpa in mpas' ng-href='#/select-transect/{{ mpa.id }}/{{ mpa.name }}'>
+	{{ mpa.name }}<span class='pull-right glyphicon glyphicon-chevron-right'></span></a>
+</div>

@@ -1,24 +1,7 @@
-html, body {
-    height: 100%;
-}
-
-header {
-    text-align: center;
-}
-
-h1 {
-    font-size: 125%;
-    padding-bottom: 20px;
-}
-
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
-}
-
-.center-text {
-    text-align: center;
 }
 
 .footer-logo {
@@ -30,4 +13,35 @@ input[type=number]::-webkit-outer-spin-button {
 .controlgroup-textinput{
     padding-top:.22em;
     padding-bottom:.22em;
+}
+
+body { margin-top: 60px; }
+
+/*.navbar-header {
+    float: left;
+    padding: 15px;
+    text-align: center;
+    width: 50%;
+}*/
+
+
+.fade {
+    /*position: absolute;*/
+    /*top: 0;*/
+    /*left: 0;*/
+    /*right: 0;*/
+    /*height: 100%;*/
+    opacity: 1;
+    transition: opacity .25s ease-in-out;
+    -moz-transition: opacity .25s ease-in-out;
+    -webkit-transition: opacity .25s ease-in-out;
+}
+
+.fade.ng-enter,
+.fade.ng-leave {
+    opacity: 0.5;
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
 }
