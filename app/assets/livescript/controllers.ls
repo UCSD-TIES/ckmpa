@@ -51,6 +51,7 @@ MpaController = ($scope, Mpas, $routeParams) ->
 DataController = ($scope, $location, $routeParams, Datasheets) ->
   $scope.confirm = false
   $scope.mpa_id = $routeParams.mpaID
+  $scope.mpa_name = $routeParams.mpaName
   $scope.transect_name = $routeParams.transectName
 
   $scope.submit = ->
