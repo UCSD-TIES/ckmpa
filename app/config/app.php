@@ -111,6 +111,7 @@ return array(
 		'Zizaco\Entrust\EntrustServiceProvider',
 		'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
 		'Codesleeve\AssetPipeline\AssetPipelineServiceProvider',
+		'Barryvdh\Cors\CorsServiceProvider'
 	),
 
 	/*

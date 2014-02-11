@@ -10,7 +10,8 @@
         "zizaco/entrust": "1.1.0",
         "laravelbook/ardent": "2.4.x",
         "nesbot/Carbon": "*",
-        "codesleeve/asset-pipeline": "dev-master"
+        "codesleeve/asset-pipeline": "dev-master",
+		"barryvdh/laravel-cors": "dev-master"
 	},
     "require-dev": {
         "barryvdh/laravel-ide-helper": "1.*",

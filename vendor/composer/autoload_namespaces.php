@@ -58,5 +58,6 @@ return array(
     'Carbon' => array($vendorDir . '/nesbot/carbon/src'),
     'Boris' => array($vendorDir . '/d11wtq/boris/lib'),
     'Barryvdh\\LaravelIdeHelper' => array($vendorDir . '/barryvdh/laravel-ide-helper/src'),
+    'Barryvdh\\Cors' => array($vendorDir . '/barryvdh/laravel-cors/src'),
     'Assetic' => array($vendorDir . '/kriswallsmith/assetic/src'),
 );
