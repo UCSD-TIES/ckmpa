@@ -22,7 +22,7 @@ var coffeeDir = 'app/assets/coffee';
 var lsDir = 'app/assets/livescript';
 
 // Which directory should CoffeeScript compile to?
-var targetJSDir = 'app/assets/javascripts/mobile';
+var targetJSDir = 'public/js';
  
 var htmlDir = 'public/';
 

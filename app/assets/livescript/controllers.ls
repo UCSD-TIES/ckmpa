@@ -5,6 +5,13 @@ LoginController = ($scope, $sanitize, $location, Auth, Flash) ->
     username: ''
     password: ''
   }
+  rightButtons = [
+    {
+      content: 'Logout'
+    }
+  ]
+  $scope.rightButtons = rightButtons
+
   $scope.login = -> (Auth.login $scope.credentials).success (-> $location.path '/select-mpa')
   $scope.logout = -> Auth.logout!.success (-> $location.path '/')
 
@@ -39,22 +46,24 @@ ModalInstanceCtrl = ($scope, $modalInstance, type, items) ->
   $scope.ok = -> $modalInstance.close $scope.selected.item
   $scope.cancel = -> $modalInstance.dismiss 'cancel'
 
-MpaController = ($scope, Mpas, $routeParams) ->
-  $scope.mpa_id = $routeParams.mpaID
-  $scope.mpa_name = $routeParams.mpaName
+MpaController = ($scope, Mpas, $stateParams) ->
+  $scope.mpa_id = $stateParams.mpaID
+  $scope.mpa_name = $stateParams.mpaName
 
   mpas = Mpas.query {}, ->
     $scope.transects = mpas |> map (.transects) |> flatten
     $scope.mpas = mpas
     
 
-DataController = ($scope, $location, $routeParams, Datasheets) ->
+DataController = ($scope, $location, $stateParams, Datasheets, $ionicSlideBoxDelegate) ->
   $scope.confirm = false
-  $scope.mpa_id = $routeParams.mpaID
-  $scope.mpa_name = $routeParams.mpaName
-  $scope.transect_name = $routeParams.transectName
+  $scope.mpa_id = $stateParams.mpaID
+  $scope.mpa_name = $stateParams.mpaName
+  $scope.transect_name = $stateParams.transectName
+
 
   $scope.submit = ->
-    $location.path '/finish/'+$routeParams.mpaID
+    $location.path '/finish/'+$stateParams.mpaID
   datasheets = Datasheets.query {}, ->
     $scope.categories = datasheets |> map (.categories)  |> flatten
+    $ionicSlideBoxDelegate.update!

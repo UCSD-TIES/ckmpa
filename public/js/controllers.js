@@ -1,10 +1,15 @@
 var app, LoginController, HomeController, ModalInstanceCtrl, VolunteersController, MpaController, DataController;
 app = angular.module('ckmpa.controllers', []);
 LoginController = function($scope, $sanitize, $location, Auth, Flash){
+  var rightButtons;
   $scope.credentials = {
     username: '',
     password: ''
   };
+  rightButtons = [{
+    content: 'Logout'
+  }];
+  $scope.rightButtons = rightButtons;
   $scope.login = function(){
     return Auth.login($scope.credentials).success(function(){
       return $location.path('/select-mpa');
@@ -71,10 +76,10 @@ ModalInstanceCtrl = function($scope, $modalInstance, type, items){
     return $modalInstance.dismiss('cancel');
   };
 };
-MpaController = function($scope, Mpas, $routeParams){
+MpaController = function($scope, Mpas, $stateParams){
   var mpas;
-  $scope.mpa_id = $routeParams.mpaID;
-  $scope.mpa_name = $routeParams.mpaName;
+  $scope.mpa_id = $stateParams.mpaID;
+  $scope.mpa_name = $stateParams.mpaName;
   return mpas = Mpas.query({}, function(){
     $scope.transects = flatten(
     map(function(it){
@@ -84,20 +89,21 @@ MpaController = function($scope, Mpas, $routeParams){
     return $scope.mpas = mpas;
   });
 };
-DataController = function($scope, $location, $routeParams, Datasheets){
+DataController = function($scope, $location, $stateParams, Datasheets, $ionicSlideBoxDelegate){
   var datasheets;
   $scope.confirm = false;
-  $scope.mpa_id = $routeParams.mpaID;
-  $scope.mpa_name = $routeParams.mpaName;
-  $scope.transect_name = $routeParams.transectName;
+  $scope.mpa_id = $stateParams.mpaID;
+  $scope.mpa_name = $stateParams.mpaName;
+  $scope.transect_name = $stateParams.transectName;
   $scope.submit = function(){
-    return $location.path('/finish/' + $routeParams.mpaID);
+    return $location.path('/finish/' + $stateParams.mpaID);
   };
   return datasheets = Datasheets.query({}, function(){
-    return $scope.categories = flatten(
+    $scope.categories = flatten(
     map(function(it){
       return it.categories;
     })(
     datasheets));
+    return $ionicSlideBoxDelegate.update();
   });
 };

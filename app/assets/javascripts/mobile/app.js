@@ -15,7 +15,7 @@ app.config([
       templateUrl: 'templates/select-transect.html',
       controller: 'MpaController'
     });
-    $routeProvider.when('/data-collection/:mpaID/:transectName', {
+    $routeProvider.when('/data-collection/:mpaID/:mpaName/:transectName', {
       templateUrl: 'templates/data-collection.html',
       controller: 'DataController'
     });
