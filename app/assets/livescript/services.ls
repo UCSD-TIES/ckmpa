@@ -1,11 +1,10 @@
 app = angular.module 'ckmpa.services', []
 
-app.factory 'Auth', ($http, $sanitize, CSRF_TOKEN, Flash) ->
+app.factory 'Auth', ($http, $sanitize, Flash) ->
   sanitizeCredentials = (credentials) ->
     {
       username: $sanitize credentials.username
       password: $sanitize credentials.password
-      csrf_token: CSRF_TOKEN
     }
   loginError = (response) -> Flash.show response.flash
   cacheSession = -> sessionStorage.setItem 'authenticated', true

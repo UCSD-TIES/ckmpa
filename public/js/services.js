@@ -1,12 +1,11 @@
 var app;
 app = angular.module('ckmpa.services', []);
-app.factory('Auth', function($http, $sanitize, CSRF_TOKEN, Flash){
+app.factory('Auth', function($http, $sanitize, Flash){
   var sanitizeCredentials, loginError, cacheSession, uncacheSession;
   sanitizeCredentials = function(credentials){
     return {
       username: $sanitize(credentials.username),
-      password: $sanitize(credentials.password),
-      csrf_token: CSRF_TOKEN
+      password: $sanitize(credentials.password)
     };
   };
   loginError = function(response){

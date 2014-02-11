@@ -7,7 +7,8 @@ LoginController = function($scope, $sanitize, $location, Auth, Flash){
     password: ''
   };
   rightButtons = [{
-    content: 'Logout'
+    content: 'Logout',
+    type: 'button-small button-clear'
   }];
   $scope.rightButtons = rightButtons;
   $scope.login = function(){

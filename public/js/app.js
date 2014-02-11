@@ -2,7 +2,7 @@ var ref$, map, filter, find, flatten, app;
 ref$ = require('prelude-ls'), map = ref$.map, filter = ref$.filter, find = ref$.find, flatten = ref$.flatten;
 app = angular.module('ckmpa', ['ionic', 'ngResource', 'ngSanitize', 'ngAnimate', 'ckmpa.filters', 'ckmpa.services', 'ckmpa.directives', 'ckmpa.controllers']);
 app.config(function($stateProvider, $urlRouterProvider){
-  return $stateProvider.state('login', {
+  $stateProvider.state('login', {
     url: '/',
     templateUrl: 'templates/login.html',
     controller: 'LoginController'
@@ -44,15 +44,18 @@ app.config(function($stateProvider, $urlRouterProvider){
     templateUrl: 'templates/demo.html',
     controller: 'DemoController'
   });
+  return $urlRouterProvider.otherwise('/');
 });
-app.run(function($rootScope, $http, $location, CSRF_TOKEN, Auth, Flash){
-  var routesThatRequireAuth;
-  $http.defaults.headers.common['csrf_token'] = CSRF_TOKEN;
-  routesThatRequireAuth = ['/patrols', '/dashboard'];
-  return $rootScope.$on('$routeChangeStart', function(event, next, current){
-    if (_(routesThatRequireAuth).contains($location.path()) && !Auth.isLoggedIn()) {
-      $location.path('/login');
-      return Flash.show('Please log in to continue.');
-    }
-  });
-});
+app.config([
+  '$httpProvider', function($httpProvider){
+    return $httpProvider.defaults.useXDomain = true;
+  }
+]);
+/*
+app.run (($rootScope, $http, $location, CSRF_TOKEN, Auth, Flash) ->
+  $http.defaults.headers.common.'csrf_token' = CSRF_TOKEN
+  routesThatRequireAuth = ['/patrols', '/dashboard']
+  $rootScope.$on '$routeChangeStart', (event, next, current) ->
+      if ((_ routesThatRequireAuth).contains $location.path!) && not Auth.isLoggedIn!
+        $location.path '/login'
+        Flash.show 'Please log in to continue.')*/

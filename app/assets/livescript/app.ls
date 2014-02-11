@@ -66,11 +66,17 @@ app.config ($stateProvider, $urlRouterProvider) ->
       controller: 'DemoController'
     }
 
+  $urlRouterProvider.otherwise('/');
 
+app.config ['$httpProvider', ($httpProvider) ->
+  $httpProvider.defaults.useXDomain = true;
+]
+
+/*
 app.run (($rootScope, $http, $location, CSRF_TOKEN, Auth, Flash) ->
   $http.defaults.headers.common.'csrf_token' = CSRF_TOKEN
   routesThatRequireAuth = ['/patrols', '/dashboard']
   $rootScope.$on '$routeChangeStart', (event, next, current) ->
       if ((_ routesThatRequireAuth).contains $location.path!) && not Auth.isLoggedIn!
         $location.path '/login'
-        Flash.show 'Please log in to continue.')
+        Flash.show 'Please log in to continue.')*/

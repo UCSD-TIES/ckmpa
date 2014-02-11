@@ -14,9 +14,7 @@
 Route::get('/', function() {
 	return View::make('mobile');
 });
-Route::get('/demo', function() {
-	return View::make('demo');
-});
+
 // Mobile routes
 Route::group(array('prefix' => 'mobile', 'before' => 'auth'), function ()
 {

@@ -8,8 +8,10 @@ LoginController = ($scope, $sanitize, $location, Auth, Flash) ->
   rightButtons = [
     {
       content: 'Logout'
+      type:'button-small button-clear'
     }
   ]
+
   $scope.rightButtons = rightButtons
 
   $scope.login = -> (Auth.login $scope.credentials).success (-> $location.path '/select-mpa')

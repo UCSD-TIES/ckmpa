@@ -1,0 +1,22 @@
+{
+  "name": "ionic",
+  "codename": "peleguin",
+  "version": "0.9.24-alpha-740",
+  "dependencies": {
+    "angular": "1.2.10",
+    "angular-animate": "1.2.10",
+    "angular-sanitize": "1.2.10",
+    "angular-ui-router": "0.2.7"
+  },
+  "homepage": "https://github.com/driftyco/bower-ionic",
+  "_release": "0.9.24-alpha-740",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.9.24-alpha-740",
+    "commit": "76deac12c50425699c9a6a71ec5b0ee781905fb7"
+  },
+  "_source": "git://github.com/driftyco/bower-ionic.git",
+  "_target": "0.9.24-alpha-740",
+  "_originalSource": "driftyco/bower-ionic",
+  "_direct": true
+}
