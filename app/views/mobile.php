@@ -2,7 +2,7 @@
 <html lang="en" ng-app="ckmpa">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, width=device-width">
     <title>MPA Watch</title>
     <link href="lib/ionic/release/css/ionic.min.css" rel="stylesheet">
     <link href="css/app.css" rel="stylesheet">
