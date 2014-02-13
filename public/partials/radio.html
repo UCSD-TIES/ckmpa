@@ -1,0 +1,12 @@
+<div class="item item-divider">
+	{{ field.name }}
+</div>
+<div ng-repeat='option in field.options'>
+  <label class="item item-radio">
+    <input type="radio" name="{{ field.name }}" id="optionsRadios1" value="{{ option.name }}" ng-checked="$first" ng-model="field.val">
+    <div class="item-content">
+    {{ option.name }}
+    </div>
+    <i class="radio-icon ion-checkmark"></i>
+  </label>
+</div>

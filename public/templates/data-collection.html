@@ -1,0 +1,30 @@
+<view title="transect_name" left-buttons="leftButtons" right-buttons="rightButtons">
+<content has-header='true'>
+
+<slide-box>
+	<slide ng-repeat="category in categories">
+		<h3 class='text-center padding-top'>{{category.name}}</h3>
+		<div class="list">
+			<div class="row" ng-if="category.name == 'On-Shore Activities'">
+				<div class='col-50'>
+					<p class='text-center'>Rocky</p>
+				</div>
+				<div class='col-50'>
+					<p class='text-center'>Sandy</p>
+				</div>
+			</div>
+			<div ng-repeat="field in fields | filter:{category_id:category.id}">
+				<div >
+
+					<div number-input field="field" ng-if="field.type == 'number'"></div>
+				</div>
+				
+				<div radio field="field" ng-if="field.type == 'radio'"></div>
+				<div checkbox field="field" ng-if="field.type == 'checkbox'"></div>
+			</div>
+		</div>
+	</slide>
+</slide-box>
+
+</content>
+</view>

@@ -2,30 +2,31 @@
 <html lang="en" ng-app="ckmpa">
 <head>
     <meta charset="utf-8">
-    <title>Laravel4 AngularJS Authentication and security</title>
-    <link href="lib/css/ionic.min.css" rel="stylesheet">
-    <link href="/css/admin.css" rel="stylesheet" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title>MPA Watch</title>
+    <link href="lib/ionic/release/css/ionic.min.css" rel="stylesheet">
+    <link href="css/app.css" rel="stylesheet">
+
+    <script src="lib/ionic/release/js/ionic.min.js"></script>
+    <script src="lib/angular/angular.min.js"></script>
+    <script src="lib/angular-animate/angular-animate.min.js"></script>
+    <script src="lib/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="lib/angular-resource/angular-resource.min.js"></script>
+    <script src="lib/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="lib/ionic/release/js/ionic-angular.min.js"></script>
+    <script src="lib/js/prelude-browser-min.js"></script>
+    <script type="text/javascript" src="phonegap.js"></script>
+
+    <script src="js/app.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/directives.js"></script>
+    <script src="js/filters.js"></script>
+    <script src="js/services.js"></script>
 </head>
 <body>
-<div ng-include="'templates/header-mobile.html'" class="navbar navbar-default navbar-fixed-top"></div>
-<div class="alert alert-info" ng-show="flash" ng-bind="flash"></div>
-<div class="container" ng-view></div>
-
-<script src="lib/js/ionic.min.js"></script>
-<script src="lib/js/angular/angular.min.js"></script>
-<script src="lib/js/angular/angular-animate.min.js"></script>
-<script src="lib/js/angular/angular-sanitize.min.js"></script>
-<script src="lib/js/angular/angular-resource.min.js"></script>
-<script src="lib/js/angular-ui/angular-ui-router.min.js"></script>
-<script src="lib/js/ionic-angular.min.js"></script>
-
-<script src="/js/app.js"></script>
-<script src="/js/controllers.js"></script>
-<script src="/js/directives.js"></script>
-<script src="/js/filters.js"></script>
-<script src="/js/services.js"></script>
-<script>
-    angular.module("ckmpa").constant("CSRF_TOKEN", '<?php echo csrf_token(); ?>');
-</script>
+<nav-bar type="bar-positive" animation="nav-title-slide-ios7"
+             back-button-type="button-icon" 
+             back-button-icon="ion-ios7-arrow-back" hide-back-button='true'></nav-bar>
+<nav-view animation="slide-left-right"></nav-view>
 </body>
 </html>

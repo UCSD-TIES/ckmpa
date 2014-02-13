@@ -1,0 +1,8 @@
+<view title="'Select a MPA'" left-buttons="leftButtons" right-buttons="rightButtons">
+	<content has-header="true">
+	<div class="list">
+		<a class="item" ng-repeat='mpa in mpas' ng-href='#/select-transect/{{ mpa.id }}/{{ mpa.name }}'>
+		{{ mpa.name }}</a>
+	</div>
+	</content>
+</view>

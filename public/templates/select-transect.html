@@ -1,0 +1,9 @@
+<view title="'Select a Transect'" left-buttons="leftButtons" right-buttons="rightButtons">
+	<content has-header="true">
+		<div class="list">
+			<div class="item item-divider"> {{ mpa_name }}</div>
+			<a class="item" ng-repeat='transect in transects | filter:{mpa_id: mpa_id}' ng-href='#/data-collection/{{ mpa_id }}/{{ mpa_name }}/{{ transect.name }}'>
+				{{ transect.name }}</a>
+		</div>
+	</content>
+</view>

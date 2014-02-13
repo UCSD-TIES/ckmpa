@@ -1,0 +1,21 @@
+<h4 class='text-center'>{{field.name}}</h4>
+<div class="row" >
+	<div class='col-50' ng-class="{'col-offset-25': category.name != 'On-Shore Activities'}">
+		<div class="item item-input-inset">
+			<button class="button button-small icon ion-minus" ng-click='dec(0)'></button>
+			<label class="item-input-wrapper">
+				<input type="number" ng-model="field.val[0]" style="text-align: center;">
+			</label>
+			<button class="button button-small icon ion-plus" ng-click='inc(0)'></button>
+		</div>
+	</div>
+	<div class='col-50' ng-if="category.name == 'On-Shore Activities'">
+		<div class="item item-input-inset">
+			<button class="button button-small icon ion-minus" ng-click='dec(1)'></button>
+			<label class="item-input-wrapper">
+				<input type="number" ng-model="field.val[1]" style="text-align: center;">
+			</label>
+			<button class="button button-small icon ion-plus" ng-click='inc(1)'></button>
+		</div>
+	</div>
+</div>
