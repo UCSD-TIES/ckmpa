@@ -4,18 +4,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <title>MPA Watch</title>
-    <link href="lib/ionic/css/ionic.min.css" rel="stylesheet">
+    <link href="lib/ionic/release/css/ionic.min.css" rel="stylesheet">
     <link href="css/app.css" rel="stylesheet">
 
-    <script src="lib/ionic/js/ionic.min.js"></script>
+    <script src="lib/ionic/release/js/ionic.min.js"></script>
     <script src="lib/angular/angular.min.js"></script>
     <script src="lib/angular-animate/angular-animate.min.js"></script>
     <script src="lib/angular-sanitize/angular-sanitize.min.js"></script>
     <script src="lib/angular-resource/angular-resource.min.js"></script>
     <script src="lib/angular-ui-router/release/angular-ui-router.min.js"></script>
-    <script src="lib/ionic/js/ionic-angular.min.js"></script>
+    <script src="lib/ionic/release/js/ionic-angular.min.js"></script>
     <script src="lib/js/prelude-browser-min.js"></script>
-    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="phonegap.js"></script>
 
     <script src="js/app.js"></script>
     <script src="js/controllers.js"></script>
