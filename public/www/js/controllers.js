@@ -1,4 +1,4 @@
-var app, LoginController, MpaController, DataController, SummaryController;
+var app, LoginController, MpaController, DataController, SummaryController, FinishController;
 app = angular.module('ckmpa.controllers', []);
 LoginController = function($scope, $sanitize, $location, Auth, Flash){
   var rightButtons;
@@ -35,7 +35,7 @@ MpaController = function($scope, Mpas, $stateParams){
     return $scope.mpas = mpas;
   });
 };
-DataController = function($scope, $state, $stateParams, Datasheets, $ionicSlideBoxDelegate, $ionicLoading, datasheets){
+DataController = function($scope, $state, $stateParams, Datasheets, $ionicSlideBoxDelegate, $ionicLoading){
   $scope.mpa_id = $stateParams.mpaID;
   $scope.mpa_name = $stateParams.mpaName;
   $scope.transect_name = $stateParams.transectName;
@@ -68,3 +68,4 @@ SummaryController = function($scope, $state, $stateParams, Datasheets){
     return $state.go('finish');
   };
 };
+FinishController = function($scope, $state, $stateParams){};

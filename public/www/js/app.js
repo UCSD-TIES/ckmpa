@@ -33,7 +33,7 @@ app.config(function($stateProvider, $urlRouterProvider){
   }).state('finish', {
     url: '/finish/:mpaID',
     templateUrl: 'templates/finish.html',
-    controller: 'DataController'
+    controller: 'FinishController'
   });
   return $urlRouterProvider.otherwise('/');
 });
