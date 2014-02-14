@@ -12,7 +12,7 @@
 */
 //Route::get('/', array('as' => 'login', 'uses' => "UsersController@login"));
 Route::get('/', function() {
-	return View::make('mobile');
+	return File::get(public_path()."/www/index.html");
 });
 
 // Mobile routes

@@ -7,6 +7,7 @@ San Diego Coastkeeper MPA Datasheet web application developed with PHP + [Larave
   - [PHPExcel](http://phpexcel.codeplex.com/) for exporting Excel sheets
   - [Carbon](https://github.com/briannesbitt/Carbon) for dates. Get it?
   - [Asset Pipeline](https://github.com/CodeSleeve/asset-pipeline) for, well, asset pipelining.
+  - [Laravel Cors](https://github.com/barryvdh/laravel-cors) for CORS support for mobile app.
 
 ###Javascript dependencies:
   - [jQuery](http://jquery.com/) for everything
@@ -15,7 +16,9 @@ San Diego Coastkeeper MPA Datasheet web application developed with PHP + [Larave
 
 ###UI Frameworks:
   - [Bootstrap](http://getbootstrap.com/) for admin side
-  - [jQuery Mobile](http://jquerymobile.com/) for mobile side
+
+###Mobile:
+  - See https://github.com/elkhouri/ckmpa-mobile
 
 Setting Up the Environment
 ------

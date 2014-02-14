@@ -1,0 +1,23 @@
+<view title="'Summary'" left-buttons="leftButtons">
+<content has-header='true'>
+
+	<div bindonce ng-repeat="category in categories">
+		<div class="item item-divider" bo-text="category.name"></div>
+		<ul class="list">
+			<li class="item" bindonce ng-repeat="field in fields | filter:{category_id:category.id}">
+				{{ field.name }}
+				<span class="badge badge-stable" bo-text="getTally(field.name)['val']"></span>
+			</li>
+		</ul>	
+	</div>
+	<h4 class='text-center'>Comments</h4>
+	<div class="list list-inset">
+	  <label class="item item-input">
+	    <textarea placeholder="Comments"></textarea>
+	  </label>
+	</div>
+	<div class='padding'>
+		<button class='button button-block' ng-click='submit()'>Submit</button>
+	</div>
+</content>
+</view>
