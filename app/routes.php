@@ -83,3 +83,5 @@ Route::group(array('prefix' => 'api'), function ()
 	Route::controller('mpas', 'MpaAPIController');
 	Route::controller('datasheets', 'DatasheetAPIController');
 });
+
+Route::post('/forget', 'UsersController@forgetUsername');

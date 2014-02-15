@@ -1,0 +1,21 @@
+<view title="'Please Login'" left-buttons="leftButtons" right-buttons="rightButtons">
+    <content has-header="true" padding="true">
+        <div class="alert alert-info" ng-show="flash" ng-bind="flash"></div>
+        <div class="list">
+            <form ng-submit="login()">
+                <label class="item item-input" for="inputUsername">
+                    <span class="input-label">Username</span>
+                    <input type="text" id="inputUsername" ng-model="credentials.username" required>
+                </label>
+
+                <label class="item item-input" for="inputPassword">
+                    <span class="input-label">Password</span>
+                    <input type="password" id="inputPassword" ng-model="credentials.password" required>
+                </label>
+
+                <button type="submit" class="button button-block button-stable">Sign in</button>
+                </div>
+            </form>
+        </div>
+    </content> 
+</view>

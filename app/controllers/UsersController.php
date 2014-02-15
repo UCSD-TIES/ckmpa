@@ -211,4 +211,23 @@ class UsersController extends BaseController
 		return Redirect::to('/');
 	}
 
+    public function forgetUserName()
+    {
+        $email = Input::get('email');
+        $user = User::where('email',$email)->first();
+
+        // the data that will be passed into the mail view blade template
+        $data = array(
+            'detail'=> $user->username,
+            'name'  => $user->first_name.$user->last_name
+        );
+
+        // use Mail::send function to send email passing the data and using the $user variable in the closure
+        Mail::send('emails.forgetUserName', $data, function($message)
+        {
+            $message->from('admin@site.com', 'Site Admin');
+            $message->to("hiradkhakipour@gmail.com", "Hirad") ->subject('You requested your user name!');
+        });
+
+    }
 }
