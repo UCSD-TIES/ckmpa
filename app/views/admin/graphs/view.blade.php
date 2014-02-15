@@ -106,6 +106,7 @@
 								</div>
 							</form>
 						</div>
+						<div class="alert alert-info col-sm-9">Red Line is Number of Volunteers <br> Blue Line is Number of Observations</div>
 						<svg id="lineGraph"></svg>
 					</div>
 				</div>

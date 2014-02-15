@@ -294,8 +294,19 @@ class AdminController extends BaseController
 
 					foreach ($tallies as $tally)
 					{
-						if ($tally->tally)
+					
+					
+					
+					
+					//////////// Updated the graphs so this information is not visible. This is the general entries that are not counted
+			$genEntries = array('Clouds', 'Precipitation', 'Air Temperature','Wind', 'Tide Level', 'Visibility', 'Beach Status');
+					 
+						if ($tally->tally && in_array($tally->field->name, $genEntries))
 						{
+							continue; //don't add them to the graph
+	
+						}
+							
 							$field = $tally->field;
 
 							if (array_key_exists($field->name, $data))
@@ -305,7 +316,7 @@ class AdminController extends BaseController
 							{
 								$data[$field->name] = $tally->tally;
 							}
-						}
+						
 					}
 
 				}
