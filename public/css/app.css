@@ -9,3 +9,7 @@ input[type=number]::-webkit-outer-spin-button {
 	-webkit-appearance: none;
 	margin: 0;
 }
+.tab-item.active, .tab-item:active {
+	color: #fff;
+	background: #666;
+}

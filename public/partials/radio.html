@@ -1,6 +1,4 @@
-<div class="item item-divider">
-	{{ field.name }}
-</div>
+<div class="item item-divider" style="background:none;" ng-bind='field.name'></div>
 <label class="item item-radio" ng-repeat='option in field.options'>
 	<input type="radio" name="{{ field.name }}" ng-value="option.name" ng-checked="$first" ng-model="getTally(field.name)['val']">
 	<div class="item-content" ng-bind="option.name"></div>

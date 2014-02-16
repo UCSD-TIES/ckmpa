@@ -56,11 +56,12 @@ app.factory('Mpas', function($resource){
   return $resource(host + 'api/mpas/');
 });
 app.factory('Datasheets', function($resource){
-  var res, categories, fields, tallies, datasheets;
+  var res, categories, fields, tallies, comments, datasheets;
   res = $resource(host + 'api/datasheets');
   categories = [];
   fields = [];
   tallies = [];
+  comments = [];
   datasheets = res.query({}, function(){
     var f;
     categories = flatten(
@@ -105,6 +106,9 @@ app.factory('Datasheets', function($resource){
     },
     tallies: function(){
       return tallies;
+    },
+    comments: function(){
+      return comments;
     },
     getTally: function(name){
       return find(function(it){

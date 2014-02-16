@@ -1,26 +1,40 @@
 <view title="transect_name" left-buttons="leftButtons" right-buttons="rightButtons">
 <content has-header='true'>
 
-<slide-box>
-	<slide ng-repeat="category in categories">
-		<h3 class='text-center padding-top'>{{category.name}}</h3>
-		<div class="list">
-			<div class="row" ng-if="category.name == 'On-Shore Activities'">
-				<div class='col-50'>
-					<p class='text-center'>Rocky</p>
-				</div>
-				<div class='col-50'>
-					<p class='text-center'>Sandy</p>
-				</div>
-			</div>
-			<div ng-repeat="field in fields | filter:{category_id:category.id}">
-				<div number-input field="field" ng-if="field.type == 'number'"></div>
-				<div radio field="field" ng-if="field.type == 'radio'"></div>
-				<div checkbox field="field" ng-if="field.type == 'checkbox'"></div>
-			</div>
+<div class="list">
+	<div ng-repeat="category in categories">
+		<div class="item item-icon-right item-divider" ng-click='showThis = !showThis'>
+			<i class="icon ion-ios7-arrow-down"></i>
+			{{ category.name }} 
 		</div>
-	</slide>
-</slide-box>
+		<div class="item tabs tabs-stable" style='border:none' ng-show='showThis' ng-init="activeTab = 0"
+			ng-if="category.name == 'On-Shore Activities' || category.name == 'Boating'">
+		  <div class="tab-item" ng-switch="category.name" ng-click='activeTab = 0' ng-class='{active: activeTab == 0}'>
+		    <div ng-switch-when="On-Shore Activities">Rocky</div>
+		    <div ng-switch-when="Boating">Inactive</div>
+		  </div>
+		  <div class="tab-item" ng-switch="category.name" ng-click='activeTab = 1' ng-class='{active: activeTab == 1}'>
+		    <div ng-switch-when="On-Shore Activities">Sandy</div>
+		    <div ng-switch-when="Boating">Active</div>
+		  </div>
+		</div>
+		<div ng-repeat="field in category.fields" ng-show='showThis'>
+			<div number-input field="field" ng-if="field.type == 'number'"></div>
+			<div radio field="field" ng-if="field.type == 'radio'"></div>
+			<div checkbox field="field" ng-if="field.type == 'checkbox'"></div>
+		</div>
+	</div>
+	<h4 class='text-center'>Comments</h4>
+	<div class="list list-inset">
+	  <label class="item item-input">
+	    <textarea placeholder="Comments" ng-model="comments['val']"></textarea>
+	  </label>
+	</div>
+</div>
+
+<div class='padding'>
+	<button class='button button-stable button-block' ng-click='submit()'>Submit</button>
+</div>
 
 </content>
 </view>

@@ -39,20 +39,16 @@ DataController = function($scope, $state, $stateParams, Datasheets, $ionicSlideB
   $scope.mpa_id = $stateParams.mpaID;
   $scope.mpa_name = $stateParams.mpaName;
   $scope.transect_name = $stateParams.transectName;
-  $scope.getTally = function(name){
-    return Datasheets.getTally(name);
-  };
   $scope.categories = Datasheets.categories();
   $scope.fields = Datasheets.fields();
   $scope.tallies = Datasheets.tallies();
-  $ionicSlideBoxDelegate.update();
-  return $scope.rightButtons = [{
-    content: 'Next',
-    type: 'button-small button-clear',
-    tap: function(){
-      return $state.go('summary');
-    }
-  }];
+  $scope.comments = Datasheets.comments();
+  $scope.submit = function(){
+    return $state.go('summary');
+  };
+  return $scope.getTally = function(name){
+    return Datasheets.getTally(name);
+  };
 };
 SummaryController = function($scope, $state, $stateParams, Datasheets){
   $scope.mpa_id = $stateParams.mpaID;
@@ -64,6 +60,7 @@ SummaryController = function($scope, $state, $stateParams, Datasheets){
   $scope.categories = Datasheets.categories();
   $scope.fields = Datasheets.fields();
   $scope.tallies = Datasheets.tallies();
+  $scope.comments = Datasheets.comments();
   return $scope.submit = function(){
     return $state.go('finish');
   };

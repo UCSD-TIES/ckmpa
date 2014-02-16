@@ -1,21 +1,13 @@
-<h4 class='text-center'>{{field.name}}</h4>
 <div class="row" >
-	<div class='col-50' ng-class="{'col-offset-25': category.name != 'On-Shore Activities'}">
-		<div class="item item-input-inset">
+	<p class='col-50' ng-bind='field.name' />
+
+	<div class='col-50'>
+		<div class="item item-input-inset" style="border:none;">
 			<button class="button button-small icon ion-minus" ng-click="dec('val')"></button>
 			<label class="item-input-wrapper">
 				<input type="number" ng-model="tally['val']" style="text-align: center;">
 			</label>
 			<button class="button button-small icon ion-plus" ng-click="inc('val')"></button>
-		</div>
-	</div>
-	<div class='col-50' ng-if="category.name == 'On-Shore Activities'">
-		<div class="item item-input-inset">
-			<button class="button button-small icon ion-minus" ng-click="dec('val1')"></button>
-			<label class="item-input-wrapper">
-				<input type="number" ng-model="tally['val1']" style="text-align: center;">
-			</label>
-			<button class="button button-small icon ion-plus" ng-click="inc('val1')"></button>
 		</div>
 	</div>
 </div>

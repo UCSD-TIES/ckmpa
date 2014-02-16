@@ -10,13 +10,10 @@
 			</li>
 		</ul>	
 	</div>
-	<h4 class='text-center'>Comments</h4>
-	<div class="list list-inset">
-	  <label class="item item-input">
-	    <textarea placeholder="Comments"></textarea>
-	  </label>
-	</div>
+
 	<div class='padding'>
+		<h4 class='text-center'>Comments</h4>
+		<textarea disabled ng-bind='comments["val"]'></textarea>
 		<button class='button button-block' ng-click='submit()'>Submit</button>
 	</div>
 </content>
