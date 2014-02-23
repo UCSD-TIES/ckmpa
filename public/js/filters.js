@@ -1,8 +1,14 @@
 'use strict';
-angular.module('ckmpa.filters', []).filter('interpolate', [
-  'version', function(version){
-    return function(text){
-      return String(text).replace(/\%VERSION\%/g, version);
-    };
-  }
-]);
+var app;
+app = angular.module('ckmpa.filters', []);
+app.filter("hasNumericField", function(){
+  return function(categories){
+    return filter(function(it){
+      return any(function(it){
+        return it.type === "number";
+      })(
+      it.fields);
+    })(
+    categories);
+  };
+});

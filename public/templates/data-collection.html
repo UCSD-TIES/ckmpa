@@ -1,27 +1,39 @@
-<view title="transect_name" left-buttons="leftButtons" right-buttons="rightButtons">
-<content has-header='true'>
+<ion-view title="transect_name" right-buttons="rightButtons">
+<ion-content has-header='true'>
 
 <div class="list">
+	<div class="item item-button-right" style="background-color: #f5f5f5; font-weight:bold; color: #222;">
+		Favorites
+	  <button class="button button-clear button-positive" ng-click='openModal()'>
+	    Edit
+	  </button>
+	</div>
+	<div ng-repeat="field in favorites">
+		<div number-input></div>
+	</div>
 	<div ng-repeat="category in categories">
-		<div class="item item-icon-right item-divider" ng-click='showThis = !showThis'>
-			<i class="icon ion-ios7-arrow-down"></i>
+		<div class="item item-icon-right item-divider" ng-click="showThis = !showThis;resize()">
+			<i ng-if="!showThis" class="icon ion-ios7-arrow-down"></i>
+			<i ng-if="showThis" class="icon ion-ios7-arrow-up"></i>
 			{{ category.name }} 
 		</div>
-		<div class="item tabs tabs-stable" style='border:none' ng-show='showThis' ng-init="activeTab = 0"
+		<div class="item tabs" ng-show='showThis' ng-init="activeTab = 0"
 			ng-if="category.name == 'On-Shore Activities' || category.name == 'Boating'">
-		  <div class="tab-item" ng-switch="category.name" ng-click='activeTab = 0' ng-class='{active: activeTab == 0}'>
+		  <div class="tab-item" ng-switch="category.name" ng-click='activeTab = 0' 
+		  	ng-class='{active: activeTab == 0, positive: activeTab == 0}'>
 		    <div ng-switch-when="On-Shore Activities">Rocky</div>
 		    <div ng-switch-when="Boating">Inactive</div>
 		  </div>
-		  <div class="tab-item" ng-switch="category.name" ng-click='activeTab = 1' ng-class='{active: activeTab == 1}'>
+		  <div class="tab-item" ng-switch="category.name" ng-click='activeTab = 1' 
+		  	ng-class='{active: activeTab == 1, positive: activeTab == 1}'>
 		    <div ng-switch-when="On-Shore Activities">Sandy</div>
 		    <div ng-switch-when="Boating">Active</div>
 		  </div>
 		</div>
 		<div ng-repeat="field in category.fields" ng-show='showThis'>
-			<div number-input field="field" ng-if="field.type == 'number'"></div>
-			<div radio field="field" ng-if="field.type == 'radio'"></div>
-			<div checkbox field="field" ng-if="field.type == 'checkbox'"></div>
+			<div number-input ng-if="field.type == 'number'"></div>
+			<div radio ng-if="field.type == 'radio'"></div>
+			<div checkbox ng-if="field.type == 'checkbox'"></div>
 		</div>
 	</div>
 	<h4 class='text-center'>Comments</h4>
@@ -36,5 +48,5 @@
 	<button class='button button-stable button-block' ng-click='submit()'>Submit</button>
 </div>
 
-</content>
-</view>
+</ion-content>
+</ion-view>
