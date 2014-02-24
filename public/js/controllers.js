@@ -40,6 +40,8 @@ DataController = function($scope, $state, $stateParams, $ionicLoading, $ionicMod
   $scope.mpa_name = $stateParams.mpaName;
   $scope.transect_name = $stateParams.transectName;
   $scope.comments = Datasheets.comments();
+  $scope.favorites = [];
+  $scope.categories = [];
   $scope.submit = function(){
     return $state.go('summary');
   };
@@ -50,14 +52,23 @@ DataController = function($scope, $state, $stateParams, $ionicLoading, $ionicMod
     return Favorites.get(name);
   };
   $scope.addFavorite = function(name){
-    return Favorites.add(name);
+    $scope.modalError = "";
+    if (!Favorites.add(name)) {
+      return $scope.modalError = "Already Added to Favorites";
+    }
   };
   $scope.deleteFavorite = function(name){
+    $scope.modalError = "";
     return Favorites['delete'](name);
   };
   $scope.resize = function(){
     return $scope.$broadcast('scroll.resize');
   };
+  datasheets = Datasheets.datasheets.then(function(data){
+    $scope.categories = Datasheets.categories();
+    $scope.favorites = Favorites.favorites();
+    return $scope.loading.hide();
+  });
   $ionicModal.fromTemplateUrl('partials/modal.html', function(modal){
     return $scope.modal = modal;
   }, {
@@ -73,18 +84,13 @@ DataController = function($scope, $state, $stateParams, $ionicLoading, $ionicMod
   $scope.$on('$destroy', function(){
     return $scope.modal.remove();
   });
-  datasheets = Datasheets.datasheets.then(function(data){
-    $scope.categories = Datasheets.categories();
-    $scope.favorites = Favorites.favorites();
-    return $scope.loading.hide();
-  });
   rightButtons = [{
     content: 'Logout',
     type: 'button-small button-clear'
   }];
   $scope.rightButtons = rightButtons;
   return $scope.loading = $ionicLoading.show({
-    content: "<i class='icon ion-loading-c'></i> Loading"
+    content: "<i class='icon ion-loading-a'></i> Loading"
   });
 };
 SummaryController = function($scope, $state, $stateParams, Datasheets){

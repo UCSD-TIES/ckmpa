@@ -4,51 +4,51 @@
     <!-- <button class="button button-clear" ng-click="closeModal()">Cancel</button> -->
   </header>
   <ion-content has-header="true" padding="true">
-      <div class="list">
-        <div class="item item-divider">
-          Current Favorites
+    <div class="" ng-bind="modalError"></div>
+    <div class="list">
+      <div class="item item-divider">
+        Current Favorites
+      </div>
+      <div ng-repeat="field in favorites">
+        <div class="item item-button-right">
+          {{ field.name }}
+          <button class="button button-clear button-assertive" ng-click="deleteFavorite(field.name)">
+            <i class="icon ion-minus"></i>
+          </button>
         </div>
-        <div ng-repeat="field in favorites">
+      </div>
+
+      <div ng-repeat="category in categories | hasNumericField">
+        <div class="item item-icon-right item-divider" ng-click='showThis = !showThis;resize()'>
+          <i ng-show="!showThis" class="icon ion-ios7-arrow-down"></i>
+          <i ng-show="showThis" class="icon ion-ios7-arrow-up"></i>
+          {{ category.name }}
+        </div>
+        <div class="item tabs" ng-show='showThis' ng-init="activeTab = 0"
+          ng-if="category.name == 'On-Shore Activities' || category.name == 'Boating'">
+          <div class="tab-item" ng-switch="category.name" ng-click='activeTab = 0' 
+            ng-class='{active: activeTab == 0, positive: activeTab == 0}'>
+            <div ng-switch-when="On-Shore Activities">Rocky</div>
+            <div ng-switch-when="Boating">Inactive</div>
+          </div>
+          <div class="tab-item" ng-switch="category.name" ng-click='activeTab = 1' 
+            ng-class='{active: activeTab == 1, positive: activeTab == 1}'>
+            <div ng-switch-when="On-Shore Activities">Sandy</div>
+            <div ng-switch-when="Boating">Active</div>
+          </div>
+        </div>
+
+        <div ng-repeat="field in category.fields" ng-show="showThis">
           <div class="item item-button-right">
             {{ field.name }}
-            <button class="button button-clear button-assertive" ng-click="deleteFavorite(field.name)">
-              <i class="icon ion-minus"></i>
+            <button class="button button-clear button-balanced" ng-click="addFavorite(field.name)">
+              <i class="icon ion-plus"></i>
             </button>
           </div>
         </div>
-
-        <div ng-repeat="category in categories | hasNumericField">
-          <div class="item item-icon-right item-divider" ng-click='showThis = !showThis;resize()'>
-            <i ng-show="!showThis" class="icon ion-ios7-arrow-down"></i>
-            <i ng-show="showThis" class="icon ion-ios7-arrow-up"></i>
-            {{ category.name }}
-          </div>
-          <div class="item tabs" ng-show='showThis' ng-init="activeTab = 0"
-            ng-if="category.name == 'On-Shore Activities' || category.name == 'Boating'">
-            <div class="tab-item" ng-switch="category.name" ng-click='activeTab = 0' 
-              ng-class='{active: activeTab == 0, positive: activeTab == 0}'>
-              <div ng-switch-when="On-Shore Activities">Rocky</div>
-              <div ng-switch-when="Boating">Inactive</div>
-            </div>
-            <div class="tab-item" ng-switch="category.name" ng-click='activeTab = 1' 
-              ng-class='{active: activeTab == 1, positive: activeTab == 1}'>
-              <div ng-switch-when="On-Shore Activities">Sandy</div>
-              <div ng-switch-when="Boating">Active</div>
-            </div>
-          </div>
-
-          <div ng-repeat="field in category.fields" ng-show="showThis">
-            <div class="item item-button-right">
-              {{ field.name }}
-              <button class="button button-clear button-balanced" ng-click="addFavorite(field.name)">
-                <i class="icon ion-plus"></i>
-              </button>
-            </div>
-          </div>
-
-        </div>
-        <button class="button button-block button-stable" ng-click="closeModal()">Close</button>
       </div>
+
+      <button class="button button-block button-stable" ng-click="closeModal()">Close</button>
     </div>
   </ion-content>
 </div>

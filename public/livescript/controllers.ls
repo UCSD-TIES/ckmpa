@@ -28,14 +28,28 @@ DataController = ($scope, $state, $stateParams, $ionicLoading, $ionicModal, Data
   $scope.mpa_name = $stateParams.mpaName
   $scope.transect_name = $stateParams.transectName
   $scope.comments = Datasheets.comments!
-  # $scope.favorites = Favorites.favorites!
+  $scope.favorites = []
+  $scope.categories = []
   
   $scope.submit = -> $state.go 'summary'
   $scope.getTally = (name) -> Datasheets.getTally(name)
   $scope.getFavorite = (name) -> Favorites.get(name)
-  $scope.addFavorite = (name) -> Favorites.add(name)
-  $scope.deleteFavorite = (name) -> Favorites.delete(name)
+
+  $scope.addFavorite = (name) ->
+    $scope.modalError = ""
+    if not Favorites.add(name)
+      $scope.modalError = "Already Added to Favorites"
+
+  $scope.deleteFavorite = (name) -> 
+    $scope.modalError = ""
+    Favorites.delete(name)
+
   $scope.resize = -> $scope.$broadcast('scroll.resize')
+
+  datasheets = Datasheets.datasheets.then (data) ->
+    $scope.categories = Datasheets.categories!
+    $scope.favorites = Favorites.favorites!
+    $scope.loading.hide!
 
   $ionicModal.fromTemplateUrl 'partials/modal.html', 
     (modal) -> $scope.modal = modal,
@@ -51,11 +65,6 @@ DataController = ($scope, $state, $stateParams, $ionicLoading, $ionicModal, Data
   $scope.$on '$destroy', ->
     $scope.modal.remove!
 
-  datasheets = Datasheets.datasheets.then (data) ->
-    $scope.categories = Datasheets.categories!
-    $scope.favorites = Favorites.favorites!
-    $scope.loading.hide!
-
   rightButtons =
     content: 'Logout'
     type:'button-small button-clear'
@@ -64,7 +73,7 @@ DataController = ($scope, $state, $stateParams, $ionicLoading, $ionicModal, Data
   $scope.rightButtons = rightButtons
 
   $scope.loading = $ionicLoading.show do
-    content: "<i class='icon ion-loading-c'></i> Loading"
+    content: "<i class='icon ion-loading-a'></i> Loading"
 
 SummaryController = ($scope, $state, $stateParams, Datasheets) ->
   $scope.mpa_id = $stateParams.mpaID
