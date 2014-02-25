@@ -2,6 +2,7 @@
 app = angular.module 'ckmpa', [
   'ionic'
   'pasvaz.bindonce'
+  'LocalStorageModule'
   'ngResource'
   'ngSanitize'
   'ngAnimate'

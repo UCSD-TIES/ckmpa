@@ -2,7 +2,7 @@
 	<ion-content has-header="true">
 		<div class="list">
 			<div class="item item-divider"> {{ mpa_name }}</div>
-			<a class="item" ng-repeat='transect in transects | filter:{mpa_id: mpa_id}' ng-href='#/data-collection/{{ mpa_id }}/{{ mpa_name }}/{{ transect.name }}'>
+			<a class="item" ng-repeat='transect in transects | filter:{mpa_id: mpa_id}' ng-href="#/data-collection/{{ mpa_id }}/{{ mpa_name }}/{{ transect.name | encodeUri }}">
 				{{ transect.name }}</a>
 		</div>
 	</ion-content>
