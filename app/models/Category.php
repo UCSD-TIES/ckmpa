@@ -21,7 +21,7 @@ class Category extends Eloquent {
 	public $timestamps = true;
 	protected $softDelete = false;
 	protected $fillable = array('name', 'datasheet_id');
-	protected $visible = array('name', 'datasheet_id', 'fields', 'id');
+	protected $visible = array('name', 'datasheet_id', 'fields', 'id', 'subcategories');
 
 	public function datasheet()
 	{
@@ -31,5 +31,9 @@ class Category extends Eloquent {
 	public function fields()
 	{
 		return $this->hasMany('Field');
+	}
+	public function subcategories()
+	{
+		return $this->hasMany('Subcategory');
 	}
 }

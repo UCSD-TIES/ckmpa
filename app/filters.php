@@ -103,6 +103,11 @@ View::composer('admin.mpas.*', function($view)
     $view->with('view', "mpas");
 });
 
+View::composer('admin.transects.*', function($view)
+{
+    $view->with('view', "mpas");
+});
+
 View::composer('admin.patrols.*', function($view)
 {
     $view->with('view', "patrols");
@@ -114,6 +119,16 @@ View::composer('admin.graphs.*', function($view)
 });
 
 View::composer('admin.datasheets.*', function($view)
+{
+    $view->with('view', "datasheets");
+});
+
+View::composer('admin.categories.*', function($view)
+{
+    $view->with('view', "datasheets");
+});
+
+View::composer('admin.fields.*', function($view)
 {
     $view->with('view', "datasheets");
 });

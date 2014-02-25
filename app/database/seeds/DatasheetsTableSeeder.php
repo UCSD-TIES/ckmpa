@@ -7,6 +7,7 @@ class DatasheetsTableSeeder extends Seeder {
 		// Uncomment the below to wipe the table clean before populating
 		DB::table('datasheets')->truncate();
 		DB::table('categories')->truncate();
+		DB::table('subcategories')->truncate();
 		DB::table('fields')->truncate();
 		DB::table('options')->truncate();
 
@@ -20,8 +21,20 @@ class DatasheetsTableSeeder extends Seeder {
 			array('name' => 'General', 'datasheet_id' => 1, 'created_at' => $now, 'updated_at' => $now),
 			array('name' => 'On-Shore Activities', 'datasheet_id' => 1, 'created_at' => $now, 'updated_at' => $now),
 			array('name' => 'Off-Shore Activities', 'datasheet_id' => 1, 'created_at' => $now, 'updated_at' => $now),
-			array('name' => 'Boating', 'datasheet_id' => 1, 'created_at' => $now, 'updated_at' => $now),
+			array('name' => 'Boating Recreational', 'datasheet_id' => 1, 'created_at' => $now, 'updated_at' => $now),
+			array('name' => 'Boating Commercial', 'datasheet_id' => 1, 'created_at' => $now, 'updated_at' => $now),
+			array('name' => 'Boating Unknown', 'datasheet_id' => 1, 'created_at' => $now, 'updated_at' => $now),
 			array('name' => 'Other', 'datasheet_id' => 1, 'created_at' => $now, 'updated_at' => $now),
+		);
+		$subcategories = array(
+			array('name' => 'Rocky', 'category_id' => 2, 'created_at' => $now, 'updated_at' => $now),
+			array('name' => 'Sandy', 'category_id' => 2, 'created_at' => $now, 'updated_at' => $now),
+			array('name' => 'Inactive', 'category_id' => 4, 'created_at' => $now, 'updated_at' => $now),
+			array('name' => 'Active', 'category_id' => 4, 'created_at' => $now, 'updated_at' => $now),
+			array('name' => 'Inactive', 'category_id' => 5, 'created_at' => $now, 'updated_at' => $now),
+			array('name' => 'Active', 'category_id' => 5, 'created_at' => $now, 'updated_at' => $now),
+			array('name' => 'Inactive', 'category_id' => 6, 'created_at' => $now, 'updated_at' => $now),
+			array('name' => 'Active', 'category_id' => 6, 'created_at' => $now, 'updated_at' => $now),
 		);
 
 		$fields = array(
@@ -61,11 +74,37 @@ class DatasheetsTableSeeder extends Seeder {
 			array('name' => 'Work Boat (e.g., life-guard, DFW)', 'type' => 'number', 'category_id' => 4, 'created_at' => $now, 'updated_at' => $now),
 			array('name' => 'Commercial Passenger Fishing Vessel (5+ people)', 'type' => 'number', 'category_id' => 4, 'created_at' => $now, 'updated_at' => $now),
 			array('name' => 'Other Boating', 'type' => 'number', 'category_id' => 4, 'created_at' => $now, 'updated_at' => $now),
-			array('name' => 'Scientific Research', 'type' => 'checkbox', 'category_id' => 5, 'created_at' => $now, 'updated_at' => $now),
-			array('name' => 'Education', 'type' => 'checkbox', 'category_id' => 5, 'created_at' => $now, 'updated_at' => $now),
-			array('name' => 'Beach Closure', 'type' => 'checkbox', 'category_id' => 5, 'created_at' => $now, 'updated_at' => $now),
-			array('name' => 'Large Gatherings (e.g., volleyball tournament)', 'type' => 'checkbox', 'category_id' => 5, 'created_at' => $now, 'updated_at' => $now),
-			array('name' => 'Enforcement Activity', 'type' => 'checkbox', 'category_id' => 5, 'created_at' => $now, 'updated_at' => $now)
+			array('name' => 'Boat Fishing - Traps', 'type' => 'number', 'category_id' => 5, 'created_at' => $now, 'updated_at' => $now),
+			array('name' => 'Boat Fishing - Line', 'type' => 'number', 'category_id' => 5, 'created_at' => $now, 'updated_at' => $now),
+			array('name' => 'Boat Fishing - Nets', 'type' => 'number', 'category_id' => 5, 'created_at' => $now, 'updated_at' => $now),
+			array('name' => 'Boat Fishing - Dive', 'type' => 'number', 'category_id' => 5, 'created_at' => $now, 'updated_at' => $now),
+			array('name' => 'Boat Fishing - Spear', 'type' => 'number', 'category_id' => 5, 'created_at' => $now, 'updated_at' => $now),
+			array('name' => 'Boat Kelp Harvesting', 'type' => 'number', 'category_id' => 5, 'created_at' => $now, 'updated_at' => $now),
+			array('name' => 'Unknown Fishing Boat', 'type' => 'number', 'category_id' => 5, 'created_at' => $now, 'updated_at' => $now),
+			array('name' => 'Paddle Operated Boa', 'type' => 'number', 'category_id' => 5, 'created_at' => $now, 'updated_at' => $now),
+			array('name' => 'Dive Boat (stationary – flag up)', 'type' => 'number', 'category_id' => 5, 'created_at' => $now, 'updated_at' => $now),
+			array('name' => 'Whale Watching Boat', 'type' => 'number', 'category_id' => 5, 'created_at' => $now, 'updated_at' => $now),
+			array('name' => 'Work Boat (e.g., life-guard, DFW)', 'type' => 'number', 'category_id' => 5, 'created_at' => $now, 'updated_at' => $now),
+			array('name' => 'Commercial Passenger Fishing Vessel (5+ people)', 'type' => 'number', 'category_id' => 5, 'created_at' => $now, 'updated_at' => $now),
+			array('name' => 'Other Boating', 'type' => 'number', 'category_id' => 5, 'created_at' => $now, 'updated_at' => $now),
+			array('name' => 'Boat Fishing - Traps', 'type' => 'number', 'category_id' => 6, 'created_at' => $now, 'updated_at' => $now),
+			array('name' => 'Boat Fishing - Line', 'type' => 'number', 'category_id' => 6, 'created_at' => $now, 'updated_at' => $now),
+			array('name' => 'Boat Fishing - Nets', 'type' => 'number', 'category_id' => 6, 'created_at' => $now, 'updated_at' => $now),
+			array('name' => 'Boat Fishing - Dive', 'type' => 'number', 'category_id' => 6, 'created_at' => $now, 'updated_at' => $now),
+			array('name' => 'Boat Fishing - Spear', 'type' => 'number', 'category_id' => 6, 'created_at' => $now, 'updated_at' => $now),
+			array('name' => 'Boat Kelp Harvesting', 'type' => 'number', 'category_id' => 6, 'created_at' => $now, 'updated_at' => $now),
+			array('name' => 'Unknown Fishing Boat', 'type' => 'number', 'category_id' => 6, 'created_at' => $now, 'updated_at' => $now),
+			array('name' => 'Paddle Operated Boa', 'type' => 'number', 'category_id' => 6, 'created_at' => $now, 'updated_at' => $now),
+			array('name' => 'Dive Boat (stationary – flag up)', 'type' => 'number', 'category_id' => 6, 'created_at' => $now, 'updated_at' => $now),
+			array('name' => 'Whale Watching Boat', 'type' => 'number', 'category_id' => 6, 'created_at' => $now, 'updated_at' => $now),
+			array('name' => 'Work Boat (e.g., life-guard, DFW)', 'type' => 'number', 'category_id' => 6, 'created_at' => $now, 'updated_at' => $now),
+			array('name' => 'Commercial Passenger Fishing Vessel (5+ people)', 'type' => 'number', 'category_id' => 6, 'created_at' => $now, 'updated_at' => $now),
+			array('name' => 'Other Boating', 'type' => 'number', 'category_id' => 6, 'created_at' => $now, 'updated_at' => $now),
+			array('name' => 'Scientific Research', 'type' => 'checkbox', 'category_id' => 7, 'created_at' => $now, 'updated_at' => $now),
+			array('name' => 'Education', 'type' => 'checkbox', 'category_id' => 7, 'created_at' => $now, 'updated_at' => $now),
+			array('name' => 'Beach Closure', 'type' => 'checkbox', 'category_id' => 7, 'created_at' => $now, 'updated_at' => $now),
+			array('name' => 'Large Gatherings (e.g., volleyball tournament)', 'type' => 'checkbox', 'category_id' => 7, 'created_at' => $now, 'updated_at' => $now),
+			array('name' => 'Enforcement Activity', 'type' => 'checkbox', 'category_id' => 7, 'created_at' => $now, 'updated_at' => $now)
 		);
 
 		$options = array(
@@ -98,6 +137,7 @@ class DatasheetsTableSeeder extends Seeder {
 		// Uncomment the below to run the seeder
 		DB::table('datasheets')->insert($datasheets);
 		DB::table('categories')->insert($categories);
+		DB::table('subcategories')->insert($subcategories);
 		DB::table('fields')->insert($fields);
 		DB::table('options')->insert($options);
 	}

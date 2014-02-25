@@ -63,6 +63,7 @@ class CategoriesController extends BaseController
 		$data['category'] = $category;
 		$data['datasheet'] = $category->datasheet;
 		$data['fields'] = $category->fields;
+		$data['subcategories'] = $category->subcategories;
 
 		return View::make('admin.categories.show', $data);
 	}
