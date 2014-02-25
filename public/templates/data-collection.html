@@ -4,7 +4,7 @@
 <div class="list">
 	<div class="item item-button-right" style="background-color: #f5f5f5; font-weight:bold; color: #222;">
 		Favorites
-	  <button class="button button-clear button-positive" ng-click='openModal()'>
+	  <button class="button button-stable" ng-click='openModal()'>
 	    Edit
 	  </button>
 	</div>
@@ -21,7 +21,7 @@
 
 		<div class="item tabs" ng-show='showThis && category.subcategories'>
 			<div class="tab-item" ng-repeat="sub in category.subcategories" ng-bind="sub.name"
-				ng-class="{positive: $parent.activeTab == $index}" ng-click="$parent.activeTab = $index" >
+				ng-class="{'active-tab': $parent.activeTab == $index}" ng-click="$parent.activeTab = $index" >
 			</div>
 		</div>
 
