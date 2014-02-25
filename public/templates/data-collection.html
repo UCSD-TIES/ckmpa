@@ -9,33 +9,37 @@
 	  </button>
 	</div>
 	<div ng-repeat="field in favorites">
-		<div number-input></div>
+		<number-input field="field" sub="0"></number-input>
 	</div>
-	<div ng-repeat="category in categories">
-		<div class="item item-icon-right item-divider" ng-click="showThis = !showThis;resize()">
+
+	<div ng-repeat="category in categories" ng-init="activeTab = 0">
+		<div class="item item-icon-right item-divider" ng-click="showThis = !showThis; resize()">
 			<i ng-if="!showThis" class="icon ion-ios7-arrow-down"></i>
 			<i ng-if="showThis" class="icon ion-ios7-arrow-up"></i>
-			{{ category.name }} 
+			{{ category.name }}
 		</div>
-		<div class="item tabs" ng-show='showThis' ng-init="activeTab = 0"
-			ng-if="category.name == 'On-Shore Activities' || category.name == 'Boating'">
-		  <div class="tab-item" ng-switch="category.name" ng-click='activeTab = 0' 
-		  	ng-class='{active: activeTab == 0, positive: activeTab == 0}'>
-		    <div ng-switch-when="On-Shore Activities">Rocky</div>
-		    <div ng-switch-when="Boating">Inactive</div>
-		  </div>
-		  <div class="tab-item" ng-switch="category.name" ng-click='activeTab = 1' 
-		  	ng-class='{active: activeTab == 1, positive: activeTab == 1}'>
-		    <div ng-switch-when="On-Shore Activities">Sandy</div>
-		    <div ng-switch-when="Boating">Active</div>
-		  </div>
+
+		<div class="item tabs" ng-show='showThis && category.subcategories'>
+			<div class="tab-item" ng-repeat="sub in category.subcategories" ng-bind="sub.name"
+				ng-class="{positive: $parent.activeTab == $index}" ng-click="$parent.activeTab = $index" >
+			</div>
 		</div>
-		<div ng-repeat="field in category.fields" ng-show='showThis'>
-			<div number-input ng-if="field.type == 'number'"></div>
-			<div radio ng-if="field.type == 'radio'"></div>
-			<div checkbox ng-if="field.type == 'checkbox'"></div>
+
+		<div ng-repeat="field in category.fields" ng-show='showThis && !category.subcategories.length'>
+			<number-input field="field" sub="0" ng-if="field.type == 'number'"></number-input>
+			<radio field="field" sub="0" ng-if="field.type == 'radio'"></radio>
+			<checkbox field="field" sub="0" ng-if="field.type == 'checkbox'"></checkbox>
+		</div>
+
+		<div ng-repeat="sub in category.subcategories" ng-show='showThis && $parent.activeTab == $index'>
+			<div ng-repeat="field in category.fields" ng-init="i = $parent.$index">
+				<number-input field="field" sub="i" ng-if="field.type == 'number'"></number-input>
+				<radio field="field" sub="i" ng-if="field.type == 'radio'"></radio>
+				<checkbox field="field" sub="i" ng-if="field.type == 'checkbox'"></checkbox>
+			</div>
 		</div>
 	</div>
+
 	<h4 class='padding-left'>Comments</h4>
 	<div class="list list-inset">
 	  <label class="item item-input">

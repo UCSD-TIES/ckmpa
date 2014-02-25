@@ -32,8 +32,6 @@ DataController = ($scope, $state, $stateParams, $ionicLoading, $ionicModal, Data
   $scope.categories = []
   
   $scope.submit = -> $state.go 'summary'
-  $scope.getTally = (name) -> Datasheets.getTally(name)
-  $scope.getFavorite = (name) -> Favorites.get(name)
 
   $scope.addFavorite = (name) ->
     $scope.modalError = ""
@@ -79,13 +77,15 @@ SummaryController = ($scope, $state, $stateParams, Datasheets) ->
   $scope.mpa_id = $stateParams.mpaID
   $scope.mpa_name = $stateParams.mpaName
   $scope.transect_name = $stateParams.transectName
-  $scope.getTally = (name) -> Datasheets.getTally(name)
   $scope.categories = Datasheets.categories!
-  $scope.fields = Datasheets.fields!
   $scope.tallies = Datasheets.tallies!
   $scope.comments = Datasheets.comments!
 
+  $scope.getTally = (name,sub,cat) -> Datasheets.getTally(name,sub,cat)
   $scope.submit = -> $state.go 'finish'
+
+  datasheets = Datasheets.datasheets.then (data) ->
+    $scope.categories = Datasheets.categories!
 
   rightButtons =
     content: 'Logout'

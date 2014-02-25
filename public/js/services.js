@@ -1,7 +1,7 @@
 var app, mode, host;
 app = angular.module('ckmpa.services', []);
-mode = 'mobile';
-host = mode === 'mobile' ? 'http://ckmpa.gopagoda.com/' : 'localhost';
+mode = 'production';
+host = mode === 'production' ? 'http://ckmpa.gopagoda.com/' : 'http://localhost/';
 app.factory('Auth', function($http, $sanitize, Flash){
   var sanitizeCredentials, loginError, cacheSession, uncacheSession;
   sanitizeCredentials = function(credentials){
@@ -63,38 +63,16 @@ app.factory('Datasheets', function($resource){
   tallies = [];
   comments = [];
   datasheets = res.query({}, function(){
-    var f;
     categories = flatten(
     map(function(it){
       return it.categories;
     })(
     datasheets));
-    fields = flatten(
+    return fields = flatten(
     map(function(it){
       return it.fields;
     })(
     categories));
-    return tallies = (function(){
-      var i$, ref$, len$, results$ = [];
-      for (i$ = 0, len$ = (ref$ = fields).length; i$ < len$; ++i$) {
-        f = ref$[i$];
-        results$.push({
-          "name": f.name,
-          "val": (fn$())
-        });
-      }
-      return results$;
-      function fn$(){
-        switch (f.type) {
-        case 'number':
-          return 0;
-        case 'checkbox':
-          return 'No';
-        case 'radio':
-          return f.options[0].name;
-        }
-      }
-    }());
   });
   return {
     datasheets: datasheets.$promise,
@@ -111,40 +89,42 @@ app.factory('Datasheets', function($resource){
     comments: function(){
       return comments;
     },
-    getTally: function(name){
-      return find(function(it){
-        return it.name === name;
+    getTally: function(name, sub, cat){
+      return find(function(x){
+        return x.name === name && x.sub === sub && x.category === cat;
       })(
       tallies);
+    },
+    addTally: function(tally){
+      return tallies.push(tally);
     }
   };
 });
 app.factory('Favorites', function(Datasheets){
-  var favorites;
-  favorites = [
-    {
-      name: "Recreation",
-      val1: 0
-    }, {
-      name: "Offshore Recreation",
-      val1: 0
-    }
-  ];
+  var favorites, datasheets;
+  favorites = [];
+  datasheets = Datasheets.datasheets.then(function(data){
+    favorites.push(find(function(it){
+      return it.name === "Recreation";
+    })(
+    Datasheets.fields()));
+    return favorites.push(find(function(it){
+      return it.name === "Offshore Recreation";
+    })(
+    Datasheets.fields()));
+  });
   return {
     favorites: function(){
       return favorites;
     },
-    add: function(name){
-      if (!this.get(name) && favorites.length < 5) {
-        return favorites.push({
-          name: name,
-          val1: 0
-        });
+    add: function(field){
+      if (!this.get(field) && favorites.length < 5) {
+        return favorites.push(field);
       }
     },
-    get: function(name){
-      return find(function(it){
-        return it.name === name;
+    get: function(field){
+      return find(function(x){
+        return x === field;
       })(
       favorites);
     },
