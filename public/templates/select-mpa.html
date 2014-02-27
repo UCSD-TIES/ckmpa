@@ -3,12 +3,16 @@
 	<div class="list">
 		<a class="item" ng-repeat='mpa in mpas' ng-href='#/select-transect/{{ mpa.id }}/{{ mpa.name }}'>
 		{{ mpa.name }}</a>
-
+	</div>
 	
-	</ion-content>
-		</div>
-	<div class="alert alert-block alert-success" id="UploadSuccess">
-    <a class="close" data-dismiss="alert">X</a>
-    <strong>Note:</strong> For the patrols, remember to travel from North to South, with the ocean on your right. <br>   Also only record your observations from the high tide mark on the beach to everything on your right. 
-</div>
+	<div class="card">
+    	<div class="item item-divider">Note</div> 
+    	<div class="item item-text-wrap">
+	    	<p>
+	    	For the patrols, remember to travel from North to South, with the ocean on your right. Also only record your observations from the high tide mark on the beach to everything on your right.
+	    	</p>
+    	</div>
+	</div>
+
+</ion-content>
 </ion-view>
