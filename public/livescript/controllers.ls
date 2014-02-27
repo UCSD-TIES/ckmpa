@@ -23,15 +23,27 @@ MpaController = ($scope, Mpas, $stateParams) ->
     $scope.transects = mpas |> map (.transects) |> flatten
     $scope.mpas = mpas
 
-DataController = ($scope, $state, $stateParams, $ionicLoading, $ionicModal, Datasheets, Favorites) ->
+DataController = ($scope, $state, $stateParams, $ionicLoading, $ionicModal, $timeout, Datasheets, Favorites) ->
   $scope.mpa_id = $stateParams.mpaID
   $scope.mpa_name = $stateParams.mpaName
   $scope.transect_name = $stateParams.transectName
   $scope.comments = Datasheets.comments!
   $scope.favorites = []
   $scope.categories = []
+  time_interval = 100000
+  var timer
+
+  saveTallies = ->
+    Datasheets.saveTallies!
+    timer := $timeout saveTallies, time_interval
+
+  timer = $timeout saveTallies, time_interval
+
+  $scope.stop = -> $timeout.cancel timer
   
-  $scope.submit = -> $state.go 'summary'
+  $scope.submit = ->
+    $timeout.cancel timer
+    $state.go 'summary'
 
   $scope.addFavorite = (name) ->
     $scope.modalError = ""
@@ -59,6 +71,7 @@ DataController = ($scope, $state, $stateParams, $ionicLoading, $ionicModal, Data
 
   $scope.closeModal = ->
     $scope.modal.hide!
+    Favorites.save!
 
   $scope.$on '$destroy', ->
     $scope.modal.remove!
@@ -82,7 +95,9 @@ SummaryController = ($scope, $state, $stateParams, Datasheets) ->
   $scope.comments = Datasheets.comments!
 
   $scope.getTally = (name,sub,cat) -> Datasheets.getTally(name,sub,cat)
-  $scope.submit = -> $state.go 'finish'
+  $scope.submit = -> 
+    $state.go 'finish'
+    Datasheets.resetTallies!
 
   datasheets = Datasheets.datasheets.then (data) ->
     $scope.categories = Datasheets.categories!

@@ -55,13 +55,15 @@ app.factory('Users', function($resource){
 app.factory('Mpas', function($resource){
   return $resource(host + 'api/mpas/');
 });
-app.factory('Datasheets', function($resource){
-  var res, categories, fields, tallies, comments, datasheets;
-  res = $resource(host + 'api/datasheets');
+app.factory('Datasheets', function($resource, localStorageService){
+  var res, categories, fields, comments, tallies, datasheets;
+  res = $resource(host + 'api/datasheets', {});
   categories = [];
   fields = [];
-  tallies = [];
   comments = [];
+  if (!(tallies = localStorageService.get("tallies"))) {
+    tallies = [];
+  }
   datasheets = res.query({}, function(){
     categories = flatten(
     map(function(it){
@@ -97,25 +99,36 @@ app.factory('Datasheets', function($resource){
     },
     addTally: function(tally){
       return tallies.push(tally);
+    },
+    saveTallies: function(){
+      return localStorageService.set('tallies', tallies);
+    },
+    resetTallies: function(){
+      return localStorageService.remove('tallies');
     }
   };
 });
-app.factory('Favorites', function(Datasheets){
+app.factory('Favorites', function(Datasheets, localStorageService){
   var favorites, datasheets;
-  favorites = [];
-  datasheets = Datasheets.datasheets.then(function(data){
-    favorites.push(find(function(it){
-      return it.name === "Recreation";
-    })(
-    Datasheets.fields()));
-    return favorites.push(find(function(it){
-      return it.name === "Offshore Recreation";
-    })(
-    Datasheets.fields()));
-  });
+  if (!(favorites = localStorageService.get("favorites"))) {
+    favorites = [];
+    datasheets = Datasheets.datasheets.then(function(data){
+      favorites.push(find(function(it){
+        return it.name === "Recreation";
+      })(
+      Datasheets.fields()));
+      return favorites.push(find(function(it){
+        return it.name === "Offshore Recreation";
+      })(
+      Datasheets.fields()));
+    });
+  }
   return {
     favorites: function(){
       return favorites;
+    },
+    save: function(){
+      return localStorageService.set('favorites', favorites);
     },
     add: function(field){
       if (!this.get(field) && favorites.length < 5) {

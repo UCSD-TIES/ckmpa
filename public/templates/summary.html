@@ -1,19 +1,19 @@
 <ion-view title="'Summary'" right-buttons="rightButtons">
 <ion-content has-header='true'>
 
-	<div bindonce ng-repeat="category in categories">
-		<div class="item item-divider" bo-text="category.name"></div>
-		<ul class="list" bo-if="!category.subcategories.length">
-			<li class="item" bindonce ng-repeat="field in category.fields">
+	<div ng-repeat="category in categories">
+		<div class="item item-divider" ng-bind="category.name"></div>
+		<ul class="list" ng-if="!category.subcategories.length">
+			<li class="item" ng-repeat="field in category.fields">
 				{{ field.name }}
-				<span class="badge badge-stable" bo-text="getTally(field.name,0,field.category_id)['val']"></span>
+				<span class="badge badge-stable" ng-bind="getTally(field.name,0,field.category_id)['val']"></span>
 			</li>
 		</ul>
-		<ul class="list" bo-if="category.subcategories.length">
-			<li class="item" bindonce ng-repeat="field in category.fields">
+		<ul class="list" ng-if="category.subcategories.length">
+			<li class="item" ng-repeat="field in category.fields">
 				{{ field.name }}
 				<span ng-repeat="sub in category.subcategories" class="badge badge-stable" 
-					bo-text="getTally(field.name,$index,field.category_id)['val']"></span>
+					ng-bind="getTally(field.name,$index,field.category_id)['val']"></span>
 			</li>
 		</ul>	
 	</div>

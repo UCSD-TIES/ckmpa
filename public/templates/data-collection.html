@@ -2,14 +2,17 @@
 <ion-content has-header='true'>
 
 <div class="list">
-	<div class="item item-button-right" style="background-color: #f5f5f5; font-weight:bold; color: #222;">
+	<div class="item" style="background-color: #f5f5f5; font-weight:bold; color: #222;">
 		Favorites
-	  <button class="button button-stable" ng-click='openModal()'>
-	    Edit
-	  </button>
+	  <!-- <button class="button button-stable" ng-click='openModal()'> -->
+	    <!-- Edit -->
+	  <!-- </button> -->
 	</div>
 	<div ng-repeat="field in favorites">
 		<number-input field="field" sub="0"></number-input>
+	</div>
+	<div class="padding-horizontal">
+	<div class='button button-block button-small' ng-click='openModal()'>Edit Favorites</div>
 	</div>
 
 	<div ng-repeat="category in categories" ng-init="activeTab = 0">

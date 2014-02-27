@@ -33,12 +33,13 @@ app.factory 'Users', ($resource) -> $resource host+'api/users/'
 
 app.factory 'Mpas', ($resource) -> $resource host+'api/mpas/'
 
-app.factory 'Datasheets' ($resource) -> 
-  res = $resource host+'api/datasheets'
+app.factory 'Datasheets' ($resource, localStorageService) -> 
+  res = $resource host+'api/datasheets' {}
   categories = []
   fields = []
-  tallies = []
   comments = []
+  if not tallies = localStorageService.get "tallies"
+    tallies = []
 
   datasheets = res.query {}, ->
     categories := datasheets |> map (.categories)  |> flatten
@@ -52,15 +53,18 @@ app.factory 'Datasheets' ($resource) ->
   comments: -> comments
   getTally: (name,sub,cat) -> tallies |> find ((x) -> x.name is name and x.sub is sub and x.category is cat)
   addTally: (tally) -> tallies.push tally
+  saveTallies: -> localStorageService.set 'tallies' tallies
+  resetTallies: -> localStorageService.remove 'tallies'
 
-app.factory 'Favorites' (Datasheets) ->
-  favorites = []
-
-  datasheets = Datasheets.datasheets.then (data) ->
-    favorites.push (Datasheets.fields! |> find (.name is "Recreation"))
-    favorites.push (Datasheets.fields! |> find (.name is "Offshore Recreation"))
+app.factory 'Favorites' (Datasheets, localStorageService) ->
+  if not favorites = localStorageService.get "favorites"
+    favorites = []
+    datasheets = Datasheets.datasheets.then (data) ->
+      favorites.push (Datasheets.fields! |> find (.name is "Recreation"))
+      favorites.push (Datasheets.fields! |> find (.name is "Offshore Recreation"))
 
   favorites: -> favorites
+  save: -> localStorageService.set 'favorites' favorites
   add: (field) ->
     if not @get field and favorites.length < 5
       favorites.push field

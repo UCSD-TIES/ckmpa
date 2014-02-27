@@ -1,11 +1,8 @@
 {map, filter, find, flatten, any} = require 'prelude-ls'
 app = angular.module 'ckmpa', [
   'ionic'
-  'pasvaz.bindonce'
   'LocalStorageModule'
   'ngResource'
-  'ngSanitize'
-  'ngAnimate'
   'ckmpa.filters'
   'ckmpa.services'
   'ckmpa.directives'

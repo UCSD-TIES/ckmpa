@@ -34,15 +34,25 @@ MpaController = function($scope, Mpas, $stateParams){
     return $scope.mpas = mpas;
   });
 };
-DataController = function($scope, $state, $stateParams, $ionicLoading, $ionicModal, Datasheets, Favorites){
-  var datasheets, rightButtons;
+DataController = function($scope, $state, $stateParams, $ionicLoading, $ionicModal, $timeout, Datasheets, Favorites){
+  var time_interval, timer, saveTallies, datasheets, rightButtons;
   $scope.mpa_id = $stateParams.mpaID;
   $scope.mpa_name = $stateParams.mpaName;
   $scope.transect_name = $stateParams.transectName;
   $scope.comments = Datasheets.comments();
   $scope.favorites = [];
   $scope.categories = [];
+  time_interval = 100000;
+  saveTallies = function(){
+    Datasheets.saveTallies();
+    return timer = $timeout(saveTallies, time_interval);
+  };
+  timer = $timeout(saveTallies, time_interval);
+  $scope.stop = function(){
+    return $timeout.cancel(timer);
+  };
   $scope.submit = function(){
+    $timeout.cancel(timer);
     return $state.go('summary');
   };
   $scope.addFavorite = function(name){
@@ -73,7 +83,8 @@ DataController = function($scope, $state, $stateParams, $ionicLoading, $ionicMod
     return $scope.modal.show();
   };
   $scope.closeModal = function(){
-    return $scope.modal.hide();
+    $scope.modal.hide();
+    return Favorites.save();
   };
   $scope.$on('$destroy', function(){
     return $scope.modal.remove();
@@ -99,7 +110,8 @@ SummaryController = function($scope, $state, $stateParams, Datasheets){
     return Datasheets.getTally(name, sub, cat);
   };
   $scope.submit = function(){
-    return $state.go('finish');
+    $state.go('finish');
+    return Datasheets.resetTallies();
   };
   datasheets = Datasheets.datasheets.then(function(data){
     return $scope.categories = Datasheets.categories();

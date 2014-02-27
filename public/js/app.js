@@ -1,6 +1,6 @@
 var ref$, map, filter, find, flatten, any, app;
 ref$ = require('prelude-ls'), map = ref$.map, filter = ref$.filter, find = ref$.find, flatten = ref$.flatten, any = ref$.any;
-app = angular.module('ckmpa', ['ionic', 'pasvaz.bindonce', 'LocalStorageModule', 'ngResource', 'ngSanitize', 'ngAnimate', 'ckmpa.filters', 'ckmpa.services', 'ckmpa.directives', 'ckmpa.controllers']);
+app = angular.module('ckmpa', ['ionic', 'LocalStorageModule', 'ngResource', 'ckmpa.filters', 'ckmpa.services', 'ckmpa.directives', 'ckmpa.controllers']);
 app.config(function($stateProvider, $urlRouterProvider){
   $stateProvider.state('login', {
     url: '/',
