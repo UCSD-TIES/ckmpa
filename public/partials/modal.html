@@ -34,9 +34,9 @@
         </div>
         
         <div class="item tabs" ng-show='showThis' ng-if="category.subcategories" ng-init="activeTab = 0">
-          <div class="tab-item" ng-repeat="sub in category.subcategories" ng-bind="sub.name"
-            ng-class="{positive: $parent.activeTab == $index}" ng-click="$parent.activeTab = $index" >
-          </div>
+          <a class="tab-item" ng-repeat="sub in category.subcategories" ng-bind="sub.name"
+            ng-class="{'active-tab': $parent.activeTab == $index}" ng-click="$parent.activeTab = $index" >
+          </a>
         </div>
 
         <div ng-repeat="field in category.fields | filter:{name:search}" ng-show="showThis">
