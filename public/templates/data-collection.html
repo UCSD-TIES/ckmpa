@@ -20,9 +20,9 @@
 		</div>
 
 		<div class="item tabs" ng-show='showThis && category.subcategories'>
-			<div class="tab-item" ng-repeat="sub in category.subcategories" ng-bind="sub.name"
+			<a class="tab-item" ng-repeat="sub in category.subcategories" ng-bind="sub.name"
 				ng-class="{'active-tab': $parent.activeTab == $index}" ng-click="$parent.activeTab = $index" >
-			</div>
+			</a>
 		</div>
 
 		<div ng-repeat="field in category.fields" ng-show='showThis && !category.subcategories.length'>
