@@ -32,6 +32,12 @@ return array(
           'allow_headers'=> array('Content-Type', 'X-Requested-With', 'X-Auth-Token'),
           'allow_methods'=> array('POST', 'PUT', 'GET', 'DELETE'),
           'max_age' => 3600
+      ),
+      '^/auth' => array(
+          'allow_origin'=> array('*'),
+          'allow_headers'=> array('Content-Type', 'X-Requested-With', 'X-Auth-Token'),
+          'allow_methods'=> array('POST', 'PUT', 'GET', 'DELETE'),
+          'max_age' => 3600
       )
   ),
 
