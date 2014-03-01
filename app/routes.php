@@ -76,12 +76,15 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth.admin'), function ()
 	Route::get('graphs-observations', array('as' => 'graphs-observations', 'uses' => 'AdminController@graphsObservations'));
 });
 
-Route::group(array('prefix' => 'api'), function ()
+Route::group(array('prefix' => 'api', 'before' => 'auth.token'), function ()
 {
-	Route::controller('auth', 'AuthController');
-	Route::controller('users', 'UserAPIController');
 	Route::controller('mpas', 'MpaAPIController');
 	Route::controller('datasheets', 'DatasheetAPIController');
 });
 
 Route::post('/forget', 'UsersController@forgetUsername');
+
+// Auth Token Routes
+Route::get('auth', 'Tappleby\AuthToken\AuthTokenController@index');
+Route::post('auth', 'Tappleby\AuthToken\AuthTokenController@store');
+Route::delete('auth', 'Tappleby\AuthToken\AuthTokenController@destroy');

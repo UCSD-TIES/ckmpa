@@ -51,6 +51,14 @@ App::error(function(Exception $exception, $code)
 	Log::error($exception);
 });
 
+App::error(function(AuthTokenNotAuthorizedException $exception) {
+	if(Request::ajax()) {
+		return Response::json(array('error' => $exception->getMessage()), $exception->getCode());
+	}
+
+	//Handle non ajax response
+});
+
 /*
 |--------------------------------------------------------------------------
 | Maintenance Mode Handler
