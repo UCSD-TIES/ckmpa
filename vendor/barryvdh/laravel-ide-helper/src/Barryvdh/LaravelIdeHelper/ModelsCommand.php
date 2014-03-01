@@ -3,13 +3,15 @@
  * Laravel IDE Helper Generator
  *
  * @author    Barry vd. Heuvel <barryvdh@gmail.com>
- * @copyright 2013 Barry vd. Heuvel / Fruitcake Studio (http://www.fruitcakestudio.nl)
+ * @copyright 2014 Barry vd. Heuvel / Fruitcake Studio (http://www.fruitcakestudio.nl)
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      https://github.com/barryvdh/laravel-ide-helper
  */
 
 namespace Barryvdh\LaravelIdeHelper;
+
 use Illuminate\Console\Command;
+use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\ClassLoader\ClassMapGenerator;
@@ -17,6 +19,7 @@ use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\DocBlock\Context;
 use phpDocumentor\Reflection\DocBlock\Tag;
 use phpDocumentor\Reflection\DocBlock\Serializer as DocBlockSerializer;
+
 /**
  * A command to generate autocomplete information for your IDE
  *
@@ -42,7 +45,7 @@ class ModelsCommand extends Command {
     protected $properties = array();
     protected $methods = array();
     protected $write = false;
-    protected $dir;
+    protected $dirs = array();
     protected $reset;
 
 
@@ -56,14 +59,14 @@ class ModelsCommand extends Command {
     {
         $filename = $this->option('filename');
         $this->write = $this->option('write');
-        $this->dir = $this->option('dir');
+        $this->dirs = array_merge($this->laravel['config']->get('laravel-ide-helper::model_locations'), $this->option('dir'));
         $model = $this->argument('model');
         $ignore = $this->option('ignore');
         $this->reset = $this->option('reset');
 
         //If filename is default and Write is not specified, ask what to do
         if(!$this->write && $filename === $this->filename && !$this->option('nowrite')){
-            if($this->confirm("Do you want to overwrite the existing model files for '$model'? Choose no to write to $filename instead? (Yes/No): ")){
+            if($this->confirm("Do you want to overwrite the existing model files? Choose no to write to $filename instead? (Yes/No): ")){
                 $this->write = true;
             }
         }
@@ -89,7 +92,7 @@ class ModelsCommand extends Command {
     protected function getArguments()
     {
         return array(
-            array('model', InputArgument::OPTIONAL, 'Which models to include', '*'),
+            array('model', InputArgument::OPTIONAL | InputArgument::IS_ARRAY, 'Which models to include', array()),
         );
     }
 
@@ -102,7 +105,7 @@ class ModelsCommand extends Command {
     {
         return array(
             array('filename', 'F', InputOption::VALUE_OPTIONAL, 'The path to the helper file', $this->filename),
-            array('dir', 'D', InputOption::VALUE_OPTIONAL, 'The model dir','app/models'),
+            array('dir', 'D', InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'The model dir', array()),
             array('write', 'W', InputOption::VALUE_NONE, 'Write to Model file'),
             array('nowrite', 'N', InputOption::VALUE_NONE, 'Don\'t write to Model file'),
             array('reset', 'R', InputOption::VALUE_NONE, 'Remove the original phpdocs instead of appending'),
@@ -110,7 +113,7 @@ class ModelsCommand extends Command {
         );
     }
 
-    protected function generateDocs($model, $ignore = ''){
+    protected function generateDocs($loadModels, $ignore = ''){
 
 
         $output = "<?php
@@ -123,10 +126,13 @@ class ModelsCommand extends Command {
  */
 \n\n";
 
-        if($model === '*'){
+        if(empty($loadModels)){
             $models = $this->loadModels();
         }else{
-            $models = explode(',', $model);
+            $models = array();
+            foreach($loadModels as $model){
+                $models = array_merge($models, explode(',', $model));
+            }
         }
 
         $ignore = explode(',', $ignore);
@@ -146,6 +152,9 @@ class ModelsCommand extends Command {
                     $reflectionClass = new \ReflectionClass($name);
                     if (!$reflectionClass->IsInstantiable()) {
                         throw new \Exception($name . ' is not instanciable.');
+                    }elseif(!$reflectionClass->isSubclassOf('Illuminate\Database\Eloquent\Model')){
+                        $this->comment("Class '$name' is not a model");
+                        continue;
                     }
 
                     $model = new $name();
@@ -167,11 +176,13 @@ class ModelsCommand extends Command {
 
 
     protected function loadModels(){
-        $dir = base_path().'/'.$this->dir;
         $models = array();
-        if(file_exists($dir)){
-            foreach(ClassMapGenerator::createMap($dir) as $model=> $path){
-                $models[] = $model;
+        foreach($this->dirs as $dir){
+            $dir = base_path() . '/' . $dir;
+            if(file_exists($dir)){
+                foreach(ClassMapGenerator::createMap($dir) as $model=> $path){
+                    $models[] = $model;
+                }
             }
         }
         return $models;
@@ -192,37 +203,41 @@ class ModelsCommand extends Command {
         if($columns){
             foreach ($columns as $column) {
                 $name = $column->getName();
-                $type =  $column->getType()->getName();
-
-                switch($type){
-                    case 'string':
-                    case 'text':
-                    case 'date':
-                    case 'time':
-                    case 'guid':
-                        $type = 'string';
-                        break;
-                    case 'integer':
-                    case 'bigint':
-                    case 'smallint':
-                        $type = 'integer';
-                        break;
-                    case 'decimal':
+                if(in_array($name, $model->getDates())){
+                    $type = '\Carbon\Carbon';
+                }else{
+                    $type =  $column->getType()->getName();
+                    switch($type){
+                        case 'string':
+                        case 'text':
+                        case 'date':
+                        case 'time':
+                        case 'guid':
+                        case 'datetimetz':
+                        case 'datetime':
+                            $type = 'string';
+                            break;
+                        case 'integer':
+                        case 'bigint':
+                        case 'smallint':
+                            $type = 'integer';
+                            break;
+                        case 'decimal':
                         case 'float':
-                        $type = 'float';
-                        break;
-                    case 'boolean':
-                        $type = 'boolean';
-                        break;
-                    case 'datetimetz':  //String or DateTime, depending on $dates
-                    case 'datetime':
-                        $type = '\Carbon\Carbon';
-                        break;
-                    default:
-                        $type = 'mixed';
-                        break;
+                            $type = 'float';
+                            break;
+                        case 'boolean':
+                            $type = 'boolean';
+                            break;
+                        default:
+                            $type = 'mixed';
+                            break;
+                    }
                 }
+
+
                 $this->setProperty($name, $type, true, true);
+                $this->setMethod(Str::camel("where_".$name), '\Illuminate\Database\Query\Builder|\\'.get_class($model), array('$value'));
             }
         }
     }
@@ -233,66 +248,64 @@ class ModelsCommand extends Command {
     protected function getPropertiesFromMethods($model){
         $methods = get_class_methods($model);
         if($methods){
-           foreach($methods as $method){
-               if(\Str::startsWith($method, 'get') && \Str::endsWith($method, 'Attribute') && $method !== 'setAttribute'){
-                   //Magic get<name>Attribute
-                   $name =  \Str::snake(substr($method, 3, -9));
-                   if(!empty($name)){
+            foreach($methods as $method){
+                if(Str::startsWith($method, 'get') && Str::endsWith($method, 'Attribute') && $method !== 'getAttribute'){
+                    //Magic get<name>Attribute
+                    $name =  Str::snake(substr($method, 3, -9));
+                    if(!empty($name)){
                         $this->setProperty($name, null, true, null);
-                   }
-               }elseif(\Str::startsWith($method, 'set') && \Str::endsWith($method, 'Attribute') && $method !== 'setAttribute'){
-                   //Magic set<name>Attribute
-                   $name =  \Str::snake(substr($method, 3, -9));
-                   if(!empty($name)){
+                    }
+                }elseif(Str::startsWith($method, 'set') && Str::endsWith($method, 'Attribute') && $method !== 'setAttribute'){
+                    //Magic set<name>Attribute
+                    $name =  Str::snake(substr($method, 3, -9));
+                    if(!empty($name)){
                         $this->setProperty($name, null, null, true);
-                   }
-               }elseif(\Str::startsWith($method, 'scope') && $method !== 'scopeQuery'){
-                   //Magic set<name>Attribute
-                   $name =  \Str::camel(substr($method, 5));
-                   if(!empty($name)){
-                       $reflection = new \ReflectionMethod($model, $method);
-                       $args = $this->getParameters($reflection);
-                       //Remove the first ($query) argument
-                       array_shift($args);
-                       $this->setMethod($name, $reflection->class, $args);
-                   }
-               }elseif(!method_exists('Eloquent', $method) && !\Str::startsWith($method, 'get')){
+                    }
+                }elseif(Str::startsWith($method, 'scope') && $method !== 'scopeQuery'){
+                    //Magic set<name>Attribute
+                    $name =  Str::camel(substr($method, 5));
+                    if(!empty($name)){
+                        $reflection = new \ReflectionMethod($model, $method);
+                        $args = $this->getParameters($reflection);
+                        //Remove the first ($query) argument
+                        array_shift($args);
+                        $this->setMethod($name, '\\'.$reflection->class, $args);
+                    }
+                }elseif(!method_exists('Eloquent', $method) && !Str::startsWith($method, 'get')){
 
-                   //Use reflection to inspect the code, based on Illuminate/Support/SerializableClosure.php
-                   $reflection = new \ReflectionMethod($model, $method);
+                    //Use reflection to inspect the code, based on Illuminate/Support/SerializableClosure.php
+                    $reflection = new \ReflectionMethod($model, $method);
 
-                   $file = new \SplFileObject($reflection->getFileName());
-                   $file->seek($reflection->getStartLine() - 1);
+                    $file = new \SplFileObject($reflection->getFileName());
+                    $file->seek($reflection->getStartLine() - 1);
 
-                   $code = '';
-                   while ($file->key() < $reflection->getEndLine())
-                   {
-                       $code .= $file->current(); $file->next();
-                   }
-                   $begin = strpos($code, 'function(');
-                   $code = substr($code, $begin, strrpos($code, '}') - $begin + 1);
+                    $code = '';
+                    while ($file->key() < $reflection->getEndLine())
+                    {
+                        $code .= $file->current(); $file->next();
+                    }
+                    $begin = strpos($code, 'function(');
+                    $code = substr($code, $begin, strrpos($code, '}') - $begin + 1);
 
-                   $begin = stripos($code, 'return $this->');
-                   $parts = explode("'", substr($code, $begin+14),3);  //"return $this->" is 14 chars
-                   if (isset($parts[2]))
-                   {
-                       list($relation, $returnModel, $rest) = $parts;
-                       $returnModel = "\\".ltrim($returnModel, "\\");
-                       $relation = trim($relation, ' (');
-    
-                       if($relation === "belongsTo" or $relation === 'hasOne'){
-                           //Single model is returned
-                           $this->setProperty($method, $returnModel, true, null);
-                       }elseif($relation === "belongsToMany" or $relation === 'hasMany'){
-                           //Collection or array of models (because Collection is Arrayable)
-                           $this->setProperty($method,  '\Illuminate\Database\Eloquent\Collection|'.$returnModel.'[]', true, null);
-                       }
-                   }else{
-                       //Not a relation
-                   }
+                    foreach(array('hasMany', 'belongsToMany', 'hasOne', 'belongsTo') as $relation){
+                        $search = '$this->'.$relation.'(';
+                        if($pos = stripos($code, $search)){
+                            $code = substr($code, $pos + strlen($search));
+                            $arguments = explode(',', substr($code, 0, stripos($code, ')')));
+                            //Remove quotes, ensure 1 \ in front of the model
+                            $returnModel = "\\".ltrim(trim($arguments[0], " \"'"), "\\");
+                            if($relation === "belongsToMany" or $relation === 'hasMany'){
+                                //Collection or array of models (because Collection is Arrayable)
+                                $this->setProperty($method,  '\Illuminate\Database\Eloquent\Collection|'.$returnModel.'[]', true, null);
+                            }else{
+                                //Single model is returned
+                                $this->setProperty($method, $returnModel, true, null);
+                            }
+                        }
+                    }
 
-               }
-           }
+                }
+            }
         }
     }
 

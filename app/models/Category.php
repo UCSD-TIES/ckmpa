@@ -10,6 +10,12 @@
  * @property integer $datasheet_id
  * @property-read \Datasheet $datasheet
  * @property-read \Illuminate\Database\Eloquent\Collection|\Field[] $fields
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Subcategory[] $subcategories
+ * @method static \Illuminate\Database\Query\Builder|\Category whereId($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Category whereCreatedAt($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Category whereUpdatedAt($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Category whereName($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Category whereDatasheetId($value) 
  */
 class Category extends Eloquent {
 	public static $rules = array(

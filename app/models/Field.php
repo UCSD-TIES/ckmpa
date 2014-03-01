@@ -12,6 +12,12 @@
  * @property-read \Illuminate\Database\Eloquent\Collection|\Tally[] $tallies
  * @property string $type
  * @property-read \Illuminate\Database\Eloquent\Collection|\Option[] $options
+ * @method static \Illuminate\Database\Query\Builder|\Field whereId($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Field whereCreatedAt($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Field whereUpdatedAt($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Field whereName($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Field whereType($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Field whereCategoryId($value) 
  */
 class Field extends Eloquent {
 	public static $rules = array(

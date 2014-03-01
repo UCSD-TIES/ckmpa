@@ -1,18 +1,66 @@
 <?php namespace Codesleeve\AssetPipeline\Filters;
 
 use DateTime;
+use Assetic\Asset\AssetInterface;
 use Assetic\Cache\CacheInterface;
+use Codesleeve\Sprockets\Interfaces\ClientCacheInterface;
 
-class ClientCacheFilter implements CacheInterface
+class ClientCacheFilter implements ClientCacheInterface
 {
     /**
-     * This is a decorator class which uses an underlying CacheInterface
+     * Underlying cache driver we use
      * 
-     * @param CacheInterface $cache
+     * @var CacheInterface
      */
-    public function __construct(CacheInterface $cache)
+    protected $cache;
+
+    /**
+     * AssetCache that asset pipeline will pass to us
+     * 
+     * @var AssetCache
+     */
+    protected $asset;
+
+    /**
+     * Allows us to get the existing cache
+     * 
+     * @return CacheInterface
+     */
+    public function getServerCache()
+    {
+        return $this->cache;
+    }
+
+    /**
+     * Allows us to delegate the cache driver to this client cache
+     * 
+     * @param CacheInterface $driver
+     */
+    public function setServerCache(CacheInterface $cache)
     {
         $this->cache = $cache;
+    }
+
+    /**
+     * Allows us to know our parent asset cache so we can do stuff like
+     * last modified time
+     * 
+     * @return AssetCache
+     */
+    public function getAssetCache()
+    {
+        return $this->asset;
+    }
+
+    /**
+     * Allows us to set our parent asset cache (from asset pipeline)
+     * so we can do stuff like last modified time
+     * 
+     * @param AssetInterface $cache
+     */
+    public function setAssetCache(AssetInterface $asset)
+    {
+        $this->asset = $asset;
     }
 
     /**
@@ -39,11 +87,11 @@ class ClientCacheFilter implements CacheInterface
     public function get($key)
     {
         $lastModified = $this->getLastTimeModified($key);
-        $modifiedSince = isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) ? strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']) : 0;
+        $modifiedSince = isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) ? $_SERVER['HTTP_IF_MODIFIED_SINCE'] : 0;
 
         header('Last-Modified: '. $lastModified);
 
-        if ($modifiedSince >= strtotime($lastModified))
+        if ($modifiedSince >= $lastModified)
         {
             header('HTTP/1.0 304 Not Modified');
             exit;
@@ -72,11 +120,6 @@ class ClientCacheFilter implements CacheInterface
      */
     public function remove($key)
     {
-        if (isset($_SESSION["client.cache.filter.$key"]))
-        {
-            unset($_SESSION["client.cache.filter.$key"]);
-        }
-
         return $this->cache->remove($key);
     }
 
@@ -91,12 +134,7 @@ class ClientCacheFilter implements CacheInterface
      */
     private function getLastTimeModified($key)
     {
-        if (!isset($_SESSION["client.cache.filter.$key"]))
-        {
-            $date = new DateTime;
-            $_SESSION["client.cache.filter.$key"] = $date->format('r');
-        }
-
-        return $_SESSION["client.cache.filter.$key"];
+        return filemtime($this->asset->getSourceRoot() . '/' . $this->asset->getSourcePath());
     }
+
 }

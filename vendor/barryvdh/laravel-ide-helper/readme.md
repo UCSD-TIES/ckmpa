@@ -53,7 +53,7 @@ The Illuminate/Support/helpers.php is already set-up, but you can add/remove you
 If you don't want to write your properties yourself, you can use the command `ide-helper:models` to generate
 phpDocs, based on table columns, relations and getters/setters. Still in beta, so please provide feedback if you want.
 You can now also write the comments directly to your Model file, using the `--write (-W)` option. By default, you are asked to overwrite or
-write to a seperate file (_ide_helper_models.php) (You can force No with `--nowrite (-N)`).
+write to a separate file (\_ide\_helper\_models.php) (You can force No with `--nowrite (-N)`).
 Please make sure to backup your models, before writing the info.
 It should keep the existing comments and only append new properties/methods. The existing phpdoc is replaced, or added if not found.
 With the `--reset (-R)` option, the existing phpdocs are ignored, only the newly found columns/relations are saved as phpdocs.
@@ -75,11 +75,13 @@ With the `--reset (-R)` option, the existing phpdocs are ignored, only the newly
 
 By default, models in app/models are scanned. The optional argument tells what models to use (also outside app/models).
 
-    php artisan ide-helper:models Post,User
+    php artisan ide-helper:models Post User
 
 You can also scan a different directory, using the --dir option (relative from the base path):
 
-    php artisan ide-helper:models --dir="app/workbench/name/package/models"
+    php artisan ide-helper:models --dir="app/workbench/name/package/models" --dir="app/src/Model"
+   
+You can publish the config file (`php artisan config:publish barryvdh/laravel-ide-helper`) and set the default directories.
 
 Models can be ignored using the --ignore (-I) option
 

@@ -865,7 +865,9 @@ class Process
     public function setEnv(array $env)
     {
         // Process can not handle env values that are arrays
-        $env = array_filter($env, function ($value) { if (!is_array($value)) { return true; } });
+        $env = array_filter($env, function ($value) {
+            return !is_array($value);
+        });
 
         $this->env = array();
         foreach ($env as $key => $value) {
@@ -1083,6 +1085,10 @@ class Process
             return self::$sigchild;
         }
 
+        if (!function_exists('phpinfo')) {
+            return self::$sigchild = false;
+        }
+
         ob_start();
         phpinfo(INFO_GENERAL);
 
@@ -1113,6 +1119,7 @@ class Process
      * Reads pipes, executes callback.
      *
      * @param Boolean $blocking Whether to use blocking calls or not.
+     * @param Boolean $close    Whether to close file handles or not.
      */
     private function readPipes($blocking, $close)
     {

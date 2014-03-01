@@ -29,6 +29,20 @@ return array(
         base_path().'/vendor/laravel/framework/src/Illuminate/Support/helpers.php',
     ),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Model locations to include
+    |--------------------------------------------------------------------------
+    |
+    | Define in which directories the ide-helper:models command should look
+    | for models.
+    |
+    */
+
+    'model_locations' => array(
+        'app/models',
+    ),
+
 
     /*
     |--------------------------------------------------------------------------

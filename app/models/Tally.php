@@ -13,6 +13,12 @@
  * @property-read \Field $field
  * @property integer $patrol_id
  * @property-read \Patrol $patrol
+ * @method static \Illuminate\Database\Query\Builder|\Tally whereId($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Tally whereCreatedAt($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Tally whereUpdatedAt($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Tally whereTally($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Tally wherePatrolId($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Tally whereFieldId($value) 
  */
 class Tally extends Eloquent {
 	protected $table = 'tallies';

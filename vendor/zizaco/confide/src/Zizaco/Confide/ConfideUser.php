@@ -50,8 +50,8 @@ class ConfideUser extends Ardent implements UserInterface {
     public static $rules = array(
         'username' => 'required|alpha_dash|unique:users',
         'email' => 'required|email|unique:users',
-        'password' => 'required|between:4,11|confirmed',
-        'password_confirmation' => 'between:4,11',
+        'password' => 'required|min:4|confirmed',
+        'password_confirmation' => 'min:4',
     );
 
     /**
@@ -131,9 +131,14 @@ class ConfideUser extends Ardent implements UserInterface {
     public function resetPassword( $params )
     {
         $password = array_get($params, 'password', '');
-        $passwordConfirmation = array_get($params, 'password_confirmation', '');
 
-        if ( $password == $passwordConfirmation )
+        $passwordValidators = array(
+            'password' => static::$rules['password'],
+            'password_confirmation' => static::$rules['password_confirmation'],
+        );
+        $validationResult = static::$app['confide.repository']->validate($passwordValidators);
+
+        if ( $validationResult )
         {
             return static::$app['confide.repository']
                 ->changePassword( $this, static::$app['hash']->make($password) );
@@ -327,8 +332,8 @@ class ConfideUser extends Ardent implements UserInterface {
     protected $updateRules = array(
         'username' => 'required|alpha_dash',
         'email' => 'required|email',
-        'password' => 'between:4,11|confirmed',
-        'password_confirmation' => 'between:4,11',
+        'password' => 'min:4|confirmed',
+        'password_confirmation' => 'min:4',
     );
 
     /**

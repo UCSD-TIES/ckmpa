@@ -1,5 +1,9 @@
 <?php namespace Codesleeve\Sprockets\Parsers;
 
+use Assetic\Asset\FileAsset;
+use Codesleeve\Sprockets\Cache\AssetCache;
+use Codesleeve\Sprockets\Cache\DependencyValidationCache;
+
 class ConfigParser extends \ArrayObject
 {
     public $mime = null;
@@ -79,6 +83,56 @@ class ConfigParser extends \ArrayObject
     public function concat()
     {
         return in_array($this->get('environment', 'production'), $this->get('concat', array('production')));
+    }
+
+    /**
+     * Returns if we should cache or not
+     * 
+     * @return bool
+     */
+    public function cache()
+    {
+        return in_array($this->get('environment', 'production'), $this->get('cache', array('production')));
+    }
+
+    /**
+     * Returns the server side cache for $files
+     *
+     * If we are not caching then we need to check
+     * all files for dependencies.
+     * 
+     * @return AssetCache
+     */
+    public function serverCache(FileAsset $files)
+    {
+        $driver = new DependencyValidationCache($this->get('cache_server'), $this, $this->cache());
+
+        $cache = new AssetCache($files, $driver);
+
+        $driver->setAssetCache($cache);
+
+        return $cache;
+    }
+
+    /**
+     * Returns the client cache for $files
+     * 
+     * @param  FileAsset $files
+     * @return AssetCache
+     */
+    public function clientCache(FileAsset $files)
+    {
+        $client = $this->get('cache_client');
+
+        $server = $this->get('cache_server');
+
+        $cache = new AssetCache($files, $client);
+
+        $client->setServerCache($server);
+
+        $client->setAssetCache($cache);
+
+        return $cache;
     }
 
     /**

@@ -13,6 +13,11 @@
  * @property integer $mpa_id
  * @property-read \Mpa $mpa
  * @property-read \Illuminate\Database\Eloquent\Collection|\Patrol[] $patrols
+ * @method static \Illuminate\Database\Query\Builder|\Transect whereId($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Transect whereCreatedAt($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Transect whereUpdatedAt($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Transect whereName($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Transect whereMpaId($value) 
  */
 class Transect extends Eloquent {
 	public static $rules = array(

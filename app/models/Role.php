@@ -12,6 +12,10 @@ use Zizaco\Entrust\EntrustRole;
  * @property-read \Illuminate\Database\Eloquent\Collection|\User[] $users
  * @property-read \Illuminate\Database\Eloquent\Collection|\Permission[] $perms
  * @property mixed $permissions
+ * @method static \Illuminate\Database\Query\Builder|\Role whereId($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Role whereName($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Role whereCreatedAt($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Role whereUpdatedAt($value) 
  */
 class Role extends EntrustRole
 {

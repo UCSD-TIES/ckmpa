@@ -12,6 +12,11 @@
  * @property-read \Illuminate\Database\Eloquent\Collection|\Patrol[] $patrols
  * @property-read \Datasheet $datasheet
  * @property-read \Illuminate\Database\Eloquent\Collection|\Transect[] $transects
+ * @method static \Illuminate\Database\Query\Builder|\Mpa whereId($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Mpa whereCreatedAt($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Mpa whereUpdatedAt($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Mpa whereName($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Mpa whereDatasheetId($value) 
  */
 class Mpa extends Eloquent {
 	public static $rules = array(

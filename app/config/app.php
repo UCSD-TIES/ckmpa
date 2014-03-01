@@ -111,7 +111,8 @@ return array(
 		'Zizaco\Entrust\EntrustServiceProvider',
 		'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
 		'Codesleeve\AssetPipeline\AssetPipelineServiceProvider',
-		'Barryvdh\Cors\CorsServiceProvider'
+		'Barryvdh\Cors\CorsServiceProvider',
+		'Tappleby\AuthToken\AuthTokenServiceProvider'
 	),
 
 	/*
@@ -179,7 +180,9 @@ return array(
 		'View'            => 'Illuminate\Support\Facades\View',
 		'Confide'         => 'Zizaco\Confide\ConfideFacade',
 		'Entrust'    => 'Zizaco\Entrust\EntrustFacade',
-		'Carbon'     => 'Carbon\Carbon'
+		'Carbon'     => 'Carbon\Carbon',
+		'AuthToken' => 'Tappleby\Support\Facades\AuthToken',
+		'AuthTokenNotAuthorizedException' => 'Tappleby\AuthToken\Exceptions\NotAuthorizedException'
 	),
 
 );

@@ -531,6 +531,17 @@ class App extends Illuminate\Support\Facades\App{
 	 }
 
 	/**
+	 * Determine if the given service is a deferred service.
+	 *
+	 * @param string  $service
+	 * @return bool
+	 * @static 
+	 */
+	 public static function isDeferredService($service){
+		return Illuminate\Foundation\Application::isDeferredService($service);
+	 }
+
+	/**
 	 * Get or set the request class for the application.
 	 *
 	 * @param string  $class
@@ -1929,6 +1940,26 @@ class Blade extends Illuminate\Support\Facades\Blade{
 	 }
 
 	/**
+	 * Gets the content tags used for the compiler.
+	 *
+	 * @return string
+	 * @static 
+	 */
+	 public static function getContentTags(){
+		return Illuminate\View\Compilers\BladeCompiler::getContentTags();
+	 }
+
+	/**
+	 * Gets the escaped content tags used for the compiler.
+	 *
+	 * @return string
+	 * @static 
+	 */
+	 public static function getEscapedContentTags(){
+		return Illuminate\View\Compilers\BladeCompiler::getEscapedContentTags();
+	 }
+
+	/**
 	 * Create a new compiler instance.
 	 *
 	 * @param \Illuminate\Filesystem\Filesystem  $files
@@ -2097,9 +2128,9 @@ class Cache extends Illuminate\Support\Facades\Cache{
 	/**
 	 * Store an item in the cache.
 	 *
-	 * @param string              $key
-	 * @param mixed               $value
-	 * @param Carbon|Datetime|int $minutes
+	 * @param string  $key
+	 * @param mixed   $value
+	 * @param \DateTime|int  $minutes
 	 * @return void
 	 * @static 
 	 */
@@ -2110,9 +2141,9 @@ class Cache extends Illuminate\Support\Facades\Cache{
 	/**
 	 * Store an item in the cache if the key does not exist.
 	 *
-	 * @param string              $key
-	 * @param mixed               $value
-	 * @param Carbon|Datetime|int $minutes
+	 * @param string  $key
+	 * @param mixed   $value
+	 * @param \DateTime|int  $minutes
 	 * @return bool
 	 * @static 
 	 */
@@ -2123,9 +2154,9 @@ class Cache extends Illuminate\Support\Facades\Cache{
 	/**
 	 * Get an item from the cache, or store the default value.
 	 *
-	 * @param string              $key
-	 * @param Carbon|Datetime|int $minutes
-	 * @param Closure             $callback
+	 * @param string  $key
+	 * @param \DateTime|int  $minutes
+	 * @param Closure  $callback
 	 * @return mixed
 	 * @static 
 	 */
@@ -2236,13 +2267,92 @@ class Cache extends Illuminate\Support\Facades\Cache{
 	/**
 	 * Register a macro with the Cache class.
 	 *
-	 * @param string $name
-	 * @param callable $callback
+	 * @param string    $name
+	 * @param callable  $callback
 	 * @return void
 	 * @static 
 	 */
 	 public static function macro($name, $callback){
 		 Illuminate\Cache\Repository::macro($name, $callback);
+	 }
+
+	/**
+	 * Increment the value of an item in the cache.
+	 *
+	 * @param string  $key
+	 * @param mixed   $value
+	 * @return void
+	 * @throws \LogicException
+	 * @static 
+	 */
+	 public static function increment($key, $value = 1){
+		 Illuminate\Cache\FileStore::increment($key, $value);
+	 }
+
+	/**
+	 * Decrement the value of an item in the cache.
+	 *
+	 * @param string  $key
+	 * @param mixed   $value
+	 * @return void
+	 * @throws \LogicException
+	 * @static 
+	 */
+	 public static function decrement($key, $value = 1){
+		 Illuminate\Cache\FileStore::decrement($key, $value);
+	 }
+
+	/**
+	 * Store an item in the cache indefinitely.
+	 *
+	 * @param string  $key
+	 * @param mixed   $value
+	 * @return void
+	 * @static 
+	 */
+	 public static function forever($key, $value){
+		 Illuminate\Cache\FileStore::forever($key, $value);
+	 }
+
+	/**
+	 * Remove an item from the cache.
+	 *
+	 * @param string  $key
+	 * @return void
+	 * @static 
+	 */
+	 public static function forget($key){
+		 Illuminate\Cache\FileStore::forget($key);
+	 }
+
+	/**
+	 * Remove all items from the cache.
+	 *
+	 * @return void
+	 * @static 
+	 */
+	 public static function flush(){
+		 Illuminate\Cache\FileStore::flush();
+	 }
+
+	/**
+	 * Get the Filesystem instance.
+	 *
+	 * @return \Illuminate\Filesystem\Filesystem
+	 * @static 
+	 */
+	 public static function getFilesystem(){
+		return Illuminate\Cache\FileStore::getFilesystem();
+	 }
+
+	/**
+	 * Get the working directory of the cache.
+	 *
+	 * @return string
+	 * @static 
+	 */
+	 public static function getDirectory(){
+		return Illuminate\Cache\FileStore::getDirectory();
 	 }
 
 }
@@ -2521,11 +2631,13 @@ class Cookie extends Illuminate\Support\Facades\Cookie{
 	 * Expire the given cookie.
 	 *
 	 * @param string  $name
+	 * @param string  $path
+	 * @param string  $domain
 	 * @return \Symfony\Component\HttpFoundation\Cookie
 	 * @static 
 	 */
-	 public static function forget($name){
-		return Illuminate\Cookie\CookieJar::forget($name);
+	 public static function forget($name, $path = null, $domain = null){
+		return Illuminate\Cookie\CookieJar::forget($name, $path, $domain);
 	 }
 
 	/**
@@ -3364,6 +3476,17 @@ class DB extends Illuminate\Support\Facades\DB{
 	 }
 
 	/**
+	 * Determine whether we're logging queries.
+	 *
+	 * @return bool
+	 * @static 
+	 */
+	 public static function logging(){
+		//Method inherited from Illuminate\Database\Connection
+		return Illuminate\Database\MySqlConnection::logging();
+	 }
+
+	/**
 	 * Get the name of the connected database.
 	 *
 	 * @return string
@@ -3720,6 +3843,17 @@ class Eloquent extends Illuminate\Database\Eloquent\Model{
 	 */
 	 public static function select($columns = array()){
 		return Illuminate\Database\Query\Builder::select($columns);
+	 }
+
+	/**
+	 * Add a new "raw" select expression to the query.
+	 *
+	 * @param string  $expression
+	 * @return \Illuminate\Database\Query\Builder|static
+	 * @static 
+	 */
+	 public static function selectRaw($expression){
+		return Illuminate\Database\Query\Builder::selectRaw($expression);
 	 }
 
 	/**
@@ -4290,7 +4424,7 @@ class Eloquent extends Illuminate\Database\Eloquent\Model{
 	/**
 	 * Indicate that the query results should be cached.
 	 *
-	 * @param \Carbon\Carbon|\Datetime|int  $minutes
+	 * @param \DateTime|int  $minutes
 	 * @param string  $key
 	 * @return \Illuminate\Database\Query\Builder|static
 	 * @static 
@@ -5779,6 +5913,16 @@ class Input extends Illuminate\Support\Facades\Input{
 	 }
 
 	/**
+	 * Get the request method.
+	 *
+	 * @return string
+	 * @static 
+	 */
+	 public static function method(){
+		return Illuminate\Http\Request::method();
+	 }
+
+	/**
 	 * Get the root URL for the application.
 	 *
 	 * @return string
@@ -5853,12 +5997,12 @@ class Input extends Illuminate\Support\Facades\Input{
 	/**
 	 * Determine if the current request URI matches a pattern.
 	 *
-	 * @param string  $pattern
+	 * @param dynamic  string
 	 * @return bool
 	 * @static 
 	 */
-	 public static function is($pattern){
-		return Illuminate\Http\Request::is($pattern);
+	 public static function is(){
+		return Illuminate\Http\Request::is();
 	 }
 
 	/**
@@ -8139,7 +8283,7 @@ class Queue extends Illuminate\Support\Facades\Queue{
 	 *
 	 * @param \DateTime|int  $delay
 	 * @param string  $job
-	 * @param mixed  $data
+	 * @param mixed   $data
 	 * @param string  $queue
 	 * @return mixed
 	 * @static 
@@ -8173,8 +8317,8 @@ class Queue extends Illuminate\Support\Facades\Queue{
 	/**
 	 * Push a new an array of jobs onto the queue.
 	 *
-	 * @param array  $jobs
-	 * @param mixed  $data
+	 * @param array   $jobs
+	 * @param mixed   $data
 	 * @param string  $queue
 	 * @return mixed
 	 * @static 
@@ -8436,6 +8580,16 @@ class Request extends Illuminate\Support\Facades\Request{
 	 }
 
 	/**
+	 * Get the request method.
+	 *
+	 * @return string
+	 * @static 
+	 */
+	 public static function method(){
+		return Illuminate\Http\Request::method();
+	 }
+
+	/**
 	 * Get the root URL for the application.
 	 *
 	 * @return string
@@ -8510,12 +8664,12 @@ class Request extends Illuminate\Support\Facades\Request{
 	/**
 	 * Determine if the current request URI matches a pattern.
 	 *
-	 * @param string  $pattern
+	 * @param dynamic  string
 	 * @return bool
 	 * @static 
 	 */
-	 public static function is($pattern){
-		return Illuminate\Http\Request::is($pattern);
+	 public static function is(){
+		return Illuminate\Http\Request::is();
 	 }
 
 	/**
@@ -10632,11 +10786,12 @@ class Session extends Illuminate\Support\Facades\Session{
 	/**
 	 * Generate a new session identifier.
 	 *
+	 * @param bool  $destroy
 	 * @return bool
 	 * @static 
 	 */
-	 public static function regenerate(){
-		return Illuminate\Session\Store::regenerate();
+	 public static function regenerate($destroy = false){
+		return Illuminate\Session\Store::regenerate($destroy);
 	 }
 
 	/**
@@ -11247,7 +11402,7 @@ class Validator extends Illuminate\Support\Facades\Validator{
 	 * Register a custom validator extension.
 	 *
 	 * @param string  $rule
-	 * @param Closure|string  $extension
+	 * @param \Closure|string  $extension
 	 * @param string  $message
 	 * @return void
 	 * @static 
@@ -11260,13 +11415,25 @@ class Validator extends Illuminate\Support\Facades\Validator{
 	 * Register a custom implicit validator extension.
 	 *
 	 * @param string   $rule
-	 * @param Closure  $extension
+	 * @param \Closure|string  $extension
 	 * @param string  $message
 	 * @return void
 	 * @static 
 	 */
 	 public static function extendImplicit($rule, $extension, $message = null){
 		 Illuminate\Validation\Factory::extendImplicit($rule, $extension, $message);
+	 }
+
+	/**
+	 * Register a custom implicit validator message replacer.
+	 *
+	 * @param string   $rule
+	 * @param \Closure|string  $replacer
+	 * @return void
+	 * @static 
+	 */
+	 public static function replacer($rule, $replacer){
+		 Illuminate\Validation\Factory::replacer($rule, $replacer);
 	 }
 
 	/**
@@ -12028,5 +12195,72 @@ class Entrust extends Zizaco\Entrust\EntrustFacade{
 }
 
 class Carbon extends Carbon\Carbon{
+}
+
+class AuthToken extends Tappleby\Support\Facades\AuthToken{
+	/**
+	 * Create a new manager instance.
+	 *
+	 * @param \Illuminate\Foundation\Application  $app
+	 * @return void
+	 * @static 
+	 */
+	 public static function __construct($app){
+		//Method inherited from Illuminate\Support\Manager
+		 Tappleby\AuthToken\AuthTokenManager::__construct($app);
+	 }
+
+	/**
+	 * Get a driver instance.
+	 *
+	 * @param string  $driver
+	 * @return mixed
+	 * @static 
+	 */
+	 public static function driver($driver = null){
+		//Method inherited from Illuminate\Support\Manager
+		return Tappleby\AuthToken\AuthTokenManager::driver($driver);
+	 }
+
+	/**
+	 * Register a custom driver creator Closure.
+	 *
+	 * @param string   $driver
+	 * @param Closure  $callback
+	 * @return \Illuminate\Support\Manager|static
+	 * @static 
+	 */
+	 public static function extend($driver, $callback){
+		//Method inherited from Illuminate\Support\Manager
+		return Tappleby\AuthToken\AuthTokenManager::extend($driver, $callback);
+	 }
+
+	/**
+	 * Get all of the created "drivers".
+	 *
+	 * @return array
+	 * @static 
+	 */
+	 public static function getDrivers(){
+		//Method inherited from Illuminate\Support\Manager
+		return Tappleby\AuthToken\AuthTokenManager::getDrivers();
+	 }
+
+	/**
+	 * Dynamically call the default driver instance.
+	 *
+	 * @param string  $method
+	 * @param array   $parameters
+	 * @return mixed
+	 * @static 
+	 */
+	 public static function __call($method, $parameters){
+		//Method inherited from Illuminate\Support\Manager
+		return Tappleby\AuthToken\AuthTokenManager::__call($method, $parameters);
+	 }
+
+}
+
+class AuthTokenNotAuthorizedException extends Tappleby\AuthToken\Exceptions\NotAuthorizedException{
 }
 

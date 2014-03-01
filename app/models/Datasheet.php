@@ -11,6 +11,10 @@
  * @property-read \Illuminate\Database\Eloquent\Collection|\Category[] $categories
  * @property-read \Illuminate\Database\Eloquent\Collection|\MPA[] $MPAs
  * @property-read \Illuminate\Database\Eloquent\Collection|\Mpa[] $mpas
+ * @method static \Illuminate\Database\Query\Builder|\Datasheet whereId($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Datasheet whereCreatedAt($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Datasheet whereUpdatedAt($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Datasheet whereName($value) 
  */
 class Datasheet extends Eloquent {
 	public static $rules = array(

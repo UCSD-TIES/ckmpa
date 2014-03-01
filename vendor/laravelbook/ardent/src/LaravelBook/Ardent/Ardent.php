@@ -232,6 +232,13 @@ abstract class Ardent extends Model {
         }
     }
 
+	public function getObservableEvents() {
+		return array_merge(
+			parent::getObservableEvents(),
+			array('validating', 'validated')
+		);
+	}
+
 	/**
 	 * Register a validating model event with the dispatcher.
 	 *
@@ -460,7 +467,7 @@ abstract class Ardent extends Model {
 
         self::$externalValidator = true;
         self::$validationFactory = new ValidationFactory($translator);
-        self::$validationFactory->setPresenceVerifier(new DatabasePresenceVerifier($db->manager));
+        self::$validationFactory->setPresenceVerifier(new DatabasePresenceVerifier($db->getDatabaseManager()));
     }
 
     /**

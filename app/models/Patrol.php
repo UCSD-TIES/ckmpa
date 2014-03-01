@@ -19,6 +19,14 @@
  * @property integer $transect_id
  * @property-read \Transect $transect
  * @property-read \Illuminate\Database\Eloquent\Collection|\Tally[] $tallies
+ * @method static \Illuminate\Database\Query\Builder|\Patrol whereId($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Patrol whereCreatedAt($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Patrol whereUpdatedAt($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Patrol whereStartTime($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Patrol whereEndTime($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Patrol whereComments($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Patrol whereUserId($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Patrol whereTransectId($value) 
  */
 class Patrol extends Eloquent {
 	protected $table = 'patrols';

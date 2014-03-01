@@ -6,15 +6,16 @@
 	"require": {
 		"laravel/framework": "4.1.*",
         "phpoffice/phpexcel": "dev-master",
-        "zizaco/confide": "3.1.x",
-        "zizaco/entrust": "1.1.0",
-        "laravelbook/ardent": "2.4.x",
+        "zizaco/confide": "dev-master",
+        "zizaco/entrust": "dev-master",
+        "laravelbook/ardent": "dev-master",
         "nesbot/Carbon": "*",
         "codesleeve/asset-pipeline": "dev-master",
-		"barryvdh/laravel-cors": "dev-master"
+		"barryvdh/laravel-cors": "dev-master",
+		"tappleby/laravel-auth-token": "dev-master"
 	},
     "require-dev": {
-        "barryvdh/laravel-ide-helper": "1.*",
+        "barryvdh/laravel-ide-helper": "dev-master",
         "way/generators": "dev-master"
     },
 	"autoload": {
@@ -33,6 +34,7 @@
 		],
 		"post-update-cmd": [
 			"php artisan clear-compiled",
+			"php artisan ide-helper:generate",
 			"php artisan optimize"
 		],
 		"post-create-project-cmd": [
