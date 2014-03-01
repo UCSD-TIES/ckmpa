@@ -30,7 +30,10 @@ app.factory('Auth', function($http, $sanitize, Flash){
     },
     logout: function(){
       var logout;
-      return logout = $http['delete'](host + 'auth').success(logoutSuccess);
+      return logout = $http({
+        method: 'delete',
+        url: host + 'auth'
+      }).success(logoutSuccess);
     },
     user: function(){
       return user || sessionStorage.getItem('user');
@@ -89,11 +92,14 @@ app.factory('Datasheets', function($resource, localStorageService){
     comments: function(){
       return comments;
     },
-    getTally: function(name, sub, cat){
-      return find(function(x){
-        return x.name === name && x.sub === sub && x.category === cat;
-      })(
-      tallies);
+    getTally: function(tally){
+      return _.find(tallies, function(x){
+        if (x.subcategory && tally.subcategory) {
+          return x.field.id === tally.field.id && x.subcategory.id === tally.subcategory.id;
+        } else {
+          return x.field.id === tally.field.id;
+        }
+      });
     },
     addTally: function(tally){
       return tallies.push(tally);
@@ -111,14 +117,29 @@ app.factory('Favorites', function(Datasheets, localStorageService){
   if (!(favorites = localStorageService.get("favorites"))) {
     favorites = [];
     datasheets = Datasheets.datasheets.then(function(data){
-      favorites.push(find(function(it){
-        return it.name === "Recreation";
-      })(
-      Datasheets.fields()));
-      return favorites.push(find(function(it){
-        return it.name === "Offshore Recreation";
-      })(
-      Datasheets.fields()));
+      favorites.push({
+        field: _(Datasheets.fields()).find({
+          'name': "Recreation"
+        }),
+        subcategory: _.find(Datasheets.categories(), function(x){
+          return _(x.fields).flatten().any({
+            'name': 'Recreation'
+          });
+        }).subcategories[1],
+        name: "Recreation (Sandy)"
+      });
+      favorites.push({
+        field: _(Datasheets.fields()).find({
+          'name': "Offshore Recreation"
+        }),
+        subcategory: _.find(Datasheets.categories(), function(x){
+          return _(x.fields).flatten().any({
+            'name': 'Offshore Recreation'
+          });
+        }).subcategories[0],
+        name: "Offshore Recreation"
+      });
+      return localStorageService.set('favorites', favorites);
     });
   }
   return {
@@ -128,9 +149,17 @@ app.factory('Favorites', function(Datasheets, localStorageService){
     save: function(){
       return localStorageService.set('favorites', favorites);
     },
-    add: function(field){
-      if (!this.get(field) && favorites.length < 5) {
-        return favorites.push(field);
+    add: function(field, sub){
+      var fav;
+      fav = {
+        field: field,
+        subcategory: sub,
+        name: field.name + (sub ? " (" + sub.name + ")" : "")
+      };
+      if (!_.any(favorites, {
+        name: fav.name
+      })) {
+        return favorites.push(fav);
       }
     },
     get: function(field){
@@ -139,14 +168,8 @@ app.factory('Favorites', function(Datasheets, localStorageService){
       })(
       favorites);
     },
-    'delete': function(name){
-      var i;
-      i = favorites.map(function(e){
-        return e.name;
-      }).indexOf(name);
-      if (!(i < 0)) {
-        return favorites.splice(i, 1);
-      }
+    'delete': function(fav){
+      return _.pull(favorites, fav);
     }
   };
 });

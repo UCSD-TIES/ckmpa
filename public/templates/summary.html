@@ -6,14 +6,14 @@
 		<ul class="list" ng-if="!category.subcategories.length">
 			<li class="item" ng-repeat="field in category.fields">
 				{{ field.name }}
-				<span class="badge badge-stable" ng-bind="getTally(field.name,0,field.category_id)['val']"></span>
+				<span class="badge badge-stable" ng-bind="getTally(field,sub)['val']"></span>
 			</li>
 		</ul>
 		<ul class="list" ng-if="category.subcategories.length">
 			<li class="item" ng-repeat="field in category.fields">
 				{{ field.name }}
 				<span ng-repeat="sub in category.subcategories" class="badge badge-stable" 
-					ng-bind="getTally(field.name,$index,field.category_id)['val']"></span>
+					ng-bind="getTally(field,sub)['val']"></span>
 			</li>
 		</ul>	
 	</div>

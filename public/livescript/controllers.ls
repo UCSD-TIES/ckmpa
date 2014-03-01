@@ -5,8 +5,7 @@ LoginController = ($scope, $sanitize, $location, Auth, Flash) !->
     username: ''
     password: ''
 
-  $scope.login = -> Auth.login $scope.credentials .success ->
-    $location.path '/select-mpa'
+  $scope.login = -> Auth.login $scope.credentials .success -> $location.path '/select-mpa'
   $scope.logout = -> Auth.logout!.success -> $location.path '/'
 
 MpaController = ($scope, Mpas, $stateParams) ->
@@ -46,9 +45,9 @@ DataController = ($scope, $state, $stateParams, $ionicLoading, $ionicModal, $tim
     $timeout.cancel timer
     $state.go 'summary'
 
-  $scope.addFavorite = (name) ->
+  $scope.addFavorite = (field, sub) ->
     $scope.modalError = ""
-    if not Favorites.add(name)
+    if not Favorites.add(field,sub)
       $scope.modalError = "Already Added to Favorites"
 
   $scope.deleteFavorite = (name) -> 
@@ -95,7 +94,11 @@ SummaryController = ($scope, $state, $stateParams, Datasheets) ->
   $scope.tallies = Datasheets.tallies!
   $scope.comments = Datasheets.comments!
 
-  $scope.getTally = (name,sub,cat) -> Datasheets.getTally(name,sub,cat)
+  $scope.getTally = (field, subcategory) ->
+    Datasheets.getTally do
+      field: field
+      subcategory: subcategory
+
   $scope.submit = -> 
     $state.go 'finish'
     Datasheets.resetTallies!

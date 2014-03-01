@@ -4,17 +4,18 @@ app = angular.module('ckmpa.directives', []);
 app.directive('numberInput', function(){
   var controller;
   controller = function($scope, Datasheets){
-    var tally;
-    if (tally = Datasheets.getTally($scope.field.name, $scope.sub, $scope.field.category_id)) {
-      $scope.tally = tally;
+    var tally, t;
+    tally = {
+      name: $scope.name,
+      field: $scope.field,
+      subcategory: $scope.subcategory,
+      val: 0
+    };
+    if (t = Datasheets.getTally(tally)) {
+      $scope.tally = t;
     } else {
-      $scope.tally = {
-        category: $scope.field.category_id,
-        name: $scope.field.name,
-        sub: $scope.sub,
-        val: 0
-      };
-      Datasheets.addTally($scope.tally);
+      $scope.tally = tally;
+      Datasheets.addTally(tally);
     }
     $scope.inc = function(){
       return $scope.tally['val'] += 1;
@@ -30,7 +31,8 @@ app.directive('numberInput', function(){
     restrict: 'E',
     scope: {
       field: "=",
-      sub: "="
+      subcategory: "=",
+      name: "="
     },
     controller: controller
   };
@@ -38,20 +40,25 @@ app.directive('numberInput', function(){
 app.directive('checkbox', function(){
   var controller;
   controller = function($scope, Datasheets){
-    $scope.tally = {
-      name: $scope.field.name,
-      sub: $scope.sub,
-      val: 'No',
-      category: $scope.field.category_id
+    var tally, t;
+    tally = {
+      field: $scope.field,
+      subcategory: $scope.subcategory,
+      val: 'No'
     };
-    return Datasheets.addTally($scope.tally);
+    if (t = Datasheets.getTally(tally)) {
+      return $scope.tally = t;
+    } else {
+      $scope.tally = tally;
+      return Datasheets.addTally(tally);
+    }
   };
   return {
     restrict: 'E',
     templateUrl: 'partials/checkbox.html',
     scope: {
       field: "=",
-      sub: "="
+      subcategory: "="
     },
     controller: controller
   };
@@ -59,20 +66,25 @@ app.directive('checkbox', function(){
 app.directive('radio', function(){
   var controller;
   controller = function($scope, Datasheets){
-    $scope.tally = {
-      name: $scope.field.name,
-      sub: $scope.sub,
-      val: $scope.field.options[0].name,
-      category: $scope.field.category_id
+    var tally, t;
+    tally = {
+      field: $scope.field,
+      subcategory: $scope.subcategory,
+      val: $scope.field.options[0].name
     };
-    return Datasheets.addTally($scope.tally);
+    if (t = Datasheets.getTally(tally)) {
+      return $scope.tally = t;
+    } else {
+      $scope.tally = tally;
+      return Datasheets.addTally(tally);
+    }
   };
   return {
     restrict: 'E',
     templateUrl: 'partials/radio.html',
     scope: {
       field: "=",
-      sub: "="
+      subcategory: "="
     },
     controller: controller
   };

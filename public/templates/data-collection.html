@@ -8,11 +8,11 @@
 	    <!-- Edit -->
 	  <!-- </button> -->
 	</div>
-	<div ng-repeat="field in favorites">
-		<number-input field="field" sub="0"></number-input>
+	<div ng-repeat="fav in favorites">
+		<number-input field="fav.field" subcategory="fav.subcategory" name="fav.name"></number-input>
 	</div>
 	<div class="padding-horizontal">
-	<div class='button button-block button-small' ng-click='openModal()'>Edit Favorites</div>
+		<div class='button button-block button-small' ng-click='openModal()'>Edit Favorites</div>
 	</div>
 
 	<div ng-repeat="category in categories" ng-init="activeTab = 0">
@@ -29,16 +29,16 @@
 		</div>
 
 		<div ng-repeat="field in category.fields" ng-show='showThis && !category.subcategories.length'>
-			<number-input field="field" sub="0" ng-if="field.type == 'number'"></number-input>
-			<radio field="field" sub="0" ng-if="field.type == 'radio'"></radio>
-			<checkbox field="field" sub="0" ng-if="field.type == 'checkbox'"></checkbox>
+			<number-input field="field" subcategory="{id:-1}" ng-if="field.type == 'number'"></number-input>
+			<radio field="field" subcategory="{id:-1}" ng-if="field.type == 'radio'"></radio>
+			<checkbox field="field" subcategory="{id:-1}" ng-if="field.type == 'checkbox'"></checkbox>
 		</div>
 
 		<div ng-repeat="sub in category.subcategories" ng-show='showThis && $parent.activeTab == $index'>
-			<div ng-repeat="field in category.fields" ng-init="i = $parent.$index">
-				<number-input field="field" sub="i" ng-if="field.type == 'number'"></number-input>
-				<radio field="field" sub="i" ng-if="field.type == 'radio'"></radio>
-				<checkbox field="field" sub="i" ng-if="field.type == 'checkbox'"></checkbox>
+			<div ng-repeat="field in category.fields">
+				<number-input field="field" subcategory="sub" ng-if="field.type == 'number'"></number-input>
+				<radio field="field" subcategory="sub" ng-if="field.type == 'radio'"></radio>
+				<checkbox field="field" subcategory="sub" ng-if="field.type == 'checkbox'"></checkbox>
 			</div>
 		</div>
 	</div>

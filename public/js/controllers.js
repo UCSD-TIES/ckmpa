@@ -55,9 +55,9 @@ DataController = function($scope, $state, $stateParams, $ionicLoading, $ionicMod
     $timeout.cancel(timer);
     return $state.go('summary');
   };
-  $scope.addFavorite = function(name){
+  $scope.addFavorite = function(field, sub){
     $scope.modalError = "";
-    if (!Favorites.add(name)) {
+    if (!Favorites.add(field, sub)) {
       return $scope.modalError = "Already Added to Favorites";
     }
   };
@@ -106,8 +106,11 @@ SummaryController = function($scope, $state, $stateParams, Datasheets){
   $scope.categories = Datasheets.categories();
   $scope.tallies = Datasheets.tallies();
   $scope.comments = Datasheets.comments();
-  $scope.getTally = function(name, sub, cat){
-    return Datasheets.getTally(name, sub, cat);
+  $scope.getTally = function(field, subcategory){
+    return Datasheets.getTally({
+      field: field,
+      subcategory: subcategory
+    });
   };
   $scope.submit = function(){
     $state.go('finish');

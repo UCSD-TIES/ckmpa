@@ -29,12 +29,14 @@ app.factory 'Auth', ($http, $sanitize, Flash) ->
       .error loginError
 
   logout: ->
-    logout = $http.delete host+'auth'
-      .success logoutSuccess
+    logout = $http do
+     method: 'delete'
+     url: host + 'auth'
+
+    .success logoutSuccess
 
   user: -> user || sessionStorage.getItem 'user'
   token: -> token || sessionStorage.getItem 'token'
-  
 
 app.factory 'Flash', ($rootScope) ->
   show: (message) -> $rootScope.flash = message
@@ -60,7 +62,13 @@ app.factory 'Datasheets' ($resource, localStorageService) ->
   fields: -> fields
   tallies: -> tallies
   comments: -> comments
-  getTally: (name,sub,cat) -> tallies |> find ((x) -> x.name is name and x.sub is sub and x.category is cat)
+  getTally: (tally) ->
+    _.find tallies, (x) ->
+      if x.subcategory and tally.subcategory
+        x.field.id is tally.field.id and x.subcategory.id is tally.subcategory.id
+      else
+        x.field.id is tally.field.id
+
   addTally: (tally) -> tallies.push tally
   saveTallies: -> localStorageService.set 'tallies' tallies
   resetTallies: -> localStorageService.remove 'tallies'
@@ -69,20 +77,34 @@ app.factory 'Favorites' (Datasheets, localStorageService) ->
   if not favorites = localStorageService.get "favorites"
     favorites = []
     datasheets = Datasheets.datasheets.then (data) ->
-      favorites.push (Datasheets.fields! |> find (.name is "Recreation"))
-      favorites.push (Datasheets.fields! |> find (.name is "Offshore Recreation"))
+      favorites.push do
+        field: _ Datasheets.fields! .find 'name': "Recreation"
+        subcategory: _.find Datasheets.categories!,
+          (x) -> _ x.fields .flatten! .any 'name':'Recreation'
+        .subcategories[1]
+        name: "Recreation (Sandy)"
+
+      favorites.push do
+        field: _ Datasheets.fields! .find 'name': "Offshore Recreation"
+        subcategory: _.find Datasheets.categories!,
+          (x) -> _ x.fields .flatten! .any 'name':'Offshore Recreation'
+        .subcategories[0]
+        name: "Offshore Recreation"
+
+      localStorageService.set 'favorites' favorites
 
   favorites: -> favorites
   save: -> localStorageService.set 'favorites' favorites
-  add: (field) ->
-    if not @get field and favorites.length < 5
-      favorites.push field
+  add: (field,sub) ->
+    fav = 
+      field: field
+      subcategory: sub
+      name: field.name + if sub then " ("+sub.name+")" else ""
 
+    favorites.push fav if not _.any favorites, name: fav.name
+      
   get: (field) -> favorites |> find ((x) -> x is field)
-  delete: (name) -> 
-    i = favorites.map (e) -> e.name 
-    .indexOf name
-    favorites.splice i,1 unless i < 0
+  delete: (fav) -> _.pull favorites, fav
 
 
   

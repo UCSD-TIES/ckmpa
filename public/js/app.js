@@ -4,7 +4,8 @@ app = angular.module('ckmpa', ['ionic', 'LocalStorageModule', 'ngResource', 'ckm
 app.run(function($http, Auth){
   return $http.defaults.headers.common["X-Auth-Token"] = Auth.token;
 });
-app.config(function($stateProvider, $urlRouterProvider){
+app.config(function($httpProvider, $stateProvider, $urlRouterProvider){
+  $httpProvider.defaults.cache = true;
   $stateProvider.state('login', {
     url: '/',
     templateUrl: 'templates/login.html',

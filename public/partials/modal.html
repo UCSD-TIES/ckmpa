@@ -17,36 +17,48 @@
       <div class="item item-divider">
         Current Favorites
       </div>
-      <div ng-repeat="field in favorites">
+      <div ng-repeat="fav in favorites">
         <div class="item item-button-right">
-          {{ field.name }}
-          <button class="button button-clear button-assertive" ng-click="deleteFavorite(field.name)">
+          {{ fav.name }}
+          <button class="button button-clear button-assertive" ng-click="deleteFavorite(fav)">
             <i class="icon ion-minus"></i>
           </button>
         </div>
       </div>
 
-      <div ng-repeat="category in categories | hasNumericField:search">
-        <div class="item item-icon-right item-divider" ng-click='showThis = !showThis;resize()'>
+      <div ng-repeat="category in categories | hasNumericField:search" ng-init="activeTab = 0">
+        <div class="item item-icon-right item-divider" ng-click='showThis = !showThis; resize()'>
           <i ng-show="!showThis" class="icon ion-ios7-arrow-down"></i>
           <i ng-show="showThis" class="icon ion-ios7-arrow-up"></i>
           {{ category.name }}
         </div>
         
-        <div class="item tabs" ng-show='showThis' ng-if="category.subcategories" ng-init="activeTab = 0">
+        <div class="item tabs" ng-show='showThis && category.subcategories'>
           <a class="tab-item" ng-repeat="sub in category.subcategories" ng-bind="sub.name"
             ng-class="{'active-tab': $parent.activeTab == $index}" ng-click="$parent.activeTab = $index" >
           </a>
         </div>
 
-        <div ng-repeat="field in category.fields | filter:{name:search}" ng-show="showThis">
+        <div ng-repeat="field in category.fields | filter:{name:search}" ng-show='showThis && !category.subcategories.length'>
           <div class="item item-button-right">
             {{ field.name }}
-            <button class="button button-clear button-balanced" ng-click="addFavorite(field)">
+            <button class="button button-clear button-balanced" ng-click="addFavorite(field,null)">
               <i class="icon ion-plus"></i>
             </button>
           </div>
         </div>
+
+        <div ng-repeat="sub in category.subcategories" ng-show='showThis && $parent.activeTab == $index'>       
+          <div ng-repeat="field in category.fields | filter:{name:search}" ng-init="i = $parent.$index">
+            <div class="item item-button-right">
+              {{ field.name }}
+              <button class="button button-clear button-balanced" ng-click="addFavorite(field,sub)">
+                <i class="icon ion-plus"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
       </div>
 
       <!-- <button class="button button-block button-positive" ng-click="closeModal()">Close</button> -->
