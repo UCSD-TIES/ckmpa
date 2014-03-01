@@ -1,8 +1,8 @@
--- MySQL dump 10.14  Distrib 5.5.35-MariaDB, for Linux (x86_64)
+-- MySQL dump 10.14  Distrib 5.5.36-MariaDB, for Linux (x86_64)
 --
 -- Host: localhost    Database: coastkeeper
 -- ------------------------------------------------------
--- Server version	5.5.35-MariaDB-log
+-- Server version	5.5.36-MariaDB-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -148,7 +148,7 @@ CREATE TABLE `migrations` (
 
 LOCK TABLES `migrations` WRITE;
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
-INSERT INTO `migrations` VALUES ('2014_01_23_071000_create_tallies_table',1),('2014_01_23_071002_create_sections_table',1),('2014_01_23_071003_create_patrols_table',1),('2014_01_23_071004_create_locations_table',1),('2014_01_23_071005_create_fields_table',1),('2014_01_23_071006_create_categories_table',1),('2014_01_23_071007_create_datasheets_table',1),('2014_01_23_071159_create_users_table',1),('2014_01_23_071210_create_foreign_keys',1),('2014_01_24_195440_add_confide_user',1),('2014_01_24_220656_entrust_setup_tables',1),('2014_01_28_210500_add_fields',1),('2014_02_24_191020_create_subcategories_table',2);
+INSERT INTO `migrations` VALUES ('2014_01_23_071000_create_tallies_table',1),('2014_01_23_071002_create_sections_table',1),('2014_01_23_071003_create_patrols_table',1),('2014_01_23_071004_create_locations_table',1),('2014_01_23_071005_create_fields_table',1),('2014_01_23_071006_create_categories_table',1),('2014_01_23_071007_create_datasheets_table',1),('2014_01_23_071159_create_users_table',1),('2014_01_23_071210_create_foreign_keys',1),('2014_01_24_195440_add_confide_user',1),('2014_01_24_220656_entrust_setup_tables',1),('2014_01_28_210500_add_fields',1),('2014_02_24_191020_create_subcategories_table',2),('2013_05_12_014954_create_auth_token_table',3);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -356,6 +356,32 @@ INSERT INTO `subcategories` VALUES (1,'Rocky',2,'2014-02-25 04:35:33','2014-02-2
 UNLOCK TABLES;
 
 --
+-- Table structure for table `ta_auth_tokens`
+--
+
+DROP TABLE IF EXISTS `ta_auth_tokens`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ta_auth_tokens` (
+  `auth_identifier` int(11) NOT NULL,
+  `public_key` varchar(96) COLLATE utf8_unicode_ci NOT NULL,
+  `private_key` varchar(96) COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`auth_identifier`,`public_key`,`private_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ta_auth_tokens`
+--
+
+LOCK TABLES `ta_auth_tokens` WRITE;
+/*!40000 ALTER TABLE `ta_auth_tokens` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ta_auth_tokens` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `tallies`
 --
 
@@ -458,4 +484,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-02-24 22:46:12
+-- Dump completed on 2014-02-28 18:02:46

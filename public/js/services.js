@@ -22,7 +22,7 @@ app.factory('Auth', function($http, $sanitize, Flash){
   return {
     login: function(credentials){
       var login;
-      login = $http.post(host + 'api/auth', sanitizeCredentials(credentials));
+      login = $http.post(host + 'auth', sanitizeCredentials(credentials));
       login.success(cacheSession);
       login.success(Flash.clear);
       login.error(loginError);
@@ -30,7 +30,7 @@ app.factory('Auth', function($http, $sanitize, Flash){
     },
     logout: function(){
       var logout;
-      logout = $http.get(host + 'api/auth');
+      logout = $http.get(host + 'auth');
       logout.success(uncacheSession);
       return logout;
     },
