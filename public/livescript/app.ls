@@ -9,6 +9,9 @@ app = angular.module 'ckmpa', [
   'ckmpa.controllers'
 ]
 
+app.run ($http, Auth) ->
+  $http.defaults.headers.common["X-Auth-Token"] = Auth.token
+
 app.config ($stateProvider, $urlRouterProvider) ->
   $stateProvider
     .state 'login', {

@@ -3,39 +3,40 @@ app = angular.module('ckmpa.services', []);
 mode = 'production';
 host = mode === 'production' ? 'http://ckmpa.gopagoda.com/' : 'http://localhost/';
 app.factory('Auth', function($http, $sanitize, Flash){
-  var sanitizeCredentials, loginError, cacheSession, uncacheSession;
+  var user, token, sanitizeCredentials, loginSuccess, loginError, logoutSuccess;
   sanitizeCredentials = function(credentials){
     return {
       username: $sanitize(credentials.username),
       password: $sanitize(credentials.password)
     };
   };
+  loginSuccess = function(data, status, headers, config){
+    user = data.user;
+    token = data.token;
+    sessionStorage.setItem('user', data.user);
+    return sessionStorage.setItem('token', data.token);
+  };
   loginError = function(response){
     return Flash.show(response.flash);
   };
-  cacheSession = function(){
-    return sessionStorage.setItem('authenticated', true);
-  };
-  uncacheSession = function(){
-    return sessionStorage.removeItem('authenticated');
+  logoutSuccess = function(){
+    user = null;
+    return token = null;
   };
   return {
     login: function(credentials){
       var login;
-      login = $http.post(host + 'auth', sanitizeCredentials(credentials));
-      login.success(cacheSession);
-      login.success(Flash.clear);
-      login.error(loginError);
-      return login;
+      return login = $http.post(host + 'auth', sanitizeCredentials(credentials)).success(loginSuccess).error(loginError);
     },
     logout: function(){
       var logout;
-      logout = $http.get(host + 'auth');
-      logout.success(uncacheSession);
-      return logout;
+      return logout = $http['delete'](host + 'auth').success(logoutSuccess);
     },
-    isLoggedIn: function(){
-      return sessionStorage.getItem('authenticated');
+    user: function(){
+      return user || sessionStorage.getItem('user');
+    },
+    token: function(){
+      return token || sessionStorage.getItem('token');
     }
   };
 });
@@ -49,10 +50,7 @@ app.factory('Flash', function($rootScope){
     }
   };
 });
-app.factory('Users', function($resource){
-  return $resource(host + 'api/users/');
-});
-app.factory('Mpas', function($resource){
+app.factory('Mpas', function($resource, Auth){
   return $resource(host + 'api/mpas/');
 });
 app.factory('Datasheets', function($resource, localStorageService){

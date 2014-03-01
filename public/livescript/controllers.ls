@@ -5,7 +5,8 @@ LoginController = ($scope, $sanitize, $location, Auth, Flash) !->
     username: ''
     password: ''
 
-  $scope.login = -> Auth.login $scope.credentials .success -> $location.path '/select-mpa'
+  $scope.login = -> Auth.login $scope.credentials .success ->
+    $location.path '/select-mpa'
   $scope.logout = -> Auth.logout!.success -> $location.path '/'
 
 MpaController = ($scope, Mpas, $stateParams) ->

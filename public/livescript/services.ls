@@ -4,34 +4,43 @@ mode = 'production'
 host = if mode == 'production' then 'http://ckmpa.gopagoda.com/' else 'http://localhost/'
 
 app.factory 'Auth', ($http, $sanitize, Flash) ->
+  var user, token
+
   sanitizeCredentials = (credentials) ->
     username: $sanitize credentials.username
     password: $sanitize credentials.password
 
+  loginSuccess = (data, status, headers, config) ->
+    user := data.user
+    token := data.token
+
+    sessionStorage.setItem 'user' data.user
+    sessionStorage.setItem 'token' data.token
+
   loginError = (response) -> Flash.show response.flash
-  cacheSession = -> sessionStorage.setItem 'authenticated', true
-  uncacheSession = -> sessionStorage.removeItem 'authenticated'
+
+  logoutSuccess = ->
+    user := null
+    token := null
   
   login: (credentials) ->
-    login = $http.post host+'api/auth', sanitizeCredentials credentials
-    login.success cacheSession
-    login.success Flash.clear
-    login.error loginError
-    login
+    login = $http.post host+'auth', sanitizeCredentials credentials
+      .success loginSuccess
+      .error loginError
+
   logout: ->
-    logout = $http.get host+'api/auth'
-    logout.success uncacheSession
-    logout
-  isLoggedIn: -> sessionStorage.getItem 'authenticated'
+    logout = $http.delete host+'auth'
+      .success logoutSuccess
+
+  user: -> user || sessionStorage.getItem 'user'
+  token: -> token || sessionStorage.getItem 'token'
   
 
 app.factory 'Flash', ($rootScope) ->
   show: (message) -> $rootScope.flash = message
   clear: -> $rootScope.flash = ''
 
-app.factory 'Users', ($resource) -> $resource host+'api/users/'
-
-app.factory 'Mpas', ($resource) -> $resource host+'api/mpas/'
+app.factory 'Mpas', ($resource, Auth) -> $resource host+'api/mpas/'
 
 app.factory 'Datasheets' ($resource, localStorageService) -> 
   res = $resource host+'api/datasheets' {}
