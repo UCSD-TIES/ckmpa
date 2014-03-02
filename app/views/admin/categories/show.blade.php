@@ -16,7 +16,7 @@
 			<td>
 				<!-- DOESN'T WORK YET -->
 				{{ Form::open(array('method'=> 'DELETE', 'class'=> 'form-inline', 'route'=> array('admin.fields.destroy', $sub->id) )) }}
-				<a class="btn btn-default" href="{{ URL::route('admin.fields.edit', $sub->id) }}">
+				<a class="btn btn-default" href="{{ URL::route('admin.subs.edit', $sub->id) }}">
 					<i	class="glyphicon glyphicon-edit"> Edit</i></a>
 					<button type="submit" class="btn btn-small btn-danger">
 						<i class="glyphicon glyphicon-trash"></i> Delete
