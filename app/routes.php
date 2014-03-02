@@ -80,6 +80,7 @@ Route::group(array('prefix' => 'api', 'before' => 'auth.token'), function ()
 {
 	Route::controller('mpas', 'MpaAPIController');
 	Route::controller('datasheets', 'DatasheetAPIController');
+	Route::controller('patrols', 'PatrolAPIController');
 });
 
 Route::post('/forget', 'UsersController@forgetUsername');

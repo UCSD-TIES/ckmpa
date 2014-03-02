@@ -25,7 +25,7 @@ class Tally extends Eloquent {
 	public $timestamps = true;
 	protected $softDelete = false;
 	protected $fillable = array('tally', 'patrol_id', 'field_id');
-	protected $visible = array('tally', 'patrol_id', 'field_id');
+	protected $visible = array('tally', 'patrol_id', 'field_id', 'subcategory_id');
 
 	public function patrol()
 	{
@@ -35,6 +35,11 @@ class Tally extends Eloquent {
 	public function field()
 	{
 		return $this->belongsTo('Field');
+	}
+
+	public function subcategory()
+	{
+		return $this->belongsTo('Subcategory');
 	}
 
 }

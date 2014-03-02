@@ -33,7 +33,7 @@ class Patrol extends Eloquent {
 	public $timestamps = true;
 	protected $softDelete = false;
 	protected $fillable = array('date', 'user_id', 'transect_id');
-	protected $visible = array('date', 'user_id', 'transect_id');
+	protected $visible = array('date', 'user_id', 'transect_id', 'comments');
 
 	public function transect()
 	{
