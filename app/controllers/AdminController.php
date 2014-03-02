@@ -95,7 +95,7 @@ class AdminController extends BaseController
 		/* Get the mpa */
 		$mpa = Mpa::find($id);
 
-		$filename = $mpa->name . '-' . Carbon::now();
+		$filename = $mpa->name . '-' . Carbon::now()->toDateTimeString();
 
 		/* Get the datasheet, we'll need to set the header up */
 		$datasheet = $mpa->datasheet;
@@ -181,7 +181,7 @@ class AdminController extends BaseController
 			{
 
 				/* Set the date */
-				$sheet->setCellValue('A' . $row_index, $patrol->date);
+				$sheet->setCellValue('A' . $row_index, $patrol->date->toDateString());
 
 				/* Get Volunteer information */
 				$volunteer = $patrol->user;
@@ -206,7 +206,6 @@ class AdminController extends BaseController
 
 				/* increase the row */
 				$row_index++;
-
 			}
 		}
 
