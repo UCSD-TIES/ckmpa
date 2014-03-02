@@ -1,26 +1,6 @@
 <?php
 
 return array(
-/*
-    'driver' => 'smtp',
-
-    'host' => 'smtp.gmail.com',
-
-    'port' => 587,
-
-    'from' => array('address' => 'authapp@awesomeauthapp. com', 'name' => 'Awesome Laravel 4 Auth App'),
-
-    'encryption' => 'tls',
-
-    'username' => 'your_gmail_username',
-
-    'password' => 'your_gmail_password',
-
-    'sendmail' => '/usr/sbin/sendmail -bs',
-
-    'pretend' => false,
-
-);*/
 	/*
 	|--------------------------------------------------------------------------
 	| Mail Driver
@@ -34,7 +14,7 @@ return array(
 	|
 	*/
 
-	'driver' => 'mail',
+	'driver' => 'smtp',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -47,7 +27,7 @@ return array(
 	|
 	*/
 
-	'host' => '',
+	'host' => 'smtp.mandrillapp.com',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -60,7 +40,7 @@ return array(
 	|
 	*/
 
-	//'port' => 587,
+	'port' => 587,
 
 	/*
 	|--------------------------------------------------------------------------
@@ -73,7 +53,7 @@ return array(
 	|
 	*/
 
-	//'from' => array('address' => 'mailer@ck.com', 'name' => 'coastkeeper'),
+	'from' => array('address' => 'mailer@ck.com', 'name' => 'Coastkeeper'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -99,7 +79,7 @@ return array(
 	|
 	*/
 
-	//'username' => null,
+	'username' => "elkhouri1@gmail.com",
 
 	/*
 	|--------------------------------------------------------------------------
@@ -112,7 +92,7 @@ return array(
 	|
 	*/
 
-	//'password' => null,
+	'password' => "h3qCCx3K9IFIBWst5M46XQ",
 
 	/*
 	|--------------------------------------------------------------------------

@@ -38,15 +38,15 @@ class UsersController extends BaseController
 		{
 			$user->attachRole(2);
 			return Redirect::route('login')
-				->with('notice', Lang::get('confide::confide.alerts.account_created'));
+					->with('notice', Lang::get('confide::confide.alerts.account_created'));
 		} else
 		{
 			// Get validation errors (see Ardent package)
 			$errors = $user->errors();
 
 			return Redirect::to('/users/register')
-				->withInput(Input::except('password'))
-				->with('errors', $errors);
+					->withInput(Input::except('password'))
+					->with('errors', $errors);
 		}
 	}
 
@@ -69,9 +69,9 @@ class UsersController extends BaseController
 	public function do_login()
 	{
 		$input = array(
-			'username' => Input::get('username'),
-			'password' => Input::get('password'),
-			'remember' => Input::get('remember'),
+				'username' => Input::get('username'),
+				'password' => Input::get('password'),
+				'remember' => Input::get('remember'),
 		);
 
 		// If you wish to only allow login from confirmed users, call logAttempt
@@ -84,11 +84,12 @@ class UsersController extends BaseController
 			// caught by the authentication filter IE Redirect::guest('user/login').
 			// Otherwise fallback to '/'
 			// Fix pull #145
-			if(!Entrust::can('can_patrol')) {
+			if (!Entrust::can('can_patrol'))
+			{
 				return Redirect::route('login')
-				->with('message', 'Access Denied');
+						->with('message', 'Access Denied');
 			}
-			
+
 			Session::put("start_time", Carbon::now());
 			return Redirect::intended('/mobile/select-MPA');
 		} else
@@ -108,8 +109,8 @@ class UsersController extends BaseController
 			}
 
 			return Redirect::route('login')
-				->withInput(Input::except('password'))
-				->with('message', $err_msg);
+					->withInput(Input::except('password'))
+					->with('message', $err_msg);
 		}
 	}
 
@@ -124,12 +125,12 @@ class UsersController extends BaseController
 		{
 			$notice_msg = Lang::get('confide::confide.alerts.confirmation');
 			return Redirect::route('login')
-				->with('notice', $notice_msg);
+					->with('notice', $notice_msg);
 		} else
 		{
 			$error_msg = Lang::get('confide::confide.alerts.wrong_confirmation');
 			return Redirect::route('login')
-				->with('error', $error_msg);
+					->with('error', $error_msg);
 		}
 	}
 
@@ -152,13 +153,13 @@ class UsersController extends BaseController
 		{
 			$notice_msg = Lang::get('confide::confide.alerts.password_forgot');
 			return Redirect::route('login')
-				->with('notice', $notice_msg);
+					->with('notice', $notice_msg);
 		} else
 		{
 			$error_msg = Lang::get('confide::confide.alerts.wrong_password_forgot');
 			return Redirect::action('UserController@forgot_password')
-				->withInput()
-				->with('error', $error_msg);
+					->withInput()
+					->with('error', $error_msg);
 		}
 	}
 
@@ -169,7 +170,7 @@ class UsersController extends BaseController
 	public function reset_password($token)
 	{
 		return View::make(Config::get('confide::reset_password_form'))
-			->with('token', $token);
+				->with('token', $token);
 	}
 
 	/**
@@ -179,9 +180,9 @@ class UsersController extends BaseController
 	public function do_reset_password()
 	{
 		$input = array(
-			'token' => Input::get('token'),
-			'password' => Input::get('password'),
-			'password_confirmation' => Input::get('password_confirmation'),
+				'token' => Input::get('token'),
+				'password' => Input::get('password'),
+				'password_confirmation' => Input::get('password_confirmation'),
 		);
 
 		// By passing an array with the token, password and confirmation
@@ -189,13 +190,13 @@ class UsersController extends BaseController
 		{
 			$notice_msg = Lang::get('confide::confide.alerts.password_reset');
 			return Redirect::action('UserController@login')
-				->with('notice', $notice_msg);
+					->with('notice', $notice_msg);
 		} else
 		{
 			$error_msg = Lang::get('confide::confide.alerts.wrong_password_reset');
 			return Redirect::action('UserController@reset_password', array('token' => $input['token']))
-				->withInput()
-				->with('error', $error_msg);
+					->withInput()
+					->with('error', $error_msg);
 		}
 	}
 
@@ -211,23 +212,8 @@ class UsersController extends BaseController
 		return Redirect::to('/');
 	}
 
-    public function forgetUserName()
-    {
-        $email = Input::get('email');
-        $user = User::where('email',$email)->first();
-
-        // the data that will be passed into the mail view blade template
-        $data = array(
-            'detail'=> $user->username,
-            'name'  => $user->first_name.$user->last_name
-        );
-
-        // use Mail::send function to send email passing the data and using the $user variable in the closure
-        Mail::send('emails.forgetUserName', $data, function($message)
-        {
-            $message->from('admin@site.com', 'Site Admin');
-            $message->to("hiradkhakipour@gmail.com", "Hirad") ->subject('You requested your user name!');
-        });
-
-    }
+	public function getForgetUsername()
+	{
+		return View::make("admin/forget");
+	}
 }

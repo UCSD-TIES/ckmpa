@@ -7,11 +7,8 @@
 	{{ Form::password('password', array('class'=> 'form-control', 'placeholder'=> 'Password')) }}
 
 	{{ Form::submit('Login', array('class'=> 'btn btn-large btn-primary btn-block')) }}
+
+	<br><a href="/password/remind">Forgot Username or Password?</a>
 	{{ Form::close() }}
-{{ Form::open(array('url'=> '/forget', 'class'=> 'form-signin')) }}
 
-
-    <input type="email" name="email">
-    <button type="submit" class="btn btn-primary"></button>
-</form>
 @stop

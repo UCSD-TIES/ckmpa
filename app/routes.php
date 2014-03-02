@@ -83,7 +83,8 @@ Route::group(array('prefix' => 'api', 'before' => 'auth.token'), function ()
 	Route::controller('patrols', 'PatrolAPIController');
 });
 
-Route::post('/forget', 'UsersController@forgetUsername');
+// Password Reminder Routes
+Route::controller('password', 'RemindersController');
 
 // Auth Token Routes
 Route::get('auth', 'Tappleby\AuthToken\AuthTokenController@index');

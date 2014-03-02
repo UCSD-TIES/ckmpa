@@ -48,7 +48,7 @@ return array(
     |
     */
     'login_form' =>             'confide::login',
-    'signup_form' =>            'users/register',
+    'signup_form' =>            'users.register',
     'forgot_password_form' =>   'confide::forgot_password',
     'reset_password_form' =>    'confide::reset_password',
 
@@ -71,7 +71,7 @@ return array(
     */
 
     'email_reset_password' =>       'confide::emails.passwordreset', // with $user and $token.
-    'email_account_confirmation' => 'confide::emails.confirm', // with $user
+    'email_account_confirmation' => 'emails.confirmation', // with $user
 
     /*
     |--------------------------------------------------------------------------

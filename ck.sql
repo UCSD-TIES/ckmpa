@@ -31,7 +31,7 @@ CREATE TABLE `assigned_roles` (
   KEY `assigned_roles_role_id_foreign` (`role_id`),
   CONSTRAINT `assigned_roles_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE,
   CONSTRAINT `assigned_roles_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +40,7 @@ CREATE TABLE `assigned_roles` (
 
 LOCK TABLES `assigned_roles` WRITE;
 /*!40000 ALTER TABLE `assigned_roles` DISABLE KEYS */;
-INSERT INTO `assigned_roles` VALUES (1,1,1),(2,2,2);
+INSERT INTO `assigned_roles` VALUES (1,1,1),(2,2,2),(4,4,1);
 /*!40000 ALTER TABLE `assigned_roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -148,7 +148,7 @@ CREATE TABLE `migrations` (
 
 LOCK TABLES `migrations` WRITE;
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
-INSERT INTO `migrations` VALUES ('2014_01_23_071000_create_tallies_table',1),('2014_01_23_071002_create_sections_table',1),('2014_01_23_071003_create_patrols_table',1),('2014_01_23_071004_create_locations_table',1),('2014_01_23_071005_create_fields_table',1),('2014_01_23_071006_create_categories_table',1),('2014_01_23_071007_create_datasheets_table',1),('2014_01_23_071159_create_users_table',1),('2014_01_23_071210_create_foreign_keys',1),('2014_01_24_195440_add_confide_user',1),('2014_01_24_220656_entrust_setup_tables',1),('2014_01_28_210500_add_fields',1),('2014_02_24_191020_create_subcategories_table',1),('2014_03_01_192432_add_sub_to_tallies',1),('2014_05_12_014954_create_auth_token_table',1);
+INSERT INTO `migrations` VALUES ('2014_01_23_071000_create_tallies_table',1),('2014_01_23_071002_create_sections_table',1),('2014_01_23_071003_create_patrols_table',1),('2014_01_23_071004_create_locations_table',1),('2014_01_23_071005_create_fields_table',1),('2014_01_23_071006_create_categories_table',1),('2014_01_23_071007_create_datasheets_table',1),('2014_01_23_071159_create_users_table',1),('2014_01_23_071210_create_foreign_keys',1),('2014_01_24_195440_add_confide_user',1),('2014_01_24_220656_entrust_setup_tables',1),('2014_01_28_210500_add_fields',1),('2014_02_24_191020_create_subcategories_table',1),('2014_03_01_192432_add_sub_to_tallies',1),('2014_05_12_014954_create_auth_token_table',1),('2014_03_02_013445_create_password_reminders_table',2);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -208,6 +208,31 @@ LOCK TABLES `options` WRITE;
 /*!40000 ALTER TABLE `options` DISABLE KEYS */;
 INSERT INTO `options` VALUES (1,'Clear',1,'2014-03-02 05:13:52','2014-03-02 05:13:52'),(2,'Partly Cloudy (1-50%)',1,'2014-03-02 05:13:52','2014-03-02 05:13:52'),(3,'Cloudy (>50%cover)',1,'2014-03-02 05:13:52','2014-03-02 05:13:52'),(4,'Yes',2,'2014-03-02 05:13:52','2014-03-02 05:13:52'),(5,'No',2,'2014-03-02 05:13:52','2014-03-02 05:13:52'),(6,'Cold',3,'2014-03-02 05:13:52','2014-03-02 05:13:52'),(7,'Cool',3,'2014-03-02 05:13:52','2014-03-02 05:13:52'),(8,'Mild',3,'2014-03-02 05:13:52','2014-03-02 05:13:52'),(9,'Warm',3,'2014-03-02 05:13:52','2014-03-02 05:13:52'),(10,'Hot',3,'2014-03-02 05:13:52','2014-03-02 05:13:52'),(11,'Calm',4,'2014-03-02 05:13:52','2014-03-02 05:13:52'),(12,'Breezy',4,'2014-03-02 05:13:52','2014-03-02 05:13:52'),(13,'Windy',4,'2014-03-02 05:13:52','2014-03-02 05:13:52'),(14,'Low',5,'2014-03-02 05:13:52','2014-03-02 05:13:52'),(15,'Medium',5,'2014-03-02 05:13:52','2014-03-02 05:13:52'),(16,'High',5,'2014-03-02 05:13:52','2014-03-02 05:13:52'),(17,'Perfect',6,'2014-03-02 05:13:52','2014-03-02 05:13:52'),(18,'Limited',6,'2014-03-02 05:13:52','2014-03-02 05:13:52'),(19,'Shore Only',6,'2014-03-02 05:13:52','2014-03-02 05:13:52'),(20,'Open',7,'2014-03-02 05:13:52','2014-03-02 05:13:52'),(21,'Posted',7,'2014-03-02 05:13:52','2014-03-02 05:13:52'),(22,'Closed',7,'2014-03-02 05:13:52','2014-03-02 05:13:52'),(23,'Unknown',7,'2014-03-02 05:13:52','2014-03-02 05:13:52');
 /*!40000 ALTER TABLE `options` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `password_reminders`
+--
+
+DROP TABLE IF EXISTS `password_reminders`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `password_reminders` (
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  KEY `password_reminders_email_index` (`email`),
+  KEY `password_reminders_token_index` (`token`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `password_reminders`
+--
+
+LOCK TABLES `password_reminders` WRITE;
+/*!40000 ALTER TABLE `password_reminders` DISABLE KEYS */;
+/*!40000 ALTER TABLE `password_reminders` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -378,7 +403,6 @@ CREATE TABLE `ta_auth_tokens` (
 
 LOCK TABLES `ta_auth_tokens` WRITE;
 /*!40000 ALTER TABLE `ta_auth_tokens` DISABLE KEYS */;
-INSERT INTO `ta_auth_tokens` VALUES (1,'12085af6ac01b594d75181e1ec4a4f5fe2cb06368133d28a854ca6d02a4135e3','4e0dca73afd77be52dc67c144381df565cd64f49f941690156eb16933a352715','2014-03-02 05:16:27','2014-03-02 05:16:27');
 /*!40000 ALTER TABLE `ta_auth_tokens` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -466,7 +490,7 @@ CREATE TABLE `users` (
   `confirmed` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_username_unique` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -475,7 +499,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'2014-03-02 05:13:53','2014-03-02 05:13:53','Iam','Admin','ck','admin@ck.com','$2y$10$G9pojRB4kPxmQ57ZDqStTuFeITs.Hzv7ACEJXkT6fHueADEjZvJUC','',0),(2,'2014-03-02 05:13:53','2014-03-02 05:13:53','Jane','Doe','user','girl@ck.com','$2y$10$G9pojRB4kPxmQ57ZDqStTuFeITs.Hzv7ACEJXkT6fHueADEjZvJUC','',0);
+INSERT INTO `users` VALUES (1,'2014-03-02 05:13:53','2014-03-02 05:13:53','Iam','Admin','ck','admin@ck.com','$2y$10$G9pojRB4kPxmQ57ZDqStTuFeITs.Hzv7ACEJXkT6fHueADEjZvJUC','',0),(2,'2014-03-02 05:13:53','2014-03-02 05:13:53','Jane','Doe','user','girl@ck.com','$2y$10$G9pojRB4kPxmQ57ZDqStTuFeITs.Hzv7ACEJXkT6fHueADEjZvJUC','',0),(4,'2014-03-02 09:29:38','2014-03-02 09:29:38','Alex','Chen','cyc','elkhouri1@gmail.com','$2y$10$3e1Jm9p8v9RbwwNJhVNPLOImiZ11ZEuij2KcvuQ/MxyuIjUnDY3UC','ec4fd1fce32b70cd4da8535f8beb2b5f',0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -488,4 +512,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-03-01 21:17:58
+-- Dump completed on 2014-03-02  2:44:54
