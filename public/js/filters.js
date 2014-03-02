@@ -11,24 +11,15 @@ app.filter("hasNumericField", function(){
       return x.type === "number" && name.substring(0, search.length) === searchString;
     };
     if (!search) {
-      return filter(function(it){
-        return any(function(it){
+      return _.filter(categories, function(x){
+        return _.any(x.fields, function(it){
           return it.type === "number";
-        })(
-        it.fields);
-      })(
-      categories);
+        });
+      });
     } else {
-      return filter(function(it){
-        return any(searchFunc)(
-        it.fields);
-      })(
-      categories);
+      return _.filter(categories, function(x){
+        return _.any(x.fields, searchFunc);
+      });
     }
-  };
-});
-app.filter('encodeUri', function(){
-  return function(x){
-    return encodeURIComponent(x);
   };
 });

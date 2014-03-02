@@ -9,10 +9,7 @@ app.filter "hasNumericField" ->
       name = x.name.toLowerCase!
       x.type is "number" and name.substring(0,search.length) is searchString
     if not search
-      categories |> filter (.fields |> any (.type=="number") )
+      _.filter categories, (x) -> _.any x.fields, (.type is "number")
     else
-      categories |> filter (.fields |> any (searchFunc) )
-
-app.filter 'encodeUri' ->
-  (x) -> encodeURIComponent x;
+      _.filter categories, (x) -> _.any x.fields, searchFunc
 

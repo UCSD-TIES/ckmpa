@@ -12,7 +12,8 @@
 		<ul class="list" ng-if="category.subcategories.length">
 			<li class="item" ng-repeat="field in category.fields">
 				{{ field.name }}
-				<span ng-repeat="sub in category.subcategories" class="badge badge-stable" 
+
+				<span ng-repeat="sub in category.subcategories | orderBy:'id':true" class="badge badge-stable" 
 					ng-bind="getTally(field,sub)['val']"></span>
 			</li>
 		</ul>	

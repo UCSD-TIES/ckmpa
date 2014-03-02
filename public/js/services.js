@@ -1,3 +1,4 @@
+"use strict";
 var app, mode, host;
 app = angular.module('ckmpa.services', []);
 mode = 'production';
@@ -66,16 +67,8 @@ app.factory('Datasheets', function($resource, localStorageService){
     tallies = [];
   }
   datasheets = res.query({}, function(){
-    categories = flatten(
-    map(function(it){
-      return it.categories;
-    })(
-    datasheets));
-    return fields = flatten(
-    map(function(it){
-      return it.fields;
-    })(
-    categories));
+    categories = _(datasheets).pluck('categories').flatten().value();
+    return fields = _(categories).pluck('fields').flatten().value();
   });
   return {
     datasheets: datasheets.$promise,
@@ -161,12 +154,6 @@ app.factory('Favorites', function(Datasheets, localStorageService){
       })) {
         return favorites.push(fav);
       }
-    },
-    get: function(field){
-      return find(function(x){
-        return x === field;
-      })(
-      favorites);
     },
     'delete': function(fav){
       return _.pull(favorites, fav);

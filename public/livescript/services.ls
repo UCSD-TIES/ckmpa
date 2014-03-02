@@ -1,3 +1,5 @@
+"use strict"
+
 app = angular.module 'ckmpa.services', []
 
 mode = 'production'
@@ -30,9 +32,8 @@ app.factory 'Auth', ($http, $sanitize, Flash) ->
 
   logout: ->
     logout = $http do
-     method: 'delete'
-     url: host + 'auth'
-
+      method: 'delete'
+      url: host + 'auth'
     .success logoutSuccess
 
   user: -> user || sessionStorage.getItem 'user'
@@ -53,8 +54,8 @@ app.factory 'Datasheets' ($resource, localStorageService) ->
     tallies = []
 
   datasheets = res.query {}, ->
-    categories := datasheets |> map (.categories)  |> flatten
-    fields := categories |> map (.fields) |> flatten
+    categories := _(datasheets).pluck \categories .flatten! .value!
+    fields := _(categories).pluck \fields .flatten! .value!
 
   datasheets: datasheets.$promise
   res: res
@@ -103,7 +104,6 @@ app.factory 'Favorites' (Datasheets, localStorageService) ->
 
     favorites.push fav if not _.any favorites, name: fav.name
       
-  get: (field) -> favorites |> find ((x) -> x is field)
   delete: (fav) -> _.pull favorites, fav
 
 app.factory 'Patrols' ($http) ->

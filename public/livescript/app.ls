@@ -1,4 +1,5 @@
-{map, filter, find, flatten, any} = require 'prelude-ls'
+"use strict"
+
 app = angular.module 'ckmpa', [
   'ionic'
   'LocalStorageModule'
