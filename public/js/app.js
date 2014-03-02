@@ -6,6 +6,7 @@ app.run(function($http, Auth){
 });
 app.config(function($httpProvider, $stateProvider, $urlRouterProvider){
   $httpProvider.defaults.cache = true;
+  $httpProvider.defaults.useXDomain = true;
   $stateProvider.state('login', {
     url: '/',
     templateUrl: 'templates/login.html',
@@ -15,29 +16,24 @@ app.config(function($httpProvider, $stateProvider, $urlRouterProvider){
     templateUrl: 'templates/select-mpa.html',
     controller: 'MpaController'
   }).state('select-transect', {
-    url: '/select-transect/:mpaID/:mpaName',
+    url: '/select-transect/:mpaId/:mpaName',
     templateUrl: 'templates/select-transect.html',
     controller: 'MpaController'
   }).state('data-collection', {
-    url: '/data-collection/:mpaID/:mpaName/:transectName',
+    url: '/data-collection/:mpaName/:transectId/:transectName',
     templateUrl: 'templates/data-collection.html',
     controller: 'DataController'
   }).state('summary', {
-    url: '/summary/:mpaID',
+    url: '/summary/:mpaID/:mpaName/:transectId/:transectName',
     templateUrl: 'templates/summary.html',
     controller: 'SummaryController'
   }).state('finish', {
-    url: '/finish/:mpaID',
+    url: '/finish/:mpaID/:mpaName/:transectId/',
     templateUrl: 'templates/finish.html',
     controller: 'FinishController'
   });
   return $urlRouterProvider.otherwise('/');
 });
-app.config([
-  '$httpProvider', function($httpProvider){
-    return $httpProvider.defaults.useXDomain = true;
-  }
-]);
 /*
 app.run (($rootScope, $http, $location, CSRF_TOKEN, Auth, Flash) ->
   $http.defaults.headers.common.'csrf_token' = CSRF_TOKEN

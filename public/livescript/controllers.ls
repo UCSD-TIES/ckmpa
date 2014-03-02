@@ -8,9 +8,19 @@ LoginController = ($scope, $sanitize, $location, Auth, Flash) !->
   $scope.login = -> Auth.login $scope.credentials .success -> $location.path '/select-mpa'
   $scope.logout = -> Auth.logout!.success -> $location.path '/'
 
-MpaController = ($scope, Mpas, $stateParams) ->
-  $scope.mpa_id = $stateParams.mpaID
+MpaController = ($scope, $state,  $stateParams, Mpas) ->
+  $scope.mpa_id = $stateParams.mpaId
   $scope.mpa_name = $stateParams.mpaName
+
+  $scope.select_transect = (mpa) ->
+    $state.go 'select-transect',
+      mpaId: mpa.id
+      mpaName: mpa.name
+
+  $scope.collect_data = (transect) ->
+    $state.go 'data-collection',
+      transectId: transect.id
+      transectName: encodeURIComponent transect.name
 
   rightButtons =
     content: 'Logout'
@@ -26,7 +36,7 @@ MpaController = ($scope, Mpas, $stateParams) ->
 DataController = ($scope, $state, $stateParams, $ionicLoading, $ionicModal, $timeout, Datasheets, Favorites) ->
   $scope.mpa_id = $stateParams.mpaID
   $scope.mpa_name = $stateParams.mpaName
-  $scope.transect_name = $stateParams.transectName
+  $scope.transect_name = decodeURIComponent $stateParams.transectName
   $scope.comments = Datasheets.comments!
   $scope.favorites = []
   $scope.categories = []
@@ -86,7 +96,7 @@ DataController = ($scope, $state, $stateParams, $ionicLoading, $ionicModal, $tim
   $scope.loading = $ionicLoading.show do
     content: "<i class='icon ion-loading-a'></i> Loading"
 
-SummaryController = ($scope, $state, $stateParams, Datasheets) ->
+SummaryController = ($scope, $state, $stateParams, $ionicLoading, Datasheets, Patrols) ->
   $scope.mpa_id = $stateParams.mpaID
   $scope.mpa_name = $stateParams.mpaName
   $scope.transect_name = $stateParams.transectName
@@ -99,9 +109,18 @@ SummaryController = ($scope, $state, $stateParams, Datasheets) ->
       field: field
       subcategory: subcategory
 
-  $scope.submit = -> 
-    $state.go 'finish'
-    Datasheets.resetTallies!
+  $scope.submit = ->
+    $scope.loading = $ionicLoading.show do
+      content: "<i class='icon ion-loading-a'></i> Submitting"
+
+    Patrols.post $stateParams.transectId,$scope.comments,$scope.tallies 
+      .success (data) ->
+        # console.log data
+        $scope.loading.hide!
+        $state.go 'finish'
+        Datasheets.resetTallies!
+      .error (data, status, headers, config) ->
+        console.log data
 
   datasheets = Datasheets.datasheets.then (data) ->
     $scope.categories = Datasheets.categories!
@@ -114,6 +133,8 @@ SummaryController = ($scope, $state, $stateParams, Datasheets) ->
   $scope.rightButtons = rightButtons
 
 FinishController = ($scope, $state, $stateParams) ->
+  $scope.mpa_id = $stateParams.mpaID
+  $scope.mpa_name = $stateParams.mpaName
   
 
 

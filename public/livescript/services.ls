@@ -1,7 +1,7 @@
 app = angular.module 'ckmpa.services', []
 
 mode = 'production'
-host = if mode == 'production' then 'http://ckmpa.gopagoda.com/' else 'http://localhost/'
+host = if mode == 'production' then 'http://ckmpa.gopagoda.com/' else 'http://localhost:8000/'
 
 app.factory 'Auth', ($http, $sanitize, Flash) ->
   var user, token
@@ -105,6 +105,15 @@ app.factory 'Favorites' (Datasheets, localStorageService) ->
       
   get: (field) -> favorites |> find ((x) -> x is field)
   delete: (fav) -> _.pull favorites, fav
+
+app.factory 'Patrols' ($http) ->
+  post: (transect, comments, tallies) -> 
+    data = 
+      transect: transect
+      comments: comments.val? or '' 
+      tallies: tallies
+
+    $http.post host+'api/patrols' data
 
 
   

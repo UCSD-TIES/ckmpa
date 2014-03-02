@@ -1,7 +1,7 @@
 var app, mode, host;
 app = angular.module('ckmpa.services', []);
 mode = 'production';
-host = mode === 'production' ? 'http://ckmpa.gopagoda.com/' : 'http://localhost/';
+host = mode === 'production' ? 'http://ckmpa.gopagoda.com/' : 'http://localhost:8000/';
 app.factory('Auth', function($http, $sanitize, Flash){
   var user, token, sanitizeCredentials, loginSuccess, loginError, logoutSuccess;
   sanitizeCredentials = function(credentials){
@@ -170,6 +170,19 @@ app.factory('Favorites', function(Datasheets, localStorageService){
     },
     'delete': function(fav){
       return _.pull(favorites, fav);
+    }
+  };
+});
+app.factory('Patrols', function($http){
+  return {
+    post: function(transect, comments, tallies){
+      var data;
+      data = {
+        transect: transect,
+        comments: comments.val != null || '',
+        tallies: tallies
+      };
+      return $http.post(host + 'api/patrols', data);
     }
   };
 });

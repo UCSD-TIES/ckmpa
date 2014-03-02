@@ -26,7 +26,7 @@
         </div>
       </div>
 
-      <div ng-repeat="category in categories | hasNumericField:search" ng-init="activeTab = 0">
+      <div ng-repeat="category in categories | hasNumericField:search" ng-init="activeTab = 1">
         <div class="item item-icon-right item-divider" ng-click='showThis = !showThis; resize()'>
           <i ng-show="!showThis" class="icon ion-ios7-arrow-down"></i>
           <i ng-show="showThis" class="icon ion-ios7-arrow-up"></i>

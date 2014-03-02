@@ -14,45 +14,41 @@ app.run ($http, Auth) ->
 
 app.config ($httpProvider, $stateProvider, $urlRouterProvider) ->
   $httpProvider.defaults.cache = true
+  $httpProvider.defaults.useXDomain = true
 
   $stateProvider
-    .state 'login', {
+    .state 'login', 
       url: '/'
       templateUrl: 'templates/login.html'
       controller: 'LoginController'
-    }
-    .state 'select-mpa', {
+    
+    .state 'select-mpa',
       url: '/select-mpa'
       templateUrl: 'templates/select-mpa.html'
       controller: 'MpaController'
-    }
-    .state 'select-transect', {
-      url: '/select-transect/:mpaID/:mpaName'
+    
+    .state 'select-transect',
+      url: '/select-transect/:mpaId/:mpaName'
       templateUrl: 'templates/select-transect.html'
       controller: 'MpaController'
-    }
-    .state 'data-collection', {
-      url: '/data-collection/:mpaID/:mpaName/:transectName'
+    
+    .state 'data-collection',
+      url: '/data-collection/:mpaName/:transectId/:transectName'
       templateUrl: 'templates/data-collection.html'
       controller: 'DataController'
-      #resolve: 'datasheets': (Datasheets) -> Datasheets.datasheets
-    }
-    .state 'summary', {
-      url: '/summary/:mpaID'
+    
+    .state 'summary',
+      url: '/summary/:mpaID/:mpaName/:transectId/:transectName'
       templateUrl: 'templates/summary.html'
       controller: 'SummaryController'
-    }
-    .state 'finish', {
-      url: '/finish/:mpaID'
+    
+    .state 'finish', 
+      url: '/finish/:mpaID/:mpaName/:transectId/'
       templateUrl: 'templates/finish.html'
       controller: 'FinishController'
-    }
+    
 
-  $urlRouterProvider.otherwise('/');
-
-app.config ['$httpProvider', ($httpProvider) ->
-  $httpProvider.defaults.useXDomain = true;
-]
+  $urlRouterProvider.otherwise '/'
 
 /*
 app.run (($rootScope, $http, $location, CSRF_TOKEN, Auth, Flash) ->

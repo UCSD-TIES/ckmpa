@@ -1,8 +1,8 @@
 <ion-view title="'Select a MPA'" right-buttons="rightButtons">
 	<ion-content has-header="true">
 	<div class="list">
-		<a class="item" ng-repeat='mpa in mpas' ng-href='#/select-transect/{{ mpa.id }}/{{ mpa.name }}'>
-		{{ mpa.name }}</a>
+		<a class="item" ng-repeat='mpa in mpas' 
+			ng-click='select_transect(mpa)' ng-bind='mpa.name'></a>
 	</div>
 	
 	<div class="list card">

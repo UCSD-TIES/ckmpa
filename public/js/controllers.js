@@ -16,10 +16,22 @@ LoginController = function($scope, $sanitize, $location, Auth, Flash){
     });
   };
 };
-MpaController = function($scope, Mpas, $stateParams){
+MpaController = function($scope, $state, $stateParams, Mpas){
   var rightButtons, mpas;
-  $scope.mpa_id = $stateParams.mpaID;
+  $scope.mpa_id = $stateParams.mpaId;
   $scope.mpa_name = $stateParams.mpaName;
+  $scope.select_transect = function(mpa){
+    return $state.go('select-transect', {
+      mpaId: mpa.id,
+      mpaName: mpa.name
+    });
+  };
+  $scope.collect_data = function(transect){
+    return $state.go('data-collection', {
+      transectId: transect.id,
+      transectName: encodeURIComponent(transect.name)
+    });
+  };
   rightButtons = [{
     content: 'Logout',
     type: 'button-small button-clear'
@@ -38,7 +50,7 @@ DataController = function($scope, $state, $stateParams, $ionicLoading, $ionicMod
   var time_interval, timer, saveTallies, datasheets, rightButtons;
   $scope.mpa_id = $stateParams.mpaID;
   $scope.mpa_name = $stateParams.mpaName;
-  $scope.transect_name = $stateParams.transectName;
+  $scope.transect_name = decodeURIComponent($stateParams.transectName);
   $scope.comments = Datasheets.comments();
   $scope.favorites = [];
   $scope.categories = [];
@@ -98,7 +110,7 @@ DataController = function($scope, $state, $stateParams, $ionicLoading, $ionicMod
     content: "<i class='icon ion-loading-a'></i> Loading"
   });
 };
-SummaryController = function($scope, $state, $stateParams, Datasheets){
+SummaryController = function($scope, $state, $stateParams, $ionicLoading, Datasheets, Patrols){
   var datasheets, rightButtons;
   $scope.mpa_id = $stateParams.mpaID;
   $scope.mpa_name = $stateParams.mpaName;
@@ -113,8 +125,16 @@ SummaryController = function($scope, $state, $stateParams, Datasheets){
     });
   };
   $scope.submit = function(){
-    $state.go('finish');
-    return Datasheets.resetTallies();
+    $scope.loading = $ionicLoading.show({
+      content: "<i class='icon ion-loading-a'></i> Submitting"
+    });
+    return Patrols.post($stateParams.transectId, $scope.comments, $scope.tallies).success(function(data){
+      $scope.loading.hide();
+      $state.go('finish');
+      return Datasheets.resetTallies();
+    }).error(function(data, status, headers, config){
+      return console.log(data);
+    });
   };
   datasheets = Datasheets.datasheets.then(function(data){
     return $scope.categories = Datasheets.categories();
@@ -125,4 +145,7 @@ SummaryController = function($scope, $state, $stateParams, Datasheets){
   }];
   return $scope.rightButtons = rightButtons;
 };
-FinishController = function($scope, $state, $stateParams){};
+FinishController = function($scope, $state, $stateParams){
+  $scope.mpa_id = $stateParams.mpaID;
+  return $scope.mpa_name = $stateParams.mpaName;
+};

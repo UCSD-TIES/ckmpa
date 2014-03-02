@@ -15,7 +15,7 @@
 		<div class='button button-block button-small' ng-click='openModal()'>Edit Favorites</div>
 	</div>
 
-	<div ng-repeat="category in categories" ng-init="activeTab = 0">
+	<div ng-repeat="category in categories" ng-init="activeTab = 1">
 		<div class="item item-icon-right item-divider" ng-click="showThis = !showThis; resize()">
 			<i ng-if="!showThis" class="icon ion-ios7-arrow-down"></i>
 			<i ng-if="showThis" class="icon ion-ios7-arrow-up"></i>
@@ -52,7 +52,7 @@
 </div>
 
 <div class='padding'>
-	<button class='button button-positive button-block' ng-click='submit()'>Submit</button>
+	<button class='button button-positive button-block' ng-click='submit()'>Next</button>
 </div>
 
 </ion-content>
