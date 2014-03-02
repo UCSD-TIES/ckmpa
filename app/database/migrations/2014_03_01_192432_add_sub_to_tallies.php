@@ -13,7 +13,9 @@ class AddSubToTallies extends Migration {
 	public function up()
 	{
 		Schema::table('tallies', function(Blueprint $table) {
-			$table->integer('subcategory_id')->unsigned()->index();
+			$table->integer('subcategory_id')->unsigned()->index()->nullable();
+		});
+		Schema::table('tallies', function(Blueprint $table) {
 			$table->foreign('subcategory_id')->references('id')->on('subcategories')
 					->onDelete('restrict')
 					->onUpdate('restrict');
