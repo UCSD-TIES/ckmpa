@@ -105,6 +105,7 @@ class VolunteersController extends BaseController {
 		return Redirect::route('admin.volunteers.edit', $id)
 			->withInput()
 			->with('errors', $errors);
+
 	}
 
 	/**
@@ -149,7 +150,7 @@ class VolunteersController extends BaseController {
 			foreach($permissions as $permission)
 				$perms[] = Input::get($role->name.'-'.$permission);
 
-			$role->perms()->sync(array_filte0r($perms));
+			$role->perms()->sync(array_filter($perms));
 		}
 
 		return Redirect::route('permissions')->with('success', 'Saved');

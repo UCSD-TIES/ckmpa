@@ -1,10 +1,12 @@
 <?php namespace Codesleeve\Sprockets\Parsers;
 
-class DirectivesParser extends PathParser
+use Codesleeve\Sprockets\Interfaces\DirectivesParserInterface;
+
+class DirectivesParser extends PathParser implements DirectivesParserInterface
 {
     /**
      * Returns an array of all the files inside of this manifest file
-     * 
+     *
      * @param  string $filename
      * @return array
      */
@@ -28,7 +30,7 @@ class DirectivesParser extends PathParser
 
     /**
      * Returns an array of all files that this file depends upon
-     * 
+     *
      * @param  string $filename
      * @return array
      */
@@ -56,7 +58,7 @@ class DirectivesParser extends PathParser
      * An iterative process to get all dependencies recursively
      * so we make sure to bust the cache properly. This avoids
      * circular loops via the $recursive = false flag
-     * 
+     *
      * @param  array $unprocessed
      * @return array
      */
@@ -83,7 +85,7 @@ class DirectivesParser extends PathParser
      * A directive can return different things. It used to be that directives could only return an
      * array of files to include. But that didn't allow us to exclude (stub) or bust cache(depend_on)
      * for our files like the asset pipeline does in Rails.
-     * 
+     *
      * @param  string $line
      * @param  file $filename
      * @return array($include, $exclude, $depend)
@@ -91,7 +93,7 @@ class DirectivesParser extends PathParser
     private function processDirectiveFromFileLine($line, $filename, $tokens = array('//=', '*=', '#='))
     {
         $line = ltrim($line);
-        
+
         if (!$line) {
             return $this->structureDirectiveResults(array());
         }
@@ -115,7 +117,7 @@ class DirectivesParser extends PathParser
      * Returns a structured array from $results, to be used like this,
      *
      * list($include, $exclude, $depend) = $this->structureDirectiveResults($results):
-     * 
+     *
      * @param  array $results
      * @return array($include, $exclude, $depend)
      */
@@ -148,7 +150,7 @@ class DirectivesParser extends PathParser
 
     /**
      * Is this array an associative array (does it have string indexes?)
-     * 
+     *
      * @param  array $array
      * @return boolean
      */
@@ -159,7 +161,7 @@ class DirectivesParser extends PathParser
 
     /**
      * Returns an array of file(s) based on directive
-     * 
+     *
      * @param  string $directive
      * @param  string $filename
      * @return array
@@ -169,7 +171,7 @@ class DirectivesParser extends PathParser
         foreach ($this->directives as $directive_name => $directive)
         {
             $param = $this->checkForDirective($directive_name, $line);
-            
+
             if ($param)
             {
                 $directive->initialize($this, $filename);
@@ -186,10 +188,10 @@ class DirectivesParser extends PathParser
     /**
      * See if the directive and diretive name match and if so, then we have a match and
      * should return the parameters of this directive on this line
-     * 
+     *
      * @param  string $directive_name
      * @param  string $directive
-     * @return 
+     * @return
      */
     private function checkForDirective($directive_name, $directive)
     {

@@ -1,5 +1,6 @@
 <?php namespace Codesleeve\Sprockets\Cache;
 
+use Assetic\Asset\FileAsset;
 use Assetic\Asset\AssetInterface;
 use Assetic\Cache\CacheInterface;
 use Assetic\Filter\FilterInterface;
@@ -88,7 +89,7 @@ class AssetCache implements AssetCacheInterface
 
     /**
      * Allows us to remove a cached file
-     * 
+     *
      * @return [type] [description]
      */
     public function remove()
@@ -237,4 +238,18 @@ class AssetCache implements AssetCacheInterface
 
         return $this->cache->has($cacheKey);
     }
+
+    /**
+     * Shortcut for seeing if a file is cached or not
+     *
+     * @param  [type]  $file [description]
+     * @return boolean       [description]
+     */
+    public function isFileCached($file)
+    {
+        $asset = new AssetCache(new FileAsset($file), $this->cache);
+        return $asset->isCached();
+    }
+
+
 }

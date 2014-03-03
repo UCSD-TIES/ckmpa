@@ -9,7 +9,6 @@ return array(
     'phpDocumentor' => array($vendorDir . '/phpdocumentor/reflection-docblock/src'),
     'dflydev\\markdown' => array($vendorDir . '/dflydev/markdown/src'),
     'Zizaco\\Entrust' => array($vendorDir . '/zizaco/entrust/src'),
-    'Zizaco\\Confide' => array($vendorDir . '/zizaco/confide/src'),
     'Whoops' => array($vendorDir . '/filp/whoops/src'),
     'Way\\Generators' => array($vendorDir . '/way/generators/src'),
     'Tappleby\\Support' => array($vendorDir . '/tappleby/laravel-auth-token/src'),

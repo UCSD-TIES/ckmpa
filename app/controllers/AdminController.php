@@ -38,12 +38,10 @@ class AdminController extends BaseController
 	{
 		$input = array(
 			'username' => Input::get('username'),
-			'password' => Input::get('password'),
-			'remember' => Input::get('remember'),
+			'password' => Input::get('password')
 		);
 
-		// Signup confirm not implemented yet ignore for now.
-		if (Confide::logAttempt($input, Config::get('confide::signup_confirm')))
+		if (Auth::attempt($input, Input::get('remember')))
 		{
 			if(!Entrust::hasRole('Admin'))
 				return Redirect::route('admin-login')->with('error', 'Please Login as Administrator');
@@ -64,7 +62,7 @@ class AdminController extends BaseController
 	 */
 	public function getLogout()
 	{
-		Confide::logout();
+		Auth::logout();
 
 		return Redirect::route('admin-login')
 			->with('message', 'Your are now logged out!');
