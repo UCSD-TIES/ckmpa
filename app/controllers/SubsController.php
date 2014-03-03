@@ -80,6 +80,7 @@ class SubsController extends BaseController
         $sub = Subcategory::find($id);
         $data['sub'] = $sub;
         $data['category'] = $sub->category;
+	     $data['category_id'] = $sub->category->id;
 
         return View::make('admin.subs.edit', $data);
     }

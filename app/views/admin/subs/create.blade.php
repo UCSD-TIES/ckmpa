@@ -19,7 +19,7 @@
 			</div>
 			<div class="form-actions">
 				<button type="submit" class="btn btn-primary">Create subcategory</button>
-				<a href="{{ URL::route('admin.categories.show') }}" class="btn btn-default">Cancel</a>
+				<a href="{{ URL::route('admin.categories.show', $category_id) }}" class="btn btn-default">Cancel</a>
 			</div>
 		</form>
 	</div>

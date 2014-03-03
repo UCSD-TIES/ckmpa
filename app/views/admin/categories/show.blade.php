@@ -15,7 +15,7 @@
 			<td>{{ $sub->name }}</td>
 			<td>
 				<!-- DOESN'T WORK YET -->
-				{{ Form::open(array('method'=> 'DELETE', 'class'=> 'form-inline', 'route'=> array('admin.fields.destroy', $sub->id) )) }}
+				{{ Form::open(array('method'=> 'DELETE', 'class'=> 'form-inline', 'route'=> array('admin.subs.destroy', $sub->id) )) }}
 				<a class="btn btn-default" href="{{ URL::route('admin.subs.edit', $sub->id) }}">
 					<i	class="glyphicon glyphicon-edit"> Edit</i></a>
 					<button type="submit" class="btn btn-small btn-danger">
@@ -27,12 +27,11 @@
 		@endforeach
 	</table>
 @endif
-
+<div style="padding-bottom: 10px;">
 <a class="btn btn-default"
    href="{{ URL::route('admin.subs.create', array( 'category_id'=>$category->id)) }} "
    class="btn"><i class="glyphicon glyphicon-plus"></i> Create new subcategory</a>
-
-
+</div>
 @if($fields)
 <table class="table table-hover">
 	<tr>
