@@ -8,51 +8,52 @@
 		@if($patrols)
 			<table class="table table-hover" id="PatrolTable">
 				
-				
+				<thead>
 				<tr>
 					<th>Date</th>
 					<th>Transect</th>
 					<th>Volunteer</th>
 					<th></th>
 				</tr>
+				</thead>
 
+				<tbody>
 				@foreach($patrols as $patrol)
-					<tr>
+						<tr>
 
-						<td>{{ $patrol->start_time->toDateString() }}</td>
-
-						<td>
-							@if($patrol->transect)
-								<a href="{{ URL::route('patrol-list', array('transect'=>$patrol->transect->id)) }}">
+						<td>{{ $patrol->start_time->toDateString() }}</td>	
+	
+							<td>
+								@if($patrol->transect)
+									<a href="{{ URL::route('patrol-list', array('transect'=>$patrol->transect->id)) }}">
 									{{ $patrol->transect->name }}
-								</a>
-							@endif
-						</td>
-						<td>
-							@if($patrol->user)
-								<a href="{{ URL::route('admin.volunteers.show', $patrol->user->id ) }}">
-									{{ $patrol->user->first_name }} {{ $patrol->user->last_name }}
-								</a>
-							@endif
-						</td>
+									</a>
+								@endif
+							</td>
+							<td>
+								@if($patrol->user)
+									<a href="{{ URL::route('admin.volunteers.show', $patrol->user->id ) }}">
+										{{ $patrol->user->first_name }} {{ $patrol->user->last_name }}
+									</a>
+								@endif
+							</td>
 
-						<td>
-							{{ Form::open(array('method'=> 'DELETE', 'class'=> 'form-inline', 'route'=> array('admin.patrols.destroy', $patrol->id) )) }}
-							<div class='form-group'>
-								<button type="submit" class="btn btn-small btn-danger">
-								<i class="glyphicon glyphicon-trash"></i>
-									Delete
-								</button>
-							</div>
-							<div class='form-group'>
-								<a class="btn btn-default" data-toggle="modal" data-target="#{{$patrol->id}}">
-								  Details
-								</a>
-							</div>
-							</form>
-							
-						</td>
-					</tr>
+							<td>
+								{{ Form::open(array('method'=> 'DELETE', 'class'=> 'form-inline', 'route'=> array('admin.patrols.destroy', $patrol->id) )) }}
+								<div class='form-group'>
+									<button type="submit" class="btn btn-small btn-danger">
+									<i class="glyphicon glyphicon-trash"></i>
+										Delete
+									</button>
+								</div>
+								<div class='form-group'>
+									<a class="btn btn-default" data-toggle="modal" data-target="#{{$patrol->id}}">
+								  	Details
+									</a>
+								</div>
+								</form>
+							</td>
+						</tr>
 					<div class="modal fade" id="{{$patrol->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 					  <div class="modal-dialog">
 					    <div class="modal-content">
@@ -78,6 +79,7 @@
 					  </div>
 					</div>
 				@endforeach
+				</tbody>
 			</table>
 		@endif
 
