@@ -13,6 +13,7 @@ class CreateTalliesTable extends Migration {
 			$table->integer('tally');
 			$table->integer('patrol_id')->unsigned()->index();
 			$table->integer('field_id')->unsigned()->index();
+			$table->integer('subcategory_id')->unsigned()->index()->nullable();
 		});
 	}
 

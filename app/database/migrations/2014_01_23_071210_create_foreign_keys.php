@@ -47,6 +47,16 @@ class CreateForeignKeys extends Migration {
 						->onDelete('cascade')
 						->onUpdate('cascade');
 		});
+		Schema::table('tallies', function(Blueprint $table) {
+			$table->foreign('subcategory_id')->references('id')->on('subcategories')
+					->onDelete('cascade')
+					->onUpdate('cascade');
+		});
+		Schema::table('subcategories', function(Blueprint $table) {
+			$table->foreign('category_id')->references('id')->on('categories')
+					->onDelete('restrict')
+					->onUpdate('restrict');
+		});
 	}
 
 	public function down()
@@ -55,7 +65,7 @@ class CreateForeignKeys extends Migration {
 			$table->dropForeign('patrols_user_id_foreign');
 		});
 		Schema::table('patrols', function(Blueprint $table) {
-			$table->dropForeign('patrols_transects_id_foreign');
+			$table->dropForeign('patrols_transect_id_foreign');
 		});
 		Schema::table('mpas', function(Blueprint $table) {
 			$table->dropForeign('mpas_datasheet_id_foreign');
@@ -74,6 +84,12 @@ class CreateForeignKeys extends Migration {
 		});
 		Schema::table('tallies', function(Blueprint $table) {
 			$table->dropForeign('tallies_field_id_foreign');
+		});
+		Schema::table('tallies', function(Blueprint $table) {
+			$table->dropForeign('tallies_subcategory_id_foreign');
+		});
+		Schema::table('subcategories', function(Blueprint $table) {
+			$table->dropForeign('subcategories_category_id_foreign');
 		});
 	}
 }
