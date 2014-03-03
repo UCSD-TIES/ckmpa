@@ -53,23 +53,26 @@ class RemindersController extends Controller {
 	 */
 	public function postReset()
 	{
-		$input = array(
-				'token' => Input::get('token'),
-				'password' => Input::get('password'),
-				'password_confirmation' => Input::get('password_confirmation'),
+		$credentials = Input::only(
+				'email', 'password', 'password_confirmation', 'token'
 		);
 
-		if (Confide::resetPassword($input))
+		$response = Password::reset($credentials, function($user, $password)
 		{
-			$notice_msg = 'Your password has been changed successfully.';
-			return Redirect::to('/admin')
-					->with('success', $notice_msg);
-		} else
+			$user->password = Hash::make($password);
+
+			$user->save();
+		});
+
+		switch ($response)
 		{
-			$error_msg = Lang::get('confide::confide.alerts.wrong_password_reset');
-			return Redirect::action('RemindersController@getReset', array('token' => $input['token']))
-					->withInput()
-					->with('error', $error_msg);
+			case Password::INVALID_PASSWORD:
+			case Password::INVALID_TOKEN:
+			case Password::INVALID_USER:
+				return Redirect::back()->with('error', Lang::get($response));
+
+			case Password::PASSWORD_RESET:
+				return Redirect::to('/admin');
 		}
 	}
 

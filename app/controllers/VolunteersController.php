@@ -24,7 +24,7 @@ class VolunteersController extends BaseController {
 	{
 		$data['roles'] = Role::all();
 
-        return View::make('admin.volunteers.create', $data);
+      return View::make('admin.volunteers.create', $data);
 	}
 
 	/**
@@ -89,6 +89,12 @@ class VolunteersController extends BaseController {
 	public function update($id)
 	{
 		$user = User::find($id);
+		if ($user->exists)
+		{
+			$user::$rules['password'] = (Input::get('password')) ? 'required|confirmed' : '';
+			$user::$rules['password_confirmation'] = (Input::get('password')) ? 'required' : '';
+		}
+
 		if($user->updateUniques())
 		{
 			$user->roles()->sync(array(Input::get('role')));
@@ -99,7 +105,6 @@ class VolunteersController extends BaseController {
 		return Redirect::route('admin.volunteers.edit', $id)
 			->withInput()
 			->with('errors', $errors);
-
 	}
 
 	/**
@@ -144,7 +149,7 @@ class VolunteersController extends BaseController {
 			foreach($permissions as $permission)
 				$perms[] = Input::get($role->name.'-'.$permission);
 
-			$role->perms()->sync(array_filter($perms));
+			$role->perms()->sync(array_filte0r($perms));
 		}
 
 		return Redirect::route('permissions')->with('success', 'Saved');

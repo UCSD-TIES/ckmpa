@@ -6,7 +6,6 @@
 	"require": {
 		"laravel/framework": "4.1.*",
         "phpoffice/phpexcel": "dev-master",
-        "zizaco/confide": "dev-master",
         "zizaco/entrust": "dev-master",
         "laravelbook/ardent": "dev-master",
         "nesbot/Carbon": "*",

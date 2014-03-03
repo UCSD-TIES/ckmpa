@@ -2,9 +2,9 @@
 
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
-use Zizaco\Confide\ConfideUser;
+use LaravelBook\Ardent\Ardent;
 use Zizaco\Entrust\HasRole;
-
+use Zizaco\Confide\ConfideUser;
 
 
 /**
@@ -33,7 +33,7 @@ use Zizaco\Entrust\HasRole;
  * @method static \Illuminate\Database\Query\Builder|\User whereConfirmationCode($value) 
  * @method static \Illuminate\Database\Query\Builder|\User whereConfirmed($value) 
  */
-class User extends ConfideUser implements UserInterface, RemindableInterface {
+class User extends Ardent implements UserInterface, RemindableInterface {
 	use HasRole;
 
 	public static $rules = array(
@@ -41,12 +41,8 @@ class User extends ConfideUser implements UserInterface, RemindableInterface {
 		'last_name'=>'required|min:2',
 		'username'=>'required|unique:users',
 		'email'=>'required|email',
-		'password'=>'required|between:6,30|confirmed',
-		'password_confirmation'=>'required|between:6,30',
-	);
-
-	public static $relationsData = array(
-		'roles'  => array(self::HAS_MANY, 'Role'),
+		'password'=>'required|min:6|confirmed',
+		'password_confirmation'=>'required',
 	);
 
 	protected $guarded = array('is_admin');
@@ -56,6 +52,9 @@ class User extends ConfideUser implements UserInterface, RemindableInterface {
 
 	public $autoHydrateEntityFromInput = true;    // hydrates on new entries' validation
 	public $forceEntityHydrationFromInput = true;
+	public static $passwordAttributes = array('password');
+	public $autoHashPasswordAttributes = true;
+	public $autoPurgeRedundantAttributes = true;
 
 	/**
 	 * Get the unique identifier for the user.
@@ -91,5 +90,10 @@ class User extends ConfideUser implements UserInterface, RemindableInterface {
 	{
 		return $this->hasMany('Patrol');
 	}
+
+//	public function roles()
+//	{
+//		return $this->hasMany('Role');
+//	}
 
 }
