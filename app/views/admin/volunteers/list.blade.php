@@ -15,7 +15,7 @@
 		</form>
 		<br><br>
 		@if($volunteers)
-			<table class="table table-bordered">
+			<table class="table table-bordered" id = "VolunteerTable">
 				<thead>
 				<tr>
 					<th>Name</th>

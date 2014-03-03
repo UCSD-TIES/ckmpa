@@ -32,8 +32,8 @@
 
 		<div>
 			<a class='btn btn-default' href="{{ URL::route('admin.categories.create', array('datasheet_id'=> $datasheet->id)) }} "
-			   class="btn"><i class="glyphicon glyphicon-plus"></i> Create new category</a>
-			<a class='btn btn-default' href="{{ URL::route('admin.datasheets.index') }}" class="btn btn-default">Back to datasheets</a>
+			   class="btn"><i class="glyphicon glyphicon-plus"></i> Create New Category</a>
+			<a class='btn btn-default' href="{{ URL::route('admin.datasheets.index') }}" class="btn btn-default"><i class="glyphicon glyphicon-arrow-left"></i> Back to Datasheets</a>
 		</div>
 	</div>
 @stop

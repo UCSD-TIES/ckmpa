@@ -6,12 +6,15 @@
 	<div class="span12">
 		<h1>Select a MPA</h1>
 		@if($mpas)
-			<table class="table table-hover">
+			<table class="table table-hover"  id = "MPATable" >
+			<thead>
 				<tr>
 					<th>MPA</th>
 					<th>Datasheet</th>
 					<th>Actions</th>
 				</tr>
+			</thead>
+			<tbody>
 				@foreach($mpas as $mpa)
 					<tr>
 						<td><a href="{{ URL::route('admin.mpas.show', $mpa->id) }}"> {{ $mpa->name }}</a></td>
@@ -33,6 +36,7 @@
 						</td>
 					</tr>
 				@endforeach
+			</tbody>
 			</table>
 		@endif
 

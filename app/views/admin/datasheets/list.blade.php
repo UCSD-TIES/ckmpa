@@ -6,11 +6,14 @@
 	<div class="span12">
 		<h1>Datasheets</h1>
 		@if($datasheets)
-			<table class="table table-hover">
+			<table class="table table-hover" id="DataSheetTable">
+			<thead>
 				<tr>
 					<th>Name</th>
 					<th>Actions</th>
 				</tr>
+				</thead>
+				<tbody>
 				@foreach($datasheets as $datasheet)
 					<tr>
 						<td>
@@ -30,11 +33,12 @@
 						</td>
 					</tr>
 				@endforeach
+			</tbody>
 			</table>
 		@endif
 		<div>
 			<a class='btn btn-default' href="{{ URL::route('admin.datasheets.create') }} " class="btn"><i
-						class="glyphicon glyphicon-plus"></i> Create new datasheet</a>
+						class="glyphicon glyphicon-plus"></i> Create new Datasheet</a>
 		</div>
 	</div>
 @stop

@@ -61,7 +61,7 @@
 <div>
 	<a class="btn btn-default"
 	href="{{ URL::route('admin.fields.create', array('datasheet_id'=>$datasheet->id, 'category_id'=>$category->id)) }} "
-	class="btn"><i class="glyphicon glyphicon-plus"></i> Create new field</a>
-	<a class="btn btn-default" href="{{ URL::route('admin.datasheets.show', array('datasheet_id'=> $datasheet->id)) }} ">Back to datasheet '{{ $datasheet->name }}'</a>
+	class="btn"><i class="glyphicon glyphicon-plus"></i> Create New Field</a>
+	<a class="btn btn-default" href="{{ URL::route('admin.datasheets.show', array('datasheet_id'=> $datasheet->id)) }} "><i class="glyphicon glyphicon-arrow-left"></i> Back to Datasheet '{{ $datasheet->name }}'</a>
 </div>
 @stop
