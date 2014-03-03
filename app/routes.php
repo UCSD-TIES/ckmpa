@@ -61,9 +61,8 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth.admin'), function ()
 	Route::resource('fields', 'FieldsController');
 	Route::resource('subs', 'SubsController');
 
-    Route::get('delete-option/{id}', 'FieldsController@deleteOption');
+   Route::get('delete-option/{id}', 'FieldsController@deleteOption');
 	Route::get('add-option/{id}', 'FieldsController@addOption');
-
 
 	Route::get('permissions', array('as' => 'permissions', 'uses' => 'VolunteersController@permissions'));
 	Route::post('permissions', array('as' => 'permissions', 'uses' => 'VolunteersController@postPermissions'));

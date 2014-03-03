@@ -36,7 +36,4 @@
 </div>
 </form>
 
-@if (Session::has('error'))
-<p style="color: red;">{{ Session::get('error') }}</p>
-@endif
 @stop

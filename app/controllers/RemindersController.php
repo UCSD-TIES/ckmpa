@@ -19,12 +19,11 @@ class RemindersController extends Controller {
 	 */
 	public function postRemind()
 	{
-		Password::remind(Input::only('email'), function($message)
+		$response = Password::remind(Input::only('email'), function($message)
 		{
 			$message->subject('Password Reset for MPA Watch');
 		});
-
-		switch ($response = Password::remind(Input::only('email')))
+		switch ($response)
 		{
 			case Password::INVALID_USER:
 				return Redirect::back()->with('error', Lang::get($response));
@@ -54,26 +53,23 @@ class RemindersController extends Controller {
 	 */
 	public function postReset()
 	{
-		$credentials = Input::only(
-			'email', 'password', 'password_confirmation', 'token'
+		$input = array(
+				'token' => Input::get('token'),
+				'password' => Input::get('password'),
+				'password_confirmation' => Input::get('password_confirmation'),
 		);
 
-		$response = Password::reset($credentials, function($user, $password)
+		if (Confide::resetPassword($input))
 		{
-			$user->password = Hash::make($password);
-
-			$user->save();
-		});
-
-		switch ($response)
+			$notice_msg = 'Your password has been changed successfully.';
+			return Redirect::to('/admin')
+					->with('success', $notice_msg);
+		} else
 		{
-			case Password::INVALID_PASSWORD:
-			case Password::INVALID_TOKEN:
-			case Password::INVALID_USER:
-				return Redirect::back()->with('error', Lang::get($response));
-
-			case Password::PASSWORD_RESET:
-				return Redirect::to('/admin');
+			$error_msg = Lang::get('confide::confide.alerts.wrong_password_reset');
+			return Redirect::action('RemindersController@getReset', array('token' => $input['token']))
+					->withInput()
+					->with('error', $error_msg);
 		}
 	}
 
