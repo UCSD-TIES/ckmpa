@@ -6,7 +6,9 @@
 	<div class="span12">
 		<h2> Patrols</h2>
 		@if($patrols)
-			<table class="table table-hover">
+			<table class="table table-hover" id="PatrolTable">
+				
+				
 				<tr>
 					<th>Date</th>
 					<th>Transect</th>
