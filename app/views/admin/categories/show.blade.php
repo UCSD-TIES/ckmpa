@@ -27,6 +27,12 @@
 		@endforeach
 	</table>
 @endif
+
+<a class="btn btn-default"
+   href="{{ URL::route('admin.subs.create', array( 'category_id'=>$category->id)) }} "
+   class="btn"><i class="glyphicon glyphicon-plus"></i> Create new subcategory</a>
+
+
 @if($fields)
 <table class="table table-hover">
 	<tr>
