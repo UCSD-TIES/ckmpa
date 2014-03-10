@@ -2,7 +2,12 @@
 var app, mode, host;
 app = angular.module('ckmpa.services', []);
 mode = 'production';
-host = mode === 'production' ? 'http://ckmpa.gopagoda.com/' : 'http://localhost:8000/';
+host = mode === 'production' ? '/' : 'http://localhost/';
+ionic.Platform.ready(function(){
+  if (ionic.Platform.device().platform) {
+    return host = 'http://ckmpa.gopagoda.com/';
+  }
+});
 app.factory('Auth', function($http, $sanitize, Flash){
   var user, token, sanitizeCredentials, loginSuccess, loginError, logoutSuccess;
   sanitizeCredentials = function(credentials){
@@ -27,13 +32,13 @@ app.factory('Auth', function($http, $sanitize, Flash){
   return {
     login: function(credentials){
       var login;
-      return login = $http.post(host + 'auth', sanitizeCredentials(credentials)).success(loginSuccess).error(loginError);
+      return login = $http.post(host + 'api/auth', sanitizeCredentials(credentials)).success(loginSuccess).error(loginError);
     },
     logout: function(){
       var logout;
       return logout = $http({
         method: 'delete',
-        url: host + 'auth'
+        url: host + 'api/auth'
       }).success(logoutSuccess);
     },
     user: function(){
@@ -51,6 +56,30 @@ app.factory('Flash', function($rootScope){
     },
     clear: function(){
       return $rootScope.flash = '';
+    }
+  };
+});
+app.factory('Users', function($http, $sanitize){
+  var sanitizeCredentials;
+  sanitizeCredentials = function(credentials){
+    return {
+      first_name: $sanitize(credentials.first_name),
+      last_name: $sanitize(credentials.last_name),
+      email: $sanitize(credentials.email),
+      username: $sanitize(credentials.username),
+      password: $sanitize(credentials.password),
+      password_confirmation: $sanitize(credentials.password_confirmation)
+    };
+  };
+  return {
+    post: function(credentials){
+      var clean_credentials;
+      clean_credentials = sanitizeCredentials(credentials);
+      return $http.post(host + 'api/users', clean_credentials).success(function(data){
+        return console.log(data);
+      }).error(function(data){
+        return console.log(data);
+      });
     }
   };
 });

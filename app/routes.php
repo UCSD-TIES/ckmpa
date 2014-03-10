@@ -78,18 +78,24 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth.admin'), function ()
 	Route::get('graphs-observations', array('as' => 'graphs-observations', 'uses' => 'AdminController@graphsObservations'));
 });
 
-Route::group(array('prefix' => 'api', 'before' => 'auth.token'), function ()
+Route::group(array('prefix' => 'api'), function ()
 {
-	Route::controller('mpas', 'APIMpas');
-	Route::controller('datasheets', 'APIDatasheets');
-	Route::controller('patrols', 'APIPatrols');
+	Route::group(array('before' => 'auth.token'), function() {
+		Route::controller('mpas', 'APIMpas');
+		Route::controller('datasheets', 'APIDatasheets');
+		Route::controller('patrols', 'APIPatrols');
+	});
+
 	Route::controller('users', 'APIUsers');
+
+	// Auth Token Routes
+	Route::get('auth', 'Tappleby\AuthToken\AuthTokenController@index');
+	Route::post('auth', 'Tappleby\AuthToken\AuthTokenController@store');
+	Route::delete('auth', 'Tappleby\AuthToken\AuthTokenController@destroy');
 });
+
 
 // Password Reminder Routes
 Route::controller('password', 'RemindersController');
 
-// Auth Token Routes
-Route::get('auth', 'Tappleby\AuthToken\AuthTokenController@index');
-Route::post('auth', 'Tappleby\AuthToken\AuthTokenController@store');
-Route::delete('auth', 'Tappleby\AuthToken\AuthTokenController@destroy');
+

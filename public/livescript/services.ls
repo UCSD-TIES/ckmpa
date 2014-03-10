@@ -2,8 +2,11 @@
 
 app = angular.module 'ckmpa.services', []
 
-mode = 'production'
-host = if mode == 'production' then 'http://ckmpa.gopagoda.com/' else 'http://localhost:8000/'
+mode = 'dev'
+host = if mode == 'production' then '/' else 'http://localhost/'
+
+ionic.Platform.ready -> 
+  host := 'http://ckmpa.gopagoda.com/' if ionic.Platform.device!.platform
 
 app.factory 'Auth', ($http, $sanitize, Flash) ->
   var user, token
@@ -26,14 +29,14 @@ app.factory 'Auth', ($http, $sanitize, Flash) ->
     token := null
   
   login: (credentials) ->
-    login = $http.post host+'auth', sanitizeCredentials credentials
+    login = $http.post host+'api/auth', sanitizeCredentials credentials
       .success loginSuccess
       .error loginError
 
   logout: ->
     logout = $http do
       method: 'delete'
-      url: host + 'auth'
+      url: host + 'api/auth'
     .success logoutSuccess
 
   user: -> user || sessionStorage.getItem 'user'
@@ -42,6 +45,22 @@ app.factory 'Auth', ($http, $sanitize, Flash) ->
 app.factory 'Flash', ($rootScope) ->
   show: (message) -> $rootScope.flash = message
   clear: -> $rootScope.flash = ''
+
+app.factory 'Users', ($http, $sanitize) ->
+  sanitizeCredentials = (credentials) ->
+    first_name: $sanitize credentials.first_name
+    last_name: $sanitize credentials.last_name
+    email: $sanitize credentials.email
+    username: $sanitize credentials.username
+    password: $sanitize credentials.password
+    password_confirmation: $sanitize credentials.password_confirmation
+
+  post: (credentials) -> 
+    clean_credentials = sanitizeCredentials credentials
+
+    $http.post host+'api/users', clean_credentials
+      .success (data) -> console.log data
+      .error (data) -> console.log data
 
 app.factory 'Mpas', ($resource, Auth) -> $resource host+'api/mpas/'
 

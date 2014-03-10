@@ -1,5 +1,5 @@
 "use strict";
-var app, LoginController, MpaController, DataController, SummaryController, FinishController;
+var app, LoginController, RegisterController, MpaController, DataController, SummaryController, FinishController;
 app = angular.module('ckmpa.controllers', []);
 LoginController = function($scope, $state, Auth, Flash){
   $scope.credentials = {
@@ -15,6 +15,26 @@ LoginController = function($scope, $state, Auth, Flash){
     return Auth.logout().success(function(){
       return $state.go('login');
     });
+  };
+};
+RegisterController = function($scope, $state, Users){
+  $scope.credentials = {
+    first_name: "",
+    last_name: "",
+    email: "",
+    username: "",
+    password: "",
+    password_confirmation: ""
+  };
+  $scope.emailRegex = /\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}\b/;
+  return $scope.register = function(){
+    if ($scope.credentials.password === $scope.credentials.password_confirmation) {
+      return Users.post($scope.credentials).success(function(){
+        return $state.go('login');
+      });
+    } else {
+      return console.log("NO");
+    }
   };
 };
 MpaController = function($scope, $state, $stateParams, $ionicLoading, Mpas, Auth){

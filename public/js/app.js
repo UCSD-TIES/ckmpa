@@ -11,6 +11,10 @@ app.config(function($httpProvider, $stateProvider, $urlRouterProvider){
     url: '/',
     templateUrl: 'templates/login.html',
     controller: 'LoginController'
+  }).state('register', {
+    url: '/register',
+    templateUrl: 'templates/register.html',
+    controller: 'RegisterController'
   }).state('select-mpa', {
     url: '/select-mpa',
     templateUrl: 'templates/select-mpa.html',

@@ -10,6 +10,23 @@ LoginController = ($scope, $state, Auth, Flash) !->
   $scope.login = -> Auth.login $scope.credentials .success -> $state.go 'select-mpa'
   $scope.logout = -> Auth.logout!.success -> $state.go 'login'
 
+RegisterController = ($scope, $state, Users) ->
+  $scope.credentials =
+    first_name: ""
+    last_name: ""
+    email: ""
+    username: ""
+    password: ""
+    password_confirmation: ""
+
+  $scope.emailRegex = /\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}\b/
+
+  $scope.register = ->
+    if $scope.credentials.password is $scope.credentials.password_confirmation
+      Users.post $scope.credentials .success -> $state.go 'login'
+    else
+      console.log "NO"
+
 MpaController = ($scope, $state,  $stateParams, $ionicLoading, Mpas, Auth) ->
   $scope.mpa_id = $stateParams.mpaId
   $scope.mpa_name = $stateParams.mpaName

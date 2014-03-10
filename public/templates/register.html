@@ -1,0 +1,42 @@
+<ion-view title="'Register'" right-buttons="rightButtons">
+    <ion-content has-header="true">
+
+    	<form name="registerForm" ng-submit="register()" class="registerForm" novalidate>
+    	    <div class="list">
+    	    	<label class="item item-input item-stacked-label" for="inputUsername">
+    	    	    <span class="input-label">First Name</span>
+    	    	    <input type="text" ng-model="credentials.first_name" required placeholder="First Name">
+    	    	</label>
+
+    	    	<label class="item item-input item-stacked-label" for="inputUsername">
+    	    	    <span class="input-label">Last Name</span>
+    	    	    <input type="text" ng-model="credentials.last_name" required placeholder="Last Name">
+    	    	</label>
+
+    	    	<label class="item item-input item-stacked-label" for="inputUsername">
+    	    	    <span class="input-label">Email</span>
+    	    	    <input name="email" type="email" ng-model="credentials.email" required placeholder="Email" ng-pattern="emailRegex">
+    	    	</label>
+
+    	        <label class="item item-input item-stacked-label" for="inputUsername">
+    	            <span class="input-label">Username</span>
+    	            <input type="text" ng-model="credentials.username" required placeholder="Username">
+    	        </label>
+
+    	        <label class="item item-input item-stacked-label" for="inputPassword">
+    	            <span class="input-label">Password (At least 6 characters long)</span>
+    	            <input type="password" ng-model="credentials.password" required placeholder="Password" ng-minlength="6">
+    	        </label>
+
+    	        <label class="item item-input item-stacked-label" for="inputPassword">
+    	            <span class="input-label">Reenter Password</span>
+    	            <input type="password" ng-model="credentials.password_confirmation" required placeholder="Reenter Password" ng-minlength="6">
+    	        </label>
+    	    </div>
+    	    <div class="padding-horizontal">
+    	        <button type="submit" class="button button-block button-positive" ng-disabled="registerForm.$invalid">Register</button>
+    	    </div>
+    	</form>
+
+    </ion-content>
+</ion-view>

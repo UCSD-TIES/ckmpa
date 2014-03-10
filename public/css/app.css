@@ -16,3 +16,14 @@ input[type=number]::-webkit-outer-spin-button {
 	color: #4a87ee;
 	border-bottom: 4px solid #4a87ee;
 }
+.registerForm input.ng-invalid.ng-dirty {
+	border: 1px solid #a94442;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+	        box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+}
+
+.registerForm input.ng-valid.ng-dirty {
+    border: 1px solid #3c763d;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+}

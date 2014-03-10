@@ -13,6 +13,7 @@ class APIUsers extends BaseController {
 		}
 
 		$errors = $user->errors();
-		return Response::json($errors);
+		return Response::json($errors, 403);
+
 	}
 }
