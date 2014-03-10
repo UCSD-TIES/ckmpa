@@ -14,7 +14,14 @@
 <!--			<button class="btn btn-success" type="submit"><i class="glyphicon glyphicon-search"></i></button>-->
 <!--		</form>-->
 		<br>
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="#main" data-toggle="tab">Volunteers</a></li>
+			<li><a href="#unconfirmed" data-toggle="tab">Unconfirmed Volunteers</a></li>
+		</ul>
+		<br>
 		@if($volunteers)
+		<div class="tab-content">
+			<div class="tab-pane active" id="main">
 			<table class="table table-bordered" id = "VolunteerTable">
 				<thead>
 					<tr>
@@ -55,6 +62,49 @@
 				@endforeach
 				</tbody>
 			</table>
+			</div>
+			<div class="tab-pane" id="unconfirmed">
+				<table class="table table-bordered" id = "UnconfirmedTable">
+					<thead>
+					<tr>
+						<th>Name</th>
+						<th></th>
+						<th></th>
+					</tr>
+					</thead>
+
+					<tbody>
+					@foreach($unconfirmed as $volunteer)
+					<tr>
+						<td>
+							<a href="{{ URL::route('admin.volunteers.show', $volunteer->id) }}">
+							{{ $volunteer->last_name }}, {{ $volunteer->first_name }}
+							</a>
+						</td>
+
+						<td>
+
+							<form method="POST" action="/admin/confirm-user" class="form-inline">
+								<input type="hidden" name="id" value="{{$volunteer->id}}">
+								<input type="hidden" name="confirmed" value="1">
+								<button type="submit" class="btn btn-success btn-small">
+									<i class="glyphicon glyphicon-ok"></i> Confirm
+								</button>
+							</form>
+						</td>
+						<td>
+							{{ Form::open(array('method'=> 'DELETE', 'class'=> 'form-inline', 'route'=> array('admin.volunteers.destroy', $volunteer->id) )) }}
+							<input type="hidden" name="id" value="{{$volunteer->id}}">
+								<button type='submit' class="btn btn-small btn-danger">
+									<i class="glyphicon glyphicon-trash"></i>Delete</button>
+							{{ Form::close() }}
+
+						</td>
+					</tr>
+					@endforeach
+					</tbody>
+				</table>
+			</div>
 		@else
 			There are no volunteers available. <a href="{{ URL::route('admin.volunteers.create') }}">Create a new one?</a>
 		@endif

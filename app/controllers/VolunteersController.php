@@ -9,8 +9,11 @@ class VolunteersController extends BaseController {
 	 */
 	public function index()
 	{
-		$volunteers = User::all();
+		$volunteers = User::where("confirmed", "1")->get();
+		$unconfirmed = User::where("confirmed", "0")->get();
+
 		$data['volunteers'] = $volunteers;
+		$data['unconfirmed'] = $unconfirmed;
 
 		return View::make('admin.volunteers.list', $data);
 	}
@@ -163,5 +166,27 @@ class VolunteersController extends BaseController {
 			->orWhere('last_name', $search)->get();
 
 		return View::make('admin.volunteers.list', $data);
+	}
+
+	public function confirm()
+	{
+		$id = Input::get("id");
+
+		$user = User::find($id);
+		$user->confirmed = 1;
+
+		if ($user->exists)
+		{
+			$user::$rules['password'] = (Input::get('password')) ? 'required|confirmed' : '';
+			$user::$rules['password_confirmation'] = (Input::get('password')) ? 'required' : '';
+		}
+
+		if($user->updateUniques())
+			return Redirect::back();
+
+		$errors = $user->errors();
+		return Redirect::back()
+				->withInput()
+				->with('errors', $errors);
 	}
 }

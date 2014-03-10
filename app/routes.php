@@ -68,6 +68,8 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth.admin'), function ()
 	Route::post('permissions', array('as' => 'permissions', 'uses' => 'VolunteersController@postPermissions'));
 	Route::get('search-user', 'VolunteersController@search');
 
+	Route::post('confirm-user', 'VolunteersController@confirm');
+
 	//Patrols
 	Route::get('patrol-list/{MPA?}', array('as' => 'patrol-list', 'uses' => 'PatrolsController@patrolsList'));
 	Route::get('patrol-user/{user?}', array('as' => 'patrol-user', 'uses' => 'PatrolsController@patrolsUser'));
