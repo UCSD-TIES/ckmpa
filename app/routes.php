@@ -80,9 +80,10 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth.admin'), function ()
 
 Route::group(array('prefix' => 'api', 'before' => 'auth.token'), function ()
 {
-	Route::controller('mpas', 'MpaAPIController');
-	Route::controller('datasheets', 'DatasheetAPIController');
-	Route::controller('patrols', 'PatrolAPIController');
+	Route::controller('mpas', 'APIMpas');
+	Route::controller('datasheets', 'APIDatasheets');
+	Route::controller('patrols', 'APIPatrols');
+	Route::controller('users', 'APIUsers');
 });
 
 // Password Reminder Routes

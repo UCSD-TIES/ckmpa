@@ -1,6 +1,6 @@
 <?php
 
-class DatasheetAPIController extends BaseController {
+class APIDatasheets extends BaseController {
 	public function getIndex()
 	{
 		$datasheets = Datasheet::with(array('categories', 'categories.fields', 'categories.subcategories', 'categories.fields.options'))->get();

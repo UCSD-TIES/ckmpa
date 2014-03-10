@@ -1,6 +1,6 @@
 <?php
 
-class PatrolAPIController extends BaseController {
+class APIPatrols extends BaseController {
 	public function postIndex()
 	{
 		$transect = Transect::find(Input::get('transect'));
