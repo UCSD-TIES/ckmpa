@@ -63,7 +63,7 @@ MpaController = function($scope, $state, $stateParams, $ionicLoading, Mpas, Auth
   mpas = Mpas.query({}, function(){
     $scope.transects = _(mpas).pluck('transects').flatten().value();
     $scope.mpas = mpas;
-    return $scope.loading.hide();
+    $ionicLoading.hide();
   });
   return $scope.loading = $ionicLoading.show({
     content: "<i class='icon ion-loading-a'></i> Loading",
@@ -107,7 +107,7 @@ DataController = function($scope, $state, $stateParams, $ionicLoading, $ionicMod
   datasheets = Datasheets.datasheets.then(function(data){
     $scope.categories = Datasheets.categories();
     $scope.favorites = Favorites.favorites();
-    return $scope.loading.hide();
+    $ionicLoading.hide();
   });
   $ionicModal.fromTemplateUrl('partials/modal.html', function(modal){
     return $scope.modal = modal;
