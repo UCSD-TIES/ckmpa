@@ -49,13 +49,14 @@ textarea {
   @include align-items(center);
   position: relative;
   overflow: hidden;
-  padding: 6px 8px 5px;
+  padding: 6px 0 5px 8px;
 
   input {
     @include border-radius(0);
     @include flex(1, 0, 220px);
     @include appearance(none);
     margin: 0;
+    padding-right: 24px;
     background-color: transparent;
   }
 
@@ -68,16 +69,14 @@ textarea {
     font-size: 16px;
   }
 
-  &.item.active, 
-  .ionic-pseudo &.item:active {
-    border-color: $item-default-border;
-    background-color: transparent;
-  }
-
   .button-bar {
     @include border-radius(0);
     @include flex(1, 0, 220px);
     @include appearance(none);
+  }
+
+  .icon {
+    min-width: 14px;
   }
 }
 
@@ -112,10 +111,13 @@ textarea {
 
 .input-label {
   @include flex(1, 0, 100px);
+  display: table;
   padding: 7px 10px 7px 3px;
   max-width: 200px;
+  width: 35%;
   color: $input-label-color;
   font-weight: bold;
+  font-size: $font-size-base;
 }
 
 .placeholder-icon {
@@ -158,7 +160,6 @@ textarea {
 // -------------------------------
 
 // Shared size and type resets
-select,
 textarea,
 input[type="text"],
 input[type="password"],
@@ -175,11 +176,12 @@ input[type="search"],
 input[type="tel"],
 input[type="color"] {
   display: block;
+  padding-top: 2px;
   height: $line-height-computed + $font-size-base;
   color: $input-color;
   vertical-align: middle;
   font-size: $font-size-base;
-  line-height: $line-height-computed;
+  line-height: $font-size-base + 2;
 }
 
 input,
@@ -229,22 +231,9 @@ input[type="checkbox"] {
   width: auto; // Override of generic input selector
 }
 
-// Make multiple select elements height not fixed
-select[multiple],
-select[size] {
-  height: auto;
-}
-
-// Set the height of select and file controls to match text inputs
-select,
+// Set the height of file to match text inputs
 input[type="file"] {
   line-height: $input-height-base;
-}
-
-// Make select elements obey height by applying a border
-select {
-  border: $input-border-width solid $input-border;
-  background-color: $input-bg; // Chrome on Linux and Mobile Safari need background-color
 }
 
 

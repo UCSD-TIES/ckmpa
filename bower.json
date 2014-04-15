@@ -1,0 +1,28 @@
+{
+  "name": "ckmpa",
+  "version": "0.0.0",
+  "authors": [
+    "Alex Chen <elkhouri1@gmail.com>"
+  ],
+  "description": "MPA watch app",
+  "keywords": [
+    "mpa"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "www/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.2.12",
+    "ionic": "driftyco/ionic-bower#master",
+    "angular-resource": "~1.2.12",
+    "lodash": "latest",
+    "angular-local-storage": "grevory/angular-local-storage"
+  }
+}

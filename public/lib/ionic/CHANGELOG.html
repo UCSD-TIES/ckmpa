@@ -1,0 +1,91 @@
+<p><a name="1.0.0-beta.1-nightly-1664"></a></p>
+<h3 id="1-0-0-beta-1-nightly-1664-changes-since-1-0-0-beta-1-2014-04-14-">1.0.0-beta.1-nightly-1664 (changes since 1.0.0-beta.1) (2014-04-14)</h3>
+<h4 id="bug-fixes">Bug Fixes</h4>
+<ul>
+<li><strong>$ionicActionSheet:</strong> provide default functions for options (<a href="https://github.com/driftyco/ionic/commit/ba39fb0046cf9ff8b3d18fb8ac7d10d734afe192">ba39fb00</a>, closes <a href="https://github.com/driftyco/ionic/issues/1013">#1013</a>)</li>
+<li><strong>$ionicLoading:</strong> stop race condition with show and hide (<a href="https://github.com/driftyco/ionic/commit/eb1dee9303177d47315a02cf327e909c14c05b22">eb1dee93</a>, closes <a href="https://github.com/driftyco/ionic/issues/1100">#1100</a>)</li>
+<li><strong>$ionicPopup:</strong> stop race condition with show then hide (<a href="https://github.com/driftyco/ionic/commit/698c93fcaf5def44cc01783faa6e188c15379e40">698c93fc</a>)</li>
+<li><strong>checkbox:</strong> Remove tap highlight and fix checkbox appearance in Firefox, closes #496 (<a href="https://github.com/driftyco/ionic/commit/b0b446d5d93cbfca027c828bc38bf827b998b6c5">b0b446d5</a>)</li>
+<li><strong>header:</strong> Header input too long on Android 4.2, closes #1081 (<a href="https://github.com/driftyco/ionic/commit/b654e02e0a8b852875509753eb106f60c11fa3c4">b654e02e</a>)</li>
+<li><strong>ionHeaderBar:</strong> make it align after elements properly load (<a href="https://github.com/driftyco/ionic/commit/d00aaa59455fdd6b4e34ac4547e86e1049734954">d00aaa59</a>)</li>
+<li><strong>ionInfiniteScroll:</strong><ul>
+<li>remove listener on $destroy (<a href="https://github.com/driftyco/ionic/commit/08da6f753c399a3e9fcf66bdc9008f9f6cb3e227">08da6f75</a>)</li>
+<li>work properly if past horizontal boundaries (<a href="https://github.com/driftyco/ionic/commit/d58fff72ded2a74c1d4e757adfb256b7e74fb578">d58fff72</a>, closes <a href="https://github.com/driftyco/ionic/issues/1073">#1073</a>)</li>
+</ul>
+</li>
+<li><strong>ionTab:</strong> make sure all tab-nav attributes are re-interpolated on change (<a href="https://github.com/driftyco/ionic/commit/757f1819313de58a3d419d0ec6075c80e40f3d61">757f1819</a>, closes <a href="https://github.com/driftyco/ionic/issues/955">#955</a>, <a href="https://github.com/driftyco/ionic/issues/1071">#1071</a>)</li>
+<li><strong>loading:</strong> fix not hiding after two shows, always cancel delay (<a href="https://github.com/driftyco/ionic/commit/4216266f2108f0b3c348b0888d37a59440099be4">4216266f</a>, closes <a href="https://github.com/driftyco/ionic/issues/1130">#1130</a>)</li>
+<li><strong>navClear:</strong> only set viewOptions if click leads to state change (<a href="https://github.com/driftyco/ionic/commit/4dffc5f6c646ee55a44c818aca9e635ea0934a3c">4dffc5f6</a>, closes <a href="https://github.com/driftyco/ionic/issues/1043">#1043</a>)</li>
+<li><strong>scroll:</strong> Allow scrolling when touchstart target is an input, #1078 (<a href="https://github.com/driftyco/ionic/commit/8af018b1facff1dee753f0cf4c341f0a91285d6a">8af018b1</a>)</li>
+</ul>
+<h4 id="features">Features</h4>
+<ul>
+<li><strong>$ionicBackdrop:</strong> add backdrop show/hide service (<a href="https://github.com/driftyco/ionic/commit/730a33b9c34babaa7f4c861fa172935eaabea740">730a33b9</a>, closes <a href="https://github.com/driftyco/ionic/issues/1084">#1084</a>)</li>
+<li><strong>$ionicNavBarDelegate:</strong><ul>
+<li>showBackButton returns whether bar is shown (<a href="https://github.com/driftyco/ionic/commit/933a555e084234462ad04b7255bd1a0e0c6b2aef">933a555e</a>, closes <a href="https://github.com/driftyco/ionic/issues/1076">#1076</a>)</li>
+<li>showBar returns whether navbar is shown (<a href="https://github.com/driftyco/ionic/commit/24a415c32dfe922174dd3a36e9b63bd2ea426fd9">24a415c3</a>)</li>
+</ul>
+</li>
+<li><strong>$ionicScrollDelegate:</strong> add getScrollView(), getScrollPosition() (<a href="https://github.com/driftyco/ionic/commit/b5ef9313cfd227c716a2096a5ca40d38179ba50f">b5ef9313</a>, closes <a href="https://github.com/driftyco/ionic/issues/1117">#1117</a>)</li>
+<li><strong>$ionicSideMenuDelegate:</strong> add isOpen() method (<a href="https://github.com/driftyco/ionic/commit/518e54ee86aa816d57ff0dcff33d2ce75fa0e712">518e54ee</a>, closes <a href="https://github.com/driftyco/ionic/issues/1074">#1074</a>)</li>
+<li><strong>avatar:</strong> Adding .item-avatar-left and deprecating .item-avatar (<a href="https://github.com/driftyco/ionic/commit/9bac6050a0c4d7a3693eb9bcf8b7b7fc5cca980e">9bac6050</a>)</li>
+<li><strong>ionSlideBox:</strong> add pager-click attribute (<a href="https://github.com/driftyco/ionic/commit/d6c960c2a64372d158e675d6627209ae82d8c7ee">d6c960c2</a>, closes <a href="https://github.com/driftyco/ionic/issues/785">#785</a>)</li>
+</ul>
+<h4 id="breaking-changes">Breaking Changes</h4>
+<ul>
+<li>$ionicPopup.show()&#39;s button onTap function has changed.</li>
+</ul>
+<p>When using <code>$ionicPopup.show()</code>, previously a button&#39;s onTap function
+would only result in closing the popup and resolving the promise if the
+ <code>onTap(event)</code> function returned a truthy value.</p>
+<p>Now, a button&#39;s onTap event will <em>always</em> close the popup and resolve
+the popup&#39;s promise, no matter the return value, by default. The only
+way to prevent the popup from closing is to call
+<code>event.preventDefault()</code>.</p>
+<p>Change your code from this:</p>
+<pre><code class="lang-js">$ionicPopup.show({
+  buttons: [{
+    onTap: function(event) {
+      if (!shouldClosePopup) {
+        return false;
+      }
+    }
+  }]
+});
+</code></pre>
+<p>To this:</p>
+<pre><code class="lang-js">$ionicPopup.show({
+  buttons: [{
+    onTap: function(event) {
+      if (!shouldClosePopup) {
+        event.preventDefault();
+      }
+    }
+  }]
+});
+</code></pre>
+<p> (<a href="https://github.com/driftyco/ionic/commit/cb1a5f62285fe5939274bdda9db169af69eddf35">cb1a5f62</a>)</p>
+<ul>
+<li>The developer should be stating exactly how an icon
+should show, but previously the right nav arrow icon violates this by
+automatically showing a right arrow when an item was an anchor or
+button. Instead of using the <code>:after</code> item selector, which was always
+applied by default, it uses the same markup as <code>item-icon-right</code>, which
+is easier to understand, customizable and not a hard coded default.</li>
+</ul>
+<p>This change removes the <code>:after</code> nav icon styling, and creates a new
+class, <code>icon-accessory</code>, based off of similar CSS. The change makes a
+nav arrow highly customizable, allows RTL developers to easily control
+the arrow direction, and the accessory class is something that&#39;s
+reusable.</p>
+<p>An example of right side arrow using <code>ion-chevron-right</code> as the icon:</p>
+<pre><code>&lt;a class=&quot;item item-icon-right&quot; href=&quot;#&quot;&gt;
+  Check mail
+  &lt;i class=&quot;icon ion-chevron-right icon-accessory&quot;&gt;&lt;/i&gt;
+&lt;/a&gt;
+</code></pre><p> (<a href="https://github.com/driftyco/ionic/commit/c7e3defca51f03368be84e7f86d71e7ec2fb374c">c7e3defc</a>)</p>
+<ul>
+<li>ionic.Platform.isCordova() has been renamed to
+ionic.Platform.isWebView()
+(<a href="https://github.com/driftyco/ionic/commit/5c300dd3e094e20ca90a311a704dfa0864b320f4">5c300dd3</a>)</li>
+</ul>
