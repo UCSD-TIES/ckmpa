@@ -1,8 +1,13 @@
-<ion-view title="mpa_name" left-buttons="leftButtons" right-buttons="rightButtons">
-	<ion-content has-header="true">
-		<div class="list">
-			<a class="item" ng-repeat='transect in transects | filter:{mpa_id: mpa_id}' 
-				ng-click="collect_data(transect)" ng-bind="transect.name"></a>
-		</div>
-	</ion-content>
+<ion-view title="{{mpa_name}}">
+    <ion-nav-buttons side="right">
+        <button class="button button-small button-clear" ng-click="logout()">
+            Logout
+        </button>
+    </ion-nav-buttons>
+    <ion-content has-header="true">
+        <div class="list">
+            <a class="item" ng-repeat='transect in transects | filter:{mpa_id: mpa_id}'
+               ng-click="collect_data(transect)" ng-bind="transect.name"></a>
+        </div>
+    </ion-content>
 </ion-view>

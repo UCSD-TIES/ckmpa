@@ -4,17 +4,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <title>MPA Watch</title>
-    <link href="lib/ionic/release/css/ionic.min.css" rel="stylesheet">
+    <link href="lib/ionic/css/ionic.min.css" rel="stylesheet">
     <link href="css/app.css" rel="stylesheet">
-    
+
     <!-- Main Ionic and Angular Libs -->
-    <script src="lib/ionic/release/js/ionic.bundle.min.js"></script>
+    <script src="lib/ionic/js/ionic.bundle.min.js"></script>
     <script src="lib/angular-resource/angular-resource.min.js"></script>
-    
+
     <!-- Helper Libs -->
     <script src="lib/lodash/dist/lodash.min.js"></script>
     <script src="lib/angular-local-storage/angular-local-storage.min.js"></script>
-    
+
     <script src="cordova.js"></script>
 
     <!-- App Javascripts -->
@@ -25,8 +25,12 @@
     <script src="js/services.js"></script>
 </head>
 <body>
-<ion-nav-bar type="bar-positive"
-    back-button-icon="ion-ios7-arrow-back" back-button-type="button-icon"></ion-nav-bar>
-<ion-nav-view animation="slide-left-right"></ion-nav-view>
+<ion-nav-bar class="bar-positive">
+    <ion-nav-back-button class="ion-ios7-arrow-back button-icon">
+    </ion-nav-back-button>
+</ion-nav-bar>
+<ion-nav-view animation="slide-left-right">
+
+</ion-nav-view>
 </body>
 </html>

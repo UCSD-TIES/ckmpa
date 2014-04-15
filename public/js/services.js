@@ -1,13 +1,16 @@
 "use strict";
 var app, mode, host;
 app = angular.module('ckmpa.services', []);
-mode = 'production';
-host = mode === 'production' ? '/' : 'http://localhost/';
+// mode = 'production';
+// host = mode === 'production' ? '/' : 'http://localhost/';
+host = "http://mpawatchsd.com/"
+
 ionic.Platform.ready(function(){
   if (ionic.Platform.device().platform) {
     return host = 'http://ckmpa.gopagoda.com/';
   }
 });
+
 app.factory('Auth', function($http, $sanitize, Flash){
   var user, token, sanitizeCredentials, loginSuccess, loginError, logoutSuccess;
   sanitizeCredentials = function(credentials){

@@ -53,15 +53,12 @@ MpaController = function($scope, $state, $stateParams, $ionicLoading, Mpas, Auth
       transectName: encodeURIComponent(transect.name)
     });
   };
-  rightButtons = [{
-    content: 'Logout',
-    type: 'button-small button-clear',
-    tap: function(){
-      return Auth.logout().success(function(){
-        return $state.go('login');
-      });
-    }
-  }];
+
+  $scope.logout = function(){
+    Auth.logout().success(function(){
+       $state.go('login');
+     });
+  }
   $scope.rightButtons = rightButtons;
   mpas = Mpas.query({}, function(){
     $scope.transects = _(mpas).pluck('transects').flatten().value();

@@ -1,19 +1,24 @@
-<ion-view title="'Select a MPA'" right-buttons="rightButtons">
-	<ion-content has-header="true">
-	<div class="list">
-		<a class="item" ng-repeat='mpa in mpas' 
-			ng-click='select_transect(mpa)' ng-bind='mpa.name'></a>
-	</div>
-	
-	<div class="list card">
-    	<div class="item item-divider">Note</div> 
-    	<div class="item item-text-wrap">
-	    	For the patrols, remember to travel from North to South, with the ocean on your right.
-    	</div>
-    	<div class="item item-text-wrap">
-	    	Also, only record your observations from the high tide mark on the beach to everything on your right.
-    	</div>
-	</div>
+<ion-view title="Select a MPA">
+    <ion-nav-buttons side="right">
+        <button class="button button-small button-clear" ng-click="logout()">
+            Logout
+        </button>
+    </ion-nav-buttons>
+    <ion-content has-header="true">
+        <div class="list">
+            <a class="item" ng-repeat='mpa in mpas'
+               ng-click='select_transect(mpa)' ng-bind='mpa.name'></a>
+        </div>
 
-</ion-content>
+        <div class="list card">
+            <div class="item item-divider">Note</div>
+            <div class="item item-text-wrap">
+                For the patrols, remember to travel from North to South, with the ocean on your right.
+            </div>
+            <div class="item item-text-wrap">
+                Also, only record your observations from the high tide mark on the beach to everything on your right.
+            </div>
+        </div>
+
+    </ion-content>
 </ion-view>
