@@ -144,25 +144,25 @@ app.factory('Favorites', function(Datasheets, localStorageService){
     datasheets = Datasheets.datasheets.then(function(data){
       favorites.push({
         field: _(Datasheets.fields()).find({
-          'name': "Recreation"
+          'name': "On-Shore Recreation"
         }),
         subcategory: _.find(Datasheets.categories(), function(x){
           return _(x.fields).flatten().any({
-            'name': 'Recreation'
+            'name': 'On-Shore Recreation'
           });
         }).subcategories[1],
-        name: "Recreation (Sandy)"
+        name: "On-Shore Recreation (Sandy)"
       });
       favorites.push({
         field: _(Datasheets.fields()).find({
-          'name': "Offshore Recreation"
+          'name': "Off-Shore Recreation"
         }),
         subcategory: _.find(Datasheets.categories(), function(x){
           return _(x.fields).flatten().any({
-            'name': 'Offshore Recreation'
+            'name': 'Off-Shore Recreation'
           });
         }).subcategories[0],
-        name: "Offshore Recreation"
+        name: "Off-Shore Recreation"
       });
       return localStorageService.set('favorites', favorites);
     });
