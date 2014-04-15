@@ -47,12 +47,12 @@ Assuming default installation paths.
 
 ###Mac  
 1. Download and install XAMPP from http://www.apachefriends.org/en/xampp.html
-2. Inside **/Application/XAMPP/etc/conf**, open **httpd.conf** and change
-    - DocumentRoot "/Application/XAMPP/htdocs" to DocumentRoot "/Application/XAMPP/htdocs/ckmpa/public"
-    - &lt;Directory "/Application/XAMPP/htdocs"&gt; to &lt;Directory "/Application/XAMPP/htdocs/ckmpa/public"&gt;
-3. Inside **/Application/XAMPP/phpMyAdmin**, open **config.inc.php** and change (may need sudo to edit)
+2. Inside **/Applications/XAMPP/etc/conf**, open **httpd.conf** and change
+    - DocumentRoot "/Applications/XAMPP/htdocs" to DocumentRoot "/Applications/XAMPP/htdocs/ckmpa/public"
+    - &lt;Directory "/Applications/XAMPP/htdocs"&gt; to &lt;Directory "/Applications/XAMPP/htdocs/ckmpa/public"&gt;
+3. Inside **/Applications/XAMPP/phpMyAdmin**, open **config.inc.php** and change (may need sudo to edit)
     - $cfg['Servers'][$i]['auth_type'] = 'config'; to $cfg['Servers'][$i]['auth_type'] = 'cookie';
-4. After you are added as collaborator to UCSD-TIES on Github, from the command line in **/Application/XAMPP/htdocs**:
+4. After you are added as collaborator to UCSD-TIES on Github, from the command line in **/Applications/XAMPP/htdocs**:
     - `git clone https://github.com/UCSD-TIES/ckmpa.git`
     - `sudo chown -R daemon:daemon ckmpa/app/storage`
 5. Open XAMPP Control Panel and start both Apache and MySQL modules
