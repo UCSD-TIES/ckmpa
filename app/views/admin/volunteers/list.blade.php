@@ -44,7 +44,9 @@
 								{{ $volunteer->last_name }}, {{ $volunteer->first_name }}
 							</a>
 						</td>
-						<td>{{ $volunteer->roles->first()->name }}</td>
+						<td>
+                          {{ $volunteer->roles->first()->name or "No Role"}}
+                        </td>
 						<td>
 							{{ Form::open(array('method'=> 'DELETE', 'class'=> 'form-inline', 'route'=> array('admin.volunteers.destroy', $volunteer->id) )) }}
 							<a class="btn btn-default btn-small"

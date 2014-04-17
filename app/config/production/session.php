@@ -2,6 +2,6 @@
 
 return array(
 
-	'driver' => 'redis',
+	'driver' => 'file'
 
 );
