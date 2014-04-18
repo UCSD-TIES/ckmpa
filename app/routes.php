@@ -61,7 +61,7 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth.admin'), function ()
 	Route::resource('fields', 'FieldsController');
 	Route::resource('subs', 'SubsController');
 
-   Route::get('delete-option/{id}', 'FieldsController@deleteOption');
+    Route::get('delete-option/{id}', 'FieldsController@deleteOption');
 	Route::get('add-option/{id}', 'FieldsController@addOption');
 
 	Route::get('permissions', array('as' => 'permissions', 'uses' => 'VolunteersController@permissions'));
@@ -73,6 +73,7 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth.admin'), function ()
 	//Patrols
 	Route::get('patrol-list/{MPA?}', array('as' => 'patrol-list', 'uses' => 'PatrolsController@patrolsList'));
 	Route::get('patrol-user/{user?}', array('as' => 'patrol-user', 'uses' => 'PatrolsController@patrolsUser'));
+    Route::get('patrol-tallies/{patrol}', array('as' => 'patrol-tallies', 'uses' => 'PatrolsController@patrolTallies'));
 
 	//Graphs
 	Route::get('graphs', array('as' => 'graphs', 'uses' => 'AdminController@graphs'));

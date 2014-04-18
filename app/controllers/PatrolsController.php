@@ -34,6 +34,16 @@ class PatrolsController extends BaseController
 		return View::make('admin.patrols.list', $data);
 	}
 
+    public function patrolTallies($patrol)
+    {
+      $patrol = Patrol::find($patrol);
+      $data['user'] = $patrol->user;
+      $data['tallies'] = $patrol->tallies;
+      $data['patrol'] = $patrol;
+
+      return View::make('layouts.patrol_modal', $data);
+    }
+
 	/**
 	 * (Not used) Show the form for creating a new resource.
 	 *

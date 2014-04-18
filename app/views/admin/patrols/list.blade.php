@@ -47,7 +47,7 @@
 									</button>
 								</div>
 								<div class='form-group'>
-									<a class="btn btn-default" data-toggle="modal" data-target="#{{$patrol->id}}">
+									<a class="btn btn-default" href="/admin/patrol-tallies/{{$patrol->id}}" data-toggle="modal" data-target="#{{$patrol->id}}">
 								  	Details
 									</a>
 								</div>
@@ -57,24 +57,6 @@
 					<div class="modal fade" id="{{$patrol->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 					  <div class="modal-dialog">
 					    <div class="modal-content">
-					      <div class="modal-header">
-					        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					        <h4 class="modal-title" id="myModalLabel">
-					        	Details for Patrol on {{ $patrol->start_time->toDateString() }} by {{ $patrol->user->first_name }}
-					        </h4>
-					      </div>
-					      <div class="modal-body">
-					      	<ul class="list-group">
-					      	@foreach($patrol->tallies as $tally)
-					      		<li class="list-group-item">{{ $tally->field->name }} 
-					      		<span class="badge">{{ $tally->tally }}</span></li>
-					      	@endforeach
-					      	</ul>
-					        Comments here
-					      </div>
-					      <div class="modal-footer">
-					        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					      </div>
 					    </div>
 					  </div>
 					</div>
