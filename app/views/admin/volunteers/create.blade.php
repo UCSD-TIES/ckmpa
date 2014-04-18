@@ -74,7 +74,7 @@
 				<label class="col-sm-2 control-label" for="role">Role:</label>
 
 				<div class="col-sm-10">
-					<select multiple class="form-control" name="role">
+					<select class="form-control" name="role">
 						@foreach($roles as $role)
 							<option value="{{ $role->id }}" @if($role->name == 'Volunteer') selected="selected"@endif>
 								{{ $role->name }}</option>
