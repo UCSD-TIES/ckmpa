@@ -69,3 +69,7 @@ small.uncompleted
   color: #aaa;
   background-color: transparent;
 }
+
+.icon-bar {
+  background-color: #fff !important;
+}
