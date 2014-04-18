@@ -2,7 +2,7 @@
  * Copyright 2014 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v1.0.0-beta.1-nightly-1664
+ * Ionic, v1.0.0-beta.1-nightly-1717
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -481,10 +481,10 @@ function delegateService(methodNames) {
         if (!matchingInstancesFound) {
           return $log.warn(
             'Delegate for handle "'+this.handle+'" could not find a ' +
-            'corresponding element with delegate-handle="'+this.handle+'"!' +
+            'corresponding element with delegate-handle="'+this.handle+'"! ' +
             methodName + '() was not called!\n' +
             'Possible cause: If you are calling ' + methodName + '() immediately, and ' +
-            'your element with delegate-handle="' + methodName + '" is a child of your ' +
+            'your element with delegate-handle="' + this.handle + '" is a child of your ' +
             'controller, then your element may not be compiled yet. Put a $timeout ' +
             'around your call to ' + methodName + '() and try again.'
           );
@@ -888,7 +888,7 @@ function($rootScope, $document, $compile, $timeout, $ionicPlatform, $ionicTempla
       return $timeout(function(){
         $document[0].body.classList.remove('modal-open');
         self.el.classList.add('hide');
-      }, 350);
+      }, 500);
     },
 
     /**
@@ -903,7 +903,7 @@ function($rootScope, $document, $compile, $timeout, $ionicPlatform, $ionicTempla
 
       return self.hide().then(function() {
         self.scope.$destroy();
-        self.el && self.el.parentElement && self.el.parentElement.removeChild(self.el);
+        angular.element(self.el).remove();
       });
     },
 
@@ -1231,8 +1231,6 @@ var POPUP_TPL =
     '</div>' +
   '</div>';
 
-var POPUP_CONTENT_DEPRECATED = '$ionicPopup options.content has been deprecated. Use options.template instead.';
-
 /**
  * @ngdoc service
  * @name $ionicPopup
@@ -1490,8 +1488,6 @@ function($animate, $ionicTemplateLoader, $ionicBackdrop, $log, $q, $timeout, $ro
       buttons: [],
     }, options || {});
 
-    deprecated.field(POPUP_CONTENT_DEPRECATED, $log.warn, options, 'content', options.content);
-
     var popupPromise = $ionicTemplateLoader.compile({
       template: POPUP_TPL,
       scope: options.scope && options.scope.$new(),
@@ -1671,7 +1667,7 @@ function($animate, $ionicTemplateLoader, $ionicBackdrop, $log, $q, $timeout, $ro
       buttons: [{
         text: opts.cancelText || 'Cancel',
         type: opts.cancelType|| 'button-default',
-        onTap: function(e) { e.preventDefault(); }
+        onTap: function(e) {}
       }, {
         text: opts.okText || 'OK',
         type: opts.okType || 'button-positive',
@@ -3885,13 +3881,24 @@ IonicModule
         return angular.isDefined($attrs.icon) ? $attrs.icon : 'ion-loading-d';
       };
 
-      $scope.$on('scroll.infiniteScrollComplete', function() {
+      var onInfinite = function() {
+        $element[0].classList.add('active');
+        infiniteScrollCtrl.isLoading = true;
+        $scope.$parent && $scope.$parent.$apply($attrs.onInfinite || '');
+      }
+
+      var finishInfiniteScroll = function() {
         $element[0].classList.remove('active');
         $timeout(function() {
           scrollView.resize();
         }, 0, false);
         infiniteScrollCtrl.isLoading = false;
+      };
+
+      $scope.$on('scroll.infiniteScrollComplete', function() {
+        finishInfiniteScroll();
       });
+
       $scope.$on('$destroy', function() {
         scrollCtrl.$element.off('scroll', checkBounds);
       });
@@ -3908,11 +3915,13 @@ IonicModule
         var scrollValues = scrollView.getValues();
         var maxScroll = infiniteScrollCtrl.getMaxScroll();
 
+        if(maxScroll.top === 0) {
+          return;
+        }
+             
         if ((maxScroll.left !== -1 && scrollValues.left >= maxScroll.left) ||
             (maxScroll.top !== -1 && scrollValues.top >= maxScroll.top)) {
-          $element[0].classList.add('active');
-          infiniteScrollCtrl.isLoading = true;
-          $scope.$parent && $scope.$parent.$apply($attrs.onInfinite || '');
+          onInfinite();
         }
       }
     }
@@ -4474,9 +4483,8 @@ IonicModule
  */
 IonicModule
 .directive('ionNavBackButton', [
-  '$ionicNgClick',
   '$animate',
-function($ionicNgClick, $animate) {
+function($animate) {
   return {
     restrict: 'E',
     require: '^ionNavBar',
@@ -4485,7 +4493,11 @@ function($ionicNgClick, $animate) {
       return function($scope, $element, $attr, navBarCtrl) {
         if (!$attr.ngClick) {
           $scope.$navBack = navBarCtrl.back;
-          $ionicNgClick($scope, $element, '$navBack($event)');
+          $element.on('click', function(event){
+            $scope.$apply(function() {
+              $scope.$navBack(event);
+            });
+          });
         }
 
         //If the current viewstate does not allow a back button,
@@ -4938,9 +4950,6 @@ function( $ionicViewService,   $state,   $compile,   $controller,   $animate) {
 }]);
 
 
-// Similar to Angular's ngTouch, however it uses Ionic's tap detection
-// and click simulation. ngClick
-
 IonicModule
 
 .config(['$provide', function($provide) {
@@ -4955,10 +4964,6 @@ IonicModule
  * @private
  */
 .factory('$ionicNgClick', ['$parse', function($parse) {
-  function onRelease(e) {
-    // wire this up to Ionic's tap/click simulation
-    ionic.tap.simulateClick(e.target, e);
-  }
   return function(scope, element, clickExpr) {
     var clickHandler = $parse(clickExpr);
 
@@ -4968,15 +4973,9 @@ IonicModule
       });
     });
 
-    ionic.on("release", onRelease, element[0]);
-
     // Hack for iOS Safari's benefit. It goes searching for onclick handlers and is liable to click
     // something else nearby.
     element.onclick = function(event) { };
-
-    scope.$on('$destroy', function () {
-      ionic.off("release", onRelease, element[0]);
-    });
   };
 }])
 
@@ -5819,7 +5818,7 @@ function($rootScope, $animate, $ionicBind, $compile) {
 }]);
 
 IonicModule
-.directive('ionTabNav', ['$ionicNgClick', function($ionicNgClick) {
+.directive('ionTabNav', [function() {
   return {
     restrict: 'E',
     replace: true,
@@ -5853,7 +5852,11 @@ IonicModule
           tabsCtrl.select(tabCtrl.$scope, true);
         };
         if (!$attrs.ngClick) {
-          $ionicNgClick($scope, $element, 'selectTab($event)');
+          $element.on('click', function(event) {
+            $scope.$apply(function() {
+              $scope.selectTab(event);
+            });
+          });
         }
 
         $scope.getIconOn = function() {
@@ -6038,72 +6041,6 @@ function($ionicGesture, $timeout) {
 
   };
 }]);
-
-
-// Similar to Angular's ngTouch, however it uses Ionic's tap detection
-// and click simulation. ngClick
-
-(function(angular, ionic) {'use strict';
-
-angular.module('ionic.ui.touch', [])
-
-  .config(['$provide', function($provide) {
-    $provide.decorator('ngClickDirective', ['$delegate', function($delegate) {
-      // drop the default ngClick directive
-      $delegate.shift();
-      return $delegate;
-    }]);
-  }])
-
-  /**
-   * @private
-   */
-  .factory('$ionicNgClick', ['$parse', function($parse) {
-    function onRelease(e) {
-      // wire this up to Ionic's tap/click simulation
-      ionic.tap.simulateClick(e.target, e);
-    }
-    return function(scope, element, clickExpr) {
-      var clickHandler = $parse(clickExpr);
-
-      element.on('click', function(event) {
-        scope.$apply(function() {
-          clickHandler(scope, {$event: (event)});
-        });
-      });
-
-      ionic.on("release", onRelease, element[0]);
-
-      // Hack for iOS Safari's benefit. It goes searching for onclick handlers and is liable to click
-      // something else nearby.
-      element.onclick = function(event) { };
-
-      scope.$on('$destroy', function () {
-        ionic.off("release", onRelease, element[0]);
-      });
-    };
-  }])
-
-  .directive('ngClick', ['$ionicNgClick', function($ionicNgClick) {
-    return function(scope, element, attr) {
-      $ionicNgClick(scope, element, attr.ngClick);
-    };
-  }])
-
-  .directive('ionStopEvent', function () {
-    function stopEvent(e) {
-      e.stopPropagation();
-    }
-    return {
-      restrict: 'A',
-      link: function (scope, element, attr) {
-        element.bind(attr.ionStopEvent, stopEvent);
-      }
-    };
-  });
-
-
-})(window.angular, window.ionic);
 
 /**
  * @ngdoc directive

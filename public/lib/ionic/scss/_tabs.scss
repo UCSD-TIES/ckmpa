@@ -129,8 +129,8 @@
   display: none;
 }
 
-.tabs-icon-top .tab-item,
-.tabs-icon-bottom .tab-item {
+.tabs-icon-top > .tabs .tab-item,
+.tabs-icon-bottom > .tabs .tab-item {
   font-size: $tabs-text-font-size-side-icon;
   line-height: $tabs-text-font-size;
 }
@@ -142,8 +142,8 @@
   font-size: $tabs-icon-size;
 }
 
-.tabs-icon-left .tab-item,
-.tabs-icon-right .tab-item {
+.tabs-icon-left > .tabs .tab-item,
+.tabs-icon-right > .tabs .tab-item {
   font-size: $tabs-text-font-size-side-icon;
 
   .icon {
@@ -175,12 +175,12 @@
 
 .tab-item .badge {
   position: absolute;
-  padding: $tabs-badge-padding;
   top: 4%;
   right: 33%; // fallback
   right: calc(50% - 26px);
-  font-size: $tabs-badge-font-size;
+  padding: $tabs-badge-padding;
   height: auto;
+  font-size: $tabs-badge-font-size;
   line-height: $tabs-badge-font-size + 4;
 }
 
@@ -226,4 +226,11 @@
   .icon:before {
     position: relative;
   }
+}
+
+.tab-item.disabled,
+.tab-item[disabled] {
+  opacity: .4;
+  cursor: default;
+  pointer-events: none;
 }
