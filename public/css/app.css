@@ -28,6 +28,11 @@ input[type=number]::-webkit-outer-spin-button {
             box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
 }
 
+.registerForm .errorText {
+  color: #a94442;
+  padding-left: 8px;
+}
+
 .list .item.item-accordion {
   line-height: 38px;
   padding-top: 0;

@@ -10,7 +10,7 @@
 
     $scope.login = function () {
       $ionicLoading.show({
-        content: "<i class='icon ion-loading-a'></i> Signing In"
+        template: "<i class='icon ion-loading-a'></i> Signing In"
       });
 
       Auth.login($scope.credentials).success(function () {
@@ -20,20 +20,14 @@
         $ionicLoading.hide();
         $ionicPopup.alert({
           title: 'Error',
-          content: response.error.message
+          template: response.error.message
         });
-      });
-    };
-
-    $scope.logout = function () {
-      Auth.logout().success(function () {
-        $state.go('login');
       });
     };
 
   });
 
-  app.controller('RegisterController', function ($scope, $state, Users) {
+  app.controller('RegisterController', function ($scope, $state, $ionicPopup, Users) {
     $scope.credentials = {
       first_name: "",
       last_name: "",
@@ -46,13 +40,13 @@
     $scope.emailRegex = /\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}\b/;
 
     $scope.register = function () {
-      if ($scope.credentials.password === $scope.credentials.password_confirmation) {
-        Users.post($scope.credentials).success(function () {
-          $state.go('login');
+      Users.post($scope.credentials).success(function () {
+        $state.go('login');
+        $ionicPopup.alert({
+          title: 'Successfully Registered!',
+          template: 'Please wait for an adminstrator to confirm you.'
         });
-      } else {
-        console.log("FAIL");
-      }
+      });
     };
   });
 
@@ -88,7 +82,7 @@
     });
 
     $ionicLoading.show({
-      content: "<i class='icon ion-loading-a'></i> Loading",
+      template: "<i class='icon ion-loading-a'></i> Loading",
       showDelay: 400
     });
   });
@@ -162,7 +156,7 @@
     });
 
     $ionicLoading.show({
-      content: "<i class='icon ion-loading-a'></i> Loading"
+      template: "<i class='icon ion-loading-a'></i> Loading"
     });
 
     $scope.logout = function () {
@@ -190,7 +184,7 @@
 
     $scope.submit = function () {
       $ionicLoading.show({
-        content: "<i class='icon ion-loading-a'></i> Submitting"
+        template: "<i class='icon ion-loading-a'></i> Submitting"
       });
       Patrols.post($stateParams.transectId, $scope.comments, $scope.tallies).success(function () {
         $ionicLoading.hide();
@@ -217,8 +211,8 @@
     $scope.mpa_name = $stateParams.mpaName;
 
     $scope.logout = function () {
-      return Auth.logout().success(function () {
-        return $state.go('login');
+      Auth.logout().success(function () {
+        $state.go('login');
       });
     };
   });
