@@ -4,5 +4,6 @@
   "curly": true,
   "indent": 2,
   "devel": true,
+  "browser": true,
   "predef": ["angular", "_"]
 }
