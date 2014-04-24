@@ -124,8 +124,8 @@
   }
 }
 
-.tabs-item-hide,
-.tabs-item-hide > .tabs {
+.tabs-item-hide > .tabs,
+.tabs.tabs-item-hide {
   display: none;
 }
 
