@@ -1,4 +1,8 @@
 {
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/UCSD-TIES/ckmpa.git"
+  },
   "devDependencies": {
     "gulp": "*",
     "gulp-util": "*",
@@ -6,6 +10,10 @@
     "tiny-lr": "*",
     "gulp-tar": "*",
     "gulp-gzip": "*",
-    "event-stream": "*"
+    "event-stream": "*",
+    "request": "*",
+    "gulp-clean": "*",
+    "q": "*",
+    "dotenv": "*"
   }
 }
