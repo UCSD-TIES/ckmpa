@@ -42,7 +42,7 @@ function appStream() {
                    'res/**/*.png',
                    'config.xml',
                    '!lib/**'], {
-    cwd: 'public/**'
+    cwd: './public/**'
   });
 }
 
@@ -58,7 +58,7 @@ function libStream() {
                    'lib/ionic/release/css/*.css',
                    'lib/ionic/release/fonts/*.*',
                    'lib/lodash/dist/lodash.min.js'], {
-    cwd: 'public/**'
+    cwd: './public/**'
   });
 }
 
@@ -66,7 +66,7 @@ gulp.task('build', function () {
   return es.merge(appStream(), libStream())
     .pipe(tar('app.tar'))
     .pipe(gzip())
-    .pipe(gulp.dest('.tmp'));
+    .pipe(gulp.dest('./tmp'));
 });
 
 gulp.task('upload', ['build'], function (cb) {
@@ -88,9 +88,9 @@ gulp.task('upload', ['build'], function (cb) {
     url: url,
     qs: qs
   }, callback)
-    .form().append("file", fs.createReadStream('.tmp/app.tar.gz'));
+    .form().append("file", fs.createReadStream('./tmp/app.tar.gz'));
 
-  gulp.src('.tmp', {
+  gulp.src('./tmp', {
     read: false
   })
     .pipe(clean());
