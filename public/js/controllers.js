@@ -10,7 +10,8 @@
 
     $scope.login = function () {
       $ionicLoading.show({
-        template: "<i class='icon ion-loading-a'></i> Signing In"
+        template: "<i class='icon ion-loading-a'></i> Signing In",
+        showDelay: 500
       });
 
       Auth.login($scope.credentials).success(function () {
@@ -83,7 +84,7 @@
 
     $ionicLoading.show({
       template: "<i class='icon ion-loading-a'></i> Loading",
-      showDelay: 400
+      showDelay: 500
     });
   });
 
@@ -184,7 +185,8 @@
 
     $scope.submit = function () {
       $ionicLoading.show({
-        template: "<i class='icon ion-loading-a'></i> Submitting"
+        template: "<i class='icon ion-loading-a'></i> Submitting",
+        showDelay: 500
       });
       Patrols.post($stateParams.transectId, $scope.comments, $scope.tallies).success(function () {
         $ionicLoading.hide();
