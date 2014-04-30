@@ -53,10 +53,10 @@ function libStream() {
                    'lib/angular-resource/angular-resource.min.js',
                    'lib/angular-sanitize/angular-sanitize.min.js',
                    'lib/angular-ui-router/release/angular-ui-router.min.js',
-                   'lib/ionic/js/ionic.min.js',
-                   'lib/ionic/js/ionic-angular.min.js',
-                   'lib/ionic/css/*.css',
-                   'lib/ionic/fonts/*.*',
+                   'lib/ionic/release/js/ionic.min.js',
+                   'lib/ionic/release/js/ionic-angular.min.js',
+                   'lib/ionic/release/css/*.css',
+                   'lib/ionic/release/fonts/*.*',
                    'lib/lodash/dist/lodash.min.js'], {
     cwd: 'public/**'
   });
@@ -109,7 +109,7 @@ gulp.task('getApk', function () {
     .pipe(fs.createWriteStream('./app.apk').on('finish', function () {
       deferred.resolve();
     }));
-  
+
   return deferred.promise;
 
 });
