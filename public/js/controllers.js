@@ -89,7 +89,7 @@
   });
 
   app.controller('DataController', function ($scope, $state, $stateParams, $ionicLoading, $ionicModal, $timeout, Datasheets, Favorites, Auth) {
-    var time_interval, timer, saveTallies, datasheets;
+    var time_interval, timer, datasheets;
     $scope.mpa_id = $stateParams.mpaID;
     $scope.mpa_name = $stateParams.mpaName;
     $scope.transect_name = decodeURIComponent($stateParams.transectName);
@@ -98,12 +98,10 @@
     $scope.categories = [];
     time_interval = 100000;
 
-    saveTallies = function () {
+    (function saveTallies() {
       Datasheets.saveTallies();
       timer = $timeout(saveTallies, time_interval);
-    };
-
-    saveTallies();
+    })();
 
     $scope.stop = function () {
       $timeout.cancel(timer);
@@ -124,6 +122,12 @@
     $scope.deleteFavorite = function (name) {
       $scope.modalError = "";
       Favorites['delete'](name);
+    };
+
+    $scope.resetTallies = function(){
+      $state.reload();
+      $scope.$broadcast("resetTallies");
+      Datasheets.resetTallies();
     };
 
     $scope.resize = function () {

@@ -28,6 +28,10 @@
           $scope.tally.val -= 1;
         }
       };
+
+      $scope.$on('resetTallies', function () {
+        $scope.tally.val = 0;
+      });
     };
 
     return {
@@ -57,6 +61,10 @@
         $scope.tally = tally;
         Datasheets.addTally(tally);
       }
+
+      $scope.$on('resetTallies', function () {
+        $scope.tally.val = 'No';
+      });
     };
 
     return {
@@ -84,6 +92,10 @@
         $scope.tally = tally;
         Datasheets.addTally(tally);
       }
+
+      $scope.$on('resetTallies', function () {
+        $scope.tally.val = $scope.field.options[0].name;
+      });
     };
 
     return {
