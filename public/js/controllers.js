@@ -124,7 +124,7 @@
       Favorites['delete'](name);
     };
 
-    $scope.resetTallies = function(){
+    $scope.resetTallies = function () {
       $state.reload();
       $scope.$broadcast("resetTallies");
       Datasheets.resetTallies();
@@ -171,7 +171,7 @@
     };
   });
 
-  app.controller('SummaryController', function ($scope, $state, $stateParams, $ionicLoading, Datasheets, Patrols, Auth) {
+  app.controller('SummaryController', function ($scope, $state, $stateParams, $ionicLoading, $ionicPopup, Datasheets, Patrols, Auth) {
     var datasheets;
     $scope.mpa_id = $stateParams.mpaID;
     $scope.mpa_name = $stateParams.mpaName;
@@ -196,8 +196,13 @@
         $ionicLoading.hide();
         $state.go('finish');
         Datasheets.resetTallies();
-      }).error(function (data) {
-        console.log(data);
+      }).error(function (response) {
+        $ionicLoading.hide();
+        $ionicPopup.alert({
+          title: 'Error',
+          template: response.error.message
+        });
+        $state.go('login');
       });
     };
 
