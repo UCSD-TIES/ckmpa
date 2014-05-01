@@ -51,7 +51,7 @@
     };
   });
 
-  app.controller('MpaController', function ($scope, $state, $stateParams, $ionicLoading, Mpas, Auth) {
+  app.controller('MpaController', function ($scope, $state, $stateParams, $ionicLoading, $ionicScrollDelegate, Mpas, Auth) {
     $scope.collect_data = function (mpa, transect) {
       $state.go('data-collection', {
         mpaId: mpa.id,
@@ -73,7 +73,7 @@
     });
 
     $scope.resize = function () {
-      $scope.$broadcast('scroll.resize');
+      $ionicScrollDelegate.resize();
     };
 
     $ionicLoading.show({
@@ -82,7 +82,7 @@
     });
   });
 
-  app.controller('DataController', function ($scope, $state, $stateParams, $ionicLoading, $ionicModal, $timeout, Datasheets, Favorites, Auth) {
+  app.controller('DataController', function ($scope, $state, $stateParams, $ionicLoading, $ionicModal, $ionicScrollDelegate, $timeout, Datasheets, Favorites, Auth) {
     var time_interval, timer, datasheets;
     $scope.mpa_id = $stateParams.mpaID;
     $scope.mpa_name = $stateParams.mpaName;
@@ -125,7 +125,7 @@
     };
 
     $scope.resize = function () {
-      $scope.$broadcast('scroll.resize');
+      $ionicScrollDelegate.resize();
     };
 
     datasheets = Datasheets.datasheets.then(function () {
