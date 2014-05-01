@@ -21,15 +21,9 @@
       templateUrl: 'templates/register.html',
       controller: 'RegisterController'
     })
-    
-    .state('select-mpa', {
-      url: '/select-mpa',
-      templateUrl: 'templates/select-mpa.html',
-      controller: 'MpaController'
-    })
-    
+
     .state('select-transect', {
-      url: '/select-transect/:mpaId/:mpaName',
+      url: '/select-transect',
       templateUrl: 'templates/select-transect.html',
       controller: 'MpaController'
     })

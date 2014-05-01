@@ -16,7 +16,7 @@
 
       Auth.login($scope.credentials).success(function () {
         $ionicLoading.hide();
-        $state.go('select-mpa');
+        $state.go('select-transect');
       }).error(function (response) {
         $ionicLoading.hide();
         $ionicPopup.alert({
@@ -52,19 +52,10 @@
   });
 
   app.controller('MpaController', function ($scope, $state, $stateParams, $ionicLoading, Mpas, Auth) {
-    var mpas;
-    $scope.mpa_id = $stateParams.mpaId;
-    $scope.mpa_name = $stateParams.mpaName;
-
-    $scope.select_transect = function (mpa) {
-      $state.go('select-transect', {
-        mpaId: mpa.id,
-        mpaName: mpa.name
-      });
-    };
-
-    $scope.collect_data = function (transect) {
+    $scope.collect_data = function (mpa, transect) {
       $state.go('data-collection', {
+        mpaId: mpa.id,
+        mpaName: mpa.name,
         transectId: transect.id,
         transectName: encodeURIComponent(transect.name)
       });
@@ -76,11 +67,14 @@
       });
     };
 
-    mpas = Mpas.query({}, function () {
-      $scope.transects = _(mpas).pluck('transects').flatten().value();
+    var mpas = Mpas.query({}, function () {
       $scope.mpas = mpas;
       $ionicLoading.hide();
     });
+
+    $scope.resize = function () {
+      $scope.$broadcast('scroll.resize');
+    };
 
     $ionicLoading.show({
       template: "<i class='icon ion-loading-a'></i> Loading",
