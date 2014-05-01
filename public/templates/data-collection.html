@@ -31,7 +31,7 @@
           </a>
         </div>
 
-        <div class="item item-accordion" ng-repeat="field in category.fields" ng-show='showThis && !category.subcategories.length'>
+        <div class="item-accordion" ng-repeat="field in category.fields" ng-show='showThis && !category.subcategories.length'>
           <number-input field="field" subcategory="{id:-1}" ng-if="field.type == 'number'"></number-input>
           <radio field="field" subcategory="{id:-1}" ng-if="field.type == 'radio'"></radio>
           <checkbox field="field" subcategory="{id:-1}" ng-if="field.type == 'checkbox'"></checkbox>
