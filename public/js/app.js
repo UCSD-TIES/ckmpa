@@ -35,19 +35,19 @@
     })
     
     .state('data-collection', {
-      url: '/data-collection/:mpaName/:transectId/:transectName',
+      url: '/data-collection/:mpaId/:mpaName/:transectId/:transectName',
       templateUrl: 'templates/data-collection.html',
       controller: 'DataController'
     })
     
     .state('summary', {
-      url: '/summary/:mpaID/:mpaName/:transectId/:transectName',
+      url: '/summary/:mpaId/:mpaName/:transectId/:transectName',
       templateUrl: 'templates/summary.html',
       controller: 'SummaryController'
     })
     
     .state('finish', {
-      url: '/finish/:mpaID/:mpaName/:transectId/',
+      url: '/finish/:mpaId/:mpaName/:transectId/',
       templateUrl: 'templates/finish.html',
       controller: 'FinishController'
     });

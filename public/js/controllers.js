@@ -173,7 +173,7 @@
 
   app.controller('SummaryController', function ($scope, $state, $stateParams, $ionicLoading, $ionicPopup, Datasheets, Patrols, Auth) {
     var datasheets;
-    $scope.mpa_id = $stateParams.mpaID;
+    $scope.mpa_id = $stateParams.mpaId;
     $scope.mpa_name = $stateParams.mpaName;
     $scope.transect_name = $stateParams.transectName;
     $scope.categories = Datasheets.categories();
@@ -218,7 +218,7 @@
   });
 
   app.controller('FinishController', function ($scope, $state, $stateParams, Auth) {
-    $scope.mpa_id = $stateParams.mpaID;
+    $scope.mpa_id = $stateParams.mpaId;
     $scope.mpa_name = $stateParams.mpaName;
 
     $scope.logout = function () {
