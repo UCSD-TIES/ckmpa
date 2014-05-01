@@ -1,26 +1,24 @@
 <ion-view title="Summary">
-<!--
   <ion-nav-buttons side="right">
     <button class="button button-small button-clear" ng-click="logout()">
       Logout
     </button>
   </ion-nav-buttons>
--->
   <ion-content>
 
     <div ng-repeat="category in categories">
       <div class="item item-divider" ng-bind="category.name"></div>
       <ul class="list" ng-if="!category.subcategories.length">
-        <li class="item" ng-repeat="field in category.fields">
+        <li class="item item-text-wrap" ng-repeat="field in category.fields">
           {{ field.name }}
           <span class="badge badge-stable" ng-bind="getTally(field,sub)['val']"></span>
         </li>
       </ul>
       <ul class="list" ng-if="category.subcategories.length">
-        <li class="item" ng-repeat="field in category.fields">
+        <li class="item item-text-wrap" ng-repeat="field in category.fields">
           {{ field.name }}
 
-          <span ng-repeat="sub in category.subcategories | orderBy:'id':true" class="badge badge-stable" ng-bind="getTally(field,sub)['val']">11</span>
+          <span ng-repeat="sub in category.subcategories | orderBy:'id':true" class="badge badge-stable" ng-bind="getTally(field,sub)['val']"></span>
         </li>
       </ul>
     </div>
