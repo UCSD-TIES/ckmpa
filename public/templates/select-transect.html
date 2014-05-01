@@ -14,7 +14,7 @@
           <i class="icon" ng-class="showThis ? 'ion-ios7-arrow-up' : 'ion-ios7-arrow-down'"></i>
         </div>
 
-        <div class="item item-accordion item-icon-right" ng-repeat="t in mpa.transects"
+        <div class="item item-icon-right" ng-repeat="t in mpa.transects"
              ng-show="showThis" ng-click="collect_data(mpa, t)">
           {{t.name}}
           <i class="icon ion-chevron-right icon-accessory"></i>
