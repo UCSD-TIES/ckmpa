@@ -19,7 +19,7 @@
       </div>
 
       <div ng-repeat="category in categories" ng-init="activeTab = 1">
-        <div class="item item-icon-right item-divider" ng-click="showThis = !showThis; resize()">
+        <div class="item item-icon-right item-divider" ng-click="showThis = !showThis; resize()" ng-class="{active: showThis}">
           {{ category.name }}
           <i class="icon" ng-class="showThis ? 'ion-ios7-arrow-up' : 'ion-ios7-arrow-down'"></i>
         </div>
