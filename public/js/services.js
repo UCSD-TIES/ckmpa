@@ -147,7 +147,8 @@
       },
       
       resetTallies: function () {
-        return localStorageService.remove('tallies');
+        tallies = [];
+        localStorageService.remove('tallies');
       }
     };
   });
