@@ -57,6 +57,7 @@ function libStream() {
                    'lib/ionic/release/js/ionic-angular.min.js',
                    'lib/ionic/release/css/*.css',
                    'lib/ionic/release/fonts/*.*',
+                   'lib/angular-toastr/dist/*.*',
                    'lib/lodash/dist/lodash.min.js'], {
     cwd: './public/**'
   });
