@@ -23,6 +23,7 @@
     "ionic": "~1.0.0",
     "angular-resource": "~1.2.12",
     "lodash": "latest",
-    "angular-local-storage": "grevory/angular-local-storage"
+    "angular-local-storage": "grevory/angular-local-storage",
+    "angular-toastr": "latest"
   }
 }

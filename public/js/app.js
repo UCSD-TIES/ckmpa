@@ -1,6 +1,6 @@
 (function () {
   "use strict";
-  var app = angular.module('ckmpa', ['ionic', 'LocalStorageModule', 'ngResource', 'ckmpa.filters', 'ckmpa.services', 'ckmpa.directives', 'ckmpa.controllers']);
+  var app = angular.module('ckmpa', ['ionic', 'LocalStorageModule', 'ngResource', 'ckmpa.filters', 'ckmpa.services', 'ckmpa.directives', 'ckmpa.controllers', 'toastr']);
   
   app.run(function ($http, Auth) {
     $http.defaults.headers.common["X-Auth-Token"] = Auth.token;

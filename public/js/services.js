@@ -209,7 +209,8 @@
         if (!_.any(favorites, {
           name: fav.name
         })) {
-          return favorites.push(fav);
+          favorites.push(fav);
+          return fav;
         }
       },
 

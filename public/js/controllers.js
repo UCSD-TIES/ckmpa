@@ -82,7 +82,7 @@
     });
   });
 
-  app.controller('DataController', function ($scope, $state, $stateParams, $ionicLoading, $ionicModal, $ionicScrollDelegate, $timeout, Datasheets, Favorites, Auth) {
+  app.controller('DataController', function ($scope, $state, $stateParams, $ionicLoading, $ionicModal, $ionicScrollDelegate, $timeout, toastr, Datasheets, Favorites, Auth) {
     var time_interval, timer, datasheets;
     $scope.mpa_id = $stateParams.mpaID;
     $scope.mpa_name = $stateParams.mpaName;
@@ -106,10 +106,20 @@
       $state.go('summary');
     };
 
-    $scope.addFavorite = Favorites.add;
+    $scope.addFavorite = function (field, sub) {
+      var fav = Favorites.add(field, sub);
+      toastr.success(fav.name, 'Added to Favorites', {
+        positionClass: "toast-bottom-full-width",
+        timeOut: 3000
+      });
+    };
 
-    $scope.deleteFavorite = function (name) {
-      Favorites['delete'](name);
+    $scope.deleteFavorite = function (fav) {
+      Favorites['delete'](fav);
+      toastr.info(fav.name, 'Deleted from Favorites', {
+        positionClass: "toast-bottom-full-width",
+        timeOut: 3000
+      });
     };
 
     $scope.alreadyAdded = function (sub) {
