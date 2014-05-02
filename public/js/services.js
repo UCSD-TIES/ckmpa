@@ -147,7 +147,6 @@
       },
       
       resetTallies: function () {
-        tallies = [];
         comments = {};
         localStorageService.remove('tallies');
       }
