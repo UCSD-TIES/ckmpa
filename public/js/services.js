@@ -4,7 +4,7 @@
   var app = angular.module('ckmpa.services', []);
   var host = "http://mpawatchsd.com/";
 
-  app.factory('Auth', function ($http, $sanitize, Flash) {
+  app.factory('Auth', function ($http, $sanitize, $ionicPopup, $q, Flash) {
     var user, token, sanitizeCredentials, loginSuccess, loginError, logoutSuccess;
     sanitizeCredentials = function (credentials) {
       return {
@@ -37,10 +37,26 @@
       },
 
       logout: function () {
-        return $http({
-          method: 'delete',
-          url: host + 'api/auth'
-        }).success(logoutSuccess);
+        var d = $q.defer();
+        $ionicPopup.confirm({
+          title: 'Are you sure you want to logout?',
+          okType: 'button-energized'
+        }).then(function (res) {
+          if (res) {
+            $http.delete(host + 'api/auth')
+              .success(function () {
+                logoutSuccess();
+                d.resolve();
+              })
+              .error(function (res) {
+                d.reject(res.error.message);
+              });
+          } else {
+            d.reject();
+          }
+        });
+
+        return d.promise;
       },
 
       user: function () {

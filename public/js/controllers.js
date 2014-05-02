@@ -62,7 +62,7 @@
     };
 
     $scope.logout = function () {
-      Auth.logout().success(function () {
+      Auth.logout().then(function () {
         $state.go('login');
       });
     };
@@ -178,7 +178,7 @@
     });
 
     $scope.logout = function () {
-      Auth.logout().success(function () {
+      Auth.logout().then(function () {
         $state.go('login');
       });
     };
@@ -224,7 +224,7 @@
     });
 
     $scope.logout = function () {
-      Auth.logout().success(function () {
+      Auth.logout().then(function () {
         $state.go('login');
       });
     };
