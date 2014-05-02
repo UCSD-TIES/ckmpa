@@ -82,7 +82,7 @@
     });
   });
 
-  app.controller('DataController', function ($scope, $state, $stateParams, $ionicLoading, $ionicModal, $ionicScrollDelegate, $timeout, Datasheets, Favorites, Auth) {
+  app.controller('DataController', function ($scope, $state, $stateParams, $ionicLoading, $ionicPopup, $ionicModal, $ionicScrollDelegate, $timeout, Datasheets, Favorites, Auth) {
     var time_interval, timer, datasheets;
     $scope.mpa_id = $stateParams.mpaID;
     $scope.mpa_name = $stateParams.mpaName;
@@ -107,14 +107,15 @@
     };
 
     $scope.addFavorite = function (field, sub) {
-      $scope.modalError = "";
       if (!Favorites.add(field, sub)) {
-        $scope.modalError = "Already Added to Favorites";
+        $ionicPopup.alert({
+          title: 'Error',
+          template: 'Already Added to Favorites.'
+        });
       }
     };
 
     $scope.deleteFavorite = function (name) {
-      $scope.modalError = "";
       Favorites['delete'](name);
     };
 
