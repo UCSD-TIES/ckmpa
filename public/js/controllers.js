@@ -121,6 +121,7 @@
     $scope.resetTallies = function () {
       $state.reload();
       $scope.$broadcast("resetTallies");
+      $scope.comments = {};
       Datasheets.resetTallies();
     };
 

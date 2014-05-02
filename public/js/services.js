@@ -98,7 +98,7 @@
     res = $resource(host + 'api/datasheets', {});
     categories = [];
     fields = [];
-    comments = [];
+    comments = {};
     
     if (!(tallies = localStorageService.get("tallies"))) {
       tallies = [];
@@ -148,6 +148,7 @@
       
       resetTallies: function () {
         tallies = [];
+        comments = {};
         localStorageService.remove('tallies');
       }
     };
