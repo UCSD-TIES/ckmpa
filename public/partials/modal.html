@@ -25,6 +25,9 @@
           </button>
         </div>
       </div>
+      <div class="item" ng-if="!favorites.length">
+        There are currently no favorites.
+      </div>
 
       <div ng-repeat="category in categories | hasNumericField:search" ng-init="activeTab = 1">
         <div class="item item-icon-right item-divider" ng-click='showThis = !showThis; resize()' ng-class="{active: showThis}">
@@ -32,10 +35,9 @@
           <i ng-show="showThis" class="icon ion-ios7-arrow-up"></i>
           {{ category.name }}
         </div>
-        
+
         <div class="item tabs" ng-show='showThis && category.subcategories'>
-          <a class="tab-item" ng-repeat="sub in category.subcategories" ng-bind="sub.name"
-            ng-class="{'active-tab': $parent.activeTab == $index}" ng-click="$parent.activeTab = $index" >
+          <a class="tab-item" ng-repeat="sub in category.subcategories" ng-bind="sub.name" ng-class="{'active-tab': $parent.activeTab == $index}" ng-click="$parent.activeTab = $index">
           </a>
         </div>
 
@@ -48,7 +50,7 @@
           </div>
         </div>
 
-        <div ng-repeat="sub in category.subcategories" ng-show='showThis && $parent.activeTab == $index'>       
+        <div ng-repeat="sub in category.subcategories" ng-show='showThis && $parent.activeTab == $index'>
           <div ng-repeat="field in category.fields | filter:{name:search}" ng-init="i = $parent.$index">
             <div class="item item-button-right">
               {{ field.name }}
