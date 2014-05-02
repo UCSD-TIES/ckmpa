@@ -82,7 +82,7 @@
     });
   });
 
-  app.controller('DataController', function ($scope, $state, $stateParams, $ionicLoading, $ionicPopup, $ionicModal, $ionicScrollDelegate, $timeout, Datasheets, Favorites, Auth) {
+  app.controller('DataController', function ($scope, $state, $stateParams, $ionicLoading, $ionicModal, $ionicScrollDelegate, $timeout, Datasheets, Favorites, Auth) {
     var time_interval, timer, datasheets;
     $scope.mpa_id = $stateParams.mpaID;
     $scope.mpa_name = $stateParams.mpaName;
@@ -106,17 +106,24 @@
       $state.go('summary');
     };
 
-    $scope.addFavorite = function (field, sub) {
-      if (!Favorites.add(field, sub)) {
-        $ionicPopup.alert({
-          title: 'Error',
-          template: 'Already Added to Favorites.'
-        });
-      }
-    };
+    $scope.addFavorite = Favorites.add;
 
     $scope.deleteFavorite = function (name) {
       Favorites['delete'](name);
+    };
+
+    $scope.alreadyAdded = function (sub) {
+      return function (item) {
+        if (!sub) {
+          return !_.some($scope.favorites, function (fav) {
+            return fav.field.name === item.name;
+          });
+        } else {
+          return !_.some($scope.favorites, function (fav) {
+            return fav.field.name === item.name && fav.subcategory.name === sub.name;
+          });
+        }
+      };
     };
 
     $scope.resetTallies = function () {
