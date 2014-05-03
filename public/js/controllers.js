@@ -165,7 +165,7 @@
       $scope.modal.show();
     };
 
-    $scope.$on('modal.hidden', function(){
+    $scope.$on('modal.hidden', function () {
       $scope.activeFavGroup = {};
       Favorites.save();
     });
@@ -206,22 +206,46 @@
     };
 
     $scope.submit = function () {
-      $ionicLoading.show({
-        template: "<i class='icon ion-loading-a'></i> Submitting",
-        showDelay: 500
+      var emptyTallies = _.every($scope.tallies, function (t) {
+        if (t.field.type === "number") {
+          return t.val === 0;
+        } else {
+          return true;
+        }
       });
-      Patrols.post($stateParams.transectId, $scope.comments, $scope.tallies).success(function () {
-        $ionicLoading.hide();
-        $state.go('finish');
-        Datasheets.resetTallies();
-      }).error(function (response) {
-        $ionicLoading.hide();
-        $ionicPopup.alert({
-          title: 'Error',
-          template: response.error.message
+
+      if (emptyTallies) {
+        $ionicPopup.confirm({
+          title: 'The tallies seem to be empty.',
+          template: "Are you sure you want to submit?",
+          okType: 'button-energized'
+        }).then(function (res) {
+          if (res) {
+            submit();
+          }
         });
-        $state.go('login');
-      });
+      } else {
+        submit();
+      }
+
+      function submit() {
+        $ionicLoading.show({
+          template: "<i class='icon ion-loading-a'></i> Submitting",
+          showDelay: 500
+        });
+        Patrols.post($stateParams.transectId, $scope.comments, $scope.tallies).success(function () {
+          $ionicLoading.hide();
+          $state.go('finish');
+          Datasheets.resetTallies();
+        }).error(function (response) {
+          $ionicLoading.hide();
+          $ionicPopup.alert({
+            title: 'Error',
+            template: response.error.message
+          });
+          $state.go('login');
+        });
+      }
     };
 
     datasheets = Datasheets.datasheets.then(function () {
