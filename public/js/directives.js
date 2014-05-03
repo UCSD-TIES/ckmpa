@@ -20,7 +20,7 @@
       }
 
       $scope.inc = function () {
-        $scope.tally.val += 1;
+        $scope.tally.val = parseInt($scope.tally.val) + 1;
       };
 
       $scope.dec = function () {
