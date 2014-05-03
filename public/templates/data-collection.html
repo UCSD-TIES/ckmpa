@@ -29,14 +29,14 @@
           </a>
         </div>
 
-        <div ng-repeat="field in category.fields" ng-show='showThis && !category.subcategories.length'>
+        <div ng-repeat="field in category.fields | orderBy:'name'" ng-show='showThis && !category.subcategories.length'>
           <number-input field="field" subcategory="{id:-1}" ng-if="field.type == 'number'"></number-input>
           <radio field="field" subcategory="{id:-1}" ng-if="field.type == 'radio'"></radio>
           <checkbox field="field" subcategory="{id:-1}" ng-if="field.type == 'checkbox'"></checkbox>
         </div>
 
         <div ng-repeat="sub in category.subcategories" ng-show='showThis && $parent.activeTab == $index'>
-          <div ng-repeat="field in category.fields">
+          <div ng-repeat="field in category.fields | orderBy:'name'">
             <number-input field="field" subcategory="sub" ng-if="field.type == 'number'"></number-input>
             <radio field="field" subcategory="sub" ng-if="field.type == 'radio'"></radio>
             <checkbox field="field" subcategory="sub" ng-if="field.type == 'checkbox'"></checkbox>
