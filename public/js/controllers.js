@@ -90,6 +90,7 @@
     $scope.comments = Datasheets.comments();
     $scope.favorites = [];
     $scope.categories = [];
+    $scope.activeFavGroup = {};
     time_interval = 100000;
 
     (function saveTallies() {
@@ -164,9 +165,13 @@
       $scope.modal.show();
     };
 
+    $scope.$on('modal.hidden', function(){
+      $scope.activeFavGroup = {};
+      Favorites.save();
+    });
+
     $scope.closeModal = function () {
       $scope.modal.hide();
-      Favorites.save();
     };
 
     $scope.$on('$destroy', function () {

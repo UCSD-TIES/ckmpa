@@ -5,7 +5,6 @@
   </ion-header-bar>
 
   <ion-content>
-    <div class="" ng-bind="modalError"></div>
     <div class="list">
       <div class="item item-input-inset">
         <label class="item-input-wrapper">
@@ -30,35 +29,39 @@
       </div>
 
       <div ng-repeat="category in categories | hasNumericField:search" ng-init="activeTab = 1">
-        <div class="item item-icon-right item-divider" ng-click='showThis = !showThis; resize()' ng-class="{active: showThis}">
+        <div class="item item-icon-right item-divider" ng-click='activeFavGroup[$index] = !activeFavGroup[$index]; resize()' ng-class="{active: activeGroup[$index]}">
           <i ng-show="!showThis" class="icon ion-ios7-arrow-down"></i>
           <i ng-show="showThis" class="icon ion-ios7-arrow-up"></i>
           {{ category.name }}
         </div>
 
-        <div class="item tabs" ng-show='showThis && category.subcategories'>
-          <a class="tab-item" ng-repeat="sub in category.subcategories" ng-bind="sub.name" ng-class="{'active-tab': $parent.activeTab == $index}" ng-click="$parent.activeTab = $index">
-          </a>
-        </div>
-
-        <div ng-repeat="field in category.fields | filter:{name:search} | filter:alreadyAdded(null)" ng-show='showThis && !category.subcategories.length'>
-          <div class="item item-button-right">
-            {{ field.name }}
-            <button class="button button-clear button-balanced" ng-click="addFavorite(field,null)">
-              <i class="icon ion-plus"></i>
-            </button>
+        <div ng-show="activeFavGroup[$index]">
+          <div class="item tabs" ng-show='category.subcategories'>
+            <a class="tab-item" ng-repeat="sub in category.subcategories" ng-bind="sub.name" ng-class="{'active-tab': $parent.activeTab == $index}" ng-click="$parent.activeTab = $index">
+            </a>
           </div>
-        </div>
 
-        <div ng-repeat="sub in category.subcategories" ng-show='showThis && $parent.activeTab == $index'>
-          <div ng-repeat="field in category.fields | filter:{name:search} | filter:alreadyAdded(sub)" ng-init="i = $parent.$index">
+          <div ng-repeat="field in category.fields | filter:{name:search} | filter:alreadyAdded(null)"
+               ng-show='!category.subcategories.length'>
             <div class="item item-button-right">
               {{ field.name }}
-              <button class="button button-clear button-balanced" ng-click="addFavorite(field,sub)">
+              <button class="button button-clear button-balanced" ng-click="addFavorite(field,null)">
                 <i class="icon ion-plus"></i>
               </button>
             </div>
           </div>
+
+          <div ng-repeat="sub in category.subcategories" ng-show='$parent.activeTab == $index'>
+            <div ng-repeat="field in category.fields | filter:{name:search} | filter:alreadyAdded(sub)" ng-init="i = $parent.$index">
+              <div class="item item-button-right">
+                {{ field.name }}
+                <button class="button button-clear button-balanced" ng-click="addFavorite(field,sub)">
+                  <i class="icon ion-plus"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
         </div>
 
       </div>
