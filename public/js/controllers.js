@@ -264,7 +264,7 @@
     $scope.mpa_name = $stateParams.mpaName;
 
     $scope.logout = function () {
-      Auth.logout().success(function () {
+      Auth.logout().then(function () {
         $state.go('login');
       });
     };
