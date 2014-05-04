@@ -82,7 +82,7 @@
     });
   });
 
-  app.controller('DataController', function ($scope, $state, $stateParams, $ionicLoading, $ionicModal, $ionicScrollDelegate, $timeout, toastr, Datasheets, Favorites, Auth) {
+  app.controller('DataController', function ($scope, $state, $stateParams, $ionicLoading, $ionicModal, $ionicScrollDelegate, $interval, toastr, Datasheets, Favorites, Auth) {
     var time_interval, timer, datasheets;
     $scope.mpa_id = $stateParams.mpaID;
     $scope.mpa_name = $stateParams.mpaName;
@@ -93,17 +93,11 @@
     $scope.activeFavGroup = {};
     time_interval = 100000;
 
-    (function saveTallies() {
+    timer = $interval(function () {
       Datasheets.saveTallies();
-      timer = $timeout(saveTallies, time_interval);
-    })();
-
-    $scope.stop = function () {
-      $timeout.cancel(timer);
-    };
+    }, time_interval);
 
     $scope.submit = function () {
-      $timeout.cancel(timer);
       $state.go('summary');
     };
 
@@ -175,6 +169,7 @@
     };
 
     $scope.$on('$destroy', function () {
+      $interval.cancel(timer);
       $scope.modal.remove();
     });
 
