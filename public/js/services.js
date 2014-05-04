@@ -109,7 +109,7 @@
     return $resource(host + 'api/mpas/');
   });
 
-  app.factory('Datasheets', function ($resource, localStorageService) {
+  app.factory('Datasheets', function ($resource, localStorageService, Favorites) {
     var res, categories, fields, comments, tallies, datasheets;
     res = $resource(host + 'api/datasheets', {});
     categories = [];
@@ -123,6 +123,7 @@
     datasheets = res.query({}, function () {
       categories = _(datasheets).pluck('categories').flatten().value();
       fields = _(categories).pluck('fields').flatten().value();
+      Favorites.initialize(categories, fields);
     });
 
     return {
@@ -169,19 +170,19 @@
     };
   });
 
-  app.factory('Favorites', function (Datasheets, localStorageService) {
-    var favorites, datasheets;
+  app.factory('Favorites', function (localStorageService) {
+    var favorites;
 
-    if (!(favorites = localStorageService.get("favorites"))) {
-      favorites = [];
+    function initializeFavorites(categories, fields) {
+      if (!(favorites = localStorageService.get("favorites"))) {
+        favorites = [];
 
-      datasheets = Datasheets.datasheets.then(function () {
         favorites.push({
-          field: _(Datasheets.fields()).find({
+          field: _.find(fields, {
             'name': "On-Shore Recreation"
           }),
 
-          subcategory: _.find(Datasheets.categories(), function (x) {
+          subcategory: _.find(categories, function (x) {
             return _(x.fields).flatten().any({
               'name': 'On-Shore Recreation'
             });
@@ -191,11 +192,11 @@
         });
 
         favorites.push({
-          field: _(Datasheets.fields()).find({
+          field: _.find(fields, {
             'name': "Off-Shore Recreation"
           }),
 
-          subcategory: _.find(Datasheets.categories(), function (x) {
+          subcategory: _.find(categories, function (x) {
             return _(x.fields).flatten().any({
               'name': 'Off-Shore Recreation'
             });
@@ -204,10 +205,13 @@
           name: "Off-Shore Recreation"
         });
         localStorageService.set('favorites', favorites);
-      });
+
+      }
     }
 
     return {
+      initialize: initializeFavorites,
+
       favorites: function () {
         return favorites;
       },
