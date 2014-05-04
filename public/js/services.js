@@ -241,7 +241,7 @@
       post: function (transect, comments, tallies) {
         var data = {
           transect: transect,
-          comments: comments.val !== null || '',
+          comments: comments.val || '',
           tallies: tallies
         };
 

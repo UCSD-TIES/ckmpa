@@ -233,6 +233,7 @@
           template: "<i class='icon ion-loading-a'></i> Submitting",
           showDelay: 500
         });
+
         Patrols.post($stateParams.transectId, $scope.comments, $scope.tallies).success(function () {
           $ionicLoading.hide();
           $state.go('finish');
