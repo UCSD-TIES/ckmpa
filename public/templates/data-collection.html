@@ -16,7 +16,9 @@
         Favorites
       </div>
 
-      <my-fav ng-repeat="fav in favorites"></my-fav>
+      <div ng-repeat="fav in favorites">
+        <my-fav></my-fav>
+      </div>
 
       <div ng-repeat="category in categories" ng-init="activeTab = 1">
         <div class="item item-icon-right item-divider" ng-click="showThis = !showThis; resize()" ng-class="{active: showThis}">

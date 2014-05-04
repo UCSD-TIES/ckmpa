@@ -65,7 +65,6 @@
 
         if ((t = Datasheets.getTally(tally))) {
           tally = t;
-          tally.label = scope.field.name;
         } else {
           Datasheets.addTally(tally);
         }
