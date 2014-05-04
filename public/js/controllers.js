@@ -98,6 +98,7 @@
     }, time_interval);
 
     $scope.submit = function () {
+      Datasheets.saveTallies();
       $state.go('summary');
     };
 
