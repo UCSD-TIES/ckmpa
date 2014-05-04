@@ -7,18 +7,30 @@
   <ion-content>
 
     <div ng-repeat="category in categories">
-      <div class="item item-divider" ng-bind="category.name"></div>
+      <div class="item item-divider">
+        {{ category.name }}
+
+        <span class="item-note">
+          <span ng-repeat="sub in category.subcategories">
+            {{ sub.name + ($even ? ' / ': '') }}
+          </span>
+        </span>
+      </div>
       <ul class="list" ng-if="!category.subcategories.length">
-        <li class="item item-text-wrap" ng-repeat="field in category.fields">
+        <li class="item item-text-wrap" ng-repeat="field in category.fields | orderBy:'name'">
           {{ field.name }}
           <span class="badge badge-stable" ng-bind="getTally(field,sub)['val']"></span>
         </li>
       </ul>
       <ul class="list" ng-if="category.subcategories.length">
-        <li class="item item-text-wrap" ng-repeat="field in category.fields">
+        <li class="item item-text-wrap" ng-repeat="field in category.fields | orderBy:'name'">
           {{ field.name }}
 
-          <span ng-repeat="sub in category.subcategories | orderBy:'id':true" class="badge badge-stable" ng-bind="getTally(field,sub)['val']"></span>
+          <span class="badge badge-stable">
+            <span ng-repeat="sub in category.subcategories">
+              {{ getTally(field,sub)['val'] + ($even ? ' /&nbsp;': '') }}
+            </span>
+          </span>
         </li>
       </ul>
     </div>
