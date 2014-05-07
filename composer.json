@@ -15,7 +15,8 @@
 	},
     "require-dev": {
         "barryvdh/laravel-ide-helper": "dev-master",
-        "way/generators": "dev-master"
+        "way/generators": "dev-master",
+        "barryvdh/laravel-debugbar": "dev-master"
     },
 	"autoload": {
 		"classmap": [

@@ -111,7 +111,8 @@ return array(
 		'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
 		'Codesleeve\AssetPipeline\AssetPipelineServiceProvider',
 		'Barryvdh\Cors\CorsServiceProvider',
-		'Tappleby\AuthToken\AuthTokenServiceProvider'
+		'Tappleby\AuthToken\AuthTokenServiceProvider',
+        'Barryvdh\Debugbar\ServiceProvider'
 	),
 
 	/*
@@ -180,7 +181,8 @@ return array(
 		'Entrust'    => 'Zizaco\Entrust\EntrustFacade',
 		'Carbon'     => 'Carbon\Carbon',
 		'AuthToken' => 'Tappleby\Support\Facades\AuthToken',
-		'AuthTokenNotAuthorizedException' => 'Tappleby\AuthToken\Exceptions\NotAuthorizedException'
+		'AuthTokenNotAuthorizedException' => 'Tappleby\AuthToken\Exceptions\NotAuthorizedException',
+        'Debugbar' => 'Barryvdh\Debugbar\Facade'
 	),
 
 );
