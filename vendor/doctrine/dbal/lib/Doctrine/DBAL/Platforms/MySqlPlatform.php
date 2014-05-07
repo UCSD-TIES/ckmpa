@@ -19,7 +19,6 @@
 
 namespace Doctrine\DBAL\Platforms;
 
-use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Schema\TableDiff;
 use Doctrine\DBAL\Schema\Index;
 use Doctrine\DBAL\Schema\Table;
@@ -718,6 +717,8 @@ class MySqlPlatform extends AbstractPlatform
             $type .= 'UNIQUE ';
         } elseif ($index->hasFlag('fulltext')) {
             $type .= 'FULLTEXT ';
+        } elseif ($index->hasFlag('spatial')) {
+            $type .= 'SPATIAL ';
         }
 
         return $type;

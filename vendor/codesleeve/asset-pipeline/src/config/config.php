@@ -64,7 +64,7 @@ return array(
 	*/
 	'mimes' => array(
 	    'javascripts' => array('.js', '.js.coffee', '.coffee', '.html', '.min.js'),
-	    'stylesheets' => array('.css', '.css.less', '.css.scss', '.less', '.scss', '.min.css'),
+	    'stylesheets' => array('.css', '.css.less', '.css.sass', '.css.scss', '.less', '.sass', '.scss', '.min.css'),
 	),
 
 	/*
@@ -104,6 +104,11 @@ return array(
 			new Codesleeve\AssetPipeline\Filters\URLRewrite(App::make('url')->to('/')),
 			new EnvironmentFilter(new Codesleeve\AssetPipeline\Filters\CssMinFilter, App::environment()),
 		),
+		'.css.sass' => array(
+			new Codesleeve\AssetPipeline\Filters\SassFilter,
+			new Codesleeve\AssetPipeline\Filters\URLRewrite(App::make('url')->to('/')),
+			new EnvironmentFilter(new Codesleeve\AssetPipeline\Filters\CssMinFilter, App::environment()),
+		),
 		'.css.scss' => array(
 			new Assetic\Filter\ScssphpFilter,
 			new Codesleeve\AssetPipeline\Filters\URLRewrite(App::make('url')->to('/')),
@@ -111,6 +116,11 @@ return array(
 		),
 		'.less' => array(
 			new Codesleeve\AssetPipeline\Filters\LessphpFilter,
+			new Codesleeve\AssetPipeline\Filters\URLRewrite(App::make('url')->to('/')),
+			new EnvironmentFilter(new Codesleeve\AssetPipeline\Filters\CssMinFilter, App::environment()),
+		),
+		'.sass' => array(
+			new Codesleeve\AssetPipeline\Filters\SassFilter,
 			new Codesleeve\AssetPipeline\Filters\URLRewrite(App::make('url')->to('/')),
 			new EnvironmentFilter(new Codesleeve\AssetPipeline\Filters\CssMinFilter, App::environment()),
 		),
@@ -130,12 +140,11 @@ return array(
 	| cache
 	|--------------------------------------------------------------------------
 	|
-	| By default we cache all assets on 'production' environment. This will greatly
-	| increase performance; ultimately though, it is up to the developer to determine
-	| how the pipeline should tell Assetic to cache assets.
-	|
-	| Below is the cache_driver which allows the developer to control how exactly
-	| how we should cache assets.
+	| By default we cache assets on production environment permanently. We also cache
+	| all files using the `cache_server` driver below but the cache is busted anytime
+	| those files are modified. On production we will cache and the only way to bust
+	| the cache is to delete files from app/storage/cache/asset-pipeline or run a
+	| command php artisan assets:clean -f somefilename.js -f application.css ...
 	|
 	*/
 	'cache' => 	array('production'),
@@ -219,6 +228,8 @@ return array(
 		'require_tree_df ' => new Codesleeve\Sprockets\Directives\RequireTreeDf,
 		'require_self' => new Codesleeve\Sprockets\Directives\RequireSelf,
 		'include ' => new Codesleeve\Sprockets\Directives\IncludeFile,
+		'include_directory ' => new Codesleeve\Sprockets\Directives\IncludeDirectory,
+		'include_tree ' => new Codesleeve\Sprockets\Directives\IncludeTree,
 		'stub ' => new Codesleeve\Sprockets\Directives\Stub,
 		'depend_on ' => new Codesleeve\Sprockets\Directives\DependOn,
 	),

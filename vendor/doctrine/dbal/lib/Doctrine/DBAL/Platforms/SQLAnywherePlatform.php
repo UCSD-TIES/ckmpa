@@ -971,10 +971,10 @@ class SQLAnywherePlatform extends AbstractPlatform
     public function getLocateExpression($str, $substr, $startPos = false)
     {
         if ($startPos == false) {
-            return 'CHARINDEX(' . $substr . ', ' . $str . ')';
+            return 'LOCATE(' . $str . ', ' . $substr . ')';
         }
 
-        return 'CHARINDEX(' . $substr . ', SUBSTR(' . $str . ', ' . ($startPos + 1) . '))';
+        return 'LOCATE(' . $str . ', ' . $substr . ', ' . $startPos . ')';
     }
 
     /**
@@ -1128,7 +1128,7 @@ class SQLAnywherePlatform extends AbstractPlatform
             }
         }
 
-        $pattern = "'%[^$char]%'";
+        $pattern = "'%[^' + $char + ']%'";
 
         switch ($pos) {
             case self::TRIM_LEADING:

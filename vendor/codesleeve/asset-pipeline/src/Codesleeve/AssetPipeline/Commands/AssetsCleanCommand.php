@@ -34,7 +34,7 @@ class AssetsCleanCommand extends Command
         // in this manifest file
         $config = $this->asset->getConfig();
         $config['concat'] = array();
-        $this->asset->setConfig($config);        
+        $this->asset->setConfig($config);
     }
 
     /**
@@ -64,20 +64,20 @@ class AssetsCleanCommand extends Command
 
     /**
      * Removes the AssetCache for this file
-     * 
+     *
      * @param  [type] $file      [description]
      * @param  [type] $recursive [description]
      * @return [type]            [description]
      */
     protected function removeAssetCache($file, $recursive)
     {
-        $files = $this->asset->isJavascript($file) ? $this->asset->parser->javascriptFiles($file) : $this->asset->parser->stylesheetFiles($file);
+        $files = $this->asset->isJavascript($file) ? $this->asset->getParser()->javascriptFiles($file) : $this->asset->getParser()->stylesheetFiles($file);
 
-        array_push($files, $this->asset->parser->absoluteFilePath($file));
+        array_push($files, $this->asset->getParser()->absoluteFilePath($file));
 
         foreach ($files as $file)
         {
-            $removed = $this->asset->generator->cachedFile($file)->remove();
+            $removed = $this->asset->getGenerator()->cachedFile($file)->remove();
 
             if ($removed === false) {
                 $this->writeln(PHP_EOL . "<warning> failed to find/remove cache for {$file}");
@@ -87,7 +87,7 @@ class AssetsCleanCommand extends Command
 
     /**
      * Output messages to the user if verbose is on
-     * 
+     *
      * @param  `[type] $message [description]
      * @return [type]          [description]
      */
