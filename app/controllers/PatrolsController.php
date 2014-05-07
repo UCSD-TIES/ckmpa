@@ -38,8 +38,23 @@ class PatrolsController extends BaseController
     {
       $patrol = Patrol::find($patrol);
       $data['user'] = $patrol->user;
-      $data['tallies'] = $patrol->tallies;
       $data['patrol'] = $patrol;
+      
+      $tallies = $patrol->tallies;
+      $grouped = array();
+      foreach($tallies as $tally){
+        $field = $tally->field;
+        $field_name = $field->name;
+        
+        if(isset($grouped[$field_name])){
+          $grouped[$field_name]['tallies'][] = $tally;
+        } else {
+          $grouped[$field_name] = ['name'=>$field_name, 'tallies'=>[$tally]];
+        }
+        
+      }
+//      return $grouped;
+      $data['fields'] = $grouped;
 
       return View::make('layouts.patrol_modal', $data);
     }

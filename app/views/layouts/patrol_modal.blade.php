@@ -6,9 +6,11 @@
 </div>
 <div class="modal-body">
   <ul class="list-group">
-    @foreach($tallies as $tally)
-    <li class="list-group-item">{{ $tally->field->name }}
+    @foreach($fields as $field)
+    <li class="list-group-item">{{$field['name']}}
+      @foreach($field['tallies'] as $tally)
       <span class="badge">{{ $tally->tally }}</span>
+      @endforeach
     </li>
     @endforeach
   </ul>
