@@ -12,6 +12,7 @@ return array(
     'APIUsers' => $baseDir . '/app/controllers/APIUsers.php',
     'AddConfideUser' => $baseDir . '/app/database/migrations/2014_01_24_195440_add_confide_user.php',
     'AddFields' => $baseDir . '/app/database/migrations/2014_01_28_210500_add_fields.php',
+    'AddRememberTokenUsers' => $baseDir . '/app/database/migrations/2014_05_07_141741_add_remember_token_users.php',
     'AdminController' => $baseDir . '/app/controllers/AdminController.php',
     'Assetic\\AssetManager' => $vendorDir . '/kriswallsmith/assetic/src/Assetic/AssetManager.php',
     'Assetic\\AssetWriter' => $vendorDir . '/kriswallsmith/assetic/src/Assetic/AssetWriter.php',
