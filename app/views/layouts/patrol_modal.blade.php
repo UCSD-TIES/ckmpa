@@ -6,15 +6,31 @@
 </div>
 <div class="modal-body">
   <ul class="list-group">
-    @foreach($fields as $field)
-    <li class="list-group-item">{{$field['name']}}
-      @foreach($field['tallies'] as $tally)
-      <span class="badge">{{ $tally->tally }}</span>
-      @endforeach
+    @foreach($categories as $category_name => $category)
+    <li class="list-group-item list-group-item-info">
+      <h4 class="list-group-item-heading">{{ $category_name }}</h4>
     </li>
+    @foreach($category as $field_name => $field)
+      @if(is_array($field))
+        <li class="list-group-item">{{ $field_name }}</li>
+          @foreach($field as $subcategory_name => $sub)
+          <li class="list-group-item">
+            {{ $subcategory_name }}
+            <span class="badge">{{ $sub }}</span>
+          </li>
+        @endforeach
+      @else
+        <li class="list-group-item">
+          {{ $field_name }}
+          <span class="badge">{{ $field }}</span>
+        </li>
+      @endif
+
     @endforeach
+  @endforeach
   </ul>
-  <h4>Comments</h4>
+
+  <h3>Comments</h3>
   <p>
     {{ $patrol->comments or "None" }}
   </p>

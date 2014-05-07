@@ -19,6 +19,7 @@ class Subcategory extends Eloquent {
 	// protected $guarded = array();
 	protected $table = 'subcategories';
     protected $fillable = array('name','category_id');
+    protected $visible = array('id', 'name', 'category');
 	public static $rules = array();
 
 	public function category()

@@ -34,27 +34,28 @@ class PatrolsController extends BaseController
 		return View::make('admin.patrols.list', $data);
 	}
 
-    public function patrolTallies($patrol)
+    public function patrolTallies($patrol_id)
     {
-      $patrol = Patrol::find($patrol);
+      $patrol = Patrol::find($patrol_id)->with('tallies.field.category', 'tallies.subcategory')->first();
       $data['user'] = $patrol->user;
       $data['patrol'] = $patrol;
-      
       $tallies = $patrol->tallies;
-      $grouped = array();
+      $categories = [];
+
       foreach($tallies as $tally){
-        $field = $tally->field;
-        $field_name = $field->name;
+        $category_name = $tally->field->category->name;
+        $field_name = $tally->field->name;
+        $value = $tally->tally;
+        $subcategory_name = $tally->subcategory['name'];
         
-        if(isset($grouped[$field_name])){
-          $grouped[$field_name]['tallies'][] = $tally;
+        if($subcategory_name != ''){
+          $categories[$category_name][$field_name][$subcategory_name] = $value;
         } else {
-          $grouped[$field_name] = ['name'=>$field_name, 'tallies'=>[$tally]];
+          $categories[$category_name][$field_name] = $value;
         }
-        
       }
-//      return $grouped;
-      $data['fields'] = $grouped;
+
+      $data['categories'] = $categories;
 
       return View::make('layouts.patrol_modal', $data);
     }
