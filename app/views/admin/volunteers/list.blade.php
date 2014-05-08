@@ -5,15 +5,14 @@
 @section('content')
 	<div class="span12">
 		<h1>Volunteers</h1>
-		<a class="btn btn-primary" href="{{ URL::route('admin.volunteers.create') }}">Create new Volunteer</a>
-		<a class="btn btn-primary" href="{{ URL::route('permissions') }}">Manage Permissions</a>
+		<a class="btn btn-primary" href="{{ URL::route('admin.volunteers.create') }}">
+          <i class="glyphicon glyphicon-plus"></i>
+          Create new Volunteer</a>
+		<a class="btn btn-primary" href="{{ URL::route('permissions') }}">
+          Manage Permissions</a>
 		<br>
-<!--		Search for First or Last name only-->
-<!--		<form name="search" action="{{URL::action('VolunteersController@search') }}" method="GET">-->
-<!--			<input type="text" name="search_string">-->
-<!--			<button class="btn btn-success" type="submit"><i class="glyphicon glyphicon-search"></i></button>-->
-<!--		</form>-->
 		<br>
+
 		<ul class="nav nav-tabs">
 			<li class="active"><a href="#main" data-toggle="tab">Volunteers</a></li>
 			<li><a href="#unconfirmed" data-toggle="tab">Unconfirmed Volunteers</a></li>
@@ -50,11 +49,8 @@
 						<td>
 							{{ Form::open(array('method'=> 'DELETE', 'class'=> 'form-inline', 'route'=> array('admin.volunteers.destroy', $volunteer->id) )) }}
 							<a class="btn btn-default btn-small"
-							   href="{{ URL::route('admin.volunteers.show', $volunteer->id) }}">
-								<i class="glyphicon glyphicon-eye-open"></i> View</a>
-							<a class="btn btn-default btn-small"
 							   href="{{ URL::route('admin.volunteers.edit', $volunteer->id) }}">
-								<i class="glyphicon glyphicon-pencil"></i> Edit</a>
+                              <i class="glyphicon glyphicon-edit"></i> Edit</a>
 							<button type='submit' class="btn btn-small btn-danger">
 								<i class="glyphicon glyphicon-trash"></i>Delete
 							</button>

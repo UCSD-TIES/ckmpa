@@ -3,10 +3,25 @@
 @section('title')Transects in {{ $mpa->name }} @stop
 
 @section('content')
-	<div class="span12">
 		<h1>Transects in {{ $mpa->name }}</h1>
-
+<table>
+  <tr>
+    <td>
+      <a href="{{ URL::route('admin.transects.create', array('id'=> $mpa->id)) }}" class="btn btn-primary"><i
+                                                                                                              class="glyphicon glyphicon-plus"></i> Add new Transect</a>
+      <a href="{{ URL::route('patrol-list', array('mpa'=> $mpa->id)) }}"
+         class="btn btn-primary"><i class="glyphicon glyphicon-eye-open"></i> View Patrols </a>
+      <a href="{{ URL::route('export-data', array('id'=> $mpa->id)) }}" class="btn btn-primary"><i
+                                                                                                   class="glyphicon glyphicon-download"></i> Export Data</a>
+    </td>
+  </tr>
+</table>
+<br>
 		<table class="table table-hover">
+            <tr>
+              <th>Name</th>
+              <th></th>
+            </tr>
 			@foreach($transects as $transect)
 				<tr>
 					<td>{{ $transect->name }}</td>
@@ -28,18 +43,4 @@
 			@endforeach
 		</table>
 
-		<table>
-			<tr>
-				<td>
-					<a href="{{ URL::route('admin.transects.create', array('id'=> $mpa->id)) }}" class="btn btn-default"><i
-								class="glyphicon glyphicon-plus"></i> Add new Transect</a>
-					<a href="{{ URL::route('patrol-list', array('mpa'=> $mpa->id)) }}"
-					   class="btn btn-default"><i class="glyphicon glyphicon-eye-open"></i> View Patrols </a>
-					<a href="{{ URL::route('export-data', array('id'=> $mpa->id)) }}" class="btn btn-default"><i
-								class="glyphicon glyphicon-download"></i> Export Data</a>
-				</td>
-			</tr>
-		</table>
-
-	</div>
 @stop

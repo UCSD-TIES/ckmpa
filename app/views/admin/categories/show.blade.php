@@ -4,7 +4,20 @@
 
 @section('content')
 <h1>{{ $datasheet->name }} - {{ $category->name }}</h1>
-@if($fields)
+<div style="position: relative">
+  <a class="btn btn-primary"
+     href="{{ URL::route('admin.subs.create', array( 'category_id'=>$category->id)) }} "
+     class="btn"><i class="glyphicon glyphicon-plus"></i> Create New Subcategory
+  </a>
+
+  <a class="btn btn-primary"
+   href="{{ URL::route('admin.fields.create', array('datasheet_id'=>$datasheet->id, 'category_id'=>$category->id)) }} ">
+    <i class="glyphicon glyphicon-plus"></i> Create New Field
+  </a>
+</div>
+<br>
+
+@if(!$subcategories->isEmpty())
 	<table class="table table-hover">
 		<tr>
 			<th>Name</th>
@@ -14,7 +27,6 @@
 		<tr>
 			<td>{{ $sub->name }}</td>
 			<td>
-				<!-- DOESN'T WORK YET -->
 				{{ Form::open(array('method'=> 'DELETE', 'class'=> 'form-inline', 'route'=> array('admin.subs.destroy', $sub->id) )) }}
 				<a class="btn btn-default" href="{{ URL::route('admin.subs.edit', $sub->id) }}">
 					<i	class="glyphicon glyphicon-edit"> Edit</i></a>
@@ -26,12 +38,10 @@
 		</tr>
 		@endforeach
 	</table>
+@else
+<h3>{{ $category->name }} has no subcategories.</h3>
+<br>
 @endif
-<div style="padding-bottom: 10px;">
-<a class="btn btn-default"
-   href="{{ URL::route('admin.subs.create', array( 'category_id'=>$category->id)) }} "
-   class="btn"><i class="glyphicon glyphicon-plus"></i> Create new subcategory</a>
-</div>
 @if($fields)
 <table class="table table-hover">
 	<tr>
@@ -56,11 +66,4 @@
 	@endforeach
 </table>
 @endif
-
-<div>
-	<a class="btn btn-default"
-	href="{{ URL::route('admin.fields.create', array('datasheet_id'=>$datasheet->id, 'category_id'=>$category->id)) }} "
-	class="btn"><i class="glyphicon glyphicon-plus"></i> Create New Field</a>
-	<a class="btn btn-default" href="{{ URL::route('admin.datasheets.show', array('datasheet_id'=> $datasheet->id)) }} "><i class="glyphicon glyphicon-arrow-left"></i> Back to Datasheet '{{ $datasheet->name }}'</a>
-</div>
 @stop

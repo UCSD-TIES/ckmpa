@@ -40,17 +40,20 @@
 
 							<td>
 								{{ Form::open(array('method'=> 'DELETE', 'class'=> 'form-inline', 'route'=> array('admin.patrols.destroy', $patrol->id) )) }}
+                              <div class='form-group'>
+                                <a class="btn btn-default" href="/admin/patrol-tallies/{{$patrol->id}}"
+                                   data-toggle="modal" data-target="#{{$patrol->id}}">
+                                  <i class="glyphicon glyphicon-stats"></i>
+                                  Details
+                                </a>
+                              </div>
 								<div class='form-group'>
 									<button type="submit" class="btn btn-small btn-danger">
 									<i class="glyphicon glyphicon-trash"></i>
 										Delete
 									</button>
 								</div>
-								<div class='form-group'>
-									<a class="btn btn-default" href="/admin/patrol-tallies/{{$patrol->id}}" data-toggle="modal" data-target="#{{$patrol->id}}">
-								  	Details
-									</a>
-								</div>
+
 								</form>
 							</td>
 						</tr>

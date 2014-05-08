@@ -3,8 +3,15 @@
 @section('title')Select a category @stop
 
 @section('content')
-	<div class="span12">
+
 		<h1>Categories for {{ $datasheet->name }}</h1>
+      <div>
+        <a class='btn btn-primary' href="{{ URL::route('admin.categories.create', array('datasheet_id'=> $datasheet->id)) }} "
+           class="btn">
+          <i class="glyphicon glyphicon-plus"></i>
+          Create New Category</a>
+      </div>
+      <br>
 		@if($categories)
 			<table class="table table-hover">
 				@foreach($categories as $category)
@@ -29,11 +36,4 @@
 				@endforeach
 			</table>
 		@endif
-
-		<div>
-			<a class='btn btn-default' href="{{ URL::route('admin.categories.create', array('datasheet_id'=> $datasheet->id)) }} "
-			   class="btn"><i class="glyphicon glyphicon-plus"></i> Create New Category</a>
-			<a class='btn btn-default' href="{{ URL::route('admin.datasheets.index') }}" class="btn btn-default"><i class="glyphicon glyphicon-arrow-left"></i> Back to Datasheets</a>
-		</div>
-	</div>
 @stop
