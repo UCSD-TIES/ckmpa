@@ -41,24 +41,24 @@ function appStream() {
                    'index.html',
                    'res/**/*.png',
                    'config.xml',
-                   '!lib/**'], {
+                   '!vendor/**'], {
     cwd: './public/**'
   });
 }
 
 function libStream() {
-  return gulp.src(['lib/angular/angular.min.js',
-                   'lib/angular-animate/angular-animate.min.js',
-                   'lib/angular-local-storage/angular-local-storage.min.js',
-                   'lib/angular-resource/angular-resource.min.js',
-                   'lib/angular-sanitize/angular-sanitize.min.js',
-                   'lib/angular-ui-router/release/angular-ui-router.min.js',
-                   'lib/ionic/release/js/ionic.min.js',
-                   'lib/ionic/release/js/ionic-angular.min.js',
-                   'lib/ionic/release/css/*.css',
-                   'lib/ionic/release/fonts/*.*',
-                   'lib/angular-toastr/dist/*.*',
-                   'lib/lodash/dist/lodash.min.js'], {
+  return gulp.src(['vendor/angular/angular.min.js',
+                   'vendor/angular-animate/angular-animate.min.js',
+                   'vendor/angular-local-storage/angular-local-storage.min.js',
+                   'vendor/angular-resource/angular-resource.min.js',
+                   'vendor/angular-sanitize/angular-sanitize.min.js',
+                   'vendor/angular-ui-router/release/angular-ui-router.min.js',
+                   'vendor/ionic/release/js/ionic.min.js',
+                   'vendor/ionic/release/js/ionic-angular.min.js',
+                   'vendor/ionic/release/css/*.css',
+                   'vendor/ionic/release/fonts/*.*',
+                   'vendor/angular-toastr/dist/*.*',
+                   'vendor/lodash/dist/lodash.min.js'], {
     cwd: './public/**'
   });
 }
