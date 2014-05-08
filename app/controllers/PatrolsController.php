@@ -36,7 +36,7 @@ class PatrolsController extends BaseController
 
     public function patrolTallies($patrol_id)
     {
-      $patrol = Patrol::find($patrol_id)->with('tallies.field.category', 'tallies.subcategory')->first();
+      $patrol = Patrol::with('tallies', 'tallies.field.category', 'tallies.subcategory')->where('id', $patrol_id)->first();
       $data['user'] = $patrol->user;
       $data['patrol'] = $patrol;
       $tallies = $patrol->tallies;
@@ -48,7 +48,7 @@ class PatrolsController extends BaseController
         $value = $tally->tally;
         $subcategory_name = $tally->subcategory['name'];
         
-        if($subcategory_name != ''){
+        if(!empty($subcategory_name)){
           $categories[$category_name][$field_name][$subcategory_name] = $value;
         } else {
           $categories[$category_name][$field_name] = $value;
