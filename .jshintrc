@@ -5,5 +5,6 @@
   "indent": 2,
   "devel": true,
   "browser": true,
+  "jquery": true,
   "predef": ["angular", "_"]
 }

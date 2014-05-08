@@ -4,6 +4,8 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.css">
+
 	<?= stylesheet_link_tag() ?>
 	<title>@yield('title', 'Volunteer Administration')</title>
 </head>
@@ -46,6 +48,8 @@
 @section('scripts')
 	<script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
 	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.0/js/jquery.dataTables.js"></script>
+    <script src="//cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/3/dataTables.bootstrap.js"></script>
 	<?= javascript_include_tag() ?>
 @show
 </body>
