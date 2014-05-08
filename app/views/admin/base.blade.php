@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
-	<?= stylesheet_link_tag('admin/application') ?>
+	<?= stylesheet_link_tag() ?>
 	<title>@yield('title', 'Volunteer Administration')</title>
 </head>
 
@@ -44,9 +44,9 @@
 	@yield('content')
 </div>
 @section('scripts')
-	<script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
+	<script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
 	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-	<?= javascript_include_tag('admin/application') ?>
+	<?= javascript_include_tag() ?>
 @show
 </body>
 </html>

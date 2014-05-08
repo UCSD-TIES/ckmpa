@@ -4,13 +4,13 @@
 		todayHighlight: true
 	});
 
-	
+
 	$('#patrols-form').on('submit', function(e) {
 		var graphLabels = [],
 			graphData = [],
 			$this = $(this),
 			generateBtn = $this.find('.create-graphs-btn');
-		
+
 		e.preventDefault();
 
 		// clear alerts
@@ -31,7 +31,7 @@
 				createAlert('danger', data.errors, $('.patrols-chart-container'));
 			} else {
 				d3BarChart(data);
-			}			
+			}
 		});
 	});
 
@@ -53,7 +53,7 @@
 		var y = d3.scale.ordinal()
 			.domain(data.map(function(d) {return d.key;}))
 			.rangeRoundBands([2, height], .1);
-		
+
 		// Construct the SVG chart
 		var chart = d3.select("#barChart")
 			.attr("width", width + margin.left + margin.right)
@@ -139,9 +139,9 @@
 
 		// Draw the title
 		chart.append("text")
-			.attr("x", (width / 2))             
+			.attr("x", (width / 2))
 			.attr("y", 0)
-			.attr("text-anchor", "middle")  
+			.attr("text-anchor", "middle")
 			.style("font-size", "16px")
 			.text("Number of Observations");
 
@@ -243,7 +243,7 @@
 			oData = [],
 			$this = $(this),
 			generateBtn = $this.find('.create-graphs-btn');
-			
+
 		e.preventDefault();
 
 		// clear alerts
@@ -266,7 +266,7 @@
 				createAlert('danger', data.errors, $('.observations-chart-container'));
 			} else {
 				d3LineGraph(data);
-			}			
+			}
 		});
 	});
 
@@ -284,6 +284,6 @@
 		alertContainer.append(closeBtn).append(msgContainer);
 		container.prepend(alertContainer);
 	};
-	
+
 })();
 

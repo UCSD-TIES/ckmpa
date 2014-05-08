@@ -116,7 +116,5 @@
 @stop
 @section('scripts')
 	@parent
-	<link href="{{ URL::asset('css/graph.css') }}" rel="stylesheet">
-	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.1/d3.min.js"></script>
-	<script src="{{ URL::asset('js/graphs.js') }}"></script>
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.6/d3.min.js"></script>
 @stop
