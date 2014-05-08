@@ -7,12 +7,12 @@
 <table>
   <tr>
     <td>
-      <a href="{{ URL::route('admin.transects.create', array('id'=> $mpa->id)) }}" class="btn btn-primary"><i
-                                                                                                              class="glyphicon glyphicon-plus"></i> Add new Transect</a>
+      <a href="{{ URL::route('admin.transects.create', array('id'=> $mpa->id)) }}" class="btn btn-primary">
+        <i class="glyphicon glyphicon-plus"></i> Add new Transect</a>
       <a href="{{ URL::route('patrol-list', array('mpa'=> $mpa->id)) }}"
          class="btn btn-primary"><i class="glyphicon glyphicon-eye-open"></i> View Patrols </a>
-      <a href="{{ URL::route('export-data', array('id'=> $mpa->id)) }}" class="btn btn-primary"><i
-                                                                                                   class="glyphicon glyphicon-download"></i> Export Data</a>
+      <a href="{{ URL::route('export-data', array('id'=> $mpa->id)) }}" class="btn btn-primary">
+        <i class="glyphicon glyphicon-download"></i> Export Data</a>
     </td>
   </tr>
 </table>
@@ -24,7 +24,12 @@
             </tr>
 			@foreach($transects as $transect)
 				<tr>
-					<td>{{ $transect->name }}</td>
+                  <td>
+                    <a href="{{ URL::route('patrol-list',
+                             ['transect'=>$transect->id, 'mpa' => $mpa->id]) }}">
+                      {{ $transect->name }}
+                    </a>
+                  </td>
 					<td>
 						{{ Form::open(array('method'=> 'DELETE', 'class'=> 'form-inline', 'route'=> array('admin.transects.destroy', $mpa->id) )) }}
 						<a class="btn btn-default btn-small"

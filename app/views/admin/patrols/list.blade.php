@@ -25,7 +25,8 @@
 	
 							<td>
 								@if($patrol->transect)
-									<a href="{{ URL::route('patrol-list', array('transect'=>$patrol->transect->id)) }}">
+                              <a href="{{ URL::route('patrol-list',
+                                       ['transect'=>$patrol->transect->id, 'mpa' => $patrol->transect->mpa->id]) }}">
 									{{ $patrol->transect->name }}
 									</a>
 								@endif

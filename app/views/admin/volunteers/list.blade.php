@@ -52,7 +52,7 @@
 							   href="{{ URL::route('admin.volunteers.edit', $volunteer->id) }}">
                               <i class="glyphicon glyphicon-edit"></i> Edit</a>
 							<button type='submit' class="btn btn-small btn-danger">
-								<i class="glyphicon glyphicon-trash"></i>Delete
+								<i class="glyphicon glyphicon-trash"></i> Delete
 							</button>
 							{{ Form::close() }}
 						</td>
@@ -94,7 +94,7 @@
 							{{ Form::open(array('method'=> 'DELETE', 'class'=> 'form-inline', 'route'=> array('admin.volunteers.destroy', $volunteer->id) )) }}
 							<input type="hidden" name="id" value="{{$volunteer->id}}">
 								<button type='submit' class="btn btn-small btn-danger">
-									<i class="glyphicon glyphicon-trash"></i>Delete</button>
+									<i class="glyphicon glyphicon-trash"></i> Delete</button>
 							{{ Form::close() }}
 
 						</td>

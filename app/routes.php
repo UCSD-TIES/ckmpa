@@ -10,20 +10,8 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
-//Route::get('/', array('as' => 'login', 'uses' => "UsersController@login"));
 Route::get('/', function() {
 	return File::get(public_path()."/index.html");
-});
-
-// Mobile routes
-Route::group(array('prefix' => 'mobile', 'before' => 'auth'), function ()
-{
-	Route::get('select-MPA', array('as' => 'select-MPA', 'uses' => 'MobileController@getSelectMPA'));
-	Route::get('select-transect/{id}', array('as' => 'select-transect', 'uses' => 'MobileController@getSelectTransect'));
-	Route::get('data-collection/{id}', array('as' => 'get-data-collection', 'uses' => 'MobileController@getDataCollection'));
-	Route::post('data-collection', array('as' => 'data-collection', 'uses' => 'MobileController@postDataCollection'));
-	Route::get('summary', array('as' => 'summary', 'uses' => 'MobileController@summary'));
-	Route::get('finish', array('as' => 'finish', 'uses' => 'MobileController@finish'));
 });
 
 // Confide User routes
@@ -71,7 +59,7 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth.admin'), function ()
 	Route::post('confirm-user', 'VolunteersController@confirm');
 
 	//Patrols
-	Route::get('patrol-list/{MPA?}', array('as' => 'patrol-list', 'uses' => 'PatrolsController@patrolsList'));
+  Route::get('patrol-list/{mpa?}/{transect?}', array('as' => 'patrol-list', 'uses' => 'PatrolsController@patrolsList'));
 	Route::get('patrol-user/{user?}', array('as' => 'patrol-user', 'uses' => 'PatrolsController@patrolsUser'));
     Route::get('patrol-tallies/{patrol}', array('as' => 'patrol-tallies', 'uses' => 'PatrolsController@patrolTallies'));
 

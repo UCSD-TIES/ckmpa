@@ -20,9 +20,13 @@ class PatrolsController extends BaseController
 	 *
 	 * @return \Illuminate\View\View
 	 */
-	public function patrolsList($transect)
+	public function patrolsList($mpa, $transect = null)
 	{
+      if(!is_null($transect)){
 		$data['patrols'] = Transect::find($transect)->patrols;
+      } else {
+        $data['patrols'] = Patrol::whereIn('transect_id', Transect::where('mpa_id', $mpa)->lists('id'))->get();
+      }
 
 		return View::make('admin.patrols.list', $data);
 	}
