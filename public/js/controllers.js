@@ -149,7 +149,7 @@
       $ionicLoading.hide();
     });
 
-    $ionicModal.fromTemplateUrl('partials/modal.html', function (modal) {
+    $ionicModal.fromTemplateUrl('templates/favorites.html', function (modal) {
       $scope.modal = modal;
     }, {
       scope: $scope,
