@@ -21,40 +21,43 @@
 		@if($volunteers)
 		<div class="tab-content">
 			<div class="tab-pane active" id="main">
-			<table class="table table-bordered" id = "VolunteerTable">
+			<table class="table table-hover" id="VolunteerTable">
 				<thead>
 					<tr>
 						<th>Name</th>
 						<th>Role</th>
-						<th>Controls</th>
+						<th></th>
 					</tr>
 				</thead>
 				<tfoot>
 					<tr>
-						<td colspan="2"><span class="is_admin">Administrators</span> are in bold.</td>
+                      <td><strong>Administrators</strong> are in bold.</td>
 					</tr>
 				</tfoot>
 				<tbody>
 				@foreach($volunteers as $volunteer)
 					<tr>
 						<td>
-							<a @if($volunteer->hasRole("Admin")) class="is_admin" @endif
-							   href="{{ URL::route('admin.volunteers.show', $volunteer->id) }}">
-								{{ $volunteer->last_name }}, {{ $volunteer->first_name }}
+							<a href="{{ URL::route('admin.volunteers.show', $volunteer->id) }}">
+                              @if($volunteer->hasRole("Admin"))
+                                <strong>{{ $volunteer->last_name }}, {{ $volunteer->first_name }}</strong>
+                              @else
+                                {{ $volunteer->last_name }}, {{ $volunteer->first_name }}
+                              @endif
 							</a>
 						</td>
 						<td>
                           {{ $volunteer->roles->first()->name or "No Role"}}
                         </td>
 						<td>
-							{{ Form::open(array('method'=> 'DELETE', 'class'=> 'form-inline', 'route'=> array('admin.volunteers.destroy', $volunteer->id) )) }}
-							<a class="btn btn-default btn-small"
-							   href="{{ URL::route('admin.volunteers.edit', $volunteer->id) }}">
-                              <i class="glyphicon glyphicon-edit"></i> Edit</a>
-							<button type='submit' class="btn btn-small btn-danger">
-								<i class="glyphicon glyphicon-trash"></i> Delete
-							</button>
-							{{ Form::close() }}
+						  <a class="btn btn-default btn-small"
+                             href="{{ URL::route('admin.volunteers.edit', $volunteer->id) }}">
+                              <i class="glyphicon glyphicon-edit"></i> Edit
+                          </a>
+                          <button user-id="{{$volunteer->id}}" class="btn btn-small btn-danger delete-btn">
+                            <i class="glyphicon glyphicon-trash"></i> Delete
+                          </button>
+
 						</td>
 					</tr>
 				@endforeach
@@ -66,7 +69,6 @@
 					<thead>
 					<tr>
 						<th>Name</th>
-						<th></th>
 						<th></th>
 					</tr>
 					</thead>
@@ -81,23 +83,12 @@
 						</td>
 
 						<td>
-
-							<form method="POST" action="/admin/confirm-user" class="form-inline">
-								<input type="hidden" name="id" value="{{$volunteer->id}}">
-								<input type="hidden" name="confirmed" value="1">
-								<button type="submit" class="btn btn-success btn-small">
-									<i class="glyphicon glyphicon-ok"></i> Confirm
-								</button>
-							</form>
-						</td>
-						<td>
-							{{ Form::open(array('method'=> 'DELETE', 'class'=> 'form-inline', 'route'=> array('admin.volunteers.destroy', $volunteer->id) )) }}
-							<input type="hidden" name="id" value="{{$volunteer->id}}">
-								<button type='submit' class="btn btn-small btn-danger">
-									<i class="glyphicon glyphicon-trash"></i> Delete</button>
-							{{ Form::close() }}
-
-						</td>
+                          <button user-id="{{$volunteer->id}}" class="btn btn-success btn-small confirm-btn">
+                            <i class="glyphicon glyphicon-ok"></i> Confirm
+                          </button>
+                          <button user-id="{{$volunteer->id}}" class="btn btn-small btn-danger delete-btn">
+                            <i class="glyphicon glyphicon-trash"></i> Delete
+                          </button>
 					</tr>
 					@endforeach
 					</tbody>
@@ -107,4 +98,34 @@
 			There are no volunteers available. <a href="{{ URL::route('admin.volunteers.create') }}">Create a new one?</a>
 		@endif
 	</div>
+  @section('scripts')
+  @parent
+
+  <script>
+  $('.confirm-btn').click(function(){
+    var data = {
+      id: $(this).attr('user-id')
+    };
+    $.ajax({
+      url: '/admin/confirm-user',
+      async: false,
+      type: 'POST',
+      data: data
+    }).done(function(){
+      location.reload();
+    });
+  });
+  $('.delete-btn').click(function(){
+    var id = $(this).attr('user-id')
+
+    $.ajax({
+      url: '/admin/volunteers/'+id,
+      async: false,
+      type: 'DELETE'
+    }).done(function(){
+      location.reload();
+    });
+  });
+  </script>
+  @stop
 @stop

@@ -37,7 +37,7 @@ $(document).ready(function () {
     "aoColumnDefs": [
       {
         "bSortable": false,
-        "aTargets": [1, 2]
+        "aTargets": [1]
       }
     ],
     "iDisplayLength": 15,
