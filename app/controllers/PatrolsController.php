@@ -10,7 +10,7 @@ class PatrolsController extends BaseController
 	 */
 	public function index()
 	{
-		$data['patrols'] = Patrol::orderBy('start_time')->get();
+		$data['patrols'] = Patrol::with('transect', 'user')->orderBy('start_time')->get();
 
 		return View::make('admin.patrols.list', $data);
 	}

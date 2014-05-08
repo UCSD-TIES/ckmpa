@@ -9,7 +9,7 @@ class MpasController extends BaseController
 	 */
 	public function index()
 	{
-		$data['mpas'] = Mpa::all();
+		$data['mpas'] = Mpa::with('datasheet')->get();
 
 		return View::make('admin.mpas.list', $data);
 	}

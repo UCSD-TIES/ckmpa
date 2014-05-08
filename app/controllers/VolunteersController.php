@@ -9,8 +9,8 @@ class VolunteersController extends BaseController {
 	 */
 	public function index()
 	{
-		$volunteers = User::where("confirmed", "1")->get();
-		$unconfirmed = User::where("confirmed", "0")->get();
+		$volunteers = User::with('roles')->where("confirmed", "1")->get();
+		$unconfirmed = User::with('roles')->where("confirmed", "0")->get();
 
 		$data['volunteers'] = $volunteers;
 		$data['unconfirmed'] = $unconfirmed;
@@ -61,7 +61,7 @@ class VolunteersController extends BaseController {
 	 */
 	public function show($id)
 	{
-		$volunteer = User::find($id);
+		$volunteer = User::find($id)->with('patrols', 'patrols.transect')->first();
 		$data['volunteer'] = $volunteer;
 		$data['patrols'] = $volunteer->patrols;
 

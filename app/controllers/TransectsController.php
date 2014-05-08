@@ -10,7 +10,8 @@ class TransectsController extends BaseController
 	 */
 	public function index()
 	{
-		$data['transects'] = Transect::all();
+		$data['transects'] = Transect::with('mpa')->get();
+      
 		return View::make('admin.transects.list', $data);
 	}
 
