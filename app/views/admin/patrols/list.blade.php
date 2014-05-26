@@ -40,7 +40,7 @@
 							</td>
 
 							<td>
-								{{ Form::open(array('method'=> 'DELETE', 'class'=> 'form-inline', 'route'=> array('admin.patrols.destroy', $patrol->id) )) }}
+
                               <div class='form-group'>
                                 <a class="btn btn-default" href="/admin/patrol-tallies/{{$patrol->id}}"
                                    data-toggle="modal" data-target="#{{$patrol->id}}">
@@ -49,13 +49,11 @@
                                 </a>
                               </div>
 								<div class='form-group'>
-									<button type="submit" class="btn btn-small btn-danger">
+                                  <button class="btn btn-small btn-danger" data-toggle="modal" data-target="#delete{{$patrol->id}}">
 									<i class="glyphicon glyphicon-trash"></i>
 										Delete
 									</button>
 								</div>
-
-								</form>
 							</td>
 						</tr>
 					<div class="modal fade" id="{{$patrol->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -64,6 +62,25 @@
 					    </div>
 					  </div>
 					</div>
+<div class="modal fade" id="delete{{$patrol->id}}">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Delete Patrol on {{ $patrol->start_time->toDateString() }} by {{ $patrol->user->first_name }}?</h4>
+      </div>
+      <div class="modal-body">
+        <p>All the data will be gone forever!</p>
+      </div>
+      <div class="modal-footer">
+        {{ Form::open(array('method'=> 'DELETE', 'class'=> 'form-inline', 'route'=> array('admin.patrols.destroy', $patrol->id) )) }}
+        <button type="submit" class="btn btn-small btn-danger">Delete</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        {{ Form::close() }}
+      </div>
+    </div>
+  </div>
+</div>
 				@endforeach
 				</tbody>
 			</table>

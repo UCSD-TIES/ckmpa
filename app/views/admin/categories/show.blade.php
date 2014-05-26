@@ -10,8 +10,7 @@
      class="btn"><i class="glyphicon glyphicon-plus"></i> Create New Subcategory
   </a>
 
-  <a class="btn btn-primary"
-   href="{{ URL::route('admin.fields.create', array('datasheet_id'=>$datasheet->id, 'category_id'=>$category->id)) }} ">
+  <a class="btn btn-primary" href="{{ URL::route('admin.fields.create', array('datasheet_id'=>$datasheet->id, 'category_id'=>$category->id)) }} ">
     <i class="glyphicon glyphicon-plus"></i> Create New Field
   </a>
 </div>
@@ -27,15 +26,33 @@
 		<tr>
 			<td>{{ $sub->name }}</td>
 			<td>
-				{{ Form::open(array('method'=> 'DELETE', 'class'=> 'form-inline', 'route'=> array('admin.subs.destroy', $sub->id) )) }}
 				<a class="btn btn-default" href="{{ URL::route('admin.subs.edit', $sub->id) }}">
-					<i	class="glyphicon glyphicon-edit"> Edit</i></a>
-					<button type="submit" class="btn btn-small btn-danger">
+					<i class="glyphicon glyphicon-edit"> Edit</i></a>
+              <button class="btn btn-small btn-danger" data-toggle="modal" data-target="#{{$sub->id}}">
 						<i class="glyphicon glyphicon-trash"></i> Delete
 					</button>
-				</form>
 			</td>
+
 		</tr>
+      <div class="modal fade" id="{{$sub->id}}">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Delete {{ $sub->name }}?</h4>
+      </div>
+      <div class="modal-body">
+        <p>All the data will be gone forever!</p>
+      </div>
+      <div class="modal-footer">
+        {{ Form::open(array('method'=> 'DELETE', 'class'=> 'form-inline', 'route'=> array('admin.subs.destroy', $sub->id) )) }}
+        <button type="submit" class="btn btn-small btn-danger">Delete</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        {{ Form::close() }}
+      </div>
+    </div>
+  </div>
+</div>
 		@endforeach
 	</table>
 @else
@@ -54,16 +71,35 @@
 		<td>{{ $field->name }}</td>
 		<td>{{ $field->type }}</td>
 		<td>
-			{{ Form::open(array('method'=> 'DELETE', 'class'=> 'form-inline', 'route'=> array('admin.fields.destroy', $field->id) )) }}
 			<a class="btn btn-default" href="{{ URL::route('admin.fields.edit', $field->id) }}">
-				<i	class="glyphicon glyphicon-edit"> Edit</i></a>
-				<button type="submit" class="btn btn-small btn-danger">
+				<i class="glyphicon glyphicon-edit"> Edit</i></a>
+          <button class="btn btn-small btn-danger" data-toggle="modal" data-target="#{{$field->id}}">
 					<i class="glyphicon glyphicon-trash"></i> Delete
 				</button>
-			</form>
 		</td>
 	</tr>
+
+<div class="modal fade" id="{{$field->id}}">
+<div class="modal-dialog modal-sm">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h4 class="modal-title" id="myModalLabel">Delete {{ $field->name }}?</h4>
+    </div>
+    <div class="modal-body">
+      <p>All the data will be gone forever!</p>
+    </div>
+    <div class="modal-footer">
+      {{ Form::open(array('method'=> 'DELETE', 'class'=> 'form-inline', 'route'=> array('admin.fields.destroy', $field->id) )) }}
+      <button type="submit" class="btn btn-small btn-danger">Delete</button>
+      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      {{ Form::close() }}
+    </div>
+  </div>
+</div>
+</div>
 	@endforeach
+
 </table>
 @endif
 @stop

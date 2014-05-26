@@ -30,7 +30,6 @@
 						<td><a href="{{ URL::route('admin.mpas.show', $mpa->id) }}"> {{ $mpa->name }}</a></td>
 						<td>{{ $mpa->datasheet->name }}</td>
 						<td>
-							{{ Form::open(array('method'=> 'DELETE', 'class'=> 'form-inline', 'route'=> array('admin.mpas.destroy', $mpa->id) )) }}
 							<a class='btn btn-small btn-default'
 							   href="{{ URL::route('admin.mpas.edit', $mpa->id) }}"><i
 										class="glyphicon glyphicon-edit"></i> Edit</a>
@@ -38,12 +37,31 @@
                               <i class="glyphicon glyphicon-download"></i>
                               Export
                             </a>
-							<button type='submit' class="btn btn-small btn-danger"><i class="glyphicon glyphicon-trash"></i>
+                          <button class="btn btn-small btn-danger" data-toggle="modal" data-target="#{{$mpa->id}}">
+                            <i class="glyphicon glyphicon-trash"></i>
 								Delete
 							</button>
-							{{ Form::close() }}
 						</td>
 					</tr>
+              <div class="modal fade" id="{{$mpa->id}}">
+                <div class="modal-dialog modal-sm">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                      <h4 class="modal-title" id="myModalLabel">Delete {{ $mpa->name }}?</h4>
+                    </div>
+                    <div class="modal-body">
+                      <p>All the data will be gone forever!</p>
+                    </div>
+                    <div class="modal-footer">
+                      {{ Form::open(array('method'=> 'DELETE', 'class'=> 'form-inline', 'route'=> array('admin.mpas.destroy', $mpa->id) )) }}
+                      <button type="submit" class="btn btn-small btn-danger">Delete</button>
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      {{ Form::close() }}
+                    </div>
+                  </div>
+                </div>
+              </div>
 				@endforeach
 			</tbody>
 			</table>
