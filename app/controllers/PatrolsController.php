@@ -52,6 +52,7 @@ class PatrolsController extends BaseController
         $value = $tally->tally;
         $subcategory_name = $tally->subcategory['name'];
         
+
         if(!empty($subcategory_name)){
           $categories[$category_name][$field_name][$subcategory_name] = $value;
         } else {

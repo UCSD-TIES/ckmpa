@@ -8,8 +8,6 @@
 		<a class="btn btn-primary" href="{{ URL::route('admin.volunteers.create') }}">
           <i class="glyphicon glyphicon-plus"></i>
           Create new Volunteer</a>
-		<a class="btn btn-primary" href="{{ URL::route('permissions') }}">
-          Manage Permissions</a>
 		<br>
 		<br>
 
