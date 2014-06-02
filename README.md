@@ -2,8 +2,6 @@ ckmpa
 ===============
 San Diego Coastkeeper MPA Datasheet web application developed with PHP + [Laravel 4](http://laravel.com/) framework.  
 ###Using additional packages:
-  - [Confide](https://github.com/Zizaco/confide) for user management
-  - [Entrust](https://github.com/Zizaco/entrust) for user permissions
   - [PHPExcel](http://phpexcel.codeplex.com/) for exporting Excel sheets
   - [Carbon](https://github.com/briannesbitt/Carbon) for dates. Get it?
   - [Asset Pipeline](https://github.com/CodeSleeve/asset-pipeline) for, well, asset pipelining.
@@ -18,7 +16,8 @@ San Diego Coastkeeper MPA Datasheet web application developed with PHP + [Larave
   - [Bootstrap](http://getbootstrap.com/) for admin side
 
 ###Mobile:
-  - See https://github.com/elkhouri/ckmpa-mobile
+  - [AngularJS](https://angularjs.org/)
+  - [Ionic](http://ionicframework.com/)
 
 Setting Up the Environment
 ------
