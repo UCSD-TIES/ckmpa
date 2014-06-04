@@ -27,8 +27,8 @@ class Transect extends Eloquent {
 	protected $table = 'transects';
 	public $timestamps = true;
 	protected $softDelete = false;
-	protected $fillable = array('name', 'mpa_id');
-	protected $visible = array('name', 'mpa_id', 'id');
+	protected $fillable = array('name', 'mpa_id', 'pdf_path');
+	protected $visible = array('name', 'mpa_id', 'id', 'pdf_path');
 
 	public function mpa()
 	{

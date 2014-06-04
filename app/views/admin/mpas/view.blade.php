@@ -37,6 +37,10 @@
 						<a class="btn btn-default btn-small"
 						   href="{{ URL::route('admin.transects.edit', $transect->id) }}"><i
 									class="glyphicon glyphicon-edit"></i> Edit</a>
+						<a class="btn btn-default btn-small"
+						   href="{{URL::action('TransectsController@getPDF', array('id'=>$transect->id)) }}">
+							<i class="glyphicon glyphicon-edit"></i>
+							PDF</a>
                       <button class="btn btn-small btn-danger" data-toggle="modal" data-target="#{{$transect->id}}">
                           <i class="glyphicon glyphicon-trash"></i>
 							Delete

@@ -88,13 +88,24 @@ class TransectsController extends BaseController
 		$input = array_except(Input::all(), '_method');
 		$validation = Validator::make($input, Transect::$rules);
 
-		if ($validation->passes())
-		{
+//		if ($validation->passes())
+//		{
 			$transect = Transect::find(Input::get('transect_id'));
-			$transect->update($input);
+			$transect->name = Input::get('name');
+
+			if (Input::hasFile('patrolPDF'))
+			{
+				$file = Input::file('patrolPDF');
+				$destinationPath = storage_path().'/pdf/';
+				$filename = $transect->name.'.pdf';
+				$uploadSuccess = $file->move($destinationPath, $filename);
+			}
+
+			$transect->pdf_path = $uploadSuccess->getRealPath();
+			$transect->save();
 
 			return Redirect::route('admin.mpas.show', $id);
-		}
+//		}
 
 		return Redirect::route('admin.transects.edit', $id)
 			->withInput()
@@ -112,6 +123,18 @@ class TransectsController extends BaseController
 		Transect::find(Input::get('transect_id'))->delete();
 
 		return Redirect::route('admin.mpas.show', $id);
+	}
+
+	public function getPDF($id)
+	{
+	    $transect = Transect::find($id);
+
+		if(!empty($transect->pdf_path)){
+		  return Response::download($transect->pdf_path);
+		} else {
+		  return Redirect::back()
+			  ->with('error', 'No PDF for '.$transect->name.' found');;
+		}
 	}
 
 }
