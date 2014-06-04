@@ -84,7 +84,7 @@
 
   app.controller('DataController', function ($scope, $state, $stateParams, $ionicLoading, $ionicModal, $ionicScrollDelegate, $interval, toastr, Datasheets, Favorites, Auth) {
     var time_interval, timer, datasheets;
-    $scope.mpa_id = $stateParams.mpaID;
+    $scope.mpa_id = $stateParams.mpaId;
     $scope.mpa_name = $stateParams.mpaName;
     $scope.transect_name = decodeURIComponent($stateParams.transectName);
     $scope.comments = Datasheets.comments();
@@ -99,7 +99,12 @@
 
     $scope.submit = function () {
       Datasheets.saveTallies();
-      $state.go('summary');
+      $state.go('summary', {
+        mpaId: $scope.mpa_id,
+        mpaName: $scope.mpa_name,
+        transectId: $stateParams.transectId,
+        transectName: $scope.transect_name
+      });
     };
 
     $scope.addFavorite = function (field, sub) {
