@@ -14,7 +14,7 @@ Add the package to your `composer.json`
 
     "require": {
 		...
-        "tappleby/laravel-auth-token": "0.2.*"
+        "tappleby/laravel-auth-token": "0.3.*"
     }
 
 Add the service provider to `app/config/app.php`
@@ -56,6 +56,26 @@ A default controller is provided to grant, check and revoke tokens. Add the foll
 	Route::get('auth', 'Tappleby\AuthToken\AuthTokenController@index');
 	Route::post('auth', 'Tappleby\AuthToken\AuthTokenController@store');
 	Route::delete('auth', 'Tappleby\AuthToken\AuthTokenController@destroy');
+	
+
+### CORS Support
+
+CORS support is not built into this library by default, it can be enabled by using the following package: [barryvdh/laravel-cors](https://github.com/barryvdh/laravel-cors).
+
+The configuration will be specific to how your routing is setup. If you are using the `X-Auth-Token` header, it is important to add this to the `allowedHeaders` configuration. See the package documentation for further configuration details. 
+
+Heres an example using the default `auth` route:
+
+    'paths' => array(
+        'auth' => array(
+            'allowedOrigins' => array('*'),
+            'allowedHeaders' => array('Content-Type', 'X-Auth-Token'),
+            'allowedMethods' => array('POST', 'PUT', 'GET', 'DELETE'),
+            'maxAge' => 3600,
+        )
+    ),
+
+> Note: If you know the list of `allowedOrigins` it might be best to define them explicitly instead of using the wildcard `*`
 
 ##### Request parameters
 
@@ -88,7 +108,7 @@ An `auth.token` route filter gets registered by the service provider. To protect
 	  });
 	});	 
 	
-### Token valid event
+### Events
 
 The route filter will trigger `auth.token.valid` with the authorized user when a valid auth token is provided. 
 
@@ -96,8 +116,15 @@ The route filter will trigger `auth.token.valid` with the authorized user when a
 	{
 	  //Token is valid, set the user on auth system.
 	  Auth::setUser($user);
-	}); 
-    
+	});
+
+AuthTokenController::store will trigger `auth.token.created` before returning the response.
+
+	Event::listen('auth.token.created', function($user, $token)
+	{
+		$user->load('relation1', 'relation2');
+	});
+
 ### Handling the NotAuthorizedException
 
 Optionally register the `NotAuthorizedException` as alias eg. `AuthTokenNotAuthorizedException`
@@ -122,6 +149,11 @@ Some apps might already be using the traditional laravel based auth. The followi
 The `AuthToken::publicToken` method prepares the auth token to be sent to the browser.
 
 ## Changes
+
+*0.3.0*
+
+- Added `auth.token.created` event which gets triggered before response is returned in AuthTokenController::store
+- AuthTokenController requires the event dispatcher to be passed to constructor.
 
 *0.2.0*
 

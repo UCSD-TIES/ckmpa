@@ -2,8 +2,11 @@
 
 use Illuminate\Routing\UrlGenerator;
 use Illuminate\Session\Store as Session;
+use Illuminate\Support\Traits\MacroableTrait;
 
 class FormBuilder {
+
+	use MacroableTrait;
 
 	/**
 	 * The HTML builder instance.
@@ -46,13 +49,6 @@ class FormBuilder {
 	 * @var array
 	 */
 	protected $labels = array();
-
-	/**
-	 * The registered form builder macros.
-	 *
-	 * @var array
-	 */
-	protected $macros = array();
 
 	/**
 	 * The reserved form open attributes.
@@ -470,15 +466,16 @@ class FormBuilder {
 	 * @param  string  $name
 	 * @param  string  $selected
 	 * @param  array   $options
+	 * @param  string  $format
 	 * @return string
 	 */
-	public function selectMonth($name, $selected = null, $options = array())
+	public function selectMonth($name, $selected = null, $options = array(), $format = '%B')
 	{
 		$months = array();
 
 		foreach (range(1, 12) as $month)
 		{
-			$months[$month] = strftime('%B', mktime(0, 0, 0, $month, 1));
+			$months[$month] = strftime($format, mktime(0, 0, 0, $month, 1));
 		}
 
 		return $this->select($name, $months, $selected, $options);
@@ -731,18 +728,6 @@ class FormBuilder {
 	}
 
 	/**
-	 * Register a custom form macro.
-	 *
-	 * @param  string    $name
-	 * @param  callable  $macro
-	 * @return void
-	 */
-	public function macro($name, $macro)
-	{
-		$this->macros[$name] = $macro;
-	}
-
-	/**
 	 * Parse the form action method.
 	 *
 	 * @param  string  $method
@@ -982,25 +967,6 @@ class FormBuilder {
 		$this->session = $session;
 
 		return $this;
-	}
-
-	/**
-	 * Dynamically handle calls to the form builder.
-	 *
-	 * @param  string  $method
-	 * @param  array   $parameters
-	 * @return mixed
-	 *
-	 * @throws \BadMethodCallException
-	 */
-	public function __call($method, $parameters)
-	{
-		if (isset($this->macros[$method]))
-		{
-			return call_user_func_array($this->macros[$method], $parameters);
-		}
-
-		throw new \BadMethodCallException("Method {$method} does not exist.");
 	}
 
 }

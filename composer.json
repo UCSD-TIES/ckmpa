@@ -4,7 +4,7 @@
 	"keywords": ["framework", "laravel"],
 	"license": "MIT",
 	"require": {
-		"laravel/framework": "4.1.*",
+		"laravel/framework": "4.2.*",
         "phpoffice/phpexcel": "dev-master",
         "zizaco/entrust": "dev-master",
         "laravelbook/ardent": "dev-master",

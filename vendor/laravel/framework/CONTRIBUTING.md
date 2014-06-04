@@ -14,7 +14,7 @@ Pull requests for bugs may be sent without creating any proposal issue. If you b
 
 ### Feature Requests
 
-If you have an idea for a new feature you would like to see added to Laravel, you may create an issue on GitHub with `[Request]` in the title. The feature request will then be reviewed by a core contributor.
+If you have an idea for a new feature you would like to see added to Laravel, you may create an issue on GitHub with `[Request]` in the title. The feature request will then be reviewed by @taylorotwell.
 
 ## Coding Guidelines
 
@@ -23,4 +23,4 @@ Laravel follows the [PSR-0](https://github.com/php-fig/fig-standards/blob/master
 - Namespace declarations should be on the same line as `<?php`.
 - Class opening `{` should be on the same line as the class name.
 - Function and control structure opening `{` should be on a separate line.
-- Interface names are suffixed with `Interface` (`FooInterface`)
+- Interface and Trait names are suffixed with `Interface` (`FooInterface`) and `Trait` (`FooTrait`) respectively.

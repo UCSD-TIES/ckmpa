@@ -61,6 +61,6 @@ return array(
     'Boris' => array($vendorDir . '/d11wtq/boris/lib'),
     'Barryvdh\\LaravelIdeHelper' => array($vendorDir . '/barryvdh/laravel-ide-helper/src'),
     'Barryvdh\\Debugbar' => array($vendorDir . '/barryvdh/laravel-debugbar/src'),
-    'Barryvdh\\Cors' => array($vendorDir . '/barryvdh/laravel-cors/src'),
     'Assetic' => array($vendorDir . '/kriswallsmith/assetic/src'),
+    'Asm89\\Stack' => array($vendorDir . '/asm89/stack-cors/src'),
 );
