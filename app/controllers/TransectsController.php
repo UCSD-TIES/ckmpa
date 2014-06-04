@@ -96,7 +96,7 @@ class TransectsController extends BaseController
 			if (Input::hasFile('patrolPDF'))
 			{
 				$file = Input::file('patrolPDF');
-				$destinationPath = storage_path().'/pdf/';
+				$destinationPath = public_path().'/pdf/';
 				$filename = $transect->name.'.pdf';
 				$uploadSuccess = $file->move($destinationPath, $filename);
 			}
