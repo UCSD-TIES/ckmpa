@@ -9,6 +9,7 @@
   app.config(function ($httpProvider, $stateProvider, $urlRouterProvider) {
     $httpProvider.defaults.cache = true;
     $httpProvider.defaults.useXDomain = true;
+    delete $httpProvider.defaults.headers.common['X-Requested-With'];
     
     $stateProvider.state('login', {
       url: '/',

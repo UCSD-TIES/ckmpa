@@ -22,13 +22,16 @@
       </div>
     </div>
 
-    <div class="list card">
-      <div class="item item-divider">Note</div>
-      <div class="item item-text-wrap">
-        For the patrols, remember to travel from North to South, with the ocean on your right.
-      </div>
-      <div class="item item-text-wrap">
-        Also, only record your observations from the high tide mark on the beach to everything on your right.
+    <div class="list">
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Patrol Instructions For:
+        </div>
+        <select ng-model='selectedTransect' ng-options='t.name for t in transects'>
+        </select>
+      </label>
+      <div class='padding'>
+        <a class="button button-block button-stable" ng-click='getPDF(selectedTransect)'>Get Instructions</a>
       </div>
     </div>
 

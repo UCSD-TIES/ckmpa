@@ -61,6 +61,23 @@
       });
     };
 
+    function downloadURL(url) {
+      var hiddenIFrameID = 'hiddenDownloader',
+          iframe = document.getElementById(hiddenIFrameID);
+      if (iframe === null) {
+        iframe = document.createElement('iframe');
+        iframe.id = hiddenIFrameID;
+        iframe.style.display = 'none';
+        document.body.appendChild(iframe);
+      }
+      iframe.src = url;
+    }
+
+    $scope.getPDF = function(transect){
+      var url = '/pdf/' + transect.name + '.pdf';
+      downloadURL(url);
+    };
+
     $scope.logout = function () {
       Auth.logout().then(function () {
         $state.go('login');
@@ -70,6 +87,7 @@
     var mpas = Mpas.query({}, function () {
       $scope.mpas = mpas;
       $ionicLoading.hide();
+      $scope.transects = _($scope.mpas).pluck('transects').flatten().value();
     });
 
     $scope.resize = function () {
